@@ -53,9 +53,8 @@ class EmbeddingGenerator:
     def gemini_client(self):
         """Lazy load Gemini client."""
         if self._gemini_client is None and self.backend == "gemini":
-            import google.generativeai as genai
-            genai.configure(api_key=self.api_key)
-            self._gemini_client = genai
+            import google.genai as genai
+            self._gemini_client = genai.Client(api_key=self.api_key)
         return self._gemini_client
 
     @property
@@ -77,12 +76,12 @@ class EmbeddingGenerator:
             List of floats (768 dimensions for Gemini)
         """
         if self.backend == "gemini":
-            result = self.gemini_client.embed_content(
+            result = self.gemini_client.models.embed_content(
                 model=self.model_name,
-                content=text,
-                task_type="retrieval_document",
+                contents=text,
+                config={"task_type": "RETRIEVAL_DOCUMENT"},
             )
-            return result['embedding']
+            return result.embeddings[0].values
         else:
             embedding = self.model.encode(text, convert_to_numpy=True)
             return embedding.tolist()
@@ -108,12 +107,12 @@ class EmbeddingGenerator:
                 batch = texts[i:i + batch_size]
                 print(f"  Embedding batch {i//batch_size + 1}/{total_batches}...")
                 for text in batch:
-                    result = self.gemini_client.embed_content(
+                    result = self.gemini_client.models.embed_content(
                         model=self.model_name,
-                        content=text,
-                        task_type="retrieval_document",
+                        contents=text,
+                        config={"task_type": "RETRIEVAL_DOCUMENT"},
                     )
-                    embeddings.append(result['embedding'])
+                    embeddings.append(result.embeddings[0].values)
             return embeddings
         else:
             embeddings = self.model.encode(
@@ -135,12 +134,12 @@ class EmbeddingGenerator:
             List of floats
         """
         if self.backend == "gemini":
-            result = self.gemini_client.embed_content(
+            result = self.gemini_client.models.embed_content(
                 model=self.model_name,
-                content=text,
-                task_type="retrieval_query",  # Different task type for queries
+                contents=text,
+                config={"task_type": "RETRIEVAL_QUERY"},  # Different task type for queries
             )
-            return result['embedding']
+            return result.embeddings[0].values
         else:
             embedding = self.model.encode(text, convert_to_numpy=True)
             return embedding.tolist()

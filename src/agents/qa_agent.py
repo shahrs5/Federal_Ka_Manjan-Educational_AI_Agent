@@ -36,7 +36,7 @@ class QAAgent:
         llm_client,
         router: ChapterRouterAgent,
         retriever: RAGRetriever,
-        model: str = "llama-3.3-70b-versatile",
+        model: str = "openai/gpt-oss-120b",
     ):
         self.llm = llm_client
         self.router = router

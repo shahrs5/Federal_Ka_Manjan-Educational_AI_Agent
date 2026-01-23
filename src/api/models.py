@@ -28,7 +28,7 @@ class ChatResponse(BaseModel):
     explanation: Optional[str] = ""
     sources: List[SourceInfo]
     confidence: float
-    chapter_used: int
+    chapter_used: Optional[int] = None
 
 
 class HealthResponse(BaseModel):

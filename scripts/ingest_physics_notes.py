@@ -22,7 +22,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from src.config import settings
-from src.ingestion.pipeline import DocumentIngestionPipeline, PHYSICS_CLASS_9_CHAPTERS
+from src.ingestion.pipeline import DocumentIngestionPipeline
+from src.ingestion.subject_metadata import PHYSICS_CLASS_9_CHAPTERS
 
 # Configure logging
 logging.basicConfig(

@@ -20,8 +20,8 @@ class Settings(BaseSettings):
 
     # LLM (Groq)
     groq_api_key: str = ""
-    groq_model: str = "llama-3.3-70b-versatile"
-    groq_model_fast: str = "llama-3.1-8b-instant"
+    groq_model: str = "openai/gpt-oss-120b"
+    groq_model_fast: str = "openai/gpt-oss-120b"
 
     # Google Gemini (optional)
     gemini_api_key: str = ""

@@ -9,6 +9,7 @@ from typing import Dict, Any, List
 from dataclasses import dataclass
 import json
 import re
+from ..ingestion.subject_metadata import SUBJECT_METADATA
 
 
 @dataclass
@@ -232,7 +233,7 @@ class ChapterRouterAgent:
         },
     }
 
-    def __init__(self, llm_client, model: str = "llama-3.3-70b-versatile", debug: bool = False):
+    def __init__(self, llm_client, model: str = "openai/gpt-oss-120b", debug: bool = False):
         """
         Initialize router.
 
@@ -326,31 +327,44 @@ class ChapterRouterAgent:
             )
 
         # Return best result from iterations
+        chapter_index = context.get("chapter_index", self.CHAPTER_INDEX)
+        fallback_chapter = list(chapter_index.keys())[0] if chapter_index else 1
         return self._create_result(
             context.get(
-                "last_plan", {"primary_chapter": 1, "confidence": 0.5}
+                "last_plan", {"primary_chapter": fallback_chapter, "confidence": 0.5}
             )
         )
 
     def _sense(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """SENSE: Extract query features for routing."""
         query = context["query"]
+        subject = context.get("subject", "Physics")
+
+        # Get chapter index for the specific subject
+        subject_chapters = SUBJECT_METADATA.get(subject, {})
+        chapter_index = self._build_chapter_index(subject_chapters)
 
         sensed = {
             **context,
             "query_length": len(query.split()),
             "has_formula": bool(self._detect_formula(query)),
-            "detected_keywords": self._extract_keywords(query),
-            "chapter_index": self.CHAPTER_INDEX,
+            "detected_keywords": self._extract_keywords(query, chapter_index),
+            "chapter_index": chapter_index,
         }
 
         return sensed
 
     def _plan(self, context: Dict[str, Any]) -> Dict[str, Any]:
         """PLAN: Use LLM to decide which chapters are relevant."""
-        chapter_desc = self._format_chapter_index()
+        chapter_index = context.get("chapter_index", self.CHAPTER_INDEX)
+        subject = context.get("subject", "Physics")
+        chapter_desc = self._format_chapter_index(chapter_index)
 
-        prompt = f"""You are routing a student's Physics question to relevant chapters.
+        # Get chapter range
+        chapter_nums = list(chapter_index.keys())
+        chapter_range = f"{min(chapter_nums)}-{max(chapter_nums)}" if chapter_nums else "1-9"
+
+        prompt = f"""You are routing a student's {subject} question to relevant chapters.
 
 STUDENT QUERY: {context['query']}
 
@@ -364,7 +378,7 @@ Analyze the query and determine which chapter(s) are most relevant.
 Respond with ONLY valid JSON:
 {{
     "action": "COMPLETE",
-    "primary_chapter": <chapter number 1-9>,
+    "primary_chapter": <chapter number from available chapters>,
     "secondary_chapters": [<additional relevant chapters>],
     "confidence": <0.0 to 1.0>,
     "reasoning": "<why you chose these chapters>",
@@ -375,7 +389,8 @@ Rules:
 - Primary chapter should be most relevant
 - Secondary chapters for related concepts (max 2)
 - Confidence 0.8+ means very confident
-- If query spans multiple topics, include secondary chapters"""
+- If query spans multiple topics, include secondary chapters
+- If no chapters match, set confidence to 0.3 and pick the closest chapter"""
 
         response = self.llm.chat.completions.create(
             model=self.model,
@@ -396,19 +411,20 @@ Rules:
         self, plan: Dict[str, Any], context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """ACT: Verify routing decision against chapter data."""
+        chapter_index = context.get("chapter_index", self.CHAPTER_INDEX)
         primary = plan.get("primary_chapter", 1)
         secondary = plan.get("secondary_chapters", [])
 
         # Validate chapter numbers
-        valid_primary = primary if primary in self.CHAPTER_INDEX else 1
+        valid_primary = primary if primary in chapter_index else (list(chapter_index.keys())[0] if chapter_index else 1)
         valid_secondary = [
             c
             for c in secondary
-            if c in self.CHAPTER_INDEX and c != valid_primary
+            if c in chapter_index and c != valid_primary
         ]
 
         # Get chapter details
-        primary_info = self.CHAPTER_INDEX.get(valid_primary, {})
+        primary_info = chapter_index.get(valid_primary, {})
 
         return {
             "primary_chapter": valid_primary,
@@ -447,20 +463,37 @@ Rules:
             topics_identified=plan.get("topics_identified", []),
         )
 
-    def _format_chapter_index(self) -> str:
+    def _build_chapter_index(self, subject_chapters: Dict) -> Dict:
+        """Build chapter index from subject metadata."""
+        chapter_index = {}
+        for chapter_num, metadata in subject_chapters.items():
+            chapter_index[chapter_num] = {
+                "title": metadata.get("title", f"Chapter {chapter_num}"),
+                "topics": metadata.get("topics", []),
+                "keywords": metadata.get("topics", []),  # Use topics as keywords
+            }
+        return chapter_index
+
+    def _format_chapter_index(self, chapter_index: Dict = None) -> str:
         """Format chapter index for LLM prompt."""
+        if chapter_index is None:
+            chapter_index = self.CHAPTER_INDEX
+
         lines = []
-        for num, info in self.CHAPTER_INDEX.items():
+        for num, info in chapter_index.items():
             topics = ", ".join(info["topics"][:5])
             lines.append(f"Chapter {num}: {info['title']} - Topics: {topics}")
         return "\n".join(lines)
 
-    def _extract_keywords(self, query: str) -> List[str]:
+    def _extract_keywords(self, query: str, chapter_index: Dict = None) -> List[str]:
         """Extract keywords from query for matching."""
+        if chapter_index is None:
+            chapter_index = self.CHAPTER_INDEX
+
         query_lower = query.lower()
         keywords = []
 
-        for chapter_info in self.CHAPTER_INDEX.values():
+        for chapter_info in chapter_index.values():
             for keyword in chapter_info.get("keywords", []):
                 if keyword.lower() in query_lower:
                     keywords.append(keyword)
