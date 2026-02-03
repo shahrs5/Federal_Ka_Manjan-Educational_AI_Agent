@@ -62,10 +62,10 @@ def ingest_subject(
     logger.info(f"INGESTING: {subject} - Class {class_level}")
     logger.info(f"{'='*60}")
 
-    # Get subject metadata
-    chapter_metadata = SUBJECT_METADATA.get(subject)
+    # Get subject metadata for the specific class level
+    chapter_metadata = SUBJECT_METADATA.get(class_level, {}).get(subject)
     if not chapter_metadata:
-        logger.warning(f"No metadata found for {subject}, proceeding without it")
+        logger.warning(f"No metadata found for {subject} Class {class_level}, proceeding without it")
 
     # Path to subject notes
     notes_dir = base_notes_dir / f"Class {class_level}" / subject / "Content"
@@ -151,7 +151,7 @@ def main():
 
     # Determine which subjects to process
     if "all" in args.subjects:
-        subjects_to_process = list(SUBJECT_METADATA.keys())
+        subjects_to_process = list(SUBJECT_METADATA.get(args.class_level, {}).keys())
     else:
         subjects_to_process = args.subjects
 

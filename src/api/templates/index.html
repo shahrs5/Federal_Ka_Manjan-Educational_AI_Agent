@@ -317,6 +317,62 @@
 
         let isFirstMessage = true;
 
+        // Subject availability by class
+        const subjectAvailability = {
+            9: {
+                'Physics': true,
+                'Chemistry': true,
+                'Biology': true,
+                'Computer Science': true,  // Now available
+                'English': true
+            },
+            10: {
+                'Physics': true,  // Now available
+                'Chemistry': true,
+                'Biology': true,
+                'Computer Science': false,  // Not available yet
+                'English': false  // Not available yet
+            }
+        };
+
+        // Update subject dropdown based on class level
+        function updateSubjectOptions() {
+            const classLevel = parseInt(classLevelSelect.value);
+            const availability = subjectAvailability[classLevel];
+
+            Array.from(subjectSelect.options).forEach(option => {
+                const subject = option.value;
+                const isAvailable = availability[subject];
+
+                if (isAvailable === false) {
+                    option.disabled = true;
+                    if (!option.text.includes('Coming Soon')) {
+                        option.text = subject + ' (Coming Soon)';
+                    }
+                } else {
+                    option.disabled = false;
+                    // Remove "(Coming Soon)" if it was previously added
+                    option.text = subject;
+                }
+            });
+
+            // If current selection is disabled, switch to first available
+            if (subjectSelect.options[subjectSelect.selectedIndex].disabled) {
+                for (let i = 0; i < subjectSelect.options.length; i++) {
+                    if (!subjectSelect.options[i].disabled) {
+                        subjectSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Initialize on load
+        updateSubjectOptions();
+
+        // Update when class changes
+        classLevelSelect.addEventListener('change', updateSubjectOptions);
+
         function handleKeyPress(event) {
             if (event.key === 'Enter' && !event.shiftKey) {
                 sendMessage();

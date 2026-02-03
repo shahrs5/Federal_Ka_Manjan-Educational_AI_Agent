@@ -257,11 +257,171 @@ ENGLISH_CLASS_9_CHAPTERS = {
     },
 }
 
-# Mapping of subject names to their chapter metadata
+# ============================================================================
+# CLASS 10 CHAPTERS
+# ============================================================================
+
+# Chemistry Class 10
+CHEMISTRY_CLASS_10_CHAPTERS = {
+    1: {
+        "title": "History of Chemistry",
+        "description": "Covers fundamental principles and methods used in chemistry, including scientific paradigms, conservation laws, and evolution of scientific ideas.",
+        "topics": ["conservation of mass", "scientific method", "atomic models", "phlogiston theory", "repeatability"],
+    },
+    2: {
+        "title": "Matter",
+        "description": "Explores physical states of matter and changes between them, explaining phase transitions, kinetic particle theory, and gas laws.",
+        "topics": ["states of matter", "phase transitions", "gas laws", "kinetic theory", "diffusion"],
+    },
+    3: {
+        "title": "Stoichiometry",
+        "description": "Examines quantitative relationships in chemical reactions, including mole concept, limiting reactants, and yield calculations.",
+        "topics": ["mole concept", "limiting reactants", "percentage yield", "empirical formula", "molarity"],
+    },
+    4: {
+        "title": "Electrochemistry",
+        "description": "Covers electrochemical cells and processes, including electrolysis, electroplating, galvanic cells, and electrochemical series.",
+        "topics": ["electrolysis", "electroplating", "galvanic cells", "electrochemical series", "fuel cells"],
+    },
+    5: {
+        "title": "Chemical Kinetics",
+        "description": "Studies rates of chemical reactions, collision theory, activation energy, and role of catalysts in processes.",
+        "topics": ["reaction rates", "collision theory", "activation energy", "catalysts", "Maxwell-Boltzmann distribution"],
+    },
+    6: {
+        "title": "Salts",
+        "description": "Explores formation, properties, and preparation of salts, including solubility rules and crystallization techniques.",
+        "topics": ["ionic salts", "lattice structure", "solubility", "crystallization", "titration"],
+    },
+    7: {
+        "title": "Nitrogen, Sulfur, and Metals",
+        "description": "Covers industrial chemical processes, environmental chemistry including acid rain, and metal reactivity.",
+        "topics": ["acid rain", "Haber process", "contact process", "metal reactivity", "amphoteric oxides"],
+    },
+}
+
+# Biology Class 10
+BIOLOGY_CLASS_10_CHAPTERS = {
+    1: {
+        "title": "Digestive System",
+        "description": "Explains structure and function of human digestive system, including alimentary canal and digestive processes.",
+        "topics": ["alimentary canal", "chemical digestion", "enzymes", "absorption", "liver function"],
+    },
+    2: {
+        "title": "Blood Circulatory System",
+        "description": "Covers cardiovascular system including blood composition, heart structure, blood vessels, and circulation pathways.",
+        "topics": ["blood components", "heart structure", "blood vessels", "circulation", "heart diseases"],
+    },
+    3: {
+        "title": "Respiratory System",
+        "description": "Examines structure and function of respiratory system, breathing mechanism, and gas exchange in alveoli.",
+        "topics": ["air passageway", "breathing mechanism", "gas exchange", "alveoli", "respiratory diseases"],
+    },
+    4: {
+        "title": "Urinary System",
+        "description": "Explores excretory system including kidney structure, nephron function, and urine formation processes.",
+        "topics": ["kidney structure", "nephron", "urine formation", "filtration", "osmoregulation"],
+    },
+    5: {
+        "title": "Nervous System",
+        "description": "Covers organization and function of nervous system, including CNS, PNS, brain structure, and response coordination.",
+        "topics": ["CNS", "PNS", "brain structure", "neurons", "stimulus response"],
+    },
+    6: {
+        "title": "Animal Reproduction",
+        "description": "Examines sexual reproduction in animals, focusing on hormonal regulation and gametogenesis processes.",
+        "topics": ["reproductive hormones", "spermatogenesis", "oogenesis", "fertilization", "sexual characteristics"],
+    },
+    7: {
+        "title": "Inheritance",
+        "description": "Introduces genetics and inheritance principles, covering chromosome structure, genes, and Mendelian genetics.",
+        "topics": ["chromosomes", "genes and alleles", "genotype and phenotype", "Mendelian genetics", "dominant and recessive"],
+    },
+    8: {
+        "title": "Diseases",
+        "description": "Classifies and describes various types of diseases including infectious, non-infectious, and zoonotic diseases.",
+        "topics": ["disease classification", "infectious diseases", "zoonotic diseases", "vector-borne diseases", "COVID-19"],
+    },
+    9: {
+        "title": "Immunity and the Immune System",
+        "description": "Explores body's defense mechanisms, immune system structure and function, and how immunity protects against pathogens.",
+        "topics": ["immune system", "antibodies", "cell-mediated immunity", "inflammation", "vaccination"],
+    },
+    10: {
+        "title": "Biotechnology",
+        "description": "Covers modern biotechnology applications in agriculture and food production, including GM crops and bio-fortification.",
+        "topics": ["biotechnology", "GM crops", "bio-fortification", "disease resistance", "drought tolerance"],
+    },
+    11: {
+        "title": "Biostatistics and Data Handling",
+        "description": "Introduces biostatistics and its applications in biology, medicine, and agriculture, covering data analysis methods.",
+        "topics": ["biostatistics", "data analysis", "epidemiology", "public health", "central tendency"],
+    },
+}
+
+# Physics Class 10
+PHYSICS_CLASS_10_CHAPTERS = {
+    1: {
+        "title": "Heat Capacity and Modes of Heat Transfer",
+        "description": "Covers heat capacity, specific heat capacity, and three modes of heat transfer (conduction, convection, radiation).",
+        "topics": ["heat capacity", "specific heat capacity", "calorimetry", "conduction", "convection", "radiation"],
+    },
+    2: {
+        "title": "Thermal Transformations",
+        "description": "Explores kinetic theory of matter, thermal expansion of solids and liquids, and phase changes including latent heat.",
+        "topics": ["kinetic theory", "thermal expansion", "phase changes", "evaporation", "latent heat", "bimetallic strips"],
+    },
+    3: {
+        "title": "Waves",
+        "description": "Introduces wave motion, types of waves (transverse and longitudinal), and wave parameters like wavelength, frequency, and amplitude.",
+        "topics": ["wave motion", "transverse waves", "longitudinal waves", "wavelength", "frequency", "amplitude"],
+    },
+    4: {
+        "title": "Sound",
+        "description": "Covers production and propagation of sound waves, ultrasound, infrasound, speed of sound, and applications like sonar.",
+        "topics": ["sound waves", "ultrasound", "infrasound", "speed of sound", "echo", "sonar"],
+    },
+    5: {
+        "title": "Optics",
+        "description": "Examines behavior of light including reflection, refraction, refractive index, lenses, mirrors, and optical instruments.",
+        "topics": ["reflection", "refraction", "refractive index", "Snell's law", "lenses", "mirrors"],
+    },
+    6: {
+        "title": "Electrostatics",
+        "description": "Introduces static electricity, electric charge, charging methods, conductors and insulators, and electric fields.",
+        "topics": ["static charge", "charge conservation", "conductors and insulators", "electric field", "Coulomb's law"],
+    },
+    7: {
+        "title": "Current Electricity",
+        "description": "Covers electric current, potential difference, Ohm's law, resistance, electrical circuits, and power in electrical systems.",
+        "topics": ["electric current", "potential difference", "Ohm's law", "resistance", "circuits", "electrical power"],
+    },
+}
+
+# English Class 10 (No content available yet)
+ENGLISH_CLASS_10_CHAPTERS = {}
+
+# Computer Science Class 10 (No content available yet)
+COMPUTER_SCIENCE_CLASS_10_CHAPTERS = {}
+
+# ============================================================================
+# METADATA MAPPINGS
+# ============================================================================
+
+# Mapping of subject names to their chapter metadata by class
 SUBJECT_METADATA = {
-    "Physics": PHYSICS_CLASS_9_CHAPTERS,
-    "Chemistry": CHEMISTRY_CLASS_9_CHAPTERS,
-    "Biology": BIOLOGY_CLASS_9_CHAPTERS,
-    "Computer Science": COMPUTER_SCIENCE_CLASS_9_CHAPTERS,
-    "English": ENGLISH_CLASS_9_CHAPTERS,
+    9: {
+        "Physics": PHYSICS_CLASS_9_CHAPTERS,
+        "Chemistry": CHEMISTRY_CLASS_9_CHAPTERS,
+        "Biology": BIOLOGY_CLASS_9_CHAPTERS,
+        "Computer Science": COMPUTER_SCIENCE_CLASS_9_CHAPTERS,
+        "English": ENGLISH_CLASS_9_CHAPTERS,
+    },
+    10: {
+        "Physics": PHYSICS_CLASS_10_CHAPTERS,
+        "Chemistry": CHEMISTRY_CLASS_10_CHAPTERS,
+        "Biology": BIOLOGY_CLASS_10_CHAPTERS,
+        "Computer Science": COMPUTER_SCIENCE_CLASS_10_CHAPTERS,
+        "English": ENGLISH_CLASS_10_CHAPTERS,
+    },
 }

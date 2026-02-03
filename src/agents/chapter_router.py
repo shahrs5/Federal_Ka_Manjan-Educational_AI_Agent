@@ -339,9 +339,10 @@ class ChapterRouterAgent:
         """SENSE: Extract query features for routing."""
         query = context["query"]
         subject = context.get("subject", "Physics")
+        class_level = context.get("class_level", 9)
 
-        # Get chapter index for the specific subject
-        subject_chapters = SUBJECT_METADATA.get(subject, {})
+        # Get chapter index for the specific class and subject
+        subject_chapters = SUBJECT_METADATA.get(class_level, {}).get(subject, {})
         chapter_index = self._build_chapter_index(subject_chapters)
 
         sensed = {

@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(unzip:*)",
+      "Bash(.venv/Scripts/python.exe:*)",
+      "Bash(python3:*)"
+    ]
+  }
+}
