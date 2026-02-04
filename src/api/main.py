@@ -58,6 +58,7 @@ async def lifespan(app: FastAPI):
         router=router,
         retriever=retriever,
         model=settings.groq_model,
+        model_fast=settings.groq_model_fast,
     )
 
     print("RAG pipeline initialized successfully!")

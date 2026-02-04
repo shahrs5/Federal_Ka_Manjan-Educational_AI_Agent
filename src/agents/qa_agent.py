@@ -37,11 +37,13 @@ class QAAgent:
         router: ChapterRouterAgent,
         retriever: RAGRetriever,
         model: str = "openai/gpt-oss-120b",
+        model_fast: str = "openai/gpt-oss-20b",
     ):
         self.llm = llm_client
         self.router = router
         self.retriever = retriever
         self.model = model
+        self.model_fast = model_fast
 
     def answer(
         self,
@@ -62,25 +64,28 @@ class QAAgent:
         Returns:
             QAResponse with answer and sources
         """
-        # Step 1: Route to relevant chapters
+        # Step 1: Rewrite query for better retrieval
+        retrieval_query = self._rewrite_query(query, subject)
+
+        # Step 2: Route to relevant chapters (using rewritten query)
         routing = self.router.route(
-            query=query,
+            query=retrieval_query,
             class_level=class_level,
             subject=subject,
         )
 
-        # Step 2: Retrieve relevant chunks
+        # Step 3: Retrieve relevant chunks (using rewritten query)
         chapters_to_search = [routing.primary_chapter] + routing.secondary_chapters[:1]
 
         chunks = self.retriever.retrieve(
-            query=query,
+            query=retrieval_query,
             class_level=class_level,
             subject=subject,
             chapter_numbers=chapters_to_search,
             top_k=5,
         )
 
-        # Step 3: Generate answer with RAG context
+        # Step 4: Generate answer with RAG context (using ORIGINAL query)
         answer_result = self._generate_answer(
             query=query,
             chunks=chunks,
@@ -111,6 +116,33 @@ class QAAgent:
             chapter_used=routing.primary_chapter,
             routing_info=routing,
         )
+
+    def _rewrite_query(self, query: str, subject: str) -> str:
+        """
+        Rewrite student query to fix spelling/grammar and make it clearer
+        for better RAG retrieval. Falls back to original query on any error.
+        """
+        try:
+            response = self.llm.chat.completions.create(
+                model=self.model_fast,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": (
+                            f"You are a query rewriter for a {subject} tutoring system. "
+                            "Rewrite the student's question to fix spelling, grammar, and clarity. "
+                            "Keep the meaning the same. Return ONLY the rewritten question, nothing else."
+                        ),
+                    },
+                    {"role": "user", "content": query},
+                ],
+                temperature=0.0,
+                max_tokens=128,
+            )
+            rewritten = response.choices[0].message.content.strip()
+            return rewritten if rewritten else query
+        except Exception:
+            return query
 
     def _generate_answer(
         self,
