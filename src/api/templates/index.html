@@ -315,68 +315,98 @@
         const subjectSelect = document.getElementById('subject');
         const languageSelect = document.getElementById('language');
 
+        // ── Chat memory ──────────────────────────────────────────────
+        const HISTORY_LIMIT = 10;
+        let chatHistory = [];          // [{role, content}, ...]
+        let activeClass = classLevelSelect.value;
+        let activeSubject = subjectSelect.value;
         let isFirstMessage = true;
 
-        // Subject availability by class
+        // ── Subject availability ─────────────────────────────────────
         const subjectAvailability = {
-            9: {
-                'Physics': true,
-                'Chemistry': true,
-                'Biology': true,
-                'Computer Science': true,  // Now available
-                'English': true
-            },
-            10: {
-                'Physics': true,  // Now available
-                'Chemistry': true,
-                'Biology': true,
-                'Computer Science': false,  // Not available yet
-                'English': false  // Not available yet
-            }
+            9:  { 'Physics': true,  'Chemistry': true, 'Biology': true, 'Computer Science': true,  'English': true  },
+            10: { 'Physics': true,  'Chemistry': true, 'Biology': true, 'Computer Science': false, 'English': false }
         };
 
-        // Update subject dropdown based on class level
         function updateSubjectOptions() {
             const classLevel = parseInt(classLevelSelect.value);
             const availability = subjectAvailability[classLevel];
 
             Array.from(subjectSelect.options).forEach(option => {
-                const subject = option.value;
-                const isAvailable = availability[subject];
-
-                if (isAvailable === false) {
+                if (availability[option.value] === false) {
                     option.disabled = true;
-                    if (!option.text.includes('Coming Soon')) {
-                        option.text = subject + ' (Coming Soon)';
-                    }
+                    if (!option.text.includes('Coming Soon')) option.text = option.value + ' (Coming Soon)';
                 } else {
                     option.disabled = false;
-                    // Remove "(Coming Soon)" if it was previously added
-                    option.text = subject;
+                    option.text = option.value;
                 }
             });
 
-            // If current selection is disabled, switch to first available
+            // If current selection got disabled, pick first available
             if (subjectSelect.options[subjectSelect.selectedIndex].disabled) {
                 for (let i = 0; i < subjectSelect.options.length; i++) {
-                    if (!subjectSelect.options[i].disabled) {
-                        subjectSelect.selectedIndex = i;
-                        break;
-                    }
+                    if (!subjectSelect.options[i].disabled) { subjectSelect.selectedIndex = i; break; }
                 }
             }
         }
-
-        // Initialize on load
         updateSubjectOptions();
 
-        // Update when class changes
-        classLevelSelect.addEventListener('change', updateSubjectOptions);
-
-        function handleKeyPress(event) {
-            if (event.key === 'Enter' && !event.shiftKey) {
-                sendMessage();
+        // ── Confirm-or-revert on class / subject change ─────────────
+        function handleSettingChange(selectEl, previousValue) {
+            // Nothing in history yet — no warning needed
+            if (chatHistory.length === 0) {
+                activeClass   = classLevelSelect.value;
+                activeSubject = subjectSelect.value;
+                if (selectEl === classLevelSelect) updateSubjectOptions();
+                return;
             }
+
+            const confirmed = confirm(
+                'Switching class or subject will clear your current chat history.\n\nDo you want to continue?'
+            );
+
+            if (confirmed) {
+                if (selectEl === classLevelSelect) updateSubjectOptions();
+                activeClass   = classLevelSelect.value;
+                activeSubject = subjectSelect.value;
+                resetChat();
+            } else {
+                // Revert the dropdown to what it was before
+                selectEl.value = previousValue;
+            }
+        }
+
+        classLevelSelect.addEventListener('change', function () {
+            // snapshot the *previous* values before anything updates
+            const prevClass   = activeClass;
+            const prevSubject = activeSubject;
+
+            handleSettingChange(classLevelSelect, prevClass);
+
+            // If user cancelled, subject might have drifted — restore it too
+            if (classLevelSelect.value !== activeClass) {
+                subjectSelect.value = prevSubject;
+            }
+        });
+
+        subjectSelect.addEventListener('change', function () {
+            handleSettingChange(subjectSelect, activeSubject);
+        });
+
+        // ── Reset chat UI + memory ───────────────────────────────────
+        function resetChat() {
+            chatHistory   = [];
+            isFirstMessage = true;
+            chatContainer.innerHTML = `
+                <div class="welcome-message">
+                    <h2>Welcome!</h2>
+                    <p>Select your class and subject, then ask any question from your syllabus.</p>
+                </div>`;
+        }
+
+        // ── Render helpers ───────────────────────────────────────────
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) sendMessage();
         }
 
         function addMessage(content, isUser, metadata = null) {
@@ -399,8 +429,7 @@
                         <span class="confidence-badge ${confidenceClass}">
                             ${Math.round(metadata.confidence * 100)}% confident
                         </span>
-                    </div>
-                `;
+                    </div>`;
 
                 if (metadata.sources && metadata.sources.length > 0) {
                     metaHtml += `
@@ -410,10 +439,8 @@
                                 <div class="source-item">
                                     <span class="chapter">Ch. ${src.chapter}:</span> ${src.title}
                                     <span class="relevance">${Math.round(src.relevance * 100)}%</span>
-                                </div>
-                            `).join('')}
-                        </div>
-                    `;
+                                </div>`).join('')}
+                        </div>`;
                 }
             }
 
@@ -421,8 +448,7 @@
                 <div class="message-content">
                     ${content.replace(/\n/g, '<br>')}
                     ${metaHtml}
-                </div>
-            `;
+                </div>`;
 
             chatContainer.appendChild(messageDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
@@ -432,46 +458,41 @@
             const typingDiv = document.createElement('div');
             typingDiv.className = 'message assistant';
             typingDiv.id = 'typingIndicator';
-            typingDiv.innerHTML = `
-                <div class="typing-indicator">
-                    <span></span><span></span><span></span>
-                </div>
-            `;
+            typingDiv.innerHTML = `<div class="typing-indicator"><span></span><span></span><span></span></div>`;
             chatContainer.appendChild(typingDiv);
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 
         function removeTypingIndicator() {
-            const typing = document.getElementById('typingIndicator');
-            if (typing) typing.remove();
+            const el = document.getElementById('typingIndicator');
+            if (el) el.remove();
         }
 
+        // ── Send ─────────────────────────────────────────────────────
         async function sendMessage() {
             const question = questionInput.value.trim();
             if (!question) return;
 
-            // Disable input
             questionInput.disabled = true;
             sendBtn.disabled = true;
 
-            // Add user message
             addMessage(question, true);
             questionInput.value = '';
-
-            // Show typing indicator
             showTypingIndicator();
+
+            // Push user message into history before sending
+            chatHistory.push({ role: 'user', content: question });
 
             try {
                 const response = await fetch('/chat', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         query: question,
                         class_level: parseInt(classLevelSelect.value),
-                        subject: subjectSelect.value,
-                        language: languageSelect.value,
+                        subject:     subjectSelect.value,
+                        language:    languageSelect.value,
+                        history:     chatHistory.slice(0, -1),  // exclude the current question — it's already in `query`
                     }),
                 });
 
@@ -485,22 +506,29 @@
                 const data = await response.json();
 
                 let answerText = data.answer;
-                if (data.explanation) {
-                    answerText += '\n\n' + data.explanation;
-                }
+                if (data.explanation) answerText += '\n\n' + data.explanation;
 
                 addMessage(answerText, false, {
-                    confidence: data.confidence,
-                    chapter_used: data.chapter_used,
-                    sources: data.sources,
+                    confidence:    data.confidence,
+                    chapter_used:  data.chapter_used,
+                    sources:       data.sources,
                 });
+
+                // Push assistant reply into history
+                chatHistory.push({ role: 'assistant', content: answerText });
+
+                // Trim to HISTORY_LIMIT (drop oldest pairs first)
+                if (chatHistory.length > HISTORY_LIMIT) {
+                    chatHistory = chatHistory.slice(chatHistory.length - HISTORY_LIMIT);
+                }
 
             } catch (error) {
                 removeTypingIndicator();
                 addMessage(`Error: ${error.message}`, false);
+                // Remove the user message we optimistically added on failure
+                chatHistory.pop();
             }
 
-            // Re-enable input
             questionInput.disabled = false;
             sendBtn.disabled = false;
             questionInput.focus();

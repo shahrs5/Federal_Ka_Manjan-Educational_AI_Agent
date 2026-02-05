@@ -51,6 +51,7 @@ class QAAgent:
         class_level: int = 9,
         subject: str = "Physics",
         language: str = "en",
+        history: List[Dict[str, str]] = None,
     ) -> QAResponse:
         """
         Answer a student's question using RAG.
@@ -64,8 +65,13 @@ class QAAgent:
         Returns:
             QAResponse with answer and sources
         """
-        # Step 1: Rewrite query for better retrieval
-        retrieval_query = self._rewrite_query(query, subject)
+        # Step 1: Rewrite query for better retrieval (needs history to resolve follow-ups)
+        print(f"\n[QA] Original query : {query}")
+        print(f"[QA] History length : {len(history or [])}")
+        for i, msg in enumerate(history or []):
+            print(f"[QA]   history[{i}] {msg['role']}: {msg['content'][:80]}")
+        retrieval_query = self._rewrite_query(query, subject, history or [])
+        print(f"[QA] Rewritten query: {retrieval_query}\n")
 
         # Step 2: Route to relevant chapters (using rewritten query)
         routing = self.router.route(
@@ -91,6 +97,7 @@ class QAAgent:
             chunks=chunks,
             class_level=class_level,
             language=language,
+            history=history or [],
         )
 
         # Build sources
@@ -117,25 +124,35 @@ class QAAgent:
             routing_info=routing,
         )
 
-    def _rewrite_query(self, query: str, subject: str) -> str:
+    def _rewrite_query(self, query: str, subject: str, history: List[Dict[str, str]]) -> str:
         """
-        Rewrite student query to fix spelling/grammar and make it clearer
-        for better RAG retrieval. Falls back to original query on any error.
+        Rewrite student query to fix spelling/grammar and resolve any references
+        to previous messages so it becomes a self-contained retrieval query.
+        Falls back to original query on any error.
         """
         try:
+            messages = [
+                {
+                    "role": "system",
+                    "content": (
+                        f"You are a query rewriter for a {subject} tutoring system. "
+                        "Rewrite the student's latest question so that it:\n"
+                        "1. Fixes spelling and grammar\n"
+                        "2. Resolves any references to the previous conversation (e.g. 'explain it', 'what about that') into a fully self-contained question\n"
+                        "Return ONLY the rewritten question, nothing else."
+                    ),
+                },
+            ]
+
+            # Include last 4 history messages (2 turns) for context — keeps token usage low
+            for msg in history[-4:]:
+                messages.append({"role": msg["role"], "content": msg["content"]})
+
+            messages.append({"role": "user", "content": query})
+
             response = self.llm.chat.completions.create(
                 model=self.model_fast,
-                messages=[
-                    {
-                        "role": "system",
-                        "content": (
-                            f"You are a query rewriter for a {subject} tutoring system. "
-                            "Rewrite the student's question to fix spelling, grammar, and clarity. "
-                            "Keep the meaning the same. Return ONLY the rewritten question, nothing else."
-                        ),
-                    },
-                    {"role": "user", "content": query},
-                ],
+                messages=messages,
                 temperature=0.0,
                 max_tokens=128,
             )
@@ -150,8 +167,9 @@ class QAAgent:
         chunks: List[RetrievedChunk],
         class_level: int,
         language: str,
+        history: List[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
-        """Generate answer using LLM with RAG context."""
+        """Generate answer using LLM with RAG context and chat history."""
 
         if not chunks:
             return {
@@ -176,9 +194,20 @@ class QAAgent:
                 "Respond in Roman Urdu (Urdu written in English letters)."
             )
 
-        prompt = f"""You are a helpful tutor for Class {class_level} Physics students.
+        system_prompt = (
+            f"You are a helpful tutor for Class {class_level} students. "
+            "Always respond with JSON. "
+            "Use the conversation history to maintain context, but base your answers on the reference material provided."
+        )
 
-REFERENCE MATERIAL:
+        # Build history messages for the LLM (plain text, no JSON structure)
+        messages = [{"role": "system", "content": system_prompt}]
+
+        for msg in (history or []):
+            messages.append({"role": msg["role"], "content": msg["content"]})
+
+        # Current turn: attach retrieved context + the student's question
+        current_prompt = f"""REFERENCE MATERIAL:
 {context}
 
 STUDENT QUESTION: {query}
@@ -191,6 +220,7 @@ Instructions:
 3. If the answer requires formulas, show them clearly
 4. If the reference material doesn't fully answer the question, say so
 5. Keep the answer concise but complete (2-3 paragraphs max)
+6. If the student is following up on something from earlier in the conversation, use that context
 
 Respond with ONLY valid JSON:
 {{
@@ -200,15 +230,11 @@ Respond with ONLY valid JSON:
     "formulas_used": ["<formula1>", "<formula2>"]
 }}"""
 
+        messages.append({"role": "user", "content": current_prompt})
+
         response = self.llm.chat.completions.create(
             model=self.model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": "You are a physics tutor. Always respond with JSON.",
-                },
-                {"role": "user", "content": prompt},
-            ],
+            messages=messages,
             temperature=0.5,
             max_tokens=1000,
         )

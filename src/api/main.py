@@ -115,11 +115,14 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=503, detail="RAG pipeline not initialized")
 
     try:
+        history = [{"role": m.role, "content": m.content} for m in request.history]
+
         response = qa_agent.answer(
             query=request.query,
             class_level=request.class_level,
             subject=request.subject,
             language=request.language,
+            history=history,
         )
 
         sources = [
