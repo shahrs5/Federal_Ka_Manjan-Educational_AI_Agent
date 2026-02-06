@@ -1,32 +1,50 @@
 # Federal Ka Manjan - Educational AI Agent
 
-A RAG-powered AI tutor for Class 9 & 10 Physics students following the Federal Board curriculum in Pakistan.
+A RAG-powered AI tutor for FBISE Class 9 & 10 students. Supports Physics, Chemistry, Biology, Computer Science, and English with multi-language responses (English, Urdu, Roman Urdu).
 
 ## Features
 
-- **RAG Pipeline**: Retrieval-Augmented Generation using your physics notes
-- **Chapter Routing**: Automatically routes questions to relevant chapters
-- **Multi-language Support**: English, Urdu, and Roman Urdu responses
-- **Web UI**: Clean chat interface built with FastAPI
-- **Source Citations**: Shows which chapters and sections were used to answer
+- **RAG Pipeline** — Retrieval-Augmented Generation grounded in your course notes
+- **Query Rewriting** — Fixes typos and resolves follow-up references ("explain it") into self-contained queries before retrieval
+- **Chapter Routing** — Automatically routes questions to relevant chapters using LLM + metadata
+- **Chat Memory** — 10-message session history; the LLM uses prior turns to maintain context
+- **Fallback to History** — If retrieval returns no chunks, the LLM answers from conversation history instead of bailing out
+- **Multi-language** — English, Urdu, and Roman Urdu responses
+- **Source Citations** — Shows which chapters were used and their relevance scores
+- **Web UI** — Single-page dark-themed chat interface
 
 ## Architecture
 
 ```
-┌─────────────┐     ┌──────────────────┐     ┌─────────────────┐
-│   User      │────▶│  FastAPI Server  │────▶│  Chapter Router │
-│  Question   │     │    /chat API     │     │   (Groq LLM)    │
-└─────────────┘     └──────────────────┘     └────────┬────────┘
-                                                      │
-                    ┌──────────────────┐              ▼
-                    │    QA Agent      │◀────┌─────────────────┐
-                    │   (Groq LLM)     │     │  RAG Retriever  │
-                    └────────┬─────────┘     │   (Supabase)    │
-                             │               └─────────────────┘
-                             ▼
-                    ┌──────────────────┐
-                    │  Answer + Sources│
-                    └──────────────────┘
+User input + chat history
+        │
+        ▼
+┌─────────────────────┐
+│  Query Rewriter     │  gpt-oss-20b — fixes typos, resolves follow-ups
+│  (last 4 history    │  using history context. Output is a self-contained
+│   messages)         │  retrieval query.
+└────────┬────────────┘
+         │ rewritten query
+         ▼
+┌─────────────────────┐
+│  Chapter Router     │  LLM picks primary + secondary chapters
+│  (subject metadata) │  from subject_metadata using the rewritten query
+└────────┬────────────┘
+         │ chapter scope
+         ▼
+┌─────────────────────┐
+│  RAG Retriever      │  Embeds rewritten query, vector search
+│  (Supabase)         │  scoped to routed chapters
+└────────┬────────────┘
+         │ chunks (or empty)
+         ▼
+┌─────────────────────┐
+│  QA Agent           │  gpt-oss-120b. Receives ORIGINAL user query
+│  (full history +    │  + history + chunks. If no chunks, answers
+│   chunks or none)   │  from history alone.
+└────────┬────────────┘
+         ▼
+   Answer + Sources
 ```
 
 ## Setup
@@ -43,14 +61,12 @@ uv pip install -r requirements.txt
 
 # Or using pip
 python -m venv .venv
-.venv\Scripts\activate  # Windows
-source .venv/bin/activate  # Linux/Mac
+.venv\Scripts\activate          # Windows
+source .venv/bin/activate       # Linux/Mac
 pip install -r requirements.txt
 ```
 
 ### 2. Configure Environment
-
-Copy the example environment file and fill in your API keys:
 
 ```bash
 cp .env.example .env
@@ -64,47 +80,60 @@ SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_KEY=your-supabase-anon-key
 GROQ_API_KEY=your-groq-api-key
 
-# Recommended: Use Gemini for embeddings (free, no large downloads)
+# LLM models (via Groq)
+GROQ_MODEL=openai/gpt-oss-120b          # main answer model
+GROQ_MODEL_FAST=openai/gpt-oss-20b      # query rewriter (low token usage)
+
+# Embeddings — use gemini (requires GEMINI_API_KEY) or a local model
 GEMINI_API_KEY=your-gemini-api-key
-EMBEDDING_MODEL=gemini
+EMBEDDING_MODEL=gemini                   # or: sentence-transformers/all-mpnet-base-v2
 ```
 
 ### 3. Ingest Notes
 
-Before using the chatbot, ingest your physics notes into the vector database:
+Process all notes for a class into the vector database:
 
 ```bash
-uv run python scripts/ingest_physics_notes.py
+# All subjects for Class 9
+python scripts/ingest_all_subjects.py --class-level 9 --subjects all
+
+# All subjects for Class 10
+python scripts/ingest_all_subjects.py --class-level 10 --subjects all
+
+# Specific subjects only
+python scripts/ingest_all_subjects.py --class-level 9 --subjects Physics Chemistry
 ```
 
 ## Running the App
 
-### Start the Server
-
 ```bash
-uv run uvicorn src.api.main:app --reload --port 8000
+uvicorn src.api.main:app --reload --port 8000
 ```
 
 Open http://localhost:8000 in your browser.
 
-### API Endpoints
+## API
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/` | GET | Chat UI |
-| `/health` | GET | Health check |
-| `/chat` | POST | Process a question |
+| `/`      | GET    | Chat UI     |
+| `/health`| GET    | Health check |
+| `/chat`  | POST   | Process a question |
 
-### Chat API Example
+### Chat API
 
 ```bash
 curl -X POST http://localhost:8000/chat \
   -H "Content-Type: application/json" \
   -d '{
-    "query": "What is Newton'\''s second law of motion?",
+    "query": "What is Newton'\''s second law?",
     "class_level": 9,
     "subject": "Physics",
-    "language": "en"
+    "language": "en",
+    "history": [
+      {"role": "user",      "content": "What is Newton'\''s first law?"},
+      {"role": "assistant", "content": "Newton'\''s first law states..."}
+    ]
   }'
 ```
 
@@ -112,7 +141,7 @@ curl -X POST http://localhost:8000/chat \
 ```json
 {
   "answer": "Newton's second law states that...",
-  "explanation": "",
+  "explanation": "...",
   "sources": [
     {"chapter": 3, "title": "Dynamics", "snippet": "...", "relevance": 0.89}
   ],
@@ -127,49 +156,65 @@ curl -X POST http://localhost:8000/chat \
 |----------|-------------|---------|
 | `SUPABASE_URL` | Supabase project URL | Required |
 | `SUPABASE_KEY` | Supabase anon key | Required |
-| `GROQ_API_KEY` | Groq API key for LLM | Required |
-| `GROQ_MODEL` | Groq model name | `llama-3.3-70b-versatile` |
-| `GEMINI_API_KEY` | Gemini API key for embeddings | Optional |
-| `EMBEDDING_MODEL` | `gemini` or sentence-transformers model | `gemini` |
-| `CHUNK_SIZE` | Text chunk size for RAG | `500` |
-| `MAX_RAG_RESULTS` | Max chunks to retrieve | `5` |
-| `SIMILARITY_THRESHOLD` | Min similarity for retrieval | `0.5` |
+| `GROQ_API_KEY` | Groq API key | Required |
+| `GROQ_MODEL` | Main LLM (answer generation) | `openai/gpt-oss-120b` |
+| `GROQ_MODEL_FAST` | Fast LLM (query rewriting) | `openai/gpt-oss-20b` |
+| `GEMINI_API_KEY` | Gemini key (if using Gemini embeddings) | Optional |
+| `EMBEDDING_MODEL` | `gemini` or a sentence-transformers model | `gemini` |
+| `CHUNK_SIZE` | Text chunk size for ingestion | `500` |
+| `CHUNK_OVERLAP` | Overlap between chunks | `50` |
+| `MAX_RAG_RESULTS` | Max chunks returned by retrieval | `5` |
+| `SIMILARITY_THRESHOLD` | Min cosine similarity to keep a chunk | `0.5` |
 
 ## Project Structure
 
 ```
 ├── src/
+│   ├── config.py                      # Pydantic settings from .env
 │   ├── agents/
-│   │   ├── chapter_router.py   # Routes questions to chapters
-│   │   ├── qa_agent.py         # Main QA agent
-│   │   └── rag_retriever.py    # Vector search retrieval
+│   │   ├── qa_agent.py                # Main orchestrator: rewrite → route → retrieve → answer
+│   │   ├── chapter_router.py          # LLM routes queries to chapters via subject_metadata
+│   │   └── rag_retriever.py           # Vector similarity search (Supabase RPC)
 │   ├── api/
-│   │   ├── main.py             # FastAPI application
-│   │   ├── models.py           # Pydantic models
+│   │   ├── main.py                    # FastAPI app, lifespan init, /chat endpoint
+│   │   ├── models.py                  # Pydantic request/response models (incl. chat history)
 │   │   └── templates/
-│   │       └── index.html      # Chat UI
+│   │       └── index.html             # Chat UI (single file, vanilla JS)
 │   ├── ingestion/
-│   │   ├── docx_extractor.py   # Extract text from .docx
-│   │   ├── embedding_generator.py  # Generate embeddings
-│   │   ├── pipeline.py         # Ingestion pipeline
-│   │   └── text_chunker.py     # Chunk text for RAG
-│   ├── services/
-│   │   ├── groq_client.py      # Groq LLM client
-│   │   └── supabase_client.py  # Supabase vector store
-│   └── config.py               # Settings management
+│   │   ├── pipeline.py                # Full pipeline: docx → extract → chunk → embed → upload
+│   │   ├── docx_extractor.py          # Structured text extraction from .docx
+│   │   ├── text_chunker.py            # Splits documents into chunks
+│   │   ├── embedding_generator.py     # Gemini or sentence-transformers (768-dim)
+│   │   ├── supabase_loader.py         # Writes chunks + embeddings to Supabase
+│   │   └── subject_metadata.py        # Chapter titles/topics. Keyed: SUBJECT_METADATA[class][subject]
+│   └── services/
+│       ├── groq_client.py             # Groq client factory
+│       └── supabase_client.py         # Supabase client factory
 ├── scripts/
-│   ├── ingest_physics_notes.py # Ingest notes into DB
-│   └── test_rag_pipeline.py    # Test the RAG pipeline
-├── Notes/                      # Physics notes (.docx files)
+│   ├── ingest_all_subjects.py         # CLI: ingest notes for any class/subject combo
+│   ├── ingest_physics_notes.py        # Legacy single-subject ingestion script
+│   ├── setup_supabase.sql             # Supabase schema (chapters + document_chunks + RPC)
+│   └── migrate_to_768_dims.sql        # Migration for 768-dim embeddings
+├── Notes/
+│   ├── Class 9/                       # Physics, Chemistry, Biology, Computer Science, English
+│   └── Class 10/                      # Physics, Chemistry, Biology (English & CS coming soon)
 ├── requirements.txt
-└── .env.example
+├── .env.example
+└── .env
 ```
+
+## What's Available
+
+| Class | Physics | Chemistry | Biology | Computer Science | English |
+|-------|---------|-----------|---------|------------------|---------|
+| 9     | All chapters | All chapters | All chapters | Ch 1, 2, 3, 5 | All chapters |
+| 10    | 7 chapters | 7 chapters | 11 chapters | — | — |
 
 ## API Keys
 
-- **Groq**: https://console.groq.com/keys (free tier available)
-- **Gemini**: https://makersuite.google.com/app/apikey (free tier: 1500 req/min)
-- **Supabase**: https://supabase.com (free tier available)
+- **Groq** — https://console.groq.com/keys (free tier available)
+- **Gemini** — https://ai.google.dev/gemini-api/docs (free tier: 1500 req/min)
+- **Supabase** — https://supabase.com (free tier available)
 
 ## License
 

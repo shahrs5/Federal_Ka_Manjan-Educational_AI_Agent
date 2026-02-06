@@ -66,12 +66,7 @@ class QAAgent:
             QAResponse with answer and sources
         """
         # Step 1: Rewrite query for better retrieval (needs history to resolve follow-ups)
-        print(f"\n[QA] Original query : {query}")
-        print(f"[QA] History length : {len(history or [])}")
-        for i, msg in enumerate(history or []):
-            print(f"[QA]   history[{i}] {msg['role']}: {msg['content'][:80]}")
         retrieval_query = self._rewrite_query(query, subject, history or [])
-        print(f"[QA] Rewritten query: {retrieval_query}\n")
 
         # Step 2: Route to relevant chapters (using rewritten query)
         routing = self.router.route(
@@ -171,20 +166,13 @@ class QAAgent:
     ) -> Dict[str, Any]:
         """Generate answer using LLM with RAG context and chat history."""
 
-        if not chunks:
+        # Hard bail only if we have nothing at all — no chunks AND no history
+        if not chunks and not history:
             return {
                 "answer": "I couldn't find relevant information to answer your question.",
                 "explanation": "",
                 "confidence": 0.3,
             }
-
-        # Build context from chunks
-        context = "\n\n---\n\n".join(
-            [
-                f"[Chapter {c.chapter_number}: {c.chapter_title}]\n{c.text}"
-                for c in chunks
-            ]
-        )
 
         language_instruction = ""
         if language == "ur":
@@ -197,17 +185,25 @@ class QAAgent:
         system_prompt = (
             f"You are a helpful tutor for Class {class_level} students. "
             "Always respond with JSON. "
-            "Use the conversation history to maintain context, but base your answers on the reference material provided."
+            "Use the conversation history to maintain context. "
+            "If reference material is provided, prefer it. "
+            "If no reference material is available but the conversation history covers the topic, answer from that."
         )
 
-        # Build history messages for the LLM (plain text, no JSON structure)
         messages = [{"role": "system", "content": system_prompt}]
 
         for msg in (history or []):
             messages.append({"role": msg["role"], "content": msg["content"]})
 
-        # Current turn: attach retrieved context + the student's question
-        current_prompt = f"""REFERENCE MATERIAL:
+        # Build the current-turn prompt — include RAG context only if we actually have chunks
+        if chunks:
+            context = "\n\n---\n\n".join(
+                [
+                    f"[Chapter {c.chapter_number}: {c.chapter_title}]\n{c.text}"
+                    for c in chunks
+                ]
+            )
+            current_prompt = f"""REFERENCE MATERIAL:
 {context}
 
 STUDENT QUESTION: {query}
@@ -215,18 +211,30 @@ STUDENT QUESTION: {query}
 {language_instruction}
 
 Instructions:
-1. Answer based ONLY on the reference material provided
+1. Answer based on the reference material provided
 2. Use simple language appropriate for Class {class_level}
 3. If the answer requires formulas, show them clearly
-4. If the reference material doesn't fully answer the question, say so
-5. Keep the answer concise but complete (2-3 paragraphs max)
-6. If the student is following up on something from earlier in the conversation, use that context
+4. Keep the answer concise but complete (2-3 paragraphs max)
+5. If the student is following up on something from the conversation, use that context too"""
+        else:
+            current_prompt = f"""STUDENT QUESTION: {query}
+
+{language_instruction}
+
+Instructions:
+1. No new reference material was retrieved — answer using the conversation history above
+2. Use simple language appropriate for Class {class_level}
+3. If the answer requires formulas, show them clearly
+4. If you don't have enough context to answer, say so
+5. Keep the answer concise but complete (2-3 paragraphs max)"""
+
+        current_prompt += f"""
 
 Respond with ONLY valid JSON:
 {{
     "answer": "<your answer>",
     "explanation": "<optional additional explanation>",
-    "confidence": <0.0 to 1.0 based on how well the reference material answers the question>,
+    "confidence": <0.0 to 1.0>,
     "formulas_used": ["<formula1>", "<formula2>"]
 }}"""
 
