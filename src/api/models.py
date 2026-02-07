@@ -3,6 +3,13 @@ from pydantic import BaseModel, Field
 from typing import List, Dict, Any, Optional
 
 
+class ChatHistoryMessage(BaseModel):
+    """A single message in the chat history."""
+
+    role: str = Field(..., description="Either 'user' or 'assistant'")
+    content: str
+
+
 class ChatRequest(BaseModel):
     """Request model for chat endpoint."""
 
@@ -10,6 +17,7 @@ class ChatRequest(BaseModel):
     class_level: int = Field(default=9, ge=9, le=10, description="Class level (9 or 10)")
     subject: str = Field(default="Physics", description="Subject name")
     language: str = Field(default="en", description="Response language: en, ur, ur-roman")
+    history: List[ChatHistoryMessage] = Field(default=[], description="Previous messages in this session (max 10)")
 
 
 class SourceInfo(BaseModel):
