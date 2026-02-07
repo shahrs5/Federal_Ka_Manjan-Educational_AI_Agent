@@ -17,6 +17,7 @@ from contextlib import asynccontextmanager
 from ..config import settings
 from ..services.groq_client import get_groq_client
 from ..services.supabase_client import get_supabase_client
+from ..services.opik_setup import setup_opik
 from ..ingestion.embedding_generator import EmbeddingGenerator
 from ..agents.chapter_router import ChapterRouterAgent
 from ..agents.rag_retriever import RAGRetriever
@@ -40,6 +41,7 @@ async def lifespan(app: FastAPI):
         raise RuntimeError("SUPABASE_URL and SUPABASE_KEY must be set in .env")
 
     # Initialize clients
+    setup_opik()
     groq_client = get_groq_client()
     supabase_client = get_supabase_client()
     embedder = EmbeddingGenerator(settings.embedding_model)

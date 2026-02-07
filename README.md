@@ -56,14 +56,13 @@ git clone https://github.com/yourusername/Federal_Ka_Manjan-Educational_AI_Agent
 cd Federal_Ka_Manjan-Educational_AI_Agent
 
 # Using uv (recommended)
-uv venv
-uv pip install -r requirements.txt
+uv sync
 
 # Or using pip
-python -m venv .venv
-.venv\Scripts\activate          # Windows
-source .venv/bin/activate       # Linux/Mac
-pip install -r requirements.txt
+# python -m venv .venv
+# .venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # Linux/Mac
+# pip install -r pyproject.toml
 ```
 
 ### 2. Configure Environment
@@ -95,13 +94,13 @@ Process all notes for a class into the vector database:
 
 ```bash
 # All subjects for Class 9
-python scripts/ingest_all_subjects.py --class-level 9 --subjects all
+uv scripts/ingest_all_subjects.py --class-level 9 --subjects all
 
 # All subjects for Class 10
-python scripts/ingest_all_subjects.py --class-level 10 --subjects all
+uv scripts/ingest_all_subjects.py --class-level 10 --subjects all
 
 # Specific subjects only
-python scripts/ingest_all_subjects.py --class-level 9 --subjects Physics Chemistry
+uv scripts/ingest_all_subjects.py --class-level 9 --subjects Physics Chemistry
 ```
 
 ## Running the App
@@ -114,11 +113,11 @@ Open http://localhost:8000 in your browser.
 
 ## API
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/`      | GET    | Chat UI     |
-| `/health`| GET    | Health check |
-| `/chat`  | POST   | Process a question |
+| Endpoint  | Method | Description        |
+| --------- | ------ | ------------------ |
+| `/`       | GET    | Chat UI            |
+| `/health` | GET    | Health check       |
+| `/chat`   | POST   | Process a question |
 
 ### Chat API
 
@@ -138,12 +137,13 @@ curl -X POST http://localhost:8000/chat \
 ```
 
 **Response:**
+
 ```json
 {
   "answer": "Newton's second law states that...",
   "explanation": "...",
   "sources": [
-    {"chapter": 3, "title": "Dynamics", "snippet": "...", "relevance": 0.89}
+    { "chapter": 3, "title": "Dynamics", "snippet": "...", "relevance": 0.89 }
   ],
   "confidence": 0.85,
   "chapter_used": 3
@@ -152,19 +152,17 @@ curl -X POST http://localhost:8000/chat \
 
 ## Configuration
 
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `SUPABASE_URL` | Supabase project URL | Required |
-| `SUPABASE_KEY` | Supabase anon key | Required |
-| `GROQ_API_KEY` | Groq API key | Required |
-| `GROQ_MODEL` | Main LLM (answer generation) | `openai/gpt-oss-120b` |
-| `GROQ_MODEL_FAST` | Fast LLM (query rewriting) | `openai/gpt-oss-20b` |
-| `GEMINI_API_KEY` | Gemini key (if using Gemini embeddings) | Optional |
-| `EMBEDDING_MODEL` | `gemini` or a sentence-transformers model | `gemini` |
-| `CHUNK_SIZE` | Text chunk size for ingestion | `500` |
-| `CHUNK_OVERLAP` | Overlap between chunks | `50` |
-| `MAX_RAG_RESULTS` | Max chunks returned by retrieval | `5` |
-| `SIMILARITY_THRESHOLD` | Min cosine similarity to keep a chunk | `0.5` |
+| Variable               | Description                             | Default                   |
+| ---------------------- | --------------------------------------- | ------------------------- |
+| `SUPABASE_URL`         | Supabase project URL                    | Required                  |
+| `SUPABASE_KEY`         | Supabase anon key                       | Required                  |
+| `GROQ_API_KEY`         | Groq API key for LLM                    | Required                  |
+| `GROQ_MODEL`           | Groq model name                         | `llama-3.3-70b-versatile` |
+| `GEMINI_API_KEY`       | Gemini API key for embeddings           | Optional                  |
+| `EMBEDDING_MODEL`      | `gemini` or sentence-transformers model | `gemini`                  |
+| `CHUNK_SIZE`           | Text chunk size for RAG                 | `500`                     |
+| `MAX_RAG_RESULTS`      | Max chunks to retrieve                  | `5`                       |
+| `SIMILARITY_THRESHOLD` | Min similarity for retrieval            | `0.5`                     |
 
 ## Project Structure
 
