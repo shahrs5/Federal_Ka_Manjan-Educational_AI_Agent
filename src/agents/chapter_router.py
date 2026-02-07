@@ -9,6 +9,7 @@ from typing import Dict, Any, List
 from dataclasses import dataclass
 import json
 import re
+import opik
 from ..ingestion.subject_metadata import SUBJECT_METADATA
 
 
@@ -247,6 +248,7 @@ class ChapterRouterAgent:
         self.memory = []
         self.debug = debug
 
+    @opik.track
     def route(
         self,
         query: str,

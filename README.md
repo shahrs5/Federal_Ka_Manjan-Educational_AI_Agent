@@ -94,13 +94,13 @@ Process all notes for a class into the vector database:
 
 ```bash
 # All subjects for Class 9
-python scripts/ingest_all_subjects.py --class-level 9 --subjects all
+uv scripts/ingest_all_subjects.py --class-level 9 --subjects all
 
 # All subjects for Class 10
-python scripts/ingest_all_subjects.py --class-level 10 --subjects all
+uv scripts/ingest_all_subjects.py --class-level 10 --subjects all
 
 # Specific subjects only
-python scripts/ingest_all_subjects.py --class-level 9 --subjects Physics Chemistry
+uv scripts/ingest_all_subjects.py --class-level 9 --subjects Physics Chemistry
 ```
 
 ## Running the App
