@@ -3,16 +3,20 @@ Generate embeddings using Gemini or sentence-transformers.
 """
 from typing import List
 import os
+import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class EmbeddingGenerator:
     """
     Generate embeddings using Gemini API or sentence-transformers.
 
-    Gemini text-embedding-004:
-    - 768 dimensional output
-    - Excellent quality
-    - Free tier: 1500 requests/minute
+    Gemini gemini-embedding-001 (replaced text-embedding-004 on Jan 14, 2026):
+    - Default 3072 dims, but configurable (we use 768 for backward compat)
+    - Excellent quality, 100+ languages
+    - Free tier available
 
     Fallback to sentence-transformers if no API key.
     """
@@ -35,7 +39,7 @@ class EmbeddingGenerator:
                 self.model_name = "sentence-transformers/all-mpnet-base-v2"
             else:
                 self.backend = "gemini"
-                self.model_name = "models/text-embedding-004"
+                self.model_name = "models/gemini-embedding-001"
         else:
             self.backend = "sentence-transformers"
 
@@ -65,6 +69,28 @@ class EmbeddingGenerator:
             self._model = SentenceTransformer(self.model_name)
         return self._model
 
+    def _gemini_embed(self, text: str, task_type: str, max_retries: int = 8):
+        """Call Gemini embed_content with retry + exponential backoff on 429."""
+        for attempt in range(max_retries):
+            try:
+                result = self.gemini_client.models.embed_content(
+                    model=self.model_name,
+                    contents=text,
+                    config={
+                        "task_type": task_type,
+                        "output_dimensionality": 768,
+                    },
+                )
+                return result.embeddings[0].values
+            except Exception as e:
+                if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                    wait = min(2 ** attempt, 60)  # 1, 2, 4, 8, 16, 32, 60, 60
+                    logger.warning(f"Rate limited, retrying in {wait}s (attempt {attempt+1}/{max_retries})")
+                    time.sleep(wait)
+                else:
+                    raise
+        raise RuntimeError(f"Failed after {max_retries} retries due to rate limiting")
+
     def generate(self, text: str) -> List[float]:
         """
         Generate embedding for a single text.
@@ -76,12 +102,7 @@ class EmbeddingGenerator:
             List of floats (768 dimensions for Gemini)
         """
         if self.backend == "gemini":
-            result = self.gemini_client.models.embed_content(
-                model=self.model_name,
-                contents=text,
-                config={"task_type": "RETRIEVAL_DOCUMENT"},
-            )
-            return result.embeddings[0].values
+            return self._gemini_embed(text, "RETRIEVAL_DOCUMENT")
         else:
             embedding = self.model.encode(text, convert_to_numpy=True)
             return embedding.tolist()
@@ -100,19 +121,15 @@ class EmbeddingGenerator:
             List of embeddings
         """
         if self.backend == "gemini":
-            # Gemini batch embedding
             embeddings = []
             total_batches = (len(texts) - 1) // batch_size + 1
             for i in range(0, len(texts), batch_size):
                 batch = texts[i:i + batch_size]
                 print(f"  Embedding batch {i//batch_size + 1}/{total_batches}...")
                 for text in batch:
-                    result = self.gemini_client.models.embed_content(
-                        model=self.model_name,
-                        contents=text,
-                        config={"task_type": "RETRIEVAL_DOCUMENT"},
-                    )
-                    embeddings.append(result.embeddings[0].values)
+                    emb = self._gemini_embed(text, "RETRIEVAL_DOCUMENT")
+                    embeddings.append(emb)
+                    time.sleep(1.5)  # ~40 RPM, safe for free tier
             return embeddings
         else:
             embeddings = self.model.encode(
@@ -134,12 +151,7 @@ class EmbeddingGenerator:
             List of floats
         """
         if self.backend == "gemini":
-            result = self.gemini_client.models.embed_content(
-                model=self.model_name,
-                contents=text,
-                config={"task_type": "RETRIEVAL_QUERY"},  # Different task type for queries
-            )
-            return result.embeddings[0].values
+            return self._gemini_embed(text, "RETRIEVAL_QUERY")
         else:
             embedding = self.model.encode(text, convert_to_numpy=True)
             return embedding.tolist()

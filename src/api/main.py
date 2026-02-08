@@ -22,17 +22,21 @@ from ..ingestion.embedding_generator import EmbeddingGenerator
 from ..agents.chapter_router import ChapterRouterAgent
 from ..agents.rag_retriever import RAGRetriever
 from ..agents.qa_agent import QAAgent
+from ..agents.math_formula_agent import MathFormulaAgent
+from ..agents.math_solving_agent import MathSolvingAgent
+from ..agents.math_orchestrator import MathOrchestrator
 from .models import ChatRequest, ChatResponse, SourceInfo, HealthResponse
 
 
 # Global instances (initialized on startup)
 qa_agent: QAAgent = None
+math_orchestrator: MathOrchestrator = None
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Initialize RAG pipeline on startup."""
-    global qa_agent
+    global qa_agent, math_orchestrator
 
     # Validate settings
     if not settings.groq_api_key:
@@ -60,6 +64,25 @@ async def lifespan(app: FastAPI):
         router=router,
         retriever=retriever,
         model=settings.groq_model,
+        model_fast=settings.groq_model_fast,
+    )
+
+    # Math agents (share the same router, retriever, and groq_client)
+    math_formula = MathFormulaAgent(
+        llm_client=groq_client,
+        router=router,
+        retriever=retriever,
+        model=settings.groq_model,
+        model_fast=settings.groq_model_fast,
+    )
+    math_solver = MathSolvingAgent(
+        llm_client=groq_client,
+        model=settings.groq_model,
+    )
+    math_orchestrator = MathOrchestrator(
+        formula_agent=math_formula,
+        solving_agent=math_solver,
+        llm_client=groq_client,
         model_fast=settings.groq_model_fast,
     )
 
@@ -119,13 +142,21 @@ async def chat(request: ChatRequest):
     try:
         history = [{"role": m.role, "content": m.content} for m in request.history]
 
-        response = qa_agent.answer(
-            query=request.query,
-            class_level=request.class_level,
-            subject=request.subject,
-            language=request.language,
-            history=history,
-        )
+        if request.subject == "Math" and math_orchestrator is not None:
+            response = math_orchestrator.answer(
+                query=request.query,
+                class_level=request.class_level,
+                language=request.language,
+                history=history,
+            )
+        else:
+            response = qa_agent.answer(
+                query=request.query,
+                class_level=request.class_level,
+                subject=request.subject,
+                language=request.language,
+                history=history,
+            )
 
         sources = [
             SourceInfo(

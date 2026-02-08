@@ -3,7 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Federal Ka Manjan - Physics AI Tutor</title>
+    <title>Federal Ka Manjan - AI Tutor</title>
+    <!-- KaTeX for math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -252,6 +256,10 @@
         .confidence-high { background: #166534; color: #86efac; }
         .confidence-medium { background: #854d0e; color: #fde047; }
         .confidence-low { background: #991b1b; color: #fca5a5; }
+
+        /* KaTeX dark-theme overrides */
+        .katex { color: #e4e4e7; }
+        .katex-display { overflow-x: auto; overflow-y: hidden; padding: 4px 0; }
     </style>
 </head>
 <body>
@@ -275,6 +283,7 @@
                     <option value="Physics">Physics</option>
                     <option value="Chemistry">Chemistry</option>
                     <option value="Biology">Biology</option>
+                    <option value="Math">Math</option>
                     <option value="Computer Science">Computer Science</option>
                     <option value="English">English</option>
                 </select>
@@ -324,8 +333,8 @@
 
         // ── Subject availability ─────────────────────────────────────
         const subjectAvailability = {
-            9:  { 'Physics': true,  'Chemistry': true, 'Biology': true, 'Computer Science': true,  'English': true  },
-            10: { 'Physics': true,  'Chemistry': true, 'Biology': true, 'Computer Science': false, 'English': false }
+            9:  { 'Physics': true,  'Chemistry': true, 'Biology': true, 'Math': true, 'Computer Science': true,  'English': true  },
+            10: { 'Physics': true,  'Chemistry': true, 'Biology': true, 'Math': true, 'Computer Science': false, 'English': false }
         };
 
         function updateSubjectOptions() {
@@ -451,6 +460,20 @@
                 </div>`;
 
             chatContainer.appendChild(messageDiv);
+
+            // Render LaTeX math in assistant messages
+            if (!isUser && typeof renderMathInElement === 'function') {
+                renderMathInElement(messageDiv, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\[', right: '\\]', display: true},
+                        {left: '\\(', right: '\\)', display: false},
+                    ],
+                    throwOnError: false,
+                });
+            }
+
             chatContainer.scrollTop = chatContainer.scrollHeight;
         }
 

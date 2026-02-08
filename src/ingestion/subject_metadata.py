@@ -257,6 +257,129 @@ ENGLISH_CLASS_9_CHAPTERS = {
     },
 }
 
+# Math Class 9
+MATH_CLASS_9_CHAPTERS = {
+    1: {
+        "title": "Matrices and Determinants",
+        "description": "Introduction to matrices, types, operations, determinants, and their properties.",
+        "topics": ["matrices", "determinants", "matrix operations", "transpose", "adjoint", "inverse"],
+    },
+    2: {
+        "title": "Real and Complex Numbers",
+        "description": "Real number system, complex numbers, properties, and operations.",
+        "topics": ["real numbers", "complex numbers", "irrational numbers", "properties of numbers"],
+    },
+    3: {
+        "title": "Logarithms",
+        "description": "Definition of logarithm, laws of logarithms, common and natural logarithms.",
+        "topics": ["logarithm", "log laws", "common logarithm", "natural logarithm", "antilogarithm"],
+    },
+    4: {
+        "title": "Algebraic Expressions and Algebraic Formulas",
+        "description": "Algebraic expressions, factorization, HCF, LCM, and algebraic identities.",
+        "topics": ["algebraic expressions", "factorization", "HCF", "LCM", "algebraic formulas", "polynomials"],
+    },
+    5: {
+        "title": "Factorization",
+        "description": "Methods of factorization including grouping, identities, and factor theorem.",
+        "topics": ["factorization", "factor theorem", "remainder theorem", "grouping", "cubic factorization"],
+    },
+    6: {
+        "title": "Algebraic Manipulation",
+        "description": "Simplification of algebraic fractions, operations on rational expressions.",
+        "topics": ["algebraic fractions", "rational expressions", "simplification", "square root"],
+    },
+    7: {
+        "title": "Linear Equations and Inequalities",
+        "description": "Solving linear equations, simultaneous equations, and linear inequalities.",
+        "topics": ["linear equations", "simultaneous equations", "inequalities", "elimination", "substitution"],
+    },
+    8: {
+        "title": "Linear Graphs and Their Application",
+        "description": "Cartesian plane, plotting points, graphing linear equations, slope and intercept.",
+        "topics": ["coordinate geometry", "linear graphs", "slope", "intercept", "Cartesian plane"],
+    },
+    9: {
+        "title": "Introduction to Coordinate Geometry",
+        "description": "Distance formula, midpoint, section formula, collinearity, and area of triangles.",
+        "topics": ["coordinate geometry", "distance formula", "midpoint", "section formula", "collinear points"],
+    },
+    10: {
+        "title": "Congruent Triangles",
+        "description": "Triangle congruence criteria SSS, SAS, ASA, AAS, and RHS.",
+        "topics": ["congruent triangles", "SSS", "SAS", "ASA", "AAS", "congruence"],
+    },
+    11: {
+        "title": "Parallelograms and Triangles",
+        "description": "Properties of parallelograms, theorems on triangles and parallelograms.",
+        "topics": ["parallelogram", "triangles", "midpoint theorem", "area of triangle"],
+    },
+}
+
+# Math Class 10
+MATH_CLASS_10_CHAPTERS = {
+    1: {
+        "title": "Quadratic Equations",
+        "description": "Solving quadratic equations by factorization, completing the square, and quadratic formula.",
+        "topics": ["quadratic equations", "quadratic formula", "factorization", "completing the square", "discriminant"],
+    },
+    2: {
+        "title": "Theory of Quadratic Equations",
+        "description": "Nature of roots, sum and product of roots, formation of equations.",
+        "topics": ["roots of equations", "discriminant", "sum of roots", "product of roots", "nature of roots"],
+    },
+    3: {
+        "title": "Variations",
+        "description": "Direct, inverse, and joint variation. Proportionality and related problems.",
+        "topics": ["direct variation", "inverse variation", "joint variation", "proportionality", "k-method"],
+    },
+    4: {
+        "title": "Partial Fractions",
+        "description": "Decomposition of rational expressions into partial fractions.",
+        "topics": ["partial fractions", "rational expressions", "linear factors", "repeated factors", "quadratic factors"],
+    },
+    5: {
+        "title": "Sets and Functions",
+        "description": "Set notation, operations, Venn diagrams, functions and their types.",
+        "topics": ["sets", "Venn diagrams", "union", "intersection", "functions", "domain", "range"],
+    },
+    6: {
+        "title": "Basic Statistics",
+        "description": "Measures of central tendency, mean, median, mode, and grouped data.",
+        "topics": ["statistics", "mean", "median", "mode", "grouped data", "frequency distribution"],
+    },
+    7: {
+        "title": "Introduction to Trigonometry",
+        "description": "Trigonometric ratios, identities, and angles of elevation and depression.",
+        "topics": ["trigonometry", "sin", "cos", "tan", "trigonometric ratios", "trigonometric identities"],
+    },
+    8: {
+        "title": "Projection of a Side of a Triangle",
+        "description": "Projection formulas, law of cosines, and applications in triangles.",
+        "topics": ["projection", "law of cosines", "triangle sides", "obtuse triangle", "acute triangle"],
+    },
+    9: {
+        "title": "Chords of a Circle",
+        "description": "Properties of chords, perpendicular from center, equal chords.",
+        "topics": ["chords", "circle", "perpendicular bisector", "equal chords", "arc"],
+    },
+    10: {
+        "title": "Tangent to a Circle",
+        "description": "Tangent properties, tangent from external point, and related theorems.",
+        "topics": ["tangent", "circle", "external point", "tangent length", "tangent theorems"],
+    },
+    11: {
+        "title": "Chords and Arcs",
+        "description": "Relationship between chords and arcs, inscribed angles, central angles.",
+        "topics": ["chords", "arcs", "inscribed angle", "central angle", "arc length"],
+    },
+    12: {
+        "title": "Angle in a Segment of a Circle",
+        "description": "Angles in same segment, cyclic quadrilaterals, and related theorems.",
+        "topics": ["angle in segment", "cyclic quadrilateral", "inscribed angle theorem", "semicircle"],
+    },
+}
+
 # ============================================================================
 # CLASS 10 CHAPTERS
 # ============================================================================
@@ -416,6 +539,7 @@ SUBJECT_METADATA = {
         "Biology": BIOLOGY_CLASS_9_CHAPTERS,
         "Computer Science": COMPUTER_SCIENCE_CLASS_9_CHAPTERS,
         "English": ENGLISH_CLASS_9_CHAPTERS,
+        "Math": MATH_CLASS_9_CHAPTERS,
     },
     10: {
         "Physics": PHYSICS_CLASS_10_CHAPTERS,
@@ -423,5 +547,6 @@ SUBJECT_METADATA = {
         "Biology": BIOLOGY_CLASS_10_CHAPTERS,
         "Computer Science": COMPUTER_SCIENCE_CLASS_10_CHAPTERS,
         "English": ENGLISH_CLASS_10_CHAPTERS,
+        "Math": MATH_CLASS_10_CHAPTERS,
     },
 }
