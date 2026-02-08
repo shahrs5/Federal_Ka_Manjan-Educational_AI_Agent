@@ -3,7 +3,7 @@ name = "federal-ka-manjan-educational-ai-agent"
 version = "0.1.0"
 description = ""
 readme = "README.md"
-requires-python = ">=3.14"
+requires-python = ">=3.12,<3.14"
 dependencies = [
     "fastapi>=0.109.0",
     "google-genai==1.60.0",

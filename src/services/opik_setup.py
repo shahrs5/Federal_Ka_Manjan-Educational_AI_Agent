@@ -9,7 +9,7 @@ def setup_opik():
     Initialize Opik configuration from environment variables.
     """
     api_key = os.getenv("OPIK_API_KEY")
-    workspace_name = os.getenv("OPIK_WORKSPACE_NAME", "federal-ka-manjan-educational-ai-agent")
+    workspace_name = os.getenv("OPIK_WORKSPACE_NAME", "shaheer-shahid")
 
     if api_key:
         opik.configure(

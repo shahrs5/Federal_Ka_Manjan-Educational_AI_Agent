@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     chunk_size: int = 500
     chunk_overlap: int = 50
     max_rag_results: int = 5
-    similarity_threshold: float = 0.5
+    similarity_threshold: float = 0.3
 
     # Agent Settings
     max_router_iterations: int = 2
