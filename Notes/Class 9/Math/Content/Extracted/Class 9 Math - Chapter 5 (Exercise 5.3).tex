@@ -1,0 +1,291 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 5.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Definition:} $|A|=\begin{cases}A,&A\ge 0\\-A,&A<0\end{cases}$.
+\item \textbf{Key rule (two cases):} If $|A|=b$ with $b\ge 0$, then $A=b$ \textbf{or} $A=-b$.
+\item \textbf{No-solution rule:} If $|A|=b$ with $b<0$, then \textbf{no real solution}.
+\item \textbf{Isolate first:} If $c|A|+d=e$, first make $|A|=\dfrac{e-d}{c}$, then apply the two-case rule.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1--Q14
+
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} $|x|=\dfrac{5}{3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& |x|=\frac{5}{3}\ \Rightarrow\ x=\frac{5}{3}\ \text{or}\ x=-\frac{5}{3}.\\
+\Step{2}\;& \boxed{\,x\in\left\{-\frac{5}{3},\ \frac{5}{3}\right\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} $|x+2|=6$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x+2=6 \ \text{or}\ x+2=-6.\\
+\Step{2}\;& x=4 \ \text{or}\ x=-8.\\
+\Step{3}\;& \boxed{\,x\in\{-8,\ 4\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} $|5y-1|=9$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 5y-1=9 \ \text{or}\ 5y-1=-9.\\
+\Step{2}\;& 5y=10 \Rightarrow y=2,\qquad 5y=-8 \Rightarrow y=-\frac{8}{5}.\\
+\Step{3}\;& \boxed{\,y\in\left\{2,\ -\frac{8}{5}\right\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} $|x+1|=2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x+1=2 \ \text{or}\ x+1=-2.\\
+\Step{2}\;& x=1 \ \text{or}\ x=-3.\\
+\Step{3}\;& \boxed{\,x\in\{-3,\ 1\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} $|6-3y|=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& |6-3y|=0 \Rightarrow 6-3y=0 \qquad (\text{only possible when inside }=0).\\
+\Step{2}\;& -3y=-6 \Rightarrow y=2.\\
+\Step{3}\;& \boxed{\,y=2\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} $3|z-2|-4=-2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 3|z-2|-4=-2 \Rightarrow 3|z-2|=2.\\
+\Step{2}\;& |z-2|=\frac{2}{3}.\\
+\Step{3}\;& z-2=\frac{2}{3}\ \text{or}\ z-2=-\frac{2}{3}.\\
+\Step{4}\;& z=\frac{8}{3}\ \text{or}\ z=\frac{4}{3}.\\
+\Step{5}\;& \boxed{\,z\in\left\{\frac{4}{3},\ \frac{8}{3}\right\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} $|2x-1|=5$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x-1=5 \ \text{or}\ 2x-1=-5.\\
+\Step{2}\;& 2x=6 \Rightarrow x=3,\qquad 2x=-4 \Rightarrow x=-2.\\
+\Step{3}\;& \boxed{\,x\in\{-2,\ 3\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} $|3x+2|=7$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 3x+2=7 \ \text{or}\ 3x+2=-7.\\
+\Step{2}\;& 3x=5 \Rightarrow x=\frac{5}{3},\qquad 3x=-9 \Rightarrow x=-3.\\
+\Step{3}\;& \boxed{\,x\in\left\{-3,\ \frac{5}{3}\right\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} $\dfrac{|4x|}{3}=12$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{|4x|}{3}=12 \Rightarrow |4x|=36.\\
+\Step{2}\;& |4x|=4|x| \Rightarrow 4|x|=36 \Rightarrow |x|=9.\\
+\Step{3}\;& x=9 \ \text{or}\ x=-9.\\
+\Step{4}\;& \boxed{\,x\in\{-9,\ 9\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} $|5x|+10=5$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& |5x|+10=5 \Rightarrow |5x|=-5.\\
+\Step{2}\;& |5x|\ge 0 \text{ for all real }x,\ \text{so it cannot equal }-5.\\
+\Step{3}\;& \boxed{\,\text{No real solution (solution set }=\varnothing)\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} $\dfrac{|1-2y|}{4}=3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{|1-2y|}{4}=3 \Rightarrow |1-2y|=12.\\
+\Step{2}\;& 1-2y=12 \ \text{or}\ 1-2y=-12.\\
+\Step{3}\;& -2y=11 \Rightarrow y=-\frac{11}{2},\qquad -2y=-13 \Rightarrow y=\frac{13}{2}.\\
+\Step{4}\;& \boxed{\,y\in\left\{-\frac{11}{2},\ \frac{13}{2}\right\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} $\dfrac{|x+1|}{2}=\dfrac{|2x-1|}{3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{|x+1|}{2}=\frac{|2x-1|}{3}\ \Rightarrow\ 3|x+1|=2|2x-1|.\\
+\Step{2}\;& \text{Break points: }x=-1\ (\text{from }x+1),\quad x=\frac12\ (\text{from }2x-1).\\
+\Step{3}\;& \textbf{Case A: }x\ge \frac12:\ 3(x+1)=2(2x-1)\\
+&\Rightarrow 3x+3=4x-2 \Rightarrow x=5.\\
+\Step{4}\;& \textbf{Case B: }-1\le x<\frac12:\ 3(x+1)=2\bigl(-(2x-1)\bigr)=2(-2x+1)\\
+&\Rightarrow 3x+3=-4x+2 \Rightarrow 7x=-1 \Rightarrow x=-\frac17.\\
+\Step{5}\;& \textbf{Case C: }x<-1:\ 3\bigl(-(x+1)\bigr)=2\bigl(-(2x-1)\bigr)\Rightarrow x=5\ (\text{reject since }x<-1).\\
+\Step{6}\;& \boxed{\,x\in\left\{5,\ -\frac17\right\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} $|5x-3|=|x+7|$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& |A|=|B|\ \Rightarrow\ A=B\ \text{or}\ A=-B.\\
+\Step{2}\;& 5x-3=x+7 \Rightarrow 4x=10 \Rightarrow x=\frac52.\\
+\Step{3}\;& 5x-3=-(x+7) \Rightarrow 5x-3=-x-7 \Rightarrow 6x=-4 \Rightarrow x=-\frac23.\\
+\Step{4}\;& \boxed{\,x\in\left\{-\frac23,\ \frac52\right\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 14}
+\textcolor{gold}{\bfseries Question:} $|z+3|-3=5-|z+3|$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $t=|z+3|$ (so $t\ge 0$).
+\[
+\begin{aligned}
+\Step{1}\;& t-3=5-t.\\
+\Step{2}\;& 2t=8 \Rightarrow t=4.\\
+\Step{3}\;& |z+3|=4 \Rightarrow z+3=4 \ \text{or}\ z+3=-4.\\
+\Step{4}\;& z=1 \ \text{or}\ z=-7.\\
+\Step{5}\;& \boxed{\,z\in\{-7,\ 1\}\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

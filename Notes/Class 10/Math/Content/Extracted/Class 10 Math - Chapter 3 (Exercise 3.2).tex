@@ -1,0 +1,680 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc} % (fixed)
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 3.2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick matrix facts (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Equality:} $A=B$ iff \emph{same order} and each corresponding entry is equal.
+\item \textbf{Addition/Subtraction:} defined only for same order; $(A\pm B)_{ij}=a_{ij}\pm b_{ij}$.
+\item \textbf{Additive inverse:} $-A$ is obtained by changing the sign of every entry of $A$.
+\item \textbf{Multiplication order:} $(m\times n)(n\times p)$ is defined and gives $(m\times p)$.
+\item \textbf{Transpose rules:} $(A+B)^t=A^t+B^t$, $(AB)^t=B^tA^t$, and $(A^t)^t=A$.
+\item \textbf{Distributive/Associative:} $A(B+C)=AB+AC$, $(AB)C=A(BC)$ (but generally $AB\neq BA$).
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (a)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}x & 9\end{bmatrix}=\begin{bmatrix}2 & y\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Equal matrices have equal corresponding entries.}
+\qquad
+\Step{2}\; x=2,\; y=9.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (b)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}6&3\\4&x\end{bmatrix}=\begin{bmatrix}7&3\\4&0\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Comparing (1,1)-entries gives }6=7,\text{ which is false.}
+\]
+\[
+\Rightarrow\; \textbf{Not possible (matrices cannot be equal).}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (c)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}5x\\2y\end{bmatrix}=\begin{bmatrix}-10 & 20\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \begin{bmatrix}5x\\2y\end{bmatrix}\text{ is }(2\times 1),\quad
+\begin{bmatrix}-10 & 20\end{bmatrix}\text{ is }(1\times 2).
+\]
+\[
+\Rightarrow\; \textbf{Not possible (orders are different).}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (d)}
+\textcolor{gold}{\bfseries Question:}
+$-\begin{bmatrix}2x&3y\\4z&10\end{bmatrix}=\begin{bmatrix}8&6\\32&-10\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&-\begin{bmatrix}2x&3y\\4z&10\end{bmatrix}
+=\begin{bmatrix}-2x&-3y\\-4z&-10\end{bmatrix}.\\[4pt]
+\Step{2}\;&\begin{bmatrix}-2x&-3y\\-4z&-10\end{bmatrix}
+=\begin{bmatrix}8&6\\32&-10\end{bmatrix}
+\Rightarrow
+\begin{cases}
+-2x=8\\
+-3y=6\\
+-4z=32
+\end{cases}\\[4pt]
+\Step{3}\;& x=-4,\quad y=-2,\quad z=-8.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (e)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}x&-2y\\6&x+y\end{bmatrix}=\begin{bmatrix}3&-6\\6&z\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x=3,\quad -2y=-6\Rightarrow y=3.\\
+\Step{2}\;& x+y=z \Rightarrow 3+3=z \Rightarrow z=6.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (f)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}5\\6\\7\end{bmatrix}=
+\begin{bmatrix}5&0\\x&0\\7&0\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{LHS is }(3\times 1),\quad \text{RHS is }(3\times 2).
+\]
+\[
+\Rightarrow\; \textbf{Not possible (orders are different).}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (g)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}x+y\\x-y\end{bmatrix}=\begin{bmatrix}11\\1\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x+y=11,\quad x-y=1.\\
+\Step{2}\;& \text{Add: }(x+y)+(x-y)=12 \Rightarrow 2x=12 \Rightarrow x=6.\\
+\Step{3}\;& y=11-x=11-6=5.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (h)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}5&10\\15&x\end{bmatrix}+
+\begin{bmatrix}5&y\\15&5\end{bmatrix}=
+\begin{bmatrix}z&15\\30&7\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\begin{bmatrix}5&10\\15&x\end{bmatrix}+
+\begin{bmatrix}5&y\\15&5\end{bmatrix}
+=\begin{bmatrix}10&10+y\\30&x+5\end{bmatrix}.\\
+\Step{2}\;&\begin{bmatrix}10&10+y\\30&x+5\end{bmatrix}
+=\begin{bmatrix}z&15\\30&7\end{bmatrix}
+\Rightarrow
+\begin{cases}
+z=10\\
+10+y=15\\
+x+5=7
+\end{cases}\\
+\Step{3}\;& y=5,\quad x=2,\quad z=10.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:}
+$5\begin{bmatrix}x\\3y\end{bmatrix}-\begin{bmatrix}36\\26\end{bmatrix}
+=2\begin{bmatrix}-2x\\y\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&5\begin{bmatrix}x\\3y\end{bmatrix}=\begin{bmatrix}5x\\15y\end{bmatrix},\quad
+2\begin{bmatrix}-2x\\y\end{bmatrix}=\begin{bmatrix}-4x\\2y\end{bmatrix}.\\
+\Step{2}\;&\begin{bmatrix}5x\\15y\end{bmatrix}-\begin{bmatrix}36\\26\end{bmatrix}
+=\begin{bmatrix}5x-36\\15y-26\end{bmatrix}
+=\begin{bmatrix}-4x\\2y\end{bmatrix}.\\
+\Step{3}\;&
+\begin{cases}
+5x-36=-4x\\
+15y-26=2y
+\end{cases}
+\Rightarrow
+\begin{cases}
+9x=36\Rightarrow x=4\\
+13y=26\Rightarrow y=2
+\end{cases}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (j)}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}x&y&z\\-2&-4&5\end{bmatrix}
++2\begin{bmatrix}5&3&2\\1&6&3\end{bmatrix}
+=\begin{bmatrix}0&0&0\\0&8&11\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&2\begin{bmatrix}5&3&2\\1&6&3\end{bmatrix}
+=\begin{bmatrix}10&6&4\\2&12&6\end{bmatrix}.\\
+\Step{2}\;&\Rightarrow
+\begin{bmatrix}x+10&y+6&z+4\\0&8&11\end{bmatrix}
+=\begin{bmatrix}0&0&0\\0&8&11\end{bmatrix}.\\
+\Step{3}\;& x+10=0,\; y+6=0,\; z+4=0
+\Rightarrow x=-10,\; y=-6,\; z=-4.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} Find the additive inverses of
+\[
+R=\begin{bmatrix}5&0&3\\7&-9&-1\\-8&5&6\end{bmatrix},\quad
+S=\begin{bmatrix}-5&2\\3&-6\\-9&4\end{bmatrix},\quad
+T=\begin{bmatrix}5&-6&1\end{bmatrix}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+-R=\begin{bmatrix}-5&0&-3\\-7&9&1\\8&-5&-6\end{bmatrix},\quad
+-S=\begin{bmatrix}5&-2\\-3&6\\9&-4\end{bmatrix},\quad
+-T=\begin{bmatrix}-5&6&-1\end{bmatrix}.
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:}
+If $A=\begin{bmatrix}5&3\\-2&6\end{bmatrix}$,
+$B=\begin{bmatrix}10&8\\-8&6\end{bmatrix}$,
+$C=\begin{bmatrix}15&6\\0&-12\end{bmatrix}$, find
+$2A+\dfrac12B-\dfrac13C$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&2A=\begin{bmatrix}10&6\\-4&12\end{bmatrix},\quad
+\frac12B=\begin{bmatrix}5&4\\-4&3\end{bmatrix},\quad
+\frac13C=\begin{bmatrix}5&2\\0&-4\end{bmatrix}.\\
+\Step{2}\;&2A+\frac12B=\begin{bmatrix}15&10\\-8&15\end{bmatrix}.\\
+\Step{3}\;&2A+\frac12B-\frac13C
+=\begin{bmatrix}15&10\\-8&15\end{bmatrix}-\begin{bmatrix}5&2\\0&-4\end{bmatrix}
+=\begin{bmatrix}10&8\\-8&19\end{bmatrix}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} Find $A-\dfrac12B$ (same $A,B$ as above).
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\frac12B=\begin{bmatrix}5&4\\-4&3\end{bmatrix}.\\
+\Step{2}\;&A-\frac12B
+=\begin{bmatrix}5&3\\-2&6\end{bmatrix}-\begin{bmatrix}5&4\\-4&3\end{bmatrix}
+=\begin{bmatrix}0&-1\\2&3\end{bmatrix}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:}
+If
+\[
+A=\begin{bmatrix}1&2\\3&-3\end{bmatrix},\;
+B=\begin{bmatrix}1&-2\\3&3\end{bmatrix},\;
+C=\begin{bmatrix}2&0\\6&0\end{bmatrix},\;
+D=\begin{bmatrix}2\\6\end{bmatrix},\;
+E=\begin{bmatrix}2&2\\6&6\end{bmatrix},
+\]
+check whether: (i) $A+B=C$ (ii) $C+D=E$ (iii) $D+D=E$ (iv) $E-D=C$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&A+B=\begin{bmatrix}1+1&2+(-2)\\3+3&-3+3\end{bmatrix}
+=\begin{bmatrix}2&0\\6&0\end{bmatrix}=C.
+\end{aligned}
+\]
+\[
+\Step{2}\; \text{(ii), (iii), (iv) are \textbf{not possible} because }C,E\text{ are }(2\times2)\text{ but }D\text{ is }(2\times1).
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Using matrices $A,B$ from Q.3, verify $A+B=B+A$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+A+B=\begin{bmatrix}5&3\\-2&6\end{bmatrix}+\begin{bmatrix}10&8\\-8&6\end{bmatrix}
+=\begin{bmatrix}15&11\\-10&12\end{bmatrix}
+=
+\begin{bmatrix}10&8\\-8&6\end{bmatrix}+\begin{bmatrix}5&3\\-2&6\end{bmatrix}=B+A.
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Using matrices $A,B,C$ from Q.3, verify $(A+B)+C=A+(B+C)$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+(A+B)+C
+&=\begin{bmatrix}15&11\\-10&12\end{bmatrix}+\begin{bmatrix}15&6\\0&-12\end{bmatrix}
+=\begin{bmatrix}30&17\\-10&0\end{bmatrix},\\[4pt]
+A+(B+C)
+&=\begin{bmatrix}5&3\\-2&6\end{bmatrix}+\left(\begin{bmatrix}10&8\\-8&6\end{bmatrix}+\begin{bmatrix}15&6\\0&-12\end{bmatrix}\right)\\
+&=\begin{bmatrix}5&3\\-2&6\end{bmatrix}+\begin{bmatrix}25&14\\-8&-6\end{bmatrix}
+=\begin{bmatrix}30&17\\-10&0\end{bmatrix}.
+\end{aligned}
+\]
+Hence verified.
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Using matrices $A,B$ from Q.4, verify $A^t+B^t=(A+B)^t$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+A^t=\begin{bmatrix}1&3\\2&-3\end{bmatrix},\quad
+B^t=\begin{bmatrix}1&3\\-2&3\end{bmatrix}
+\Rightarrow
+A^t+B^t=\begin{bmatrix}2&6\\0&0\end{bmatrix}.
+\]
+Also,
+\[
+A+B=\begin{bmatrix}2&0\\6&0\end{bmatrix}
+\Rightarrow
+(A+B)^t=\begin{bmatrix}2&6\\0&0\end{bmatrix}.
+\]
+So $A^t+B^t=(A+B)^t$.
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8 (i)}
+\textcolor{gold}{\bfseries Question:}
+Find $Z$ if
+\[
+4\begin{bmatrix}5\\10\end{bmatrix}-5Z=\sqrt{5}\begin{bmatrix}\sqrt{45}\\\sqrt{5}\end{bmatrix}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sqrt{45}=3\sqrt{5}\Rightarrow
+\sqrt{5}\begin{bmatrix}\sqrt{45}\\\sqrt{5}\end{bmatrix}
+=\begin{bmatrix}\sqrt{5}\cdot 3\sqrt{5}\\ \sqrt{5}\cdot \sqrt{5}\end{bmatrix}
+=\begin{bmatrix}15\\5\end{bmatrix}.\\
+\Step{2}\;&4\begin{bmatrix}5\\10\end{bmatrix}=\begin{bmatrix}20\\40\end{bmatrix}.\\
+\Step{3}\;&\begin{bmatrix}20\\40\end{bmatrix}-5Z=\begin{bmatrix}15\\5\end{bmatrix}
+\Rightarrow -5Z=\begin{bmatrix}-5\\-35\end{bmatrix}
+\Rightarrow Z=\begin{bmatrix}1\\7\end{bmatrix}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8 (ii)}
+\textcolor{gold}{\bfseries Question:}
+Find $Z$ if
+\[
+Z+\begin{bmatrix}5\\-7\end{bmatrix}=3Z-\begin{bmatrix}5\\3\end{bmatrix}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& Z+\begin{bmatrix}5\\-7\end{bmatrix}=3Z-\begin{bmatrix}5\\3\end{bmatrix}
+\Rightarrow \begin{bmatrix}5\\-7\end{bmatrix} =2Z-\begin{bmatrix}5\\3\end{bmatrix}.\\
+\Step{2}\;& \Rightarrow 2Z=\begin{bmatrix}5\\-7\end{bmatrix}+\begin{bmatrix}5\\3\end{bmatrix}
+=\begin{bmatrix}10\\-4\end{bmatrix}
+\Rightarrow Z=\begin{bmatrix}5\\-2\end{bmatrix}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9 (a)}
+\textcolor{gold}{\bfseries Question:} Mention the order of the indicated products where possible.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{enumerate}[label=(\roman*)]
+\item $\begin{bmatrix}1&0\\0&1\end{bmatrix}\!\times\!\begin{bmatrix}5&3\end{bmatrix}$ : not possible $(2\times2)(1\times2)$.
+\item $\begin{bmatrix}5&3\end{bmatrix}\!\times\!\begin{bmatrix}1&0\\1&0\end{bmatrix}$ : possible, order $(1\times2)$.
+\item $\begin{bmatrix}1&1\\0&0\end{bmatrix}\!\times\!\begin{bmatrix}5\\3\end{bmatrix}$ : possible, order $(2\times1)$.
+\item $\begin{bmatrix}5\\3\end{bmatrix}\!\times\!\begin{bmatrix}0&0\\1&0\end{bmatrix}$ : not possible $(2\times1)(2\times2)$.
+\item $\begin{bmatrix}5\end{bmatrix}\!\times\!\begin{bmatrix}1&0\\1&0\end{bmatrix}$ : not possible $(1\times1)(2\times2)$.
+\item $\begin{bmatrix}1&-2\\3&4\end{bmatrix}\!\times\!\begin{bmatrix}5\end{bmatrix}$ : not possible $(2\times2)(1\times1)$.
+\item $\begin{bmatrix}1\\3\end{bmatrix}\!\times\!\begin{bmatrix}5\end{bmatrix}$ : possible, order $(2\times1)$.
+\item $\begin{bmatrix}5\end{bmatrix}\!\times\!\begin{bmatrix}1\\3\end{bmatrix}$ : not possible $(1\times1)(2\times1)$.
+\item $\begin{bmatrix}5\end{bmatrix}\!\times\!\begin{bmatrix}9&3\end{bmatrix}$ : possible, order $(1\times2)$.
+\item $\begin{bmatrix}9&-3\end{bmatrix}\!\times\!\begin{bmatrix}5\end{bmatrix}$ : not possible $(1\times2)(1\times1)$.
+\item $\begin{bmatrix}5\end{bmatrix}\!\times\!\begin{bmatrix}10\end{bmatrix}$ : possible, order $(1\times1)$.
+\item $\begin{bmatrix}5&10\end{bmatrix}\!\times\!\begin{bmatrix}-2\\3\end{bmatrix}$ : possible, order $(1\times1)$.
+\item $\begin{bmatrix}2\\3\end{bmatrix}\!\times\!\begin{bmatrix}5&10\end{bmatrix}$ : possible, order $(2\times2)$.
+\item $\begin{bmatrix}5&2\\3&4\end{bmatrix}\!\times\!\begin{bmatrix}0&1\\1&0\end{bmatrix}$ : possible, order $(2\times2)$.
+\item $\begin{bmatrix}5&3\\2&6\end{bmatrix}\!\times\!\begin{bmatrix}5\\-2\end{bmatrix}$ : possible, order $(2\times1)$.
+\end{enumerate}
+\end{QAPair}
+
+\begin{QAPair}{Question 9 (b)}
+\textcolor{gold}{\bfseries Question:} Perform the indicated products in part (a) where possible.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\text{(ii)}\;& \begin{bmatrix}5&3\end{bmatrix}\begin{bmatrix}1&0\\1&0\end{bmatrix}
+=\begin{bmatrix}5+3&0\end{bmatrix}=\begin{bmatrix}8&0\end{bmatrix}.\\[4pt]
+\text{(iii)}\;& \begin{bmatrix}1&1\\0&0\end{bmatrix}\begin{bmatrix}5\\3\end{bmatrix}
+=\begin{bmatrix}5+3\\0\end{bmatrix}=\begin{bmatrix}8\\0\end{bmatrix}.\\[4pt]
+\text{(vii)}\;& \begin{bmatrix}1\\3\end{bmatrix}\begin{bmatrix}5\end{bmatrix}
+=\begin{bmatrix}5\\15\end{bmatrix}.\\[4pt]
+\text{(ix)}\;& \begin{bmatrix}5\end{bmatrix}\begin{bmatrix}9&3\end{bmatrix}
+=\begin{bmatrix}45&15\end{bmatrix}.\\[4pt]
+\text{(xi)}\;& \begin{bmatrix}5\end{bmatrix}\begin{bmatrix}10\end{bmatrix}
+=\begin{bmatrix}50\end{bmatrix}.\\[4pt]
+\text{(xii)}\;& \begin{bmatrix}5&10\end{bmatrix}\begin{bmatrix}-2\\3\end{bmatrix}
+=\begin{bmatrix}-10+30\end{bmatrix}=\begin{bmatrix}20\end{bmatrix}.\\[4pt]
+\text{(xiii)}\;& \begin{bmatrix}2\\3\end{bmatrix}\begin{bmatrix}5&10\end{bmatrix}
+=\begin{bmatrix}10&20\\15&30\end{bmatrix}.\\[4pt]
+\text{(xiv)}\;& \begin{bmatrix}5&2\\3&4\end{bmatrix}\begin{bmatrix}0&1\\1&0\end{bmatrix}
+=\begin{bmatrix}2&5\\4&3\end{bmatrix}.\\[4pt]
+\text{(xv)}\;& \begin{bmatrix}5&3\\2&6\end{bmatrix}\begin{bmatrix}5\\-2\end{bmatrix}
+=\begin{bmatrix}25-6\\10-12\end{bmatrix}
+=\begin{bmatrix}19\\-2\end{bmatrix}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10 (i)}
+\textcolor{gold}{\bfseries Question:}
+If $A=\begin{bmatrix}1&0\\2&3\end{bmatrix}$, $B=\begin{bmatrix}2&1\\0&-3\end{bmatrix}$, find $AB$ and $BA$ and check if $AB=BA$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+AB=\begin{bmatrix}1&0\\2&3\end{bmatrix}\begin{bmatrix}2&1\\0&-3\end{bmatrix}
+=\begin{bmatrix}2&1\\4&-7\end{bmatrix},
+\quad
+BA=\begin{bmatrix}2&1\\0&-3\end{bmatrix}\begin{bmatrix}1&0\\2&3\end{bmatrix}
+=\begin{bmatrix}4&3\\-6&-9\end{bmatrix}.
+\]
+\[
+\Rightarrow\; AB\neq BA.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (ii)}
+\textcolor{gold}{\bfseries Question:} Find $AC$ and $CA$ and check if $AC=CA$, where $C=\begin{bmatrix}3&0\\-2&1\end{bmatrix}$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+AC=\begin{bmatrix}1&0\\2&3\end{bmatrix}\begin{bmatrix}3&0\\-2&1\end{bmatrix}
+=\begin{bmatrix}3&0\\0&3\end{bmatrix},
+\quad
+CA=\begin{bmatrix}3&0\\-2&1\end{bmatrix}\begin{bmatrix}1&0\\2&3\end{bmatrix}
+=\begin{bmatrix}3&0\\0&3\end{bmatrix}.
+\]
+\[
+\Rightarrow\; AC=CA.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (iii)}
+\textcolor{gold}{\bfseries Question:} Verify $A(B+C)=AB+AC$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+B+C=\begin{bmatrix}2&1\\0&-3\end{bmatrix}+\begin{bmatrix}3&0\\-2&1\end{bmatrix}
+=\begin{bmatrix}5&1\\-2&-2\end{bmatrix}.
+\]
+\[
+A(B+C)=\begin{bmatrix}1&0\\2&3\end{bmatrix}\begin{bmatrix}5&1\\-2&-2\end{bmatrix}
+=\begin{bmatrix}5&1\\4&-4\end{bmatrix}.
+\]
+Also,
+\[
+AB+AC=\begin{bmatrix}2&1\\4&-7\end{bmatrix}+\begin{bmatrix}3&0\\0&3\end{bmatrix}
+=\begin{bmatrix}5&1\\4&-4\end{bmatrix}.
+\]
+Hence verified.
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (iv)}
+\textcolor{gold}{\bfseries Question:} Verify $(A-B)C=AC-BC$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+A-B=\begin{bmatrix}1&0\\2&3\end{bmatrix}-\begin{bmatrix}2&1\\0&-3\end{bmatrix}
+=\begin{bmatrix}-1&-1\\2&6\end{bmatrix}.
+\]
+\[
+(A-B)C=\begin{bmatrix}-1&-1\\2&6\end{bmatrix}\begin{bmatrix}3&0\\-2&1\end{bmatrix}
+=\begin{bmatrix}-1&-1\\-6&6\end{bmatrix}.
+\]
+Also,
+\[
+BC=\begin{bmatrix}2&1\\0&-3\end{bmatrix}\begin{bmatrix}3&0\\-2&1\end{bmatrix}
+=\begin{bmatrix}4&1\\6&-3\end{bmatrix},
+\quad
+AC-BC=\begin{bmatrix}3&0\\0&3\end{bmatrix}-\begin{bmatrix}4&1\\6&-3\end{bmatrix}
+=\begin{bmatrix}-1&-1\\-6&6\end{bmatrix}.
+\]
+Hence verified.
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (v)}
+\textcolor{gold}{\bfseries Question:} Verify the associative property of matrix multiplication: $(AB)C=A(BC)$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+(AB)C=\begin{bmatrix}2&1\\4&-7\end{bmatrix}\begin{bmatrix}3&0\\-2&1\end{bmatrix}
+=\begin{bmatrix}4&1\\26&-7\end{bmatrix}.
+\]
+\[
+A(BC)=\begin{bmatrix}1&0\\2&3\end{bmatrix}\begin{bmatrix}4&1\\6&-3\end{bmatrix}
+=\begin{bmatrix}4&1\\26&-7\end{bmatrix}.
+\]
+Hence $(AB)C=A(BC)$.
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (vi)}
+\textcolor{gold}{\bfseries Question:} Find $A^2$, $B^2$, $A+B$, $A-B$, $(A+B)(A-B)$ and $A^2-B^2$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+A^2=\begin{bmatrix}1&0\\2&3\end{bmatrix}^2=\begin{bmatrix}1&0\\8&9\end{bmatrix},\quad
+B^2=\begin{bmatrix}2&1\\0&-3\end{bmatrix}^2=\begin{bmatrix}4&-1\\0&9\end{bmatrix}.
+\]
+\[
+A+B=\begin{bmatrix}3&1\\2&0\end{bmatrix},\quad
+A-B=\begin{bmatrix}-1&-1\\2&6\end{bmatrix}.
+\]
+\[
+(A+B)(A-B)=\begin{bmatrix}3&1\\2&0\end{bmatrix}\begin{bmatrix}-1&-1\\2&6\end{bmatrix}
+=\begin{bmatrix}-1&3\\-2&-2\end{bmatrix}.
+\]
+\[
+A^2-B^2=\begin{bmatrix}1&0\\8&9\end{bmatrix}-\begin{bmatrix}4&-1\\0&9\end{bmatrix}
+=\begin{bmatrix}-3&1\\8&0\end{bmatrix}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (vii)}
+\textcolor{gold}{\bfseries Question:} Check whether $(A+B)(A-B)=A^2-B^2$ or not.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+(A+B)(A-B)=\begin{bmatrix}-1&3\\-2&-2\end{bmatrix},
+\qquad
+A^2-B^2=\begin{bmatrix}-3&1\\8&0\end{bmatrix}.
+\]
+\[
+\Rightarrow\; (A+B)(A-B)\neq A^2-B^2.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (viii)}
+\textcolor{gold}{\bfseries Question:} Check whether $(A-B)(A+B)=A^2-B^2$ or not.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+(A-B)(A+B)=\begin{bmatrix}-1&-1\\2&6\end{bmatrix}\begin{bmatrix}3&1\\2&0\end{bmatrix}
+=\begin{bmatrix}-5&-1\\18&2\end{bmatrix}.
+\]
+\[
+A^2-B^2=\begin{bmatrix}-3&1\\8&0\end{bmatrix}.
+\Rightarrow\; (A-B)(A+B)\neq A^2-B^2.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (ix)}
+\textcolor{gold}{\bfseries Question:} Check whether $(A+B)(A-B)=(A-B)(A+B)$ or not.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+(A+B)(A-B)=\begin{bmatrix}-1&3\\-2&-2\end{bmatrix},\qquad
+(A-B)(A+B)=\begin{bmatrix}-5&-1\\18&2\end{bmatrix}.
+\]
+\[
+\Rightarrow\; (A+B)(A-B)\neq (A-B)(A+B).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (x)}
+\textcolor{gold}{\bfseries Question:} Verify that $(AB)^t=B^tA^t$ and $(A^t)^t=A$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+AB=\begin{bmatrix}2&1\\4&-7\end{bmatrix}
+\Rightarrow
+(AB)^t=\begin{bmatrix}2&4\\1&-7\end{bmatrix}.
+\]
+\[
+B^t=\begin{bmatrix}2&0\\1&-3\end{bmatrix},\quad
+A^t=\begin{bmatrix}1&2\\0&3\end{bmatrix}
+\Rightarrow
+B^tA^t=\begin{bmatrix}2&4\\1&-7\end{bmatrix}=(AB)^t.
+\]
+Also,
+\[
+(A^t)^t=A.
+\]
+\end{QAPair}
+
+\end{document}

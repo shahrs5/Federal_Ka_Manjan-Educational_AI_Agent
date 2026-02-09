@@ -1,0 +1,462 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns}
+\usepackage{microtype}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% ---- overflow safety ----
+\sloppy
+\setlength{\emergencystretch}{2em}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+  before upper=\sloppy,
+  before lower=\sloppy,
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 5 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick facts (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Linear equation (standard form):} $ax+b=0$ where $a\ne 0$.
+\item \textbf{Absolute value:} $|u|=c$ gives $u=c$ or $u=-c$ (only if $c\ge 0$).
+\item \textbf{Radicals:} $\sqrt{A}\ge 0$. If $\sqrt{A}=k$ with $k<0$, then \textbf{no real solution}.
+\item \textbf{Inequalities:} multiplying/dividing by a \textbf{negative} number reverses the sign.
+\item \textbf{OR in inequalities:} take the \textbf{union} of solution sets.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 MCQs (i) to (xvi)
+
+\begin{QAPair}{Question 1 (i) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the standard form of linear equation?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $ax^2+b=0$
+\item[(b)] $ax+b=-c$
+\item[(c)] $ax+b>0$
+\item[(d)] $ax+b=0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d)} \quad because standard linear form is $ax+b=0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} The exponent of the variable in a linear equation is?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $1$
+\item[(b)] $2$
+\item[(c)] $-1$
+\item[(d)] $0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a)} \quad linear means power of variable is $1$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the linear equation in one variable?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $ax+y=0$
+\item[(b)] $xy+3=0$
+\item[(c)] $2x+3=0$
+\item[(d)] $2x^2+3=0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)} \quad only $2x+3=0$ is linear and has one variable.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the solution of $12x+17=65$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $48$
+\item[(b)] $\dfrac{82}{12}$
+\item[(c)] $4$
+\item[(d)] $\dfrac{65}{12}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)} \quad since $12x=48 \Rightarrow x=4$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What number must be subtracted from RHS of $7x=30$ so that $x=4$ becomes a solution?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $7$
+\item[(b)] $2$
+\item[(c)] $4$
+\item[(d)] $-2$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)} \quad because $7(4)=28$ so RHS must become $28$: $30-2=28$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which property of equality will be applied to solve $-2x=\dfrac{2}{5}$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] Addition
+\item[(b)] Subtraction
+\item[(c)] Division
+\item[(d)] Addition and subtraction
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)} \quad divide both sides by $-2$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the solution set of $5|x|=25$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $\{-25,25\}$
+\item[(b)] $\{-25\}$
+\item[(c)] $\{5\}$
+\item[(d)] $\{-5,5\}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d)} \quad $|x|=5 \Rightarrow x=\pm 5$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which is the solution set of $|x|+7=3$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $\{-4\}$
+\item[(b)] $\{4,-4\}$
+\item[(c)] $\{\}$
+\item[(d)] $\{-7,-3\}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)} \quad because $|x|= -4$ is impossible in reals.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the solution set of $\sqrt{5x}=-10$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $\{\}$
+\item[(b)] $\{-20\}$
+\item[(c)] $\{20\}$
+\item[(d)] $\{-2\}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a)} \quad since $\sqrt{5x}\ge 0$ cannot be $-10$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the solution set of $\sqrt{3x+1}=5$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $25$
+\item[(b)] $8$
+\item[(c)] $24$
+\item[(d)] $\dfrac{26}{3}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)} \quad $3x+1=25 \Rightarrow x=8$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the solution of $\dfrac{4}{x}-\dfrac{2}{x}=5$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $-1$
+\item[(b)] $\dfrac{2}{5}$
+\item[(c)] $\dfrac{5}{2}$
+\item[(d)] $0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)} \quad $\dfrac{2}{x}=5 \Rightarrow x=\dfrac{2}{5}$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is a strict inequality?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $x+3\ne 0$
+\item[(b)] $12x>5$
+\item[(c)] $2y-3\le 0$
+\item[(d)] $4x+5\ge 0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)} \quad strict inequalities use $<$ or $>$ only.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What should be the value of $k$ if $x<y$ shows $kx>ky$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $k=0$
+\item[(b)] $k>0$
+\item[(c)] $k<0$
+\item[(d)] $k\ge 0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)} \quad multiplying by a negative reverses the inequality.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the compound relation?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $1+2x<4+x$
+\item[(b)] $4x+3>5\dfrac{3}{5}$
+\item[(c)] $x+y>5\dfrac{1}{2}$
+\item[(d)] $x\le 0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)} \quad it relates \textbf{two variables} ($x$ and $y$).
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the solution of $3-\dfrac{1}{2}x\ge 0$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $x\ge -6$
+\item[(b)] $x\le 6$
+\item[(c)] $x\ge 6$
+\item[(d)] $x\le -6$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)} \quad $3\ge \dfrac{x}{2}\Rightarrow 6\ge x$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which one is the solution of $2(x+6)\le 3(x+4)$?
+\begin{itemize}[leftmargin=*,labelsep=0.6em]
+\item[(a)] $x\le 0$
+\item[(b)] $x\ge 0$
+\item[(c)] $x\le 24$
+\item[(d)] $x\ge 24$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)} \quad $2x+12\le 3x+12\Rightarrow 0\le x$.
+\end{QAPair}
+
+% ============================================================
+% Solve the following (2) to (9)
+
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:}
+\[
+\frac{2x-11}{12}
+=
+\frac{2x+10}{12}
+-
+\left(\frac{28-2x}{4}-\frac14\right)
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \left(\frac{28-2x}{4}-\frac14\right)=\frac{28-2x-1}{4}=\frac{27-2x}{4}\\
+\Step{2}\;& \text{Multiply whole equation by }12:\\
+&2x-11=(2x+10)-12\cdot\frac{27-2x}{4}\\
+\Step{3}\;& 12\cdot\frac{27-2x}{4}=3(27-2x)=81-6x\\
+\Step{4}\;& 2x-11=2x+10-(81-6x)=8x-71\\
+\Step{5}\;& 2x-11=8x-71 \Rightarrow 60=6x \Rightarrow x=10\\[4pt]
+&\textcolor{muted}{\textbf{Solution:}} x=10
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:}
+\[
+\sqrt{a-\frac12}=\sqrt{\frac{2a}{5}+\frac{2}{5}}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a-\frac12=\frac{2a}{5}+\frac{2}{5}\\
+\Step{2}\;& \text{Multiply by }10:\quad 10a-5=4a+4\\
+\Step{3}\;& 6a=9 \Rightarrow a=\frac{3}{2}\\
+\Step{4}\;& \text{Check: both sides }=\sqrt{1}\;\checkmark\\[4pt]
+&\textcolor{muted}{\textbf{Solution:}} a=\frac{3}{2}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:}
+\[
+\frac{\sqrt{5x-4}-4}{10}=-1
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sqrt{5x-4}-4=-10\\
+\Step{2}\;& \sqrt{5x-4}=-6\\
+\Step{3}\;& \text{But }\sqrt{5x-4}\ge 0 \text{ (real roots), impossible.}\\[4pt]
+&\textcolor{muted}{\textbf{Solution set:}} \phi
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:}
+\[
+5-|5y+1|=-9
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& -|5y+1|=-14 \Rightarrow |5y+1|=14\\
+\Step{2}\;& 5y+1=14 \Rightarrow y=\frac{13}{5}\\
+\Step{3}\;& 5y+1=-14 \Rightarrow y=-3\\[4pt]
+&\textcolor{muted}{\textbf{Solution set:}} \left\{-3,\frac{13}{5}\right\}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:}
+\[
+\frac{3}{4}x-1\ge x+1,\quad x\in\mathbb{R}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{3}{4}x-x\ge 2\\
+\Step{2}\;& -\frac14 x\ge 2\\
+\Step{3}\;& x\le -8 \quad (\text{multiply by }-4\text{ flips sign})\\[4pt]
+&\textcolor{muted}{\textbf{Solution:}} (-\infty,-8]
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:}
+\[
+4(2y+3)-(6y-1)>10,\quad y\in\mathbb{R}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 8y+12-6y+1>10\\
+\Step{2}\;& 2y+13>10\\
+\Step{3}\;& 2y>-3 \Rightarrow y>-\frac{3}{2}\\[4pt]
+&\textcolor{muted}{\textbf{Solution:}} \left(-\frac{3}{2},\infty\right)
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:}
+\[
+\frac{3}{2}x\le -3 \ \ \textbf{or}\ \ \frac{2}{3}x\ge 4,\quad x\in\mathbb{R}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{3}{2}x\le -3 \Rightarrow x\le -2\\
+\Step{2}\;& \frac{2}{3}x\ge 4 \Rightarrow x\ge 6\\[4pt]
+&\textcolor{muted}{\textbf{Solution:}} (-\infty,-2]\cup[6,\infty)
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:}
+The difference between three times a number $y$ and $18$ is less than $12$ or greater than $39$.\\
+Find all real numbers $y$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+“The difference” means absolute value:
+\[
+|3y-18|<12 \quad \textbf{or} \quad |3y-18|>39
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& |3y-18|<12 \Rightarrow -12<3y-18<12\\
+&\Rightarrow 6<3y<30 \Rightarrow 2<y<10\\[6pt]
+\Step{2}\;& |3y-18|>39 \Rightarrow
+\begin{cases}
+3y-18>39\\
+3y-18<-39
+\end{cases}\\
+&\Rightarrow
+\begin{cases}
+y>19\\
+y<-7
+\end{cases}\\[6pt]
+\Step{3}\;& \text{Union (because OR): } y<-7 \ \text{or}\ 2<y<10 \ \text{or}\ y>19.
+\end{aligned}
+\]
+
+\[
+\textcolor{muted}{\textbf{Solution:}}\quad (-\infty,-7)\cup(2,10)\cup(19,\infty)
+\]
+\end{QAPair}
+
+\end{document}

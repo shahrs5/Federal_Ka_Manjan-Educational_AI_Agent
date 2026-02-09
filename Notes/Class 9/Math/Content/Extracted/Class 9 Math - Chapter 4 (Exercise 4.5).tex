@@ -1,0 +1,240 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 4.5 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Factor first!} Write each polynomial as a product of irreducible factors.
+\item \textbf{HCF (GCD):} product of \emph{common} factors with the \emph{smallest} powers.
+\item \textbf{LCM:} product of \emph{all} factors with the \emph{largest} powers.
+\item \textbf{Key relation:} \;$(P_1)(P_2)=\text{HCF}\times \text{LCM}$ \; (taking HCF/LCM in the usual normalized form).
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1(i)
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} Find HCF and LCM of $16-4x^2$ and $x^2+x-6$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&16-4x^2=4(4-x^2)=4(2-x)(2+x)=-4(x-2)(x+2).\\
+\Step{2}\;&x^2+x-6=(x+3)(x-2).\\
+\Step{3}\;&\text{Common factor (ignoring sign/constants): } (x-2).\\[4pt]
+\Step{4}\;&\boxed{\text{HCF}=x-2.}\\
+\Step{5}\;&\text{LCM takes highest powers: }4\,(x-2)(x+2)(x+3).\\
+\Step{6}\;&\boxed{\text{LCM}=4(x-2)(x+2)(x+3).}
+\end{aligned}
+\]
+\end{QAPair}
+
+% Q1(ii)
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} Find HCF and LCM of $a^4-a^3-a+1$ and $a^4+a^2+1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&a^4-a^3-a+1=a^3(a-1)-1(a-1)=(a-1)(a^3-1)\\
+&=(a-1)(a-1)(a^2+a+1)=(a-1)^2(a^2+a+1).\\
+\Step{2}\;&a^4+a^2+1=(a^2+a+1)(a^2-a+1).\\
+\Step{3}\;&\text{Common factor: }(a^2+a+1).\\
+\Step{4}\;&\boxed{\text{HCF}=a^2+a+1.}\\
+\Step{5}\;&\text{LCM uses all factors at greatest powers: }(a-1)^2(a^2+a+1)(a^2-a+1).\\
+\Step{6}\;&\boxed{\text{LCM}=(a-1)^2(a^2+a+1)(a^2-a+1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+% Q1(iii)
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} Find HCF and LCM of $x^3+2x^2-3x$ and $2x^3+5x^2-3x$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^3+2x^2-3x=x(x^2+2x-3)=x(x+3)(x-1).\\
+\Step{2}\;&2x^3+5x^2-3x=x(2x^2+5x-3)=x(2x-1)(x+3).\\
+\Step{3}\;&\text{Common factors: }x,\ (x+3).\\
+\Step{4}\;&\boxed{\text{HCF}=x(x+3).}\\
+\Step{5}\;&\text{LCM uses all factors: }x(x+3)(x-1)(2x-1).\\
+\Step{6}\;&\boxed{\text{LCM}=x(x+3)(x-1)(2x-1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} If HCF and LCM of two polynomials are $x-7$ and $x^3-10x^2+11x+70$ respectively, find the product of the two polynomials.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\text{Using } (P_1)(P_2)=\text{HCF}\times\text{LCM},\\
+\Step{2}\;&(P_1)(P_2)=(x-7)(x^3-10x^2+11x+70).\\
+\Step{3}\;&=\;x^4-17x^3+81x^2-7x-490.\\
+\Step{4}\;&\boxed{(P_1)(P_2)=x^4-17x^3+81x^2-7x-490.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} Product of two polynomials is $x^4+3x^3-12x^2-20x+48$ and their HCF is $x-2$. Find their LCM.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\text{LCM}=\dfrac{(P_1)(P_2)}{\text{HCF}}
+=\frac{x^4+3x^3-12x^2-20x+48}{x-2}.\\
+\Step{2}\;&\text{Divide by }(x-2):\ \ x^4+3x^3-12x^2-20x+48=(x-2)(x^3+5x^2-2x-24).\\
+\Step{3}\;&x^3+5x^2-2x-24=(x-2)(x^2+7x+12)=(x-2)(x+3)(x+4).\\
+\Step{4}\;&\boxed{\text{LCM}=(x-2)(x+3)(x+4).}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Product of two polynomials is $y^4+6y^3-3y^2-56y-48$ and their LCM is $y^3+2y^2-11y-12$. Find their HCF.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\text{HCF}=\dfrac{(P_1)(P_2)}{\text{LCM}}
+=\frac{y^4+6y^3-3y^2-56y-48}{y^3+2y^2-11y-12}.\\
+\Step{2}\;&y^3+2y^2-11y-12=(y-3)(y^2+5y+4)=(y-3)(y+1)(y+4).\\
+\Step{3}\;&y^4+6y^3-3y^2-56y-48=(y-3)(y+1)(y+4)^2.\\
+\Step{4}\;&\Rightarrow\ \text{HCF}=\dfrac{(y-3)(y+1)(y+4)^2}{(y-3)(y+1)(y+4)}=y+4.\\
+\Step{5}\;&\boxed{\text{HCF}=y+4.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Find the second polynomial when\\
+First polynomial $=x^4+x^3+x+1$, HCF $=x+1$ and LCM $=(x^3+1)(x^4+x^3-x-1)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let first polynomial be $P_1$ and second be $P_2$.
+\[
+\begin{aligned}
+\Step{1}\;&P_1=x^4+x^3+x+1=x^3(x+1)+1(x+1)=(x+1)(x^3+1).\\
+\Step{2}\;&(P_1)(P_2)=\text{HCF}\times\text{LCM}=(x+1)\,(x^3+1)(x^4+x^3-x-1).\\
+\Step{3}\;&P_2=\frac{(x+1)(x^3+1)(x^4+x^3-x-1)}{(x+1)(x^3+1)}=x^4+x^3-x-1.\\
+\Step{4}\;&\boxed{P_2=x^4+x^3-x-1=(x+1)(x^3-1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Find the LCM of polynomials $4x^3-10x^2+4x+2$ and $3x^4-2x^3-3x+2$ if their HCF is $x-1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let
+\[
+P=4x^3-10x^2+4x+2,\qquad Q=3x^4-2x^3-3x+2,\qquad \text{HCF}=x-1.
+\]
+\[
+\begin{aligned}
+\Step{1}\;&\text{Factor }P:\quad
+P=2(2x^3-5x^2+2x+1)=2(x-1)(2x^2-3x-1).\\
+\Step{2}\;&\text{Factor }Q:\quad
+Q=(x-1)(3x^3+x^2+x-2)\\
+&=(x-1)(3x-2)(x^2+x+1).\\
+\Step{3}\;&\text{LCM}=\dfrac{PQ}{\text{HCF}}
+=\frac{2(x-1)(2x^2-3x-1)\cdot (x-1)(3x-2)(x^2+x+1)}{x-1}.\\
+\Step{4}\;&\boxed{\text{LCM}=2(x-1)(2x^2-3x-1)(3x-2)(x^2+x+1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

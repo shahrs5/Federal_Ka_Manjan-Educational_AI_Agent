@@ -1,0 +1,701 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes,intersections}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- TikZ Styles --------------------
+\tikzset{
+  geom/.style={draw=muted, line width=0.95pt},
+  strong/.style={draw=cyan, line width=1.05pt, -latex},
+  helper/.style={draw=muted, dashed, line width=0.75pt},
+  pt/.style={circle, fill=cyan, inner sep=1.2pt},
+  lab/.style={text=text, font=\small},
+  ang/.style={draw=cyan, line width=0.9pt},
+  note/.style={text=muted, font=\small}
+}
+
+% -------------------- Step + Diagram Macro --------------------
+% Usage:
+% \StepFig{1}{<text>}{<tikzpicture contents ONLY>}
+\newcommand{\StepFig}[3]{%
+  \Step{#1} #2\par\medskip
+  \begin{center}
+    \begin{tikzpicture}[scale=0.92]
+      #3
+    \end{tikzpicture}
+  \end{center}
+  \vspace{-2pt}
+}
+
+% tiny right-angle mark macro
+\newcommand{\RightAngleMark}[2]{%
+  % #1 = corner point, #2 = size
+  \draw[ang] ($(#1)+(#2,0)$) -- ($(#1)+(#2,#2)$) -- ($(#1)+(0,#2)$);
+}
+
+% Axis helper (no arrows; clean)
+\newcommand{\Axes}{%
+  \draw[helper] (-0.2,0) -- (5.2,0);
+  \draw[helper] (0,-0.2) -- (0,4.2);
+  \node[note] at (5.1,-0.25) {$x$};
+  \node[note] at (-0.25,4.1) {$y$};
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 7 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick facts (Vectors)}\par\medskip
+\begin{itemize}
+\item \textbf{Scalar vs vector:} scalar has \emph{magnitude only} (e.g.\ speed); vector has \emph{magnitude + direction} (e.g.\ velocity, force).
+\item \textbf{Position vectors:} if $\overrightarrow{OA}=\vec a$ and $\overrightarrow{OB}=\vec b$, then $\overrightarrow{AB}=\vec b-\vec a$.
+\item \textbf{Magnitude:} for $\vec u = xi+yj$, \; $|\vec u|=\sqrt{x^2+y^2}$.
+\item \textbf{Unit vector:} $\hat u=\dfrac{\vec u}{|\vec u|}$ (same direction, magnitude $1$).
+\item \textbf{Resultant of forces:} add components: $R_x=\sum F\cos\theta$, $R_y=\sum F\sin\theta$, \;
+$R=\sqrt{R_x^2+R_y^2}$, \; $\tan\phi=\dfrac{R_y}{R_x}$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 MCQs (i) to (xiv)
+
+\begin{QAPair}{Question 1 (i) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which of the following is a scalar quantity?\par
+(a) velocity \quad (b) speed \quad (c) torque \quad (d) force
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) speed}\par
+\StepFig{1}{Speed is only the \emph{magnitude} of velocity, so it is a scalar.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (4.4,2.2);
+  \draw[strong] (O) -- (P);
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (P) node[lab, above right] {$P$};
+  \node[lab] at (2.3,1.35) {$\vec v$ (velocity)};
+  \node[note] at (3.9,0.55) {speed $=|\vec v|$ (scalar)};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which of the following is a vector quantity?\par
+(a) velocity \quad (b) speed \quad (c) distance \quad (d) work
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) velocity}\par
+\StepFig{1}{Velocity needs \emph{direction} and magnitude, so it is a vector.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (V) at (4.2,3.0);
+  \draw[strong] (O)--(V);
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (V) node[lab, above right] {$\vec v$};
+  \node[note] at (2.2,3.6) {direction matters};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $\vec a$ and $\vec b$ are position vectors of points $A$ and $B$ respectively, then $\overrightarrow{AB}$ is:\par
+(a) $\vec b+\vec a$ \quad (b) $\vec a-\vec b$ \quad (c) $\vec b-\vec a$ \quad (d) $-\vec b-\vec a$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $\vec b-\vec a$}\par
+\StepFig{1}{\;$\overrightarrow{AB}=\overrightarrow{OB}-\overrightarrow{OA}=\vec b-\vec a$.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (1.4,2.8);
+  \coordinate (B) at (4.4,1.2);
+
+  \draw[strong] (O)--(A);
+  \draw[strong] (O)--(B);
+  \draw[geom, -latex, line width=1.05pt] (A)--(B);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (A) node[lab, above left] {$A$};
+  \fill[pt] (B) node[lab, above right] {$B$};
+
+  \node[lab] at (0.9,1.6) {$\vec a$};
+  \node[lab] at (2.8,0.8) {$\vec b$};
+  \node[note] at (3.2,2.35) {$\overrightarrow{AB}=\vec b-\vec a$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which of the following is not a symbol of vector $\vec a$?\par
+(a) $\vec a$ \quad (b) $\underline{a}$ \quad (c) $a$ \quad (d) $|\vec a|$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $|\vec a|$}\par
+\StepFig{1}{$|\vec a|$ means the \emph{magnitude} (a scalar), not the vector itself.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (3.8,2.4);
+  \draw[strong] (O)--(A);
+  \draw[helper] (0,0) -- (3.8,0) -- (3.8,2.4);
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (A) node[lab, above right] {};
+  \node[lab] at (2.1,1.45) {$\vec a$};
+  \node[note] at (4.2,2.9) {$|\vec a|$ is length};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $\overrightarrow{OP}=[-6,\,7]$, then $-\overrightarrow{OP}$ is equal to:\par
+(a) $[-6,\,7]$ \quad (b) $[6,\,7]$ \quad (c) $[6,\,-7]$ \quad (d) $[-6,\,-7]$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $[6,\,-7]$}\par
+\StepFig{1}{Negating a vector reverses direction: $-\,[x,y]=[-x,-y]$.}{%
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (-2.6,3.0);
+  \coordinate (Q) at (2.6,-3.0);
+
+  \draw[helper] (-3.2,0)--(3.2,0);
+  \draw[helper] (0,-3.4)--(0,3.4);
+
+  \draw[strong] (O)--(P);
+  \draw[strong] (O)--(Q);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (P) node[lab, above left] {$P$};
+  \fill[pt] (Q) node[lab, below right] {$Q$};
+
+  \node[note] at (-2.1,2.2) {$\overrightarrow{OP}=[-6,7]$};
+  \node[note] at (2.1,-2.2) {$-\overrightarrow{OP}=[6,-7]$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $\vec u=-5\hat{i}+12\hat{j}$, then $|\vec u|$ is equal to:\par
+(a) $17$ \quad (b) $7$ \quad (c) $169$ \quad (d) $13$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $13$}\par
+\StepFig{1}{\;$|\vec u|=\sqrt{(-5)^2+12^2}=\sqrt{25+144}=13$.}{%
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (4.0,0);
+  \coordinate (B) at (4.0,3.2);
+
+  \draw[helper] (-0.2,0)--(5.2,0);
+  \draw[helper] (0,-0.2)--(0,4.2);
+
+  \draw[geom] (O)--(A)--(B)--cycle;
+  \RightAngleMark{A}{0.18}
+
+  \draw[strong] (O)--(B);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (B) node[lab, above right] {$\vec u$};
+
+  \node[note] at (2.0,-0.55) {$5$};
+  \node[note] at (4.55,1.6) {$12$};
+  \node[note] at (2.6,2.1) {$|\vec u|=13$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Given that $\vec u$ is any vector. Which of the following is true?\par
+(a) $|-\vec u|=|\vec u|$ \quad (b) $-|\vec u|=|\vec u|$ \quad (c) $|\vec u|+|-\vec u|=0$ \quad (d) $|\vec u|=0$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $|-\vec u|=|\vec u|$}\par
+\StepFig{1}{A vector and its negative have the same length (only direction changes).}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (U) at (4.0,2.2);
+  \coordinate (V) at (-4.0,-2.2);
+
+  \draw[strong] (O)--(U);
+  \draw[strong] (O)--(V);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (U) node[lab, above right] {$\vec u$};
+  \fill[pt] (V) node[lab, below left] {$-\vec u$};
+
+  \node[note] at (2.7,3.6) {$|\vec u|=|-\vec u|$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} The unit vector of the vector $\vec u=6\hat{i}+10\hat{j}-2\hat{j}$ is:\par
+(a) $\frac{3\hat{i}}{5}-\frac{4\hat{j}}{5}$ \quad
+(b) $\frac{3\hat{i}}{5}+\frac{4\hat{j}}{5}$ \quad
+(c) $-\frac{3\hat{i}}{5}-\frac{4\hat{j}}{5}$ \quad
+(d) $-\frac{3\hat{i}}{5}+\frac{4\hat{j}}{5}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $\frac{3\hat{i}}{5}+\frac{4\hat{j}}{5}$}\par
+\StepFig{1}{First simplify: $\vec u=6\hat i+(10-2)\hat j=6\hat i+8\hat j$, \;$|\vec u|=10$, so $\hat u=\frac{1}{10}(6,8)=\left(\frac35,\frac45\right)$.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (U) at (4.2,2.8); % scaled drawing
+  \coordinate (Uh) at (2.1,1.4);
+
+  \draw[strong] (O)--(U);
+  \draw[geom, -latex, line width=1.05pt] (O)--(Uh);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+
+  \node[lab] at (3.3,2.2) {$\vec u$};
+  \node[lab] at (1.3,1.0) {$\hat u$};
+
+  \node[note] at (4.2,3.6) {$\hat u=\dfrac{\vec u}{|\vec u|}$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $\vec a=\lambda \vec b$, $\vec a=12\hat{i}-18\hat{j}$ and $\vec b=-2\hat{i}+3\hat{j}$, then $\lambda$ is equal to:\par
+(a) $3$ \quad (b) $-3$ \quad (c) $6$ \quad (d) $-6$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $-6$}\par
+\StepFig{1}{Match components: $12=\lambda(-2)\Rightarrow \lambda=-6$ (and $-18=\lambda(3)$ also gives $\lambda=-6$).}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (b) at (1.2, -1.8);
+  \coordinate (a) at (-3.6, 5.4);
+
+  \draw[geom, -latex, line width=1.05pt] (O)--(b);
+  \draw[strong] (O)--(a);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \node[lab] at (0.9,-1.1) {$\vec b$};
+  \node[lab] at (-2.1,3.8) {$\vec a=-6\vec b$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $\vec u=[-5x,\,8]$ and $\vec v=[10,\,4y]$ are equal vectors, then:\par
+(a) $x=2,y=2$ \quad (b) $x=-2,y=-2$ \quad (c) $x=-2,y=2$ \quad (d) $x=2,y=-2$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $x=-2,\;y=2$}\par
+\StepFig{1}{Equal vectors have equal components: $-5x=10\Rightarrow x=-2$ and $8=4y\Rightarrow y=2$.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (U) at (4.0,3.2);
+  \draw[strong] (O)--(U);
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (U) node[lab, above right] {};
+  \node[lab] at (2.4,2.2) {$\vec u=\vec v$};
+  \node[note] at (3.8,0.6) {match components};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $\vec p=[5,\,-6]$ and $\vec q=[2,\,6]$, then $\vec p-2\vec q$ is:\par
+(a) $[1,\,-18]$ \quad (b) $[9,\,18]$ \quad (c) $[1,\,18]$ \quad (d) $[-9,\,-18]$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $[1,\,-18]$}\par
+\StepFig{1}{\;$\vec p-2\vec q=[5,-6]-[4,12]=[1,-18]$.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (2.2,1.6);
+  \coordinate (Q) at (1.2,3.0);
+  \coordinate (R) at (0.4,-3.4);
+
+  \draw[geom, -latex, line width=1.05pt] (O)--(P);
+  \draw[geom, -latex, line width=1.05pt] (O)--(Q);
+  \draw[strong] (O)--(R);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \node[lab] at (1.6,1.0) {$\vec p$};
+  \node[lab] at (0.9,2.3) {$\vec q$};
+  \node[lab] at (0.8,-2.5) {$\vec p-2\vec q$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $\vec u=5\hat{i}+10\hat{j}$ and $\vec v=4\hat{j}$, then $|\vec u-\vec v|$ is:\par
+(a) $\sqrt{123}$ \quad (b) $\sqrt{61}$ \quad (c) $\sqrt{11}$ \quad (d) $-\sqrt{61}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $\sqrt{61}$}\par
+\StepFig{1}{\;$\vec u-\vec v=(5,10)-(0,4)=(5,6)$, so $|\vec u-\vec v|=\sqrt{5^2+6^2}=\sqrt{61}$.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (W) at (3.8,2.4); % (5,6) scaled
+  \draw[strong] (O)--(W);
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (W) node[lab, above right] {};
+  \draw[helper] (0,0)--(3.8,0)--(3.8,2.4);
+  \node[note] at (2.0,-0.55) {$5$};
+  \node[note] at (4.35,1.2) {$6$};
+  \node[note] at (2.6,2.9) {$\sqrt{61}$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which of the following vectors represents a position vector?\par
+(a) $\overrightarrow{OP}$ \quad (b) $-\overrightarrow{OP}$ \quad (c) $\overrightarrow{PO}$ \quad (d) $\overrightarrow{PQ}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $\overrightarrow{OP}$}\par
+\StepFig{1}{A position vector starts at the origin $O$ and ends at the point (here $P$).}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (4.3,2.6);
+  \draw[strong] (O)--(P);
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (P) node[lab, above right] {$P$};
+  \node[note] at (2.6,1.9) {$\overrightarrow{OP}$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What type of a quadrilateral $ABCD$ is, if $\overrightarrow{AB}=\frac{2}{3}\overrightarrow{DC}$?\par
+(a) kite \quad (b) rectangle \quad (c) trapezium \quad (d) rhombus
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) trapezium}\par
+\StepFig{1}{If one side vector is a nonzero scalar multiple of another, the sides are \emph{parallel}. Thus $AB\parallel DC$, so it is a trapezium.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (4.8,0);
+  \coordinate (D) at (0.8,2.6);
+  \coordinate (C) at (4.0,2.6);
+
+  \draw[geom] (A)--(B)--(C)--(D)--cycle;
+
+  \draw[strong] (A)--(B);
+  \draw[strong] (D)--(C);
+
+  \fill[pt] (A) node[lab, below] {$A$};
+  \fill[pt] (B) node[lab, below] {$B$};
+  \fill[pt] (C) node[lab, above] {$C$};
+  \fill[pt] (D) node[lab, above] {$D$};
+
+  \node[note] at (2.4,-0.65) {$AB \parallel DC$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 --- Given $\vec p=3\hat{i}-4\hat{j}$ and $\vec q=-3\hat{i}-4\hat{j}$. Prove that $|\vec p|=|\vec q|$. Is $\vec p=\vec q$?}
+\tcblower
+\textcolor{green}{\bfseries Solution:}\par
+
+\StepFig{1}{Compute magnitudes.}{%
+  \node[lab, align=left] at (0,0) {$\displaystyle |\vec p|=\sqrt{3^2+(-4)^2}=\sqrt{9+16}=5$};
+  \node[lab, align=left] at (0,-0.8) {$\displaystyle |\vec q|=\sqrt{(-3)^2+(-4)^2}=\sqrt{9+16}=5$};
+}
+
+\StepFig{2}{Show they are not equal vectors (different directions/components).}{%
+  \draw[helper] (-3.2,0)--(3.2,0);
+  \draw[helper] (0,-3.2)--(0,3.2);
+  \coordinate (O) at (0,0);
+  \coordinate (P) at (2.4,-3.2);
+  \coordinate (Q) at (-2.4,-3.2);
+
+  \draw[strong] (O)--(P);
+  \draw[strong] (O)--(Q);
+
+  \fill[pt] (O) node[lab, above right] {$O$};
+  \fill[pt] (P) node[lab, below right] {$\vec p$};
+  \fill[pt] (Q) node[lab, below left] {$\vec q$};
+
+  \node[note] at (0,2.6) {same length, different direction};
+}
+
+\textcolor{green}{\bfseries Conclusion:}\;
+$|\vec p|=|\vec q|=5$, but $\vec p\neq \vec q$ because their $x$-components differ ($3\neq -3$).
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 --- If $\vec a=2\hat{i}-4\hat{j}$ and $\vec b=-2\hat{i}+x\hat{j}$, find $x$ if $|\vec a+2\vec b|=6$.}
+\tcblower
+\textcolor{green}{\bfseries Solution:}\par
+
+\StepFig{1}{Form $\vec a+2\vec b$.}{%
+  \node[lab, align=left] at (0,0) {$\displaystyle \vec a+2\vec b=(2,-4)+2(-2,x)=(2-4,\,-4+2x)=(-2,\;2x-4)$};
+}
+
+\StepFig{2}{Use the magnitude condition $|\vec a+2\vec b|=6$.}{%
+  \node[lab, align=left] at (0,0.6) {$\displaystyle \sqrt{(-2)^2+(2x-4)^2}=6$};
+  \node[lab, align=left] at (0,-0.2) {$\displaystyle 4+(2x-4)^2=36 \;\Rightarrow\; (2x-4)^2=32$};
+  \node[lab, align=left] at (0,-1.0) {$\displaystyle 2x-4=\pm\sqrt{32}=\pm 4\sqrt2$};
+}
+
+\textcolor{green}{\bfseries Answer:}\;
+$\displaystyle x=2\pm 2\sqrt2$.
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 --- In $\triangle OAB$, $\overrightarrow{OA}=\vec a$, $\overrightarrow{OB}=\vec b$ and $M$ is midpoint of $\overline{OA}$. Write the following vectors in terms of $\vec a$ and $\vec b$: (i) $\overrightarrow{OM}$ (ii) $\overrightarrow{AM}$ (iii) $\overrightarrow{BM}$ (iv) $\overrightarrow{OB}+\overrightarrow{BA}$.}
+\tcblower
+\textcolor{green}{\bfseries Solution:}\par
+
+\StepFig{1}{Draw the figure and mark $M$ as midpoint of $OA$.}{%
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (5.6,0);
+  \coordinate (B) at (3.3,2.8);
+  \coordinate (M) at ($(O)!0.5!(A)$);
+
+  \draw[geom] (O)--(A);
+  \draw[geom] (O)--(B);
+  \draw[geom] (B)--(A);
+  \draw[helper] (B)--(M);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (A) node[lab, below right] {$A$};
+  \fill[pt] (B) node[lab, above] {$B$};
+  \fill[pt] (M) node[lab, below] {$M$};
+
+  \node[note] at (2.8,-0.75) {$M$ is midpoint of $OA$};
+}
+
+\StepFig{2}{Use midpoint and position-vector ideas.}{%
+  \node[lab, align=left] at (0,0.9) {$\displaystyle (i)\;\overrightarrow{OM}=\frac12\,\overrightarrow{OA}=\frac12\vec a$};
+  \node[lab, align=left] at (0,0.1) {$\displaystyle (ii)\;\overrightarrow{AM}=\overrightarrow{OM}-\overrightarrow{OA}=\frac12\vec a-\vec a=-\frac12\vec a$};
+  \node[lab, align=left] at (0,-0.7) {$\displaystyle (iii)\;\overrightarrow{BM}=\overrightarrow{OM}-\overrightarrow{OB}=\frac12\vec a-\vec b$};
+  \node[lab, align=left] at (0,-1.5) {$\displaystyle (iv)\;\overrightarrow{OB}+\overrightarrow{BA}=\vec b+(\overrightarrow{OA}-\overrightarrow{OB})=\vec b+(\vec a-\vec b)=\vec a$};
+}
+
+\textcolor{green}{\bfseries Answers:}\;
+(i) $\dfrac12\vec a$;\;
+(ii) $-\dfrac12\vec a$;\;
+(iii) $\dfrac12\vec a-\vec b$;\;
+(iv) $\vec a$.
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 --- Two tractors pull with forces $250$ N at $50^\circ$ and $300$ N at $40^\circ$ to the horizontal. Find the magnitude and direction of the resultant force.}
+\tcblower
+\textcolor{green}{\bfseries Solution:}\par
+
+\StepFig{1}{Resolve forces into components and add.}{%
+  \node[lab, align=left] at (0,1.0) {$\displaystyle R_x=250\cos50^\circ+300\cos40^\circ \approx 391.85$};
+  \node[lab, align=left] at (0,0.2) {$\displaystyle R_y=250\sin50^\circ+300\sin40^\circ \approx 383.44$};
+  \node[lab, align=left] at (0,-0.6) {$\displaystyle R=\sqrt{R_x^2+R_y^2}\approx \sqrt{391.85^2+383.44^2}\approx 548.1\ \text{N}$};
+  \node[lab, align=left] at (0,-1.4) {$\displaystyle \phi=\tan^{-1}\!\left(\frac{R_y}{R_x}\right)\approx \tan^{-1}(0.9785)\approx 44.5^\circ$};
+}
+
+\StepFig{2}{Vector diagram (tail-to-tail) with resultant.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (X) at ($(O)+(1,0)$); % helper point on +x-axis for angle marking
+
+  % scaled arrows
+  \coordinate (Fone) at ($(O)+(50:3.0)$);
+  \coordinate (Ftwo) at ($(O)+(40:3.6)$);
+
+  \draw[strong] (O)--(Fone);
+  \draw[strong] (O)--(Ftwo);
+
+  % resultant (approx)
+  \coordinate (R) at ($(O)+(44.5:4.2)$);
+  \draw[geom, -latex, line width=1.2pt] (O)--(R);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \node[lab] at (2.1,2.7) {$250\text{ N}$};
+  \node[lab] at (2.9,2.2) {$300\text{ N}$};
+  \node[lab] at (3.0,3.3) {$\vec R$};
+
+  % FIXED: use a named helper point for the +x-axis ray
+  \pic[ang, angle radius=0.65cm, "$50^\circ$"] {angle = X--O--Fone};
+  \pic[ang, angle radius=1.00cm, "$40^\circ$"] {angle = X--O--Ftwo};
+}
+
+\textcolor{green}{\bfseries Answer:}\;
+Resultant force $\boxed{R\approx 548.1\ \text{N}}$ at $\boxed{\phi\approx 44.5^\circ}$ above the horizontal.
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 --- The paths are $\vec V_1=120\hat{i}+12\hat{j}$ and $\vec V_2=90\hat{i}-30\hat{j}$ (meters). (i) How much farther did the first ball travel? (ii) What is the distance between the two balls thrown?}
+\tcblower
+\textcolor{green}{\bfseries Solution:}\par
+
+\StepFig{1}{Compute distances (magnitudes).}{%
+  \node[lab, align=left] at (0,1.0) {$\displaystyle |\vec V_1|=\sqrt{120^2+12^2}=\sqrt{14544}\approx 120.60\ \text{m}$};
+  \node[lab, align=left] at (0,0.2) {$\displaystyle |\vec V_2|=\sqrt{90^2+(-30)^2}=\sqrt{9000}\approx 94.87\ \text{m}$};
+  \node[lab, align=left] at (0,-0.6) {$\displaystyle \text{Difference}=|\vec V_1|-|\vec V_2|\approx 25.74\ \text{m}$};
+}
+
+\StepFig{2}{Distance between balls (separation) if thrown from the same point.}{%
+  \node[lab, align=left] at (0,0.8) {$\displaystyle \vec V_1-\vec V_2=(120-90,\;12-(-30))=(30,\;42)$};
+  \node[lab, align=left] at (0,0.0) {$\displaystyle \text{Separation}=\sqrt{30^2+42^2}=\sqrt{2664}\approx 51.61\ \text{m}$};
+}
+
+\StepFig{3}{Diagram of $\vec V_1,\vec V_2$ and separation.}{%
+  \Axes
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (4.6,0.5);  % V1 scaled
+  \coordinate (B) at (3.5,-1.25);% V2 scaled
+  \draw[strong] (O)--(A);
+  \draw[strong] (O)--(B);
+  \draw[geom, -latex, line width=1.05pt] (B)--(A);
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \fill[pt] (A) node[lab, above right] {$V_1$};
+  \fill[pt] (B) node[lab, below right] {$V_2$};
+
+  \node[note] at (4.1,2.9) {separation $=|V_1-V_2|$};
+}
+
+\textcolor{green}{\bfseries Answers:}\;
+(i) $\boxed{\approx 25.74\ \text{m}}$ farther.\quad
+(ii) $\boxed{\approx 51.61\ \text{m}}$ between the two balls.
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7 --- Ahmad swims at $6$ m/s in still water. River current flows west at $1.5$ m/s. Find the resultant velocity if: (i) he swims due west, (ii) due east, (iii) due north across the river.}
+\tcblower
+\textcolor{green}{\bfseries Solution:}\par
+
+\StepFig{1}{Set axes: East = $+x$, North = $+y$. Current is west $\Rightarrow -x$ direction.}{%
+  \draw[helper] (-3.2,0)--(3.2,0);
+  \draw[helper] (0,-2.8)--(0,2.8);
+  \node[note] at (3.05,-0.25) {East $(+x)$};
+  \node[note] at (-3.05,-0.25) {West $(-x)$};
+  \node[note] at (0.55,2.55) {North $(+y)$};
+  \node[note] at (0.55,-2.55) {South $(-y)$};
+
+  \draw[strong] (0,0) -- (-2.2,0);
+  \node[lab] at (-1.5,0.35) {current $1.5$};
+}
+
+\StepFig{2}{(i) Swim due west: velocities add in the same direction.}{%
+  \node[lab, align=left] at (0,0.2) {$\displaystyle v_{\text{result}}=6+1.5=7.5\ \text{m/s west}$};
+}
+
+\StepFig{3}{(ii) Swim due east: subtract the west current.}{%
+  \node[lab, align=left] at (0,0.2) {$\displaystyle v_{\text{result}}=6-1.5=4.5\ \text{m/s east}$};
+}
+
+\StepFig{4}{(iii) Swim due north: perpendicular addition of (north 6) and (west 1.5).}{%
+  \node[lab, align=left] at (0,1.0) {$\displaystyle |\vec v|=\sqrt{6^2+1.5^2}=\sqrt{38.25}\approx 6.19\ \text{m/s}$};
+  \node[lab, align=left] at (0,0.2) {$\displaystyle \theta=\tan^{-1}\!\left(\frac{1.5}{6}\right)\approx 14.0^\circ$ west of north};
+  \draw[helper] (-3.2,0)--(3.2,0);
+  \draw[helper] (0,-2.8)--(0,2.8);
+
+  \coordinate (O) at (0,0);
+  \coordinate (N) at (0,2.4);
+  \coordinate (R) at (-0.6,2.4);
+
+  \draw[geom] (O)--(N);
+  \draw[geom] (N)--(R);
+  \draw[strong] (O)--(R);
+
+  \RightAngleMark{N}{0.14}
+  \fill[pt] (O) node[lab, below right] {$O$};
+  \node[note] at (-1.2,1.6) {$\vec v$};
+}
+
+\textcolor{green}{\bfseries Answers:}\;
+(i) $\boxed{7.5\ \text{m/s west}}$;\;
+(ii) $\boxed{4.5\ \text{m/s east}}$;\;
+(iii) $\boxed{\approx 6.19\ \text{m/s at }14.0^\circ\text{ west of north}}$.
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8 --- A plane travels north at $150$ km/h. Wind blows due east at $50$ km/h. (i) Find the resultant speed of the plane. (ii) How far is the plane from its starting point after $10$ hours?}
+\tcblower
+\textcolor{green}{\bfseries Solution:}\par
+
+\StepFig{1}{Resultant ground speed (perpendicular velocities).}{%
+  \node[lab, align=left] at (0,1.0) {$\displaystyle v=\sqrt{150^2+50^2}=\sqrt{25000}\approx 158.11\ \text{km/h}$};
+  \node[lab, align=left] at (0,0.2) {$\displaystyle \text{Direction: } \alpha=\tan^{-1}\!\left(\frac{50}{150}\right)\approx 18.43^\circ\ \text{east of north}$};
+}
+
+\StepFig{2}{After $10$ hours, displacement components and distance.}{%
+  \node[lab, align=left] at (0,1.0) {$\displaystyle \text{North distance}=150\times 10=1500\ \text{km}$};
+  \node[lab, align=left] at (0,0.2) {$\displaystyle \text{East distance}=50\times 10=500\ \text{km}$};
+  \node[lab, align=left] at (0,-0.6) {$\displaystyle \text{Distance from start}=\sqrt{1500^2+500^2}=10\sqrt{25000}\approx 1581.14\ \text{km}$};
+}
+
+\StepFig{3}{Diagram (north + east = resultant).}{%
+  \draw[helper] (-0.2,0)--(5.2,0);
+  \draw[helper] (0,-0.2)--(0,4.2);
+  \node[note] at (5.1,-0.25) {East};
+  \node[note] at (-0.35,4.1) {North};
+
+  \coordinate (O) at (0,0);
+  \coordinate (N) at (0,3.6);
+  \coordinate (E) at (1.2,3.6);
+
+  \draw[geom] (O)--(N);
+  \draw[geom] (N)--(E);
+  \draw[strong] (O)--(E);
+
+  \RightAngleMark{N}{0.16}
+
+  \fill[pt] (O) node[lab, below left] {$O$};
+  \node[lab] at (0.35,2.2) {$150$};
+  \node[lab] at (0.9,3.95) {$50$};
+  \node[lab] at (1.0,2.2) {$\vec v$};
+}
+
+\textcolor{green}{\bfseries Answers:}\;
+(i) $\boxed{v\approx 158.11\ \text{km/h}}$.\quad
+(ii) $\boxed{\approx 1581.14\ \text{km}}$ from the starting point after $10$ hours.
+\end{QAPair}
+
+\end{document}

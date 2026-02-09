@@ -1,0 +1,319 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 3.2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (Sets \& Venn)}\par\medskip
+\begin{itemize}
+\item \textbf{Two sets:} $n(A\cup B)=n(A)+n(B)-n(A\cap B)$.
+\item \textbf{Difference:} $n(A-B)=n(A)-n(A\cap B)$ and $n(B-A)=n(B)-n(A\cap B)$.
+\item \textbf{Neither (two sets):} $n(\text{neither})=n(U)-n(A\cup B)$.
+\item \textbf{Three sets:} $n(A\cup B\cup C)=\sum n(\text{single})-\sum n(\text{pair})+n(A\cap B\cap C)$.
+\item \textbf{Only one (three sets):} e.g.\ $n(A\ \text{only})=n(A)-n(A\cap B)-n(A\cap C)+n(A\cap B\cap C)$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} Let $A$ and $B$ be two finite sets such that $n(A)=24$, $n(B)=18$ and $n(A\cup B)=31$. Find $n(A\cap B)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& n(A\cup B)=n(A)+n(B)-n(A\cap B).\\
+\Step{2}\;& 31=24+18-n(A\cap B).\\
+\Step{3}\;& n(A\cap B)=24+18-31=11.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} If $n(A-B)=23$, $n(A\cup B)=44$ and $n(A\cap B)=2$, then find $n(B-A)$. Also find $n(B)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& n(A)=n(A-B)+n(A\cap B)=23+2=25.\\
+\Step{2}\;& n(A\cup B)=n(A)+n(B)-n(A\cap B)\\
+&\Rightarrow 44=25+n(B)-2=23+n(B).\\
+\Step{3}\;& n(B)=44-23=21.\\
+\Step{4}\;& n(B-A)=n(B)-n(A\cap B)=21-2=19.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} In a group of $30$ Mathematics students, $20$ like Algebra and $15$ like both Geometry and Algebra. Show the data by Venn diagram. Also find how many students like Geometry.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $A=$ Algebra, $G=$ Geometry. (Assume every student likes at least one of the two, so $n(A\cup G)=30$.)
+\[
+\begin{aligned}
+\Step{1}\;& n(A\cap G)=15,\quad n(A)=20.\\
+\Step{2}\;& n(A\ \text{only})=n(A)-n(A\cap G)=20-15=5.\\
+\Step{3}\;& n(A\cup G)=n(A)+n(G)-n(A\cap G)\\
+&\Rightarrow 30=20+n(G)-15.\\
+\Step{4}\;& n(G)=30-5=25.\\[2pt]
+&\text{Venn regions: } \text{Algebra only }=5,\; \text{Both }=15,\; \text{Geometry only }=25-15=10.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} In a street with $50$ houses, $25$ houses have lawns, $32$ houses have car porch and $15$ houses have both lawn and car porch. Show the data by Venn diagram. Also find how many houses have neither lawn nor porch.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $L=$ lawns, $P=$ car porch.
+\[
+\begin{aligned}
+\Step{1}\;& n(L\cup P)=n(L)+n(P)-n(L\cap P)=25+32-15=42.\\
+\Step{2}\;& n(\text{neither})=50-n(L\cup P)=50-42=8.\\[2pt]
+&\text{Venn regions: } L\text{ only}=25-15=10,\; P\text{ only}=32-15=17,\; \text{Both}=15,\; \text{Neither}=8.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} In a survey of $940$ children, $400$ students were found studying at primary level, $240$ at elementary and $175$ at secondary level. Create a Venn diagram to illustrate this information. How many children were found out of school?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} These three levels are treated as \emph{separate} (no overlap).
+\[
+\begin{aligned}
+\Step{1}\;& n(\text{in school})=400+240+175=815.\\
+\Step{2}\;& n(\text{out of school})=940-815=125.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} ABC Dairy polls its customers on their favorite flavor: chocolate, vanilla or mango. $100$ customers said they like mango flavor, $90$ said they like vanilla, $40$ polled for chocolate, $20$ liked both mango and vanilla while $14$ liked both chocolate and vanilla. How many customers said they like: (i) only mango? (ii) only vanilla? (iii) only chocolate?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $M=$ mango, $V=$ vanilla, $C=$ chocolate. (Assume no other overlap is given, so $n(M\cap C)=0$ and no triple overlap.)
+\[
+\begin{aligned}
+\Step{1}\;& n(M\ \text{only})=n(M)-n(M\cap V)=100-20=80.\\
+\Step{2}\;& n(V\ \text{only})=n(V)-n(M\cap V)-n(C\cap V)=90-20-14=56.\\
+\Step{3}\;& n(C\ \text{only})=n(C)-n(C\cap V)=40-14=26.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7 (a)--(c)}
+\textcolor{gold}{\bfseries Question:} In a survey of university $200$ students were interviewed. It was found that: $42$ have laptops, $80$ have cell phones, $100$ have iPods, $23$ have both a laptop and a cell phone, $10$ have both a laptop and iPod, $14$ have both a cell phone and iPod and $8$ have all three items.
+\begin{enumerate}[label=(\alph*)]
+\item How many students have only cell phone?
+\item How many students have none of the three items?
+\item How many students have both iPod and laptop but not cellphone?
+\end{enumerate}
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $L=$ laptop, $C=$ cell phone, $I=$ iPod.
+\[
+\begin{aligned}
+\Step{1}\;& \text{Only cell phone: } n(C\ \text{only})=n(C)-n(L\cap C)-n(C\cap I)+n(L\cap C\cap I)\\
+&=80-23-14+8=51.\\[4pt]
+\Step{2}\;& n(L\cup C\cup I)=n(L)+n(C)+n(I)-n(L\cap C)-n(L\cap I)-n(C\cap I)+n(L\cap C\cap I)\\
+&=42+80+100-23-10-14+8=183.\\
+&\text{None: } 200-183=17.\\[4pt]
+\Step{3}\;& \text{Both iPod and laptop but not cellphone: } n((L\cap I)-C)=n(L\cap I)-n(L\cap C\cap I)=10-8=2.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} In a girl college, every student plays either badminton or table tennis or both. If $350$ play badminton, $280$ play table tennis and $150$ play both. Find how many students are there in the college?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $B=$ badminton, $T=$ table tennis. Since everyone plays at least one, total $=n(B\cup T)$.
+\[
+\begin{aligned}
+\Step{1}\;& n(B\cup T)=n(B)+n(T)-n(B\cap T)\\
+\Step{2}\;&=350+280-150=480.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Among $50$ students, $8$ are learning both English and Chinese languages. A total of $26$ students are learning English. If every student is learning at least one language, how many students are learning Chinese?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $E=$ English, $C=$ Chinese. Since everyone learns at least one, $n(E\cup C)=50$.
+\[
+\begin{aligned}
+\Step{1}\;& n(E\cup C)=n(E)+n(C)-n(E\cap C).\\
+\Step{2}\;& 50=26+n(C)-8.\\
+\Step{3}\;& n(C)=50-18=32.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Out of $70$ people, $48$ like tea and $40$ like coffee and each person likes at least one of the two drinks. How many like both tea and coffee?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $T=$ tea, $C=$ coffee. Since everyone likes at least one, $n(T\cup C)=70$.
+\[
+\begin{aligned}
+\Step{1}\;& n(T\cup C)=n(T)+n(C)-n(T\cap C).\\
+\Step{2}\;& 70=48+40-n(T\cap C).\\
+\Step{3}\;& n(T\cap C)=88-70=18.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q11
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} There are $46$ students in science group and $50$ students in arts group. Find the number of students who are either in science or arts group.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Science and Arts groups are treated as separate (no overlap).
+\[
+\begin{aligned}
+\Step{1}\;& n(\text{science or arts})=46+50=96.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q12
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} In a group of people, $52$ people can speak Arabic and $112$ can speak French. How many can speak Arabic only? How many can speak French only if $12$ of them can speak both languages? How many people were in the group?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $A=$ Arabic, $F=$ French, with $n(A\cap F)=12$.
+\[
+\begin{aligned}
+\Step{1}\;& \text{Arabic only }=n(A)-n(A\cap F)=52-12=40.\\
+\Step{2}\;& \text{French only }=n(F)-n(A\cap F)=112-12=100.\\
+\Step{3}\;& \text{Total }=n(A\cup F)=n(A)+n(F)-n(A\cap F)=52+112-12=152.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13
+\begin{QAPair}{Question 13 (i)--(iii)}
+\textcolor{gold}{\bfseries Question:} In a high school, $360$ students like reading story books, $170$ like practical activities and $150$ like both. Find:
+\begin{enumerate}[label=(\roman*)]
+\item The number of students who like reading story books only.
+\item The number of students who like only practical activities.
+\item The total number of students in the school.
+\end{enumerate}
+\tcblower
+\textcolor{green}{\bfseries Answer:} Let $S=$ story books, $P=$ practical activities, with $n(S\cap P)=150$.
+\[
+\begin{aligned}
+\Step{1}\;& \text{Story books only }=n(S)-n(S\cap P)=360-150=210.\\
+\Step{2}\;& \text{Practical only }=n(P)-n(S\cap P)=170-150=20.\\
+\Step{3}\;& \text{Total }=n(S\cup P)=n(S)+n(P)-n(S\cap P)=360+170-150=380.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q14
+\begin{QAPair}{Question 14}
+\textcolor{gold}{\bfseries Question:} In a survey of $60$ people, it was found that $25$ people watch channel $A$, $16$ watch channel $B$, $13$ watch channel $C$, $4$ watch both $A$ and $B$, $7$ watch both $B$ and $C$, $8$ watch both $A$ and $C$, $3$ watch all three channels. Find the number of people who watch at least one of the channels. Also find number of people who do not watch these channels.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Use inclusion--exclusion for three sets $A,B,C$.
+\[
+\begin{aligned}
+\Step{1}\;& n(A\cup B\cup C)=n(A)+n(B)+n(C)-n(A\cap B)-n(B\cap C)-n(A\cap C)+n(A\cap B\cap C)\\
+\Step{2}\;&=25+16+13-4-7-8+3=38.\\
+\Step{3}\;& \text{Do not watch any }=60-38=22.
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

@@ -1,0 +1,611 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% --- Diagrams ---
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% A helper symbol for engineering imaginary unit
+\newcommand{\J}{\mathrm{J}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 1.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Imaginary unit:} $i^2=-1$ \quad (In electrical questions, $\J$ is used and $\J^2=-1$.)
+\item \textbf{Solve:} $x^2+a=0 \Rightarrow x^2=-a \Rightarrow x=\pm i\sqrt{a}$ \quad (for $a>0$).
+\item \textbf{Conjugate:} $\overline{a+bi}=a-bi$.
+\item \textbf{Division rule:} $\displaystyle \frac{a+bi}{c+di}=\frac{(a+bi)(c-di)}{c^2+d^2}$ \quad (multiply by conjugate).
+\item \textbf{Factorization:} $x^2+a^2=(x+ai)(x-ai)$.
+\item \textbf{Circuit formula:} $E=IZ \Rightarrow I=\dfrac{E}{Z},\; Z=\dfrac{E}{I}$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} Solve $x^2+7=0$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; x^2+7=0 \;\Rightarrow\; x^2=-7.
+\]
+\[
+\Step{2}\; x=\pm\sqrt{-7}=\pm i\sqrt{7}.
+\]
+\[
+\boxed{x= i\sqrt{7}\;\; \text{or}\;\; x=-i\sqrt{7}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} Solve $x^2+9=0$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; x^2=-9
+\qquad\Rightarrow\qquad
+\Step{2}\; x=\pm\sqrt{-9}=\pm 3i.
+\]
+\[
+\boxed{x=3i\;\;\text{or}\;\;x=-3i}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} Solve $x^2+100=0$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; x^2=-100
+\qquad\Rightarrow\qquad
+\Step{2}\; x=\pm\sqrt{-100}=\pm 10i.
+\]
+\[
+\boxed{x=10i\;\;\text{or}\;\;x=-10i}
+\]
+\end{QAPair}
+
+% ---------------- Diagram (Argand plane for Q1--Q3 roots) ----------------
+\begin{QAPair}{Argand Diagram (for roots of Q1--Q3)}
+\textcolor{gold}{\bfseries Question:} Show where the solutions lie on the complex plane.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\textcolor{muted}{All roots are \emph{purely imaginary}, so they lie on the vertical (imaginary) axis.}
+
+\begin{center}
+\begin{tikzpicture}[scale=0.55]
+% Axes
+\draw[-{Stealth[length=3mm]}, color=text, line width=0.9pt] (-7,0) -- (7,0) node[right] {\textcolor{text}{$\Re$}};
+\draw[-{Stealth[length=3mm]}, color=text, line width=0.9pt] (0,-12) -- (0,12) node[above] {\textcolor{text}{$\Im$}};
+
+% Ticks and labels
+\foreach \y/\lab in {-10/-10, -3/-3, 0/0, 3/3, 10/10}{
+  \draw[color=border] (-0.18,\y) -- (0.18,\y);
+  \node[left, text=text] at (-0.25,\y) {\small \lab};
+}
+
+% Points (approx positions for sqrt7)
+\filldraw[cyan] (0,2.65) circle (2.3pt) node[right, text=text] {\small $i\sqrt{7}$};
+\filldraw[cyan] (0,-2.65) circle (2.3pt) node[right, text=text] {\small $-i\sqrt{7}$};
+
+\filldraw[cyan] (0,3) circle (2.3pt) node[right, text=text] {\small $3i$};
+\filldraw[cyan] (0,-3) circle (2.3pt) node[right, text=text] {\small $-3i$};
+
+\filldraw[cyan] (0,10) circle (2.3pt) node[right, text=text] {\small $10i$};
+\filldraw[cyan] (0,-10) circle (2.3pt) node[right, text=text] {\small $-10i$};
+
+\end{tikzpicture}
+\end{center}
+
+\textcolor{muted}{Note: $\sqrt{7}\approx 2.65$, so the points $\pm i\sqrt{7}$ are placed near $\pm 2.65$ on the imaginary axis.}
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Determine whether $1+2i$ is a solution of $x^2-2x+5=0$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Let $x=1+2i$.
+
+\[
+\Step{1}\; x^2=(1+2i)^2=1+4i+(2i)^2=1+4i-4=-3+4i.
+\]
+\[
+\Step{2}\; -2x=-2(1+2i)=-2-4i.
+\]
+\[
+\Step{3}\; x^2-2x+5=(-3+4i)+(-2-4i)+5=0.
+\]
+\[
+\boxed{\text{$1+2i$ \;is a solution.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Determine whether $1-2i$ is a solution of $x^2-2x+5=0$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Let $x=1-2i$.
+
+\[
+\Step{1}\; x^2=(1-2i)^2=1-4i+(-2i)^2=1-4i-4=-3-4i.
+\]
+\[
+\Step{2}\; -2x=-2(1-2i)=-2+4i.
+\]
+\[
+\Step{3}\; x^2-2x+5=(-3-4i)+(-2+4i)+5=0.
+\]
+\[
+\boxed{\text{$1-2i$ \;is a solution.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Determine whether $1-i$ is a solution of $x^2+2x+2=0$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Let $x=1-i$.
+
+\[
+\Step{1}\; x^2=(1-i)^2=1-2i+i^2=1-2i-1=-2i.
+\]
+\[
+\Step{2}\; 2x=2(1-i)=2-2i.
+\]
+\[
+\Step{3}\; x^2+2x+2=(-2i)+(2-2i)+2=4-4i\neq 0.
+\]
+\[
+\boxed{\text{$1-i$ \;is NOT a solution.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Determine whether $i$ is a solution of $x^2+1=0$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Let $x=i$.
+
+\[
+\Step{1}\; x^2+1=i^2+1=-1+1=0.
+\]
+\[
+\boxed{\text{$i$ \;is a solution.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Factorize $x^2+16$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; x^2+16=x^2+4^2.
+\]
+\[
+\Step{2}\; x^2+4^2=(x+4i)(x-4i).
+\]
+\[
+\boxed{x^2+16=(x+4i)(x-4i)}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Factorize $a^2+b^2$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; a^2+b^2=a^2+(b)^2.
+\]
+\[
+\Step{2}\; a^2+b^2=(a+bi)(a-bi).
+\]
+\[
+\boxed{a^2+b^2=(a+bi)(a-bi)}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Factorize $x^2+25y^2$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; x^2+25y^2=x^2+(5y)^2.
+\]
+\[
+\Step{2}\; x^2+(5y)^2=(x+5yi)(x-5yi).
+\]
+\[
+\boxed{x^2+25y^2=(x+5yi)(x-5yi)}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q11
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} Solve the system:
+\[
+\begin{cases}
+z-4w=3i\\
+2z+3w=11-5i
+\end{cases}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; \text{From } z-4w=3i \Rightarrow z=3i+4w.
+\]
+\[
+\Step{2}\; \text{Substitute into } 2z+3w=11-5i:
+\quad 2(3i+4w)+3w=11-5i.
+\]
+\[
+\Step{3}\; 6i+8w+3w=11-5i
+\Rightarrow 11w=11-11i
+\Rightarrow w=1-i.
+\]
+\[
+\Step{4}\; z=3i+4(1-i)=3i+4-4i=4-i.
+\]
+
+\[
+\boxed{z=4-i,\qquad w=1-i}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q12
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} Solve the system:
+\[
+\begin{cases}
+3z+(2+i)w=11-i\\
+(2-i)z-w=1+i
+\end{cases}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; (2-i)z-w=1+i \Rightarrow w=(2-i)z-(1+i).
+\]
+
+\[
+\Step{2}\; \text{Substitute into } 3z+(2+i)w=11-i:
+\quad 3z+(2+i)\bigl((2-i)z-(1+i)\bigr)=11-i.
+\]
+
+\[
+\Step{3}\; (2+i)(2-i)=4-2i+2i-i^2=5.
+\]
+So,
+\[
+3z+5z-(2+i)(1+i)=11-i.
+\]
+
+\[
+\Step{4}\; (2+i)(1+i)=2+2i+i+i^2=1+3i.
+\]
+Thus,
+\[
+8z-(1+3i)=11-i
+\Rightarrow 8z=12+2i
+\Rightarrow z=\frac{12+2i}{8}=\frac{3}{2}+\frac{i}{4}.
+\]
+
+\[
+\Step{5}\; w=(2-i)z-(1+i).
+\]
+Compute $(2-i)\left(\frac{3}{2}+\frac{i}{4}\right)$:
+\[
+(2-i)\left(\frac{3}{2}+\frac{i}{4}\right)=\frac{13}{4}-i.
+\]
+So,
+\[
+w=\left(\frac{13}{4}-i\right)-(1+i)=\frac{9}{4}-2i.
+\]
+
+\[
+\boxed{z=\frac{3}{2}+\frac{i}{4},\qquad w=\frac{9}{4}-2i}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13a(i)
+\begin{QAPair}{Question 13(a)(i)}
+\textcolor{gold}{\bfseries Question:} In a circuit $E=IZ$. Find $I$ if\\
+$E=(70+220\J)$ volts, $\; Z=(16+8\J)$ ohms.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; I=\frac{E}{Z}=\frac{70+220\J}{16+8\J}.
+\]
+
+\[
+\Step{2}\; \text{Multiply top and bottom by conjugate }(16-8\J):
+\quad I=\frac{(70+220\J)(16-8\J)}{16^2+8^2}.
+\]
+
+\[
+\Step{3}\; \text{Denominator: } 16^2+8^2=256+64=320.
+\]
+
+\[
+\Step{4}\; \text{Numerator: } (70+220\J)(16-8\J)
+=1120-560\J+3520\J-1760\J^2
+=2880+2960\J
+\]
+(because $\J^2=-1$, so $-1760\J^2=+1760$).
+
+\[
+\Step{5}\; I=\frac{2880}{320}+\frac{2960}{320}\J
+=9+\frac{37}{4}\J.
+\]
+
+\[
+\boxed{I=9+\frac{37}{4}\J\ \text{amp}\; \;(\text{i.e. } I=9+9.25\J)}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13a(ii)
+\begin{QAPair}{Question 13(a)(ii)}
+\textcolor{gold}{\bfseries Question:} Find $I$ if\\
+$E=(85+110\J)$ volts, $\; Z=(3-4\J)$ ohms.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; I=\frac{E}{Z}=\frac{85+110\J}{3-4\J}.
+\]
+
+\[
+\Step{2}\; \text{Multiply by conjugate }(3+4\J):
+\quad I=\frac{(85+110\J)(3+4\J)}{3^2+4^2}.
+\]
+
+\[
+\Step{3}\; \text{Denominator: } 3^2+4^2=9+16=25.
+\]
+
+\[
+\Step{4}\; \text{Numerator: } (85+110\J)(3+4\J)
+=255+340\J+330\J+440\J^2
+=-185+670\J.
+\]
+
+\[
+\Step{5}\; I=\frac{-185}{25}+\frac{670}{25}\J
+=-\frac{37}{5}+\frac{134}{5}\J.
+\]
+
+\[
+\boxed{I=-\frac{37}{5}+\frac{134}{5}\J\ \text{amp}\; \;(\text{i.e. } I=-7.4+26.8\J)}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13b(i)
+\begin{QAPair}{Question 13(b)(i)}
+\textcolor{gold}{\bfseries Question:} Find $Z$ if\\
+$E=(-50+100\J)$ volts, $\; I=(-6-2\J)$ amp.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; Z=\frac{E}{I}=\frac{-50+100\J}{-6-2\J}.
+\]
+
+\[
+\Step{2}\; \text{Multiply by conjugate }(-6+2\J):
+\quad Z=\frac{(-50+100\J)(-6+2\J)}{(-6)^2+(-2)^2}.
+\]
+
+\[
+\Step{3}\; \text{Denominator: } 36+4=40.
+\]
+
+\[
+\Step{4}\; \text{Numerator: } (-50+100\J)(-6+2\J)
+=300-100\J-600\J+200\J^2
+=100-700\J.
+\]
+
+\[
+\Step{5}\; Z=\frac{100}{40}-\frac{700}{40}\J
+=\frac{5}{2}-\frac{35}{2}\J.
+\]
+
+\[
+\boxed{Z=\frac{5}{2}-\frac{35}{2}\J\ \Omega\; \;(\text{i.e. } Z=2.5-17.5\J)}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13b(ii)
+\begin{QAPair}{Question 13(b)(ii)}
+\textcolor{gold}{\bfseries Question:} Find $Z$ if\\
+$E=(100+10\J)$ volts, $\; I=(-8+3\J)$ amp.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; Z=\frac{E}{I}=\frac{100+10\J}{-8+3\J}.
+\]
+
+\[
+\Step{2}\; \text{Multiply by conjugate }(-8-3\J):
+\quad Z=\frac{(100+10\J)(-8-3\J)}{(-8)^2+3^2}.
+\]
+
+\[
+\Step{3}\; \text{Denominator: } 64+9=73.
+\]
+
+\[
+\Step{4}\; \text{Numerator: } (100+10\J)(-8-3\J)
+=-800-300\J-80\J-30\J^2
+=-770-380\J.
+\]
+
+\[
+\Step{5}\; Z=-\frac{770}{73}-\frac{380}{73}\J.
+\]
+
+\[
+\boxed{Z=-\frac{770}{73}-\frac{380}{73}\J\ \Omega\; \;(\text{approx } Z\approx -10.55-5.21\J)}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13c
+\begin{QAPair}{Question 13(c)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\displaystyle \frac{1}{z-z^2}$ when $z=\frac{1-i}{10}$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+\Step{1}\; z=\frac{1-i}{10}.
+\]
+
+\[
+\Step{2}\; z^2=\left(\frac{1-i}{10}\right)^2=\frac{(1-i)^2}{100}
+=\frac{1-2i+i^2}{100}
+=\frac{-2i}{100}=-\frac{i}{50}.
+\]
+
+\[
+\Step{3}\; z-z^2=\frac{1-i}{10}-\left(-\frac{i}{50}\right)
+=\frac{1-i}{10}+\frac{i}{50}.
+\]
+
+\[
+\Step{4}\; \text{Common denominator }50:
+\quad \frac{1-i}{10}=\frac{5(1-i)}{50}=\frac{5-5i}{50}.
+\]
+So,
+\[
+z-z^2=\frac{5-5i+i}{50}=\frac{5-4i}{50}.
+\]
+
+\[
+\Step{5}\; \frac{1}{z-z^2}=\frac{1}{\frac{5-4i}{50}}=\frac{50}{5-4i}.
+\]
+
+\[
+\Step{6}\; \text{Multiply by conjugate }(5+4i):
+\quad \frac{50}{5-4i}=\frac{50(5+4i)}{5^2+4^2}
+=\frac{250+200i}{41}.
+\]
+
+\[
+\boxed{\frac{1}{z-z^2}=\frac{250}{41}+\frac{200}{41}i}
+\]
+\end{QAPair}
+
+\end{document}

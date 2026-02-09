@@ -1,0 +1,385 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 6.2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Sum/Difference:} $(f\pm g)(x)=f(x)\pm g(x)$.
+\item \textbf{Product:} $(fg)(x)=f(x)g(x)$.
+\item \textbf{Quotient:} $\left(\dfrac{f}{g}\right)(x)=\dfrac{f(x)}{g(x)}$, with $g(x)\neq 0$.
+\item \textbf{Composition:} $(f\circ g)(x)=f(g(x))$.
+\item \textbf{Inverse idea:} Write $y=f(x)$, swap $x$ and $y$, then solve for $y$ (and note the domain/range restrictions).
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=4(x-1)$ and $g(x)=x^2-2x+1$, find $(f+g)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& f(x)=4(x-1)=4x-4.\\
+\Step{2}\;& (f+g)(x)=(4x-4)+(x^2-2x+1).\\
+\Step{3}\;&=x^2+2x-3.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=4(x-1)$ and $g(x)=x^2-2x+1$, find $(f-g)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& f(x)=4x-4.\\
+\Step{2}\;& (f-g)(x)=(4x-4)-(x^2-2x+1).\\
+\Step{3}\;&=-x^2+6x-5.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=4(x-1)$ and $g(x)=x^2-2x+1$, find $(f\times g)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& f(x)=4(x-1),\quad g(x)=(x-1)^2.\\
+\Step{2}\;& (f\times g)(x)=4(x-1)\cdot (x-1)^2=4(x-1)^3.\\
+\Step{3}\;& 4(x-1)^3=4(x^3-3x^2+3x-1)\\
+&=4x^3-12x^2+12x-4.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=4(x-1)$ and $g(x)=x^2-2x+1$, find $(f\div g)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \left(\frac{f}{g}\right)(x)=\frac{4(x-1)}{x^2-2x+1}.\\
+\Step{2}\;& x^2-2x+1=(x-1)^2 \;\Rightarrow\; \frac{4(x-1)}{(x-1)^2}=\frac{4}{x-1}.\\
+\Step{3}\;& \boxed{\left(\frac{f}{g}\right)(x)=\frac{4}{x-1}},\quad \text{with } x\neq 1.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=4x$ and $g(x)=x+1$, find $(f\circ g)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (f\circ g)(x)=f(g(x))=f(x+1).\\
+\Step{2}\;& f(x+1)=4(x+1)=4x+4.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=4x$ and $g(x)=x+1$, find $(g\circ f)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (g\circ f)(x)=g(f(x))=g(4x).\\
+\Step{2}\;& g(4x)=4x+1.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=4x$, find $(f\circ f)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (f\circ f)(x)=f(f(x))=f(4x).\\
+\Step{2}\;& f(4x)=4(4x)=16x.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} If $g(x)=x+1$, find $(g\circ g)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (g\circ g)(x)=g(g(x))=g(x+1).\\
+\Step{2}\;& g(x+1)=(x+1)+1=x+2.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} Find $(f\circ g)(x)$ and $(g\circ f)(x)$ if $f(x)=3-2x$ and $g(x)=x+1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (f\circ g)(x)=f(x+1)=3-2(x+1)=1-2x.\\
+\Step{2}\;& (g\circ f)(x)=g(3-2x)=(3-2x)+1=4-2x.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} Find $(f\circ g)(x)$ and $(g\circ f)(x)$ if $f(x)=\dfrac{2}{x}$ and $g(x)=\dfrac{2x}{x-1}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (f\circ g)(x)=f\!\left(\frac{2x}{x-1}\right)
+=\frac{2}{\frac{2x}{x-1}}
+=\frac{2(x-1)}{2x}
+=\frac{x-1}{x}.\\[4pt]
+\Step{2}\;& (g\circ f)(x)=g\!\left(\frac{2}{x}\right)
+=\frac{2\cdot \frac{2}{x}}{\frac{2}{x}-1}
+=\frac{\frac{4}{x}}{\frac{2-x}{x}}
+=\frac{4}{2-x}.\\[4pt]
+\Step{3}\;& \text{Restrictions: } x\neq 0,\; x\neq 1 \text{ for } (f\circ g)(x);\quad x\neq 0,\; x\neq 2 \text{ for } (g\circ f)(x).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} Find $(f\circ g)(x)$ and $(g\circ f)(x)$ if $f(x)=3x$ and $g(x)=\dfrac{2}{\sqrt{x-1}}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (f\circ g)(x)=f\!\left(\frac{2}{\sqrt{x-1}}\right)
+=3\cdot \frac{2}{\sqrt{x-1}}
+=\frac{6}{\sqrt{x-1}}.\\
+\Step{2}\;& (g\circ f)(x)=g(3x)=\frac{2}{\sqrt{3x-1}}.\\
+\Step{3}\;& \text{Restrictions: } x>1 \text{ for } (f\circ g)(x);\quad x>\frac13 \text{ for } (g\circ f)(x).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textcolor{gold}{\bfseries Question:} Find $(f\circ g)(x)$ and $(g\circ f)(x)$ if $f(x)=x^2-1$ and $g(x)=\sqrt{x}-1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (f\circ g)(x)=f(\sqrt{x}-1)=(\sqrt{x}-1)^2-1.\\
+\Step{2}\;& (\sqrt{x}-1)^2=x-2\sqrt{x}+1 \;\Rightarrow\; (f\circ g)(x)=x-2\sqrt{x}.\\
+\Step{3}\;& (g\circ f)(x)=g(x^2-1)=\sqrt{x^2-1}-1.\\
+\Step{4}\;& \text{Restrictions: } x\ge 0 \text{ for } (f\circ g)(x);\quad x\le -1 \text{ or } x\ge 1 \text{ for } (g\circ f)(x).
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=x^2$ and $g(x)=2x+1$, find $x$ if $(f\circ g)(x)=(g\circ f)(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (f\circ g)(x)=f(2x+1)=(2x+1)^2=4x^2+4x+1.\\
+\Step{2}\;& (g\circ f)(x)=g(x^2)=2x^2+1.\\
+\Step{3}\;& 4x^2+4x+1=2x^2+1 \;\Rightarrow\; 2x^2+4x=0.\\
+\Step{4}\;& 2x(x+2)=0 \;\Rightarrow\; \boxed{x=0 \text{ or } x=-2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=x^2$ and $g(x)=2x+1$, find $x$ if $f(x)=g(x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2=2x+1 \;\Rightarrow\; x^2-2x-1=0.\\
+\Step{2}\;& x=\frac{2\pm \sqrt{(-2)^2-4(1)(-1)}}{2}
+=\frac{2\pm \sqrt{8}}{2}
+=\frac{2\pm 2\sqrt2}{2}.\\
+\Step{3}\;& \boxed{x=1+\sqrt2 \text{ or } x=1-\sqrt2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} If $f(x)=x^2$ and $g(x)=2x+1$, find $x$ if $(g\circ f)(x)=9$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (g\circ f)(x)=g(x^2)=2x^2+1.\\
+\Step{2}\;& 2x^2+1=9 \;\Rightarrow\; 2x^2=8 \;\Rightarrow\; x^2=4.\\
+\Step{3}\;& \boxed{x=2 \text{ or } x=-2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 (i)}
+\textcolor{gold}{\bfseries Question:} Find the inverse of $f(x)=2x-1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& y=2x-1.\\
+\Step{2}\;& \text{Swap } x \text{ and } y:\quad x=2y-1.\\
+\Step{3}\;& 2y=x+1 \;\Rightarrow\; y=\frac{x+1}{2}.\\
+\Step{4}\;& \boxed{f^{-1}(x)=\frac{x+1}{2}.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (ii)}
+\textcolor{gold}{\bfseries Question:} Find the inverse of $g(x)=\dfrac{2}{x-3}$, where $x\neq 3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& y=\frac{2}{x-3}.\\
+\Step{2}\;& y(x-3)=2 \;\Rightarrow\; x-3=\frac{2}{y} \;\Rightarrow\; x=3+\frac{2}{y}.\\
+\Step{3}\;& \text{Swap } x \text{ and } y:\quad y=3+\frac{2}{x}.\\
+\Step{4}\;& \boxed{g^{-1}(x)=3+\frac{2}{x}},\quad \text{with } x\neq 0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iii)}
+\textcolor{gold}{\bfseries Question:} Find the inverse of $f(x)=\sqrt{x+5}$, where $x\ge -5$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& y=\sqrt{x+5}\quad (\Rightarrow y\ge 0).\\
+\Step{2}\;& y^2=x+5 \;\Rightarrow\; x=y^2-5.\\
+\Step{3}\;& \text{Swap } x \text{ and } y:\quad y=x^2-5.\\
+\Step{4}\;& \boxed{f^{-1}(x)=x^2-5},\quad \text{domain of } f^{-1}: x\ge 0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iv)}
+\textcolor{gold}{\bfseries Question:} Find the inverse of $g(x)=(x-3)^2$, where $x\ge 3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& y=(x-3)^2\quad (\Rightarrow y\ge 0 \text{ and } x\ge 3).\\
+\Step{2}\;& x-3=\sqrt{y}\quad (\text{take the positive root since } x\ge 3).\\
+\Step{3}\;& x=3+\sqrt{y}.\\
+\Step{4}\;& \text{Swap } x \text{ and } y:\quad \boxed{g^{-1}(x)=3+\sqrt{x}},\quad x\ge 0.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} If $f(x)=\dfrac{3}{x-5}$ and $g(x)=x+\dfrac{3}{2}$, find $f^{-1}(1)$ and $g^{-1}\!\left(\dfrac12\right)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \textbf{Find } f^{-1}(x):\quad y=\frac{3}{x-5}\;\Rightarrow\; y(x-5)=3\\
+&\Rightarrow x-5=\frac{3}{y}\;\Rightarrow\; x=5+\frac{3}{y}.\\
+&\Rightarrow f^{-1}(x)=5+\frac{3}{x}\quad (x\neq 0).\\[4pt]
+\Step{2}\;& f^{-1}(1)=5+\frac{3}{1}=8.\\[6pt]
+\Step{3}\;& \textbf{Find } g^{-1}(x):\quad y=x+\frac{3}{2}\;\Rightarrow\; x=y-\frac{3}{2}.\\
+&\Rightarrow g^{-1}(x)=x-\frac{3}{2}.\\[4pt]
+\Step{4}\;& g^{-1}\!\left(\frac12\right)=\frac12-\frac{3}{2}=-1.
+\end{aligned}
+\]
+\[
+\boxed{\,f^{-1}(1)=8,\qquad g^{-1}\!\left(\tfrac12\right)=-1\,}
+\]
+\end{QAPair}
+
+\end{document}

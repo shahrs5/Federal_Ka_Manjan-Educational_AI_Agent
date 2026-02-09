@@ -1,0 +1,408 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 1 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Distributive law:} $a(b+c-d)=ab+ac-ad$.
+\item \textbf{Exponent laws:} $a^m a^n=a^{m+n}$,\;
+$\dfrac{a^m}{a^n}=a^{m-n}$,\;
+(a^m)^n=a^{mn}$,\;
+$a^{-k}=\dfrac{1}{a^k}$.
+\item \textbf{Rational exponent:} $a^{\frac{m}{n}}=\sqrt[n]{a^m}$ (for odd $n$, negative $a$ is allowed).
+\item \textbf{Identity \& inverse:} $a+0=a$, $a\cdot 1=a$, $a\cdot \dfrac{1}{a}=1$ ($a\neq 0$).
+\item \textbf{Reflexive property:} any expression equals itself, e.g. $E=E$.
+\item \textbf{Number line:} open circle for $<$ or $>$, closed circle for $\le$ or $\ge$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} $a(b+c-d)$ equals which option?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a(b+c-d)=ab+ac-ad \qquad (\text{distributive law})\\
+\Step{2}\;& \Rightarrow\; \text{Correct option: (b) } \; ac+ab-ad.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} $a^r\cdot a^{-s}\div a^s$ is\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a^r\cdot a^{-s}\div a^s
+= a^{r+(-s)-s} \qquad (\text{add/subtract exponents})\\
+\Step{2}\;&=a^{r-2s}
+=\frac{a^r}{a^{2s}}.\\
+\Step{3}\;& \Rightarrow\; \text{Correct option: (d) } \dfrac{a^r}{a^{2s}}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} $\sqrt[n]{ab}$ is equal to\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sqrt[n]{ab}=(ab)^{\frac{1}{n}} \qquad (\text{radical to exponent})\\
+\Step{2}\;& \Rightarrow\; \text{Correct option: (d) } (ab)^{\frac{1}{n}}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} Which number is self-multiplicative inverse?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{If } x \text{ is its own multiplicative inverse, then } x=\frac{1}{x}.\\
+\Step{2}\;& x^2=1 \;\Rightarrow\; x=\pm 1.\\
+\Step{3}\;& \Rightarrow\; \text{From the options, } -1 \text{ fits. Correct option: (c).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} If $a>0$, then $\sqrt{a}$ is\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a>0 \Rightarrow \sqrt{a} \text{ exists as a real number.}\\
+\Step{2}\;& \Rightarrow\; \text{Correct option: (a) real.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi)}
+\textcolor{gold}{\bfseries Question:} If $a+b=a$, what is the value of $b$?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a+b=a\\
+\Step{2}\;& b=a-a=0.\\
+\Step{3}\;& \Rightarrow\; \text{Correct option: (d) } 0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii)}
+\textcolor{gold}{\bfseries Question:} If $a\cdot b=1$, what is the value of $b$?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a\cdot b=1 \quad (a\neq 0)\\
+\Step{2}\;& b=\frac{1}{a}.\\
+\Step{3}\;& \Rightarrow\; \text{Correct option: (c) } \frac{1}{a}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii)}
+\textcolor{gold}{\bfseries Question:} According to reflexive property: $y^2-17=?$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Reflexive property says any expression equals itself.}\\
+\Step{2}\;& y^2-17 = y^2-17.\\
+\Step{3}\;& \Rightarrow\; \text{Correct option: (c) } y^2-17.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix)}
+\textcolor{gold}{\bfseries Question:} If $a\cdot b=a$, what is the value of $b$?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a\cdot b=a\\
+\Step{2}\;& \text{Divide both sides by } a \; (a\neq 0):\quad b=1.\\
+\Step{3}\;& \Rightarrow\; \text{Correct option: (b) } 1.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x)}
+\textcolor{gold}{\bfseries Question:} If $a\cdot b=1$, what is $b$ called?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a\cdot b=1 \Rightarrow b=\frac{1}{a}.\\
+\Step{2}\;& \text{So } b \text{ is the \emph{multiplicative inverse} of } a.\\
+\Step{3}\;& \Rightarrow\; \text{Correct option: (a) multiplicative inverse of } a.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi)}
+\textcolor{gold}{\bfseries Question:} Commutative property does not hold with respect to\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Addition: } a+b=b+a \text{ (true).}\\
+\Step{2}\;& \text{Multiplication: } ab=ba \text{ (true).}\\
+\Step{3}\;& \text{Subtraction: } a-b\neq b-a \text{ in general.}\\
+\Step{4}\;& \Rightarrow\; \text{Correct option: (c) subtraction.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Represent $-5\frac{1}{5}$ on the number line.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& -5\frac{1}{5}= -\left(5+\frac{1}{5}\right)= -\frac{26}{5}.\\
+\Step{2}\;& -\frac{26}{5}= -5.2.
+\end{aligned}
+\]
+So, mark a point at $-5.2$ (between $-5$ and $-6$, slightly closer to $-5$).
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Represent $\dfrac{17}{3}$ on the number line.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{17}{3}=5\frac{2}{3}.\\
+\Step{2}\;& 5\frac{2}{3}\approx 5.67.
+\end{aligned}
+\]
+So, mark a point between $5$ and $6$, closer to $6$.
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Represent $-2<x<4$ on the number line.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& -2<x<4 \text{ means } x \text{ is between } -2 \text{ and } 4.\\
+\Step{2}\;& \text{Endpoints are not included (strict inequality).}
+\end{aligned}
+\]
+Interval form: \(\;(-2,\,4)\;\). Use \textbf{open circles} at $-2$ and $4$ and shade between them.
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} Represent $x\ge 6$ on the number line.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x\ge 6 \text{ means all numbers starting from } 6 \text{ and larger.}\\
+\Step{2}\;& 6 \text{ is included.}
+\end{aligned}
+\]
+Interval form: \(\;[6,\,\infty)\;\). Use a \textbf{closed circle} at $6$ and draw/shade a ray to the right.
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} $(-2)^{\frac{4}{5}}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (-2)^{\frac{4}{5}}=\sqrt[5]{(-2)^4} \qquad \left(a^{\frac{m}{n}}=\sqrt[n]{a^m}\right)\\
+\Step{2}\;&= \sqrt[5]{16}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} $(-27)^{\frac{1}{3}}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (-27)^{\frac{1}{3}}=\sqrt[3]{-27}\\
+\Step{2}\;&= -3.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} $(\sqrt{16})^4$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sqrt{16}=4\\
+\Step{2}\;& (\sqrt{16})^4=4^4=256.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textcolor{gold}{\bfseries Question:} $(\sqrt[3]{-8})^9$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sqrt[3]{-8}=-2\\
+\Step{2}\;& (\sqrt[3]{-8})^9=(-2)^9=-512.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (v)}
+\textcolor{gold}{\bfseries Question:} $(x^{-2})^3\,(x^0)^5$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (x^{-2})^3=x^{-6} \qquad \left((a^m)^n=a^{mn}\right)\\
+\Step{2}\;& (x^0)^5=1^5=1\\
+\Step{3}\;& (x^{-2})^3(x^0)^5 = x^{-6}\cdot 1=x^{-6}=\frac{1}{x^6}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{(-2)^3\cdot (-2)^{-4}\cdot (-2)}{(-2)^{-3}}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{(-2)^3\cdot (-2)^{-4}\cdot (-2)}{(-2)^{-3}}
+= (-2)^{3+(-4)+1-(-3)}\\
+\Step{2}\;&= (-2)^{0+3}=(-2)^3\\
+\Step{3}\;&= -8.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{2^{\frac12}\cdot 2^{\frac34}}{2^{\frac12}}\times \dfrac{3\cdot 3^{\frac32}}{3^{-\frac12}}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{2^{\frac12}\cdot 2^{\frac34}}{2^{\frac12}}
+=2^{\frac12+\frac34-\frac12}=2^{\frac34}.\\
+\Step{2}\;& \frac{3\cdot 3^{\frac32}}{3^{-\frac12}}
+=3^{1+\frac32-(-\frac12)}=3^{1+\frac32+\frac12}=3^3=27.\\
+\Step{3}\;& \Rightarrow\; 2^{\frac34}\cdot 27 = 27\cdot 2^{\frac34}
+=27\sqrt[4]{2^3}=27\sqrt[4]{8}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Determine whether each statement is true or false. If false, give an example.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{enumerate}[label=\textbf{(\alph*)}]
+\item Every rational number is an integer. \;\;\textcolor{gold}{False.}\; Example: $\frac{1}{2}$ is rational but not an integer.
+\item Every real number is an irrational number. \;\;\textcolor{gold}{False.}\; Example: $2$ is real but rational.
+\item Every irrational number is a real number. \;\;\textcolor{gold}{True.}
+\item Every integer is a rational number. \;\;\textcolor{gold}{True.}\; (e.g. $7=\frac{7}{1}$.)
+\item Every real number is either rational or irrational. \;\;\textcolor{gold}{True.}
+\end{enumerate}
+\end{QAPair}
+
+\end{document}

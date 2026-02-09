@@ -1,0 +1,736 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% ---- overflow protection
+\setlength{\emergencystretch}{2.5em}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+  before upper=\sloppy,
+  before lower=\sloppy
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 4 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (hot)}\par\medskip
+\begin{itemize}
+\item $a^2-b^2=(a-b)(a+b)$,\quad $a^3-b^3=(a-b)(a^2+ab+b^2)$
+\item $a^3+b^3=(a+b)(a^2-ab+b^2)$
+\item \textbf{Sophie Germain:} $a^4+4b^4=(a^2-2ab+2b^2)(a^2+2ab+2b^2)$
+\item \textbf{HCF/LCM:} (for polynomials) $\ \text{Product}=\text{HCF}\times \text{LCM}$
+\end{itemize}
+\end{QuickBox}
+
+% ===================== 1 (MCQs) =====================
+\begin{QAPair}{Question 1 (i) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Factors of $-2-a+a^2$ are:
+\begin{itemize}
+\item[(a)] $(a-2)(a-1)$
+\item[(b)] $(a+1)(a+2)$
+\item[(c)] $(a+2)(a-1)$
+\item[(d)] $(a+1)(a-2)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d)}
+\[
+\begin{aligned}
+\Step{1}\;& -2-a+a^2=a^2-a-2.\\
+\Step{2}\;& a^2-a-2=(a-2)(a+1).\\
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Factorization of $x^2-x+\dfrac14$ is:
+\begin{itemize}
+\item[(a)] $\left(x+\frac12\right)\left(x-\frac12\right)$
+\item[(b)] $\left(x+\frac12\right)(x-1)$
+\item[(c)] $\left(x-\frac12\right)(x+1)$
+\item[(d)] $\left(x-\frac12\right)\left(x-\frac12\right)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d)}
+\[
+x^2-x+\frac14=\left(x-\frac12\right)^2.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} $(x^2+m^2)(x+m)(x^4+m^4)(x-m)$ is the factored form of:
+\begin{itemize}
+\item[(a)] $x^4-m^4$
+\item[(b)] $x^8+m^8$
+\item[(c)] $x^8-m^8$
+\item[(d)] $x^4+m^4$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}
+\[
+(x+m)(x-m)=x^2-m^2,\quad (x^2-m^2)(x^2+m^2)=x^4-m^4,
+\]
+\[
+(x^4-m^4)(x^4+m^4)=x^8-m^8.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} $a^4+64b^4$ is the product of:
+\begin{itemize}
+\item[(a)] $a^2-4ab+8b^2$ and $a^2+4ab+8b^2$
+\item[(b)] $a^2+8b^2+4ab$ and $a^2-8b^2+4ab$
+\item[(c)] $(a^2+8b^2)^2$
+\item[(d)] none of these
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a)}
+\[
+a^4+64b^4=a^4+4(2b)^4=(a^2-4ab+8b^2)(a^2+4ab+8b^2).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v) --- MCQ}
+\textcolor{gold}{\bfseries Question:} $x(2a+3b+7)+x(2a+3b+5)$ equals:
+\begin{itemize}
+\item[(a)] $2x(2a+3b+6)$
+\item[(b)] $4x(2a+3b+6)$
+\item[(c)] $x(2a+3b+7)(2a+3b+5)$
+\item[(d)] $(x+x)(2a+3b+12)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a)}
+\[
+x[(2a+3b+7)+(2a+3b+5)]=x(4a+6b+12)=2x(2a+3b+6).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Highest common factor of $-12x^2y^2,\ 6xy^3,\ 24x^2y^2$ is:
+\begin{itemize}
+\item[(a)] $-6xy$
+\item[(b)] $6x^2y^3$
+\item[(c)] $6xy^2$
+\item[(d)] $-24x^2y^3$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}
+\[
+\gcd(12,6,24)=6,\quad x^{\min(2,1,2)}=x,\quad y^{\min(2,3,2)}=y^2.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} LCM of $12x^2y^2,\ 6xy^3,\ 24x^2y^2$ is:
+\begin{itemize}
+\item[(a)] $6xy$
+\item[(b)] $6x^2y^3$
+\item[(c)] $6xy^2$
+\item[(d)] $24x^2y^3$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d)}
+\[
+\mathrm{lcm}(12,6,24)=24,\quad x^{\max(2,1,2)}=x^2,\quad y^{\max(2,3,2)}=y^3.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Highest common factor of $7x-6xy$ and $5xy^3-3x^2$ is:
+\begin{itemize}
+\item[(a)] $(7-6y)(5y^3-3x)$
+\item[(b)] $(7x-6xy)(5y^3x-3x^2)$
+\item[(c)] $x$
+\item[(d)] $x(7-6y)(5y^3-3x)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}
+\[
+7x-6xy=x(7-6y),\quad 5xy^3-3x^2=x(5y^3-3x)\Rightarrow \text{HCF}=x.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix) --- MCQ}
+\textcolor{gold}{\bfseries Question:} LCM of $7x-6xy$ and $5xy^3-3x^2$ is:
+\begin{itemize}
+\item[(a)] $(7-6y)(5y^3-3x^2)$
+\item[(b)] $(7x-6xy)(5y^3-3x^2)$
+\item[(c)] $x$
+\item[(d)] $x(7-6y)(5y^3-3x)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d)}
+\[
+\text{LCM}=x(7-6y)(5y^3-3x).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x) --- MCQ}
+\textcolor{gold}{\bfseries Question:} HCF of $7x^3-8y^3$ and $3x^3-5y^3$ is:
+\begin{itemize}
+\item[(a)] $1$
+\item[(b)] $(7x^3-8y^3)(3x^3-5y^3)$
+\item[(c)] $7x^3-8y^3$
+\item[(d)] $3x^3-5y^3$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a)}\quad (no common factor)
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} LCM of $7x^3-8y^3$ and $3x^3-5y^3$ is:
+\begin{itemize}
+\item[(a)] $1$
+\item[(b)] $(7x^3-8y^3)(3x^3-5y^3)$
+\item[(c)] $7x^3-8y^3$
+\item[(d)] $3x^3-5y^3$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)}
+\[
+\text{LCM}=\text{product (since HCF}=1).
+\]
+\end{QAPair}
+\begin{QAPair}{Question 1 (xii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the product of $\dfrac{uv^2}{3w^3}$ and $\dfrac{6w^4}{u^2v^3}$?
+\begin{itemize}
+\item[(a)] $\dfrac{uv^2}{3w^2}\times\dfrac{u^2v^3}{6w^4}$
+\item[(b)] $\dfrac{2w}{uv}$
+\item[(c)] $\dfrac{uv}{2w}$
+\item[(d)] both a \& c
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)}
+\[
+\frac{uv^2}{3w^3}\cdot\frac{6w^4}{u^2v^3}
+=2\cdot \frac{w}{uv}
+\Rightarrow \boxed{\frac{2w}{uv}}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the quotient of $\dfrac{3y^2}{10}\div\dfrac{y^3}{2}$?
+\begin{itemize}
+\item[(a)] $\dfrac{3y^5}{20}$
+\item[(b)] $\dfrac{3}{5y}$
+\item[(c)] $\dfrac{3y^2}{10}\div\dfrac{2}{y^3}$
+\item[(d)] $\dfrac{5y}{3}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)}
+\[
+\frac{3y^2}{10}\cdot\frac{2}{y^3}=\frac{3}{5y}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the sum of $\dfrac{2a}{a^2-1}$ and $\dfrac{-a}{a^2-1}$?
+\begin{itemize}
+\item[(a)] $\dfrac{3a}{a^2-1}$
+\item[(b)] $\dfrac{a}{a^2-1}$
+\item[(c)] $\dfrac{2a-a}{(a^2-1)+(a^2-1)}$
+\item[(d)] $\dfrac{-2a}{a^2-1}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)}
+\[
+\frac{2a-a}{a^2-1}=\frac{a}{a^2-1}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the difference of $\dfrac{-3x}{x+y}$ and $\dfrac{x}{x+y}$?
+\begin{itemize}
+\item[(a)] $\dfrac{-2x}{x+y}$
+\item[(b)] $\dfrac{-3x-x}{2x+2y}$
+\item[(c)] $\dfrac{3x^2}{x+y}$
+\item[(d)] $\dfrac{-4x}{x+y}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d)}
+\[
+\frac{-3x}{x+y}-\frac{x}{x+y}=\frac{-4x}{x+y}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If product of two polynomials is $(a-b)^2(a^2+ab+b^2)$ and their HCF is $a-b$, what is their LCM?
+\begin{itemize}
+\item[(a)] $a^3-b^3$
+\item[(b)] $(a-b)^3(a^2+ab+b^2)$
+\item[(c)] $(a-b)^2(a^2+ab+b^2)$
+\item[(d)] $a^2+ab+b^2$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a)}
+\[
+\text{LCM}=\frac{\text{product}}{\text{HCF}}
+=\frac{(a-b)^2(a^2+ab+b^2)}{(a-b)}
+=(a-b)(a^2+ab+b^2)=a^3-b^3.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If product of HCF and LCM of two polynomials is $(x^3-y^3)(x+y)$ then what will be the product of these polynomials?
+\begin{itemize}
+\item[(a)] $x^4-y^4$
+\item[(b)] $(x-y)(x^2+y^2)$
+\item[(c)] $(x^2-y^2)(x^2+xy+y^2)$
+\item[(d)] $(x^2-y^2)(x^2-xy+y^2)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}
+\[
+(x^3-y^3)(x+y)=(x-y)(x^2+xy+y^2)(x+y)=(x^2-y^2)(x^2+xy+y^2).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xviii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the square root of $36x^6y^{16}$?
+\begin{itemize}
+\item[(a)] $6x^6y^{16}$
+\item[(b)] $6xy$
+\item[(c)] $6x^3y^8$
+\item[(d)] $16x^3y^8$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}
+\[
+\sqrt{36x^6y^{16}}=6x^3y^8.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xix) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the square root of $(15x^2-7y^2)^4$?
+\begin{itemize}
+\item[(a)] $\pm(15x^2-7y^2)^2$
+\item[(b)] $\pm(15x^2-7y^2)$
+\item[(c)] $\pm(15x-7y)^2$
+\item[(d)] $\pm(15x-7y)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a)}
+\[
+(15x^2-7y^2)^4=\Bigl((15x^2-7y^2)^2\Bigr)^2
+\Rightarrow \sqrt{\cdot}=\pm(15x^2-7y^2)^2.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xx) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the square root of $\left[-\left(2x+\frac1x+1\right)\right]^2$?
+\begin{itemize}
+\item[(a)] $\pm\left(2x+\frac1x+1\right)^2$
+\item[(b)] $\left(2x+\frac1x+1\right)^2$
+\item[(c)] $2x+\frac1x+1$
+\item[(d)] $\sqrt{2x+\frac1x+1}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}
+\[
+\left[-\left(2x+\frac1x+1\right)\right]^2=\left(2x+\frac1x+1\right)^2
+\Rightarrow \sqrt{\cdot}=2x+\frac1x+1.
+\]
+\end{QAPair}
+
+
+% ===================== Factorize (2--14) =====================
+\begin{QAPair}{Question 2 (Factorize)}
+\[
+(a^2-5)^2-13(a^2-5)+36
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $t=a^2-5$:
+\[
+t^2-13t+36=(t-9)(t-4).
+\]
+So,
+\[
+(a^2-14)(a^2-9)=\boxed{(a^2-14)(a-3)(a+3)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (Factorize)}
+\[
+6x^2+19x+15
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+6x^2+19x+15=(3x+5)(2x+3).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (Factorize)}
+\[
+(x+1)(x-3)(x-5)(x-9)+44
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+(x+1)(x-9)=x^2-8x-9,\quad (x-3)(x-5)=x^2-8x+15.
+\]
+Let $t=x^2-8x$:
+\[
+(t-9)(t+15)+44=t^2+6t-91=(t+13)(t-7).
+\]
+\[
+\boxed{(x^2-8x+13)(x^2-8x-7)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (Factorize)}
+\[
+x^4-12x^2+16
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x^4-12x^2+16=(x^2-4)(x^2-8).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (Factorize)}
+\[
+(3x^2+4x-5)(3x^2+4x-2)-4
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $A=3x^2+4x$:
+\[
+(A-5)(A-2)-4=A^2-7A+6=(A-1)(A-6).
+\]
+\[
+\boxed{(3x^2+4x-1)(3x^2+4x-6)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7 (Factorize)}
+\[
+2m^4+m^2n^2-3n^4
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $u=m^2$:
+\[
+2u^2+n^2u-3n^4=(2u+3n^2)(u-n^2).
+\]
+\[
+\boxed{(2m^2+3n^2)(m-n)(m+n)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8 (Factorize)}
+\[
+x^4+10x^2y^2-56y^4
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $u=x^2$:
+\[
+u^2+10y^2u-56y^4=(u+14y^2)(u-4y^2).
+\]
+\[
+\boxed{(x^2+14y^2)(x-2y)(x+2y)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9 (Factorize)}
+\[
+x^2+2ax-bx-2ab
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x(x+2a)-b(x+2a)=\boxed{(x-b)(x+2a)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (Factorize)}
+\[
+a^{12}-b^{12}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{(a-b)(a+b)(a^2+b^2)(a^2+ab+b^2)(a^2-ab+b^2)(a^4-a^2b^2+b^4)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 11 (Factorize)}
+\[
+28x^4y+64x^3y-60x^2y
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+28x^4y+64x^3y-60x^2y=4x^2y(7x^2+16x-15)=\boxed{4x^2y(7x-5)(x+3)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 12 (Factorize)}
+\[
+4(x-y)^3-(x-y)
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+(x-y)\bigl(4(x-y)^2-1\bigr)
+=(x-y)\bigl(2(x-y)-1\bigr)\bigl(2(x-y)+1\bigr).
+\]
+\[
+\boxed{(x-y)(2x-2y-1)(2x-2y+1)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 13 (Factorize)}
+\[
+x^3p^2-8y^3p^2-4x^3q^2+32y^3q^2
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+p^2(x^3-8y^3)-4q^2(x^3-8y^3)=(x^3-8y^3)(p^2-4q^2).
+\]
+\[
+\boxed{(x-2y)(x^2+2xy+4y^2)(p-2q)(p+2q)}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 14 (Factorize)}
+\[
+x^4+y^4-7x^2y^2
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x^4+y^4-7x^2y^2=(x^2+y^2)^2-(3xy)^2
+=\boxed{(x^2+y^2-3xy)(x^2+y^2+3xy)}.
+\]
+\end{QAPair}
+
+% ===================== 15 =====================
+\begin{QAPair}{Question 15 (i) --- HCF}
+Find HCF of $x^3+3x^2-8x-24$ and $x^3+3x^2-3x-9$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x^3+3x^2-8x-24=(x+3)(x^2-8),\quad
+x^3+3x^2-3x-9=(x+3)(x^2-3).
+\]
+\[
+\boxed{\text{HCF}=x+3}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 15 (ii) --- HCF}
+Find HCF of $3x^4-3x^3-2x^2-x-1$ and $9x^4-3x^3-x-1$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+3x^4-3x^3-2x^2-x-1=(3x^2+1)(x^2-x-1),
+\]
+\[
+9x^4-3x^3-x-1=(3x^2+1)(3x^2-x-1).
+\]
+\[
+\boxed{\text{HCF}=3x^2+1}
+\]
+\end{QAPair}
+
+% ===================== 16 =====================
+\begin{QAPair}{Question 16 (i) --- LCM}
+Find LCM of $2x^2+3x+1,\ 2x^2+5x+2,\ x^2+3x+2$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+2x^2+3x+1=(2x+1)(x+1),\ 
+2x^2+5x+2=(2x+1)(x+2),\
+x^2+3x+2=(x+1)(x+2).
+\]
+\[
+\boxed{\text{LCM}=(2x+1)(x+1)(x+2)}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 16 (ii) --- LCM}
+Find LCM of $3x^2+11x+6,\ 3x^2+8x+4,\ x^2+5x+6$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+3x^2+11x+6=(3x+2)(x+3),\ 
+3x^2+8x+4=(3x+2)(x+2),\
+x^2+5x+6=(x+2)(x+3).
+\]
+\[
+\boxed{\text{LCM}=(3x+2)(x+2)(x+3)}
+\]
+\end{QAPair}
+
+% ===================== 17 =====================
+\begin{QAPair}{Question 17 --- HCF and LCM}
+Find HCF and LCM of:
+\[
+a(a+c)-b(b+c),\quad b(b+a)-c(c+a),\quad c(c+b)-a(a+b).
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+a(a+c)-b(b+c)=(a-b)(a+b+c),
+\]
+\[
+b(b+a)-c(c+a)=(b-c)(a+b+c),
+\]
+\[
+c(c+b)-a(a+b)=(c-a)(a+b+c).
+\]
+\[
+\boxed{\text{HCF}=a+b+c}
+\]
+\[
+\boxed{\text{LCM}=(a+b+c)(a-b)(b-c)(c-a)}
+\]
+\end{QAPair}
+
+% ===================== 18 =====================
+\begin{QAPair}{Question 18 (Square root)}
+Find the square root of
+\[
+\frac{9a^2}{x^2}-\frac{6a}{5x}+\frac{101}{25}-\frac{4x}{15a}+\frac{4x^2}{9a^2}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\left(\frac{3a}{x}+\frac{2x}{3a}-\frac15\right)^2
+=\frac{9a^2}{x^2}+\frac{4x^2}{9a^2}+\frac{1}{25}
++4-\frac{6a}{5x}-\frac{4x}{15a}.
+\]
+So,
+\[
+\boxed{\sqrt{\cdot}=\pm\left(\frac{3a}{x}+\frac{2x}{3a}-\frac15\right)}.
+\]
+\end{QAPair}
+
+% ===================== 19 =====================
+\begin{QAPair}{Question 19 (i) --- Simplify}
+\[
+\frac{x^2+x-2}{x^2-x-20}\times\frac{x^2+5x+4}{x^2-x}\div
+\left(\frac{x^2+3x+2}{x^2-2x-15}\times\frac{x+3}{x^2}\right)
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Factor all polynomials and cancel common factors. The expression simplifies to:
+\[
+\boxed{x}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 19 (ii) --- Simplify}
+\[
+\frac{1}{x+1}-\frac{1}{(x+1)(x+2)}+\frac{1}{(x+1)(x+2)(x+3)}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{\frac{x+2}{(x+1)(x+3)}}
+\]
+\end{QAPair}
+
+% ===================== 20 =====================
+\begin{QAPair}{Question 20}
+Find $a$ and $b$ if
+\[
+x^4+ax^3+bx^2-4x+4
+\]
+is a perfect square.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Assume $(x^2+px+q)^2=x^4+2px^3+(p^2+2q)x^2+2pq\,x+q^2$.
+
+Match coefficients:
+\[
+2pq=-4\Rightarrow pq=-2,\qquad q^2=4\Rightarrow q=\pm2.
+\]
+If $q=2$, then $p=-1$ $\Rightarrow a=2p=-2,\ b=p^2+2q=1+4=5$.
+
+If $q=-2$, then $p=1$ $\Rightarrow a=2,\ b=1-4=-3$.
+
+\[
+\boxed{(a,b)=(-2,5)\ \text{or}\ (2,-3)}
+\]
+\end{QAPair}
+
+\end{document}

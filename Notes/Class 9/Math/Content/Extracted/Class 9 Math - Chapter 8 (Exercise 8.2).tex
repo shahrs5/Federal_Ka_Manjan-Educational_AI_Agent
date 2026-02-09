@@ -1,0 +1,793 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+% -------------------- TikZ (Diagrams) --------------------
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- TikZ Styles --------------------
+\tikzset{
+  axes/.style={->,>=stealth, line width=0.85pt, draw=muted},
+  grid/.style={draw=border, very thin},
+  lineC/.style={draw=cyan, line width=1.15pt},
+  lineG/.style={draw=green, line width=1.15pt},
+  dashedM/.style={draw=muted, dashed, line width=0.9pt},
+  pt/.style={circle, fill=gold, draw=gold, inner sep=1.6pt},
+  lab/.style={text=gold, font=\small},
+  labm/.style={text=muted, font=\small}
+}
+
+% -------------------- Graph Template (clipped + axes + ticks + numeric labels) --------------------
+% Usage:
+% \GraphBox{xmin}{ymin}{xmax}{ymax}{ <tikz drawing commands> }
+\newcommand{\GraphBox}[5]{%
+\begin{center}
+\begin{tikzpicture}[scale=0.62]
+  % keep the picture size fixed and prevent overflow
+  \path[use as bounding box] (#1,#2) rectangle (#3,#4);
+  \clip (#1,#2) rectangle (#3,#4);
+
+  % draw grid
+  \draw[grid] (#1,#2) grid (#3,#4);
+
+  % choose visible axis positions (if 0 is outside, put axis on nearest border)
+  \pgfmathsetmacro{\yAxisX}{max(#1, min(0, #3))}
+  \pgfmathsetmacro{\xAxisY}{max(#2, min(0, #4))}
+
+  % axes with arrowheads
+  \draw[axes] (#1,\xAxisY) -- (#3,\xAxisY);
+  \draw[axes] (\yAxisX,#2) -- (\yAxisX,#4);
+
+  % ---------- Tick directions + label placement (kept INSIDE the clipped box) ----------
+  \pgfmathsetmacro{\eps}{0.0001}
+
+  % x-axis ticks: if axis is on bottom border -> ticks go up, if on top -> ticks go down, else -> ticks go up
+  \pgfmathsetmacro{\xTickDir}{abs(\xAxisY-#2)<\eps ? 1 : (abs(\xAxisY-#4)<\eps ? -1 : 1)}
+  % y-axis ticks: if axis is on left border -> ticks go right, if on right -> ticks go left, else -> ticks go left
+  \pgfmathsetmacro{\yTickDir}{abs(\yAxisX-#1)<\eps ? 1 : (abs(\yAxisX-#3)<\eps ? -1 : -1)}
+
+  % numeric label offsets (inside)
+  \pgfmathsetmacro{\xLabShift}{abs(\xAxisY-#2)<\eps ? 0.45 : -0.45}
+  \pgfmathsetmacro{\yLabShift}{abs(\yAxisX-#1)<\eps ? 0.45 : -0.45}
+
+  % anchors for numeric labels
+  \ifdim\xLabShift pt>0pt\def\xLabAnchor{south}\else\def\xLabAnchor{north}\fi
+  \ifdim\yLabShift pt>0pt\def\yLabAnchor{west}\else\def\yLabAnchor{east}\fi
+
+  % ---------- Numeric ticks (step = 1) ----------
+  \pgfmathtruncatemacro{\xStart}{ceil(#1)}
+  \pgfmathtruncatemacro{\xEnd}{floor(#3)}
+  \foreach \x in {\xStart,...,\xEnd}{
+    \draw[draw=muted,line width=0.7pt] (\x,\xAxisY) -- ++(0,0.18*\xTickDir);
+    \node[labm,font=\scriptsize,anchor=\xLabAnchor] at (\x,\xAxisY+\xLabShift) {\x};
+  }
+
+  \pgfmathtruncatemacro{\yStart}{ceil(#2)}
+  \pgfmathtruncatemacro{\yEnd}{floor(#4)}
+  \foreach \y in {\yStart,...,\yEnd}{
+    \draw[draw=muted,line width=0.7pt] (\yAxisX,\y) -- ++(0.18*\yTickDir,0);
+    \node[labm,font=\scriptsize,anchor=\yLabAnchor] at (\yAxisX+\yLabShift,\y) {\y};
+  }
+
+  % axis labels near arrow tips (kept inside using anchors)
+  \node[labm,anchor=south east] at (#3,\xAxisY) {$x$};
+  \node[labm,anchor=north west] at (\yAxisX,#4) {$y$};
+
+  % user drawing
+  #5
+\end{tikzpicture}
+\end{center}
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 8.2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (Straight Line)}\par\medskip
+\begin{itemize}
+\item \textbf{Horizontal line through $(x_1,y_1)$:} $y=y_1$.\qquad
+\textbf{Vertical line through $(x_1,y_1)$:} $x=x_1$.
+\item \textbf{Slope:} $m=\dfrac{y_2-y_1}{x_2-x_1}$ \ (if $x_2\neq x_1$).
+\item \textbf{Slope--intercept form:} $y=mx+c$.
+\item \textbf{Point--slope form:} $y-y_1=m(x-x_1)$.
+\item \textbf{Two--point form:} $\dfrac{y-y_1}{y_2-y_1}=\dfrac{x-x_1}{x_2-x_1}$.
+\item \textbf{Intercept form:} $\dfrac{x}{a}+\dfrac{y}{b}=1$.
+\item \textbf{Normal form:} $x\cos\theta+y\sin\theta=p$.
+\item \textbf{Symmetric form:} $\dfrac{x-x_1}{a}=\dfrac{y-y_1}{b}$.
+\item \textbf{Parallel / Perpendicular:} parallel $\Rightarrow$ same slope;\; perpendicular $\Rightarrow m_1m_2=-1$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} Find the equation of horizontal line passing through $(2,3)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Horizontal line } \Rightarrow y=\text{constant},\qquad
+\Step{2}\; \Rightarrow \boxed{y=3}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-2}{-1}{6}{5}{
+  \draw[lineC] (-2,3) -- (6,3);
+  \node[pt] at (2,3) {};
+  \node[lab,above] at (2,3) {$(2,3)$};
+  \node[lab, right] at (5.6,3.2) {$y=3$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} Find the equation of horizontal line passing through $(8,0)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{y=0}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{0}{-3}{12}{4}{
+  \draw[lineC] (0,0) -- (12,0);
+  \node[pt] at (8,0) {};
+  \node[lab,above] at (8,0) {$(8,0)$};
+  \node[lab, right] at (11.2,0.3) {$y=0$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} Find the equation of horizontal line passing through $(-5,-9)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{y=-9}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-9}{-12}{2}{2}{
+  \draw[lineC] (-9,-9) -- (2,-9);
+  \node[pt] at (-5,-9) {};
+  \node[lab,above] at (-5,-9) {$(-5,-9)$};
+  \node[lab, right] at (1.2,-8.6) {$y=-9$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} Find the equation of horizontal line passing through $\left(-\frac{3}{2},-\frac{5}{2}\right)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{y=-\frac{5}{2}}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-5}{-5}{5}{3}{
+  \draw[lineC] (-5,-2.5) -- (5,-2.5);
+  \node[pt] at (-1.5,-2.5) {};
+  \node[lab,above] at (-1.5,-2.5) {$\left(-\frac32,-\frac52\right)$};
+  \node[lab, right] at (4.2,-2.2) {$y=-\frac52$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Find the equation of vertical line passing through $(1,5)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{x=1}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-2}{0}{4}{8}{
+  \draw[lineC] (1,0) -- (1,8);
+  \node[pt] at (1,5) {};
+  \node[lab,right] at (1,5) {$(1,5)$};
+  \node[lab, above] at (1.3,7.5) {$x=1$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Find the equation of vertical line passing through $(9,6)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{x=9}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{0}{0}{12}{10}{
+  \draw[lineC] (9,0) -- (9,10);
+  \node[pt] at (9,6) {};
+  \node[lab,left] at (9,6) {$(9,6)$};
+  \node[lab, above] at (9.3,9.4) {$x=9$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Find the equation of vertical line passing through $(-4,-7)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{x=-4}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-6}{-10}{3}{3}{
+  \draw[lineC] (-4,-10) -- (-4,3);
+  \node[pt] at (-4,-7) {};
+  \node[lab,right] at (-4,-7) {$(-4,-7)$};
+  \node[lab, above] at (-3.7,2.3) {$x=-4$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} Find the equation of vertical line passing through $\left(\frac14,\frac34\right)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{x=\frac14}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-2}{-1}{4}{4}{
+  \draw[lineC] (0.25,-1) -- (0.25,4);
+  \node[pt] at (0.25,0.75) {};
+  \node[lab,right] at (0.25,0.75) {$\left(\frac14,\frac34\right)$};
+  \node[lab, above] at (0.55,3.5) {$x=\frac14$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} slope $=2$, $y$-intercept $=-3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; y=mx+c,\quad m=2,\ c=-3 \Rightarrow \boxed{y=2x-3}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-1}{-6}{6}{8}{
+  \draw[lineC] (-1,-5) -- (6,9);
+  \node[pt] at (0,-3) {}; \node[lab,left] at (0,-3) {$(0,-3)$};
+  \node[pt] at (1,-1) {}; \node[lab,above] at (1,-1) {$(1,-1)$};
+  \node[lab, right] at (5.1,7.4) {$y=2x-3$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} Through $(-5,7)$ with slope $4$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+y-7=4(x+5)\Rightarrow \boxed{y=4x+27}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-8}{-4}{0}{18}{
+  \draw[lineC] (-8,-5) -- (0,27);
+  \node[pt] at (-5,7) {}; \node[lab,right] at (-5,7) {$(-5,7)$};
+  \node[pt] at (-4,11) {}; \node[lab,above] at (-4,11) {$(-4,11)$};
+  \node[lab, right] at (-1.2,16.5) {$y=4x+27$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} Through $(4,-5)$ with slope $0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+m=0 \Rightarrow \boxed{y=-5}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{0}{-8}{8}{2}{
+  \draw[lineC] (0,-5) -- (8,-5);
+  \node[pt] at (4,-5) {}; \node[lab,above] at (4,-5) {$(4,-5)$};
+  \node[lab, right] at (7.1,-4.6) {$y=-5$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textcolor{gold}{\bfseries Question:} Through $(-2,9)$ with slope undefined.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\text{Vertical line}\Rightarrow \boxed{x=-2}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-6}{0}{4}{12}{
+  \draw[lineC] (-2,0) -- (-2,12);
+  \node[pt] at (-2,9) {}; \node[lab,right] at (-2,9) {$(-2,9)$};
+  \node[lab, above] at (-1.7,11.3) {$x=-2$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (v)}
+\textcolor{gold}{\bfseries Question:} Through $(-6,1)$ and $(2,-4)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+m=-\frac{5}{8},\quad y-1=-\frac{5}{8}(x+6)\Rightarrow \boxed{5x+8y+22=0}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-8}{-7}{4}{4}{
+  \draw[lineC] (-8,2.25) -- (4,-5.25);
+  \node[pt] at (-6,1) {}; \node[lab,above] at (-6,1) {$(-6,1)$};
+  \node[pt] at (2,-4) {}; \node[lab,below right] at (2,-4) {$(2,-4)$};
+  \node[lab, right] at (3.0,-4.6) {$5x+8y+22=0$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (vi)}
+\textcolor{gold}{\bfseries Question:} Through $(2,-4)$ and $(8,4)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+m=\frac{4}{3},\quad y+4=\frac{4}{3}(x-2)\Rightarrow \boxed{4x-3y-20=0}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-1}{-8}{10}{8}{
+  \draw[lineC] (-1,-8) -- (10,{(4*10-20)/3});
+  \node[pt] at (2,-4) {}; \node[lab,below left] at (2,-4) {$(2,-4)$};
+  \node[pt] at (8,4) {};  \node[lab,above] at (8,4) {$(8,4)$};
+  \node[lab, right] at (8.6,6.4) {$4x-3y-20=0$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (vii)}
+\textcolor{gold}{\bfseries Question:} $x$-intercept $=-6$, $y$-intercept $=5$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\frac{x}{-6}+\frac{y}{5}=1 \Rightarrow \boxed{-5x+6y-30=0}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-8}{-2}{6}{10}{
+  \draw[lineC] (-8,{(5/6)*(-8)+5}) -- (6,{(5/6)*(6)+5});
+  \node[pt] at (-6,0) {}; \node[lab,above] at (-6,0) {$(-6,0)$};
+  \node[pt] at (0,5) {};  \node[lab,left] at (0,5) {$(0,5)$};
+  \node[lab, right] at (4.8,9.0) {$-5x+6y-30=0$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (viii)}
+\textcolor{gold}{\bfseries Question:} slope $=-1$, $x$-intercept $=11$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+(11,0),\ m=-1 \Rightarrow \boxed{y=-x+11}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-1}{-2}{13}{13}{
+  \draw[lineC] (-1,12) -- (13,-2);
+  \node[pt] at (11,0) {}; \node[lab,above] at (11,0) {$(11,0)$};
+  \node[pt] at (0,11) {}; \node[lab,left] at (0,11) {$(0,11)$};
+  \node[lab, right] at (10.8,1.3) {$y=-x+11$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} Find equation in symmetric form when $(x_1,y_1)=(-4,2)$ and $\tan\theta=\frac34$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\text{direction }(4,3)\Rightarrow \boxed{\frac{x+4}{4}=\frac{y-2}{3}}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-8}{-2}{6}{12}{
+  \draw[lineC] (-8,{0.75*(-8)+5}) -- (6,{0.75*(6)+5});
+  \node[pt] at (-4,2) {}; \node[lab,below right] at (-4,2) {$(-4,2)$};
+  \node[lab, right] at (4.8,9.8) {$y=\frac34x+5$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} Find equation in symmetric form when $(x_1,y_1)=(6,-6)$ and $\theta=30^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{\frac{x-6}{\sqrt3}=\frac{y+6}{1}}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{0}{-12}{12}{2}{
+  \draw[lineC] (0,{-6 + (0-6)/sqrt(3)}) -- (12,{-6 + (12-6)/sqrt(3)});
+  \node[pt] at (6,-6) {}; \node[lab,above] at (6,-6) {$(6,-6)$};
+  \node[lab, right] at (10.2,-3.2) {$y+6=\frac{1}{\sqrt3}(x-6)$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 (i)}
+\textcolor{gold}{\bfseries Question:} Find equation in normal form when $p=5$ and $\theta=120^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x\cos120^\circ+y\sin120^\circ=5
+\Rightarrow \boxed{-x+\sqrt3\,y=10}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-2}{2}{10}{12}{
+  \draw[lineC] (-2,{(10-2)/sqrt(3)}) -- (10,{(10+10)/sqrt(3)});
+  \node[lab, right] at (7.5,11.0) {$-x+\sqrt3y=10$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (ii)}
+\textcolor{gold}{\bfseries Question:} Find equation in normal form when $p=10$ and $\tan\theta=1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\theta=45^\circ \Rightarrow \boxed{x+y=10\sqrt2}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{0}{0}{16}{16}{
+  \draw[lineC] (0,14.142) -- (14.142,0);
+  \node[lab, right] at (12.6,2.2) {$x+y=10\sqrt2$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 (i)}
+\textcolor{gold}{\bfseries Question:} Through $(-4,-4)$ and parallel to line with slope $-5$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{y=-5x-24}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-7}{-12}{2}{8}{
+  \draw[lineC] (-7,{-5*(-7)-24}) -- (2,{-5*(2)-24});
+  \node[pt] at (-4,-4) {}; \node[lab,above] at (-4,-4) {$(-4,-4)$};
+  \node[lab, right] at (-0.2,-9.5) {$y=-5x-24$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (ii)}
+\textcolor{gold}{\bfseries Question:} Through $(5,-1)$ and perpendicular to line with slope $\frac14$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{y=-4x+19}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-1}{-6}{7}{20}{
+  \draw[lineC] (-1,{-4*(-1)+19}) -- (7,{-4*(7)+19});
+  \node[pt] at (5,-1) {}; \node[lab,above] at (5,-1) {$(5,-1)$};
+  \node[lab, right] at (5.2,-3.2) {$y=-4x+19$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iii)}
+\textcolor{gold}{\bfseries Question:} Having $y$-intercept $=4$ and parallel to line with slope $\frac12$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{y=\frac12 x+4}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-2}{0}{10}{12}{
+  \draw[lineC] (-2,{0.5*(-2)+4}) -- (10,{0.5*(10)+4});
+  \node[pt] at (0,4) {}; \node[lab,left] at (0,4) {$(0,4)$};
+  \node[lab, right] at (8.4,9.8) {$y=\frac12x+4$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iv)}
+\textcolor{gold}{\bfseries Question:} Having $x$-intercept $=-2$ and perpendicular to line with slope $4$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{y=-\frac14x-\frac12}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-10}{-4}{6}{4}{
+  \draw[lineC] (-10,{-0.25*(-10)-0.5}) -- (6,{-0.25*(6)-0.5});
+  \node[pt] at (-2,0) {}; \node[lab,above] at (-2,0) {$(-2,0)$};
+  \node[lab, right] at (3.6,-1.6) {$y=-\frac14x-\frac12$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (v)}
+\textcolor{gold}{\bfseries Question:} Through $(-1,4)$ and perpendicular to the line through $(3,0)$ and $(1,-2)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+m_{\text{given}}=1 \Rightarrow m_\perp=-1,\quad \boxed{y=-x+3}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-2}{-1}{7}{8}{
+  % given line: y=x-3
+  \draw[dashedM] (-2,-5) -- (7,4);
+  \node[labm, right] at (6.4,3.6) {given};
+
+  % required: y=-x+3
+  \draw[lineC] (-2,5) -- (7,-4);
+  \node[pt] at (-1,4) {}; \node[lab,above] at (-1,4) {$(-1,4)$};
+  \node[lab, right] at (4.6,-1.6) {$y=-x+3$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (vi)}
+\textcolor{gold}{\bfseries Question:} Through $(6,-4)$ and parallel to the line through $(-5,2)$ and $(3,6)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+m=\frac12,\quad \boxed{y=\frac12x-7}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-7}{-10}{9}{10}{
+  % given line through (-5,2) and (3,6): y=0.5x+4.5
+  \draw[dashedM] (-7,{0.5*(-7)+4.5}) -- (9,{0.5*(9)+4.5});
+  \node[labm, right] at (7.5,9.0) {given};
+
+  % required: y=0.5x-7
+  \draw[lineC] (-7,{0.5*(-7)-7}) -- (9,{0.5*(9)-7});
+
+  \node[pt] at (6,-4) {}; \node[lab,above] at (6,-4) {$(6,-4)$};
+  \node[pt] at (-5,2) {}; \node[lab,above left] at (-5,2) {$(-5,2)$};
+  \node[pt] at (3,6) {};  \node[lab,above] at (3,6) {$(3,6)$};
+
+  \node[lab, right] at (5.5,-3.0) {$y=\frac12x-7$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Find equation of the line through $(3,7)$ and parallel to $4x-3y+1=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+4x-3y+k=0,\ (3,7)\Rightarrow k=9 \Rightarrow \boxed{4x-3y+9=0}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-1}{-1}{7}{12}{
+  \draw[dashedM] (-1,{(4/3)*(-1)+1/3}) -- (7,{(4/3)*(7)+1/3});
+  \node[labm,right] at (6.4,9.2) {given};
+
+  \draw[lineC] (-1,{(4/3)*(-1)+3}) -- (7,{(4/3)*(7)+3});
+  \node[pt] at (3,7) {}; \node[lab,above] at (3,7) {$(3,7)$};
+
+  \node[lab,right] at (5.9,10.8) {$4x-3y+9=0$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Find equation of the line through $(-2,-1)$ and perpendicular to $x-2y=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x-2y=0\Rightarrow m_1=\frac12,\ m_2=-2,\quad y+1=-2(x+2)\Rightarrow \boxed{y=-2x-5}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-6}{-10}{6}{10}{
+  \draw[dashedM] (-6,-3) -- (6,3);
+  \node[labm,right] at (5.2,2.2) {$x-2y=0$};
+
+  \draw[lineC] (-6,7) -- (2.5,-10);
+  \node[pt] at (-2,-1) {}; \node[lab,above] at (-2,-1) {$(-2,-1)$};
+
+  \node[lab,right] at (-0.2,-8.8) {$y=-2x-5$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Find equation of perpendicular bisector of segment joining $(0,6)$ and $(2,-2)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+M=(1,2),\ m_{PQ}=-4\Rightarrow m_\perp=\frac14,\quad
+y-2=\frac14(x-1)\Rightarrow \boxed{x-4y+7=0}.
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-2}{-4}{6}{8}{
+  \coordinate (P) at (0,6);
+  \coordinate (Q) at (2,-2);
+  \coordinate (M) at (1,2);
+
+  \draw[dashedM] (P)--(Q);
+  \node[pt] at (P) {}; \node[lab,left] at (P) {$(0,6)$};
+  \node[pt] at (Q) {}; \node[lab,right] at (Q) {$(2,-2)$};
+
+  \node[pt] at (M) {}; \node[lab,above] at (M) {$M(1,2)$};
+
+  \draw[lineC] (-2,{(-2+7)/4}) -- (6,{(6+7)/4});
+  \node[lab,right] at (4.8,3.3) {$x-4y+7=0$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Find equations of medians and altitudes of triangle with vertices
+$A(0,4)$, $B(4,6)$, $C(-2,-2)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{cyan}{\bfseries Medians}
+\[
+\begin{aligned}
+&\text{Midpoint of }BC=(1,2)\Rightarrow \boxed{y=-2x+4}.\\
+&\text{Midpoint of }CA=(-1,1)\Rightarrow \boxed{y=x+2}.\\
+&\text{Midpoint of }AB=(2,5)\Rightarrow \boxed{7x-4y+6=0}.
+\end{aligned}
+\]
+
+\textcolor{cyan}{\bfseries Altitudes}
+\[
+\boxed{3x+4y-16=0},\qquad
+\boxed{x+3y-22=0},\qquad
+\boxed{2x+y+6=0}.
+\]
+
+\textcolor{muted}{\bfseries Diagram (triangle + medians + altitudes):}
+\GraphBox{-5}{-5}{7}{9}{
+  \coordinate (A) at (0,4);
+  \coordinate (B) at (4,6);
+  \coordinate (C) at (-2,-2);
+
+  % triangle
+  \draw[lineC] (A)--(B)--(C)--cycle;
+
+  % midpoints
+  \coordinate (Mbc) at (1,2);
+  \coordinate (Mca) at (-1,1);
+  \coordinate (Mab) at (2,5);
+
+  % medians
+  \draw[dashedM] (A)--(Mbc);
+  \draw[dashedM] (B)--(Mca);
+  \draw[dashedM] (C)--(Mab);
+
+  % altitudes (draw as clipped segments)
+  % 3x+4y-16=0  => y=(16-3x)/4
+  \draw[lineG] (-5,31/4) -- (7,-5/4);
+  % x+3y-22=0 => y=(22-x)/3
+  \draw[lineG] (-5,9) -- (7,5);
+  % 2x+y+6=0 => y=-2x-6
+  \draw[lineG] (-5,4) -- (1/2,-7);
+
+  % points
+  \node[pt] at (A) {}; \node[lab,above left] at (A) {$A(0,4)$};
+  \node[pt] at (B) {}; \node[lab,above] at (B) {$B(4,6)$};
+  \node[pt] at (C) {}; \node[lab,below left] at (C) {$C(-2,-2)$};
+
+  \node[pt] at (Mbc) {}; \node[labm,right] at (Mbc) {$(1,2)$};
+  \node[pt] at (Mca) {}; \node[labm,left]  at (Mca) {$(-1,1)$};
+  \node[pt] at (Mab) {}; \node[labm,above] at (Mab) {$(2,5)$};
+
+  \node[labm] at (5.8,8.2) {medians: dashed};
+  \node[labm] at (5.8,7.4) {altitudes: green};
+}
+\end{QAPair}
+
+% ============================================================
+% Q11 (a)
+\begin{QAPair}{Question 11 (a)}
+\textcolor{gold}{\bfseries Question:} Reduce $6x+8y-11=0$ into:
+(i) slope-intercept, (ii) two-intercept, (iii) point-slope, (iv) two-point, (v) normal, (vi) symmetric form.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\textbf{(i)}\ 8y=-6x+11 \Rightarrow \boxed{y=-\frac34x+\frac{11}{8}}.\\
+\Step{2}\;&\textbf{(ii)}\ a=\frac{11}{6},\ b=\frac{11}{8}\Rightarrow \boxed{\frac{x}{11/6}+\frac{y}{11/8}=1}.\\
+\Step{3}\;&\textbf{(iii)}\ \left(\frac{11}{6},0\right),\ m=-\frac34 \Rightarrow \boxed{y=-\frac34\!\left(x-\frac{11}{6}\right)}.\\
+\Step{4}\;&\textbf{(iv)}\ \left(\frac{11}{6},0\right),\left(0,\frac{11}{8}\right)\Rightarrow \boxed{\frac{y}{11/8}=\frac{x-\frac{11}{6}}{-\frac{11}{6}}}.\\
+\Step{5}\;&\textbf{(v)}\ \sqrt{6^2+8^2}=10\Rightarrow \boxed{\frac{6}{10}x+\frac{8}{10}y=\frac{11}{10}}.\\
+\Step{6}\;&\textbf{(vi)}\ (b,-a)=(8,-6)\sim(4,-3)\Rightarrow \boxed{\frac{x-\frac{11}{6}}{4}=\frac{y}{-3}}.
+\end{aligned}
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-1}{-1}{4}{3}{
+  \draw[lineC] (-1,{ -(-3/4) + 11/8}) -- (4,{ -3 + 11/8});
+  \node[pt] at (0,11/8) {}; \node[lab,left] at (0,11/8) {$\left(0,\frac{11}{8}\right)$};
+  \node[pt] at (11/6,0) {}; \node[lab,above] at (11/6,0) {$\left(\frac{11}{6},0\right)$};
+  \node[lab,right] at (2.6,1.2) {$6x+8y-11=0$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q11 (b)
+\begin{QAPair}{Question 11 (b)}
+\textcolor{gold}{\bfseries Question:} Reduce $4x-3y+9=0$ into:
+(i) slope-intercept, (ii) two-intercept, (iii) point-slope, (iv) two-point, (v) normal, (vi) symmetric form.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\textbf{(i)}\ -3y=-4x-9 \Rightarrow \boxed{y=\frac43x+3}.\\
+\Step{2}\;&\textbf{(ii)}\ a=-\frac94,\ b=3 \Rightarrow \boxed{\frac{x}{-9/4}+\frac{y}{3}=1}.\\
+\Step{3}\;&\textbf{(iii)}\ (0,3),\ m=\frac43 \Rightarrow \boxed{y-3=\frac43x}.\\
+\Step{4}\;&\textbf{(iv)}\ \left(-\frac94,0\right),(0,3)\Rightarrow \boxed{\frac{y}{3}=\frac{x+\frac94}{\frac94}}.\\
+\Step{5}\;&\textbf{(v)}\ \sqrt{4^2+(-3)^2}=5,\ \text{use }-4x+3y-9=0
+\Rightarrow \boxed{-\frac45x+\frac35y=\frac95}.\\
+\Step{6}\;&\textbf{(vi)}\ (b,-a)=(3,4)\Rightarrow \boxed{\frac{x}{3}=\frac{y-3}{4}}.
+\end{aligned}
+\]
+\textcolor{muted}{\bfseries Graph:}
+\GraphBox{-4}{-1}{6}{10}{
+  \draw[lineC] (-4,{(4/3)*(-4)+3}) -- (6,{(4/3)*(6)+3});
+  \node[pt] at (0,3) {}; \node[lab,left] at (0,3) {$(0,3)$};
+  \node[pt] at (-9/4,0) {}; \node[lab,above] at (-9/4,0) {$\left(-\frac94,0\right)$};
+  \node[lab,right] at (3.2,8.6) {$4x-3y+9=0$};
+}
+\end{QAPair}
+
+\end{document}

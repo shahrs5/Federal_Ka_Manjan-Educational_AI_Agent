@@ -1,0 +1,357 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tabularx}
+\usepackage{array}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 4.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{HCF of monomials:} $\text{HCF}=\gcd(\text{coefficients})\times$ each variable with the \textbf{least power} common to all.
+\item \textbf{HCF of polynomials:} \textbf{factorize completely} $\Rightarrow$ take \textbf{common factors} with the \textbf{least power}.
+\item \textbf{Useful identities:}
+\[
+a^2-b^2=(a-b)(a+b),\quad (a\pm b)^2=a^2\pm 2ab+b^2
+\]
+\[
+a^3-b^3=(a-b)(a^2+ab+b^2),\quad a^3+b^3=(a+b)(a^2-ab+b^2)
+\]
+\item \textbf{Grouping:} split into pairs, factor each pair, then take the common factor.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1(a)
+\begin{QAPair}{Question 1(a)}
+\textcolor{gold}{\bfseries Question:} Find the HCF of the following monomials by completing the table.\\
+\[
+\begin{aligned}
+&\text{(i) } 16p^3q,\; 9pq^2r\\
+&\text{(ii) } 10p^3q^2r,\; 5p^2qr,\; 15p^2qr^2\\
+&\text{(iii) } 14p^4qr^4,\; 28p^3qr^2,\; 7p^2qr^2,\; 21p^2q^2r^4
+\end{aligned}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Take } \gcd \text{ of coefficients and the least powers of } p,q,r.
+\]
+
+% --- Alternative table layout (NOT squashed): fewer columns, normal font ---
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{6pt}
+
+\begin{center}
+\begin{tabularx}{\textwidth}{|>{\raggedright\arraybackslash}p{0.23\textwidth}|X|X|X|}
+\hline
+\textcolor{gold}{\bfseries Component} &
+\textcolor{gold}{\bfseries (i)} &
+\textcolor{gold}{\bfseries (ii)} &
+\textcolor{gold}{\bfseries (iii)} \\
+\hline
+
+\textbf{Monomials} &
+$\displaystyle 16p^3q,\; 9pq^2r$ &
+$\displaystyle 10p^3q^2r,\; 5p^2qr,\newline 15p^2qr^2$ &
+$\displaystyle 14p^4qr^4,\; 28p^3qr^2,\newline
+7p^2qr^2,\; 21p^2q^2r^4$ \\
+\hline
+
+\textbf{HCF of numerical coefficients} &
+$\displaystyle \gcd(16,9)=1$ &
+$\displaystyle \gcd(10,5,15)=5$ &
+$\displaystyle \gcd(14,28,7,21)=7$ \\
+\hline
+
+\textbf{HCF of $p$} &
+$\displaystyle p^{\min(3,1)}=p$ &
+$\displaystyle p^{\min(3,2,2)}=p^2$ &
+$\displaystyle p^{\min(4,3,2,2)}=p^2$ \\
+\hline
+
+\textbf{HCF of $q$} &
+$\displaystyle q^{\min(1,2)}=q$ &
+$\displaystyle q^{\min(2,1,1)}=q$ &
+$\displaystyle q^{\min(1,1,1,2)}=q$ \\
+\hline
+
+\textbf{HCF of $r$} &
+$\displaystyle r^{\min(0,1)}=1$ &
+$\displaystyle r^{\min(1,1,2)}=r$ &
+$\displaystyle r^{\min(4,2,2,4)}=r^2$ \\
+\hline
+
+\textbf{Required HCF} &
+$\displaystyle \boxed{pq}$ &
+$\displaystyle \boxed{5p^2qr}$ &
+$\displaystyle \boxed{7p^2qr^2}$ \\
+\hline
+
+\end{tabularx}
+\end{center}
+
+\end{QAPair}
+
+% ============================================================
+% Q1(b)
+\begin{QAPair}{Question 1(b)}
+\textcolor{gold}{\bfseries Question:} If all common factors with least power of three unknown polynomials are
+$2^2,\; 3,\; pq$ and $(p+q)^2$, then what would be their HCF?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{HCF is the product of all common factors with least powers.}\\
+\Step{2}\;& \text{HCF}=2^2\cdot 3\cdot pq\cdot (p+q)^2\\
+\Step{3}\;&=12\,pq\,(p+q)^2.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q1(c)
+\begin{QAPair}{Question 1(c)}
+\textcolor{gold}{\bfseries Question:} Write any two polynomials of your choice having HCF as $1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Example: } (x+1)\ \text{and}\ (x+2).
+\]
+They have no common factor other than $1$, so their HCF is $1$.
+\end{QAPair}
+
+% ============================================================
+% Q1(d)
+\begin{QAPair}{Question 1(d)}
+\textcolor{gold}{\bfseries Question:} The only common factor of two polynomials is $m-n$ and the only uncommon factor is $m^2+n^2$.
+Can you guess the unknown polynomials?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{If the common factor is } (m-n),\ \text{both polynomials must contain } (m-n).\\
+\Step{2}\;& \text{If the only extra (uncommon) factor is } (m^2+n^2),\ \text{one simple choice is:}\\
+& P_1=(m-n)(m^2+n^2),\qquad P_2=(m-n).
+\end{aligned}
+\]
+(Any other pair that keeps \emph{only} $(m-n)$ common is also acceptable.)
+\end{QAPair}
+
+% ============================================================
+% Q1(e)
+\begin{QAPair}{Question 1(e)}
+\textcolor{gold}{\bfseries Question:} Can you guess HCF of two polynomials $x^3+5x+1$ and $1+5x+x^3$ without any procedure?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Both expressions are the same polynomial (just rearranged).}
+\]
+\[
+\Step{2}\; \Rightarrow\ \text{HCF}=x^3+5x+1.
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2 onwards: HCF by factorization
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $(x+y)^2$ and $x^2-y^2$ by factorization.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (x+y)^2=(x+y)(x+y),\\
+\Step{2}\;& x^2-y^2=(x-y)(x+y),\\
+\Step{3}\;& \Rightarrow\ \text{Common factor is } (x+y).\\
+\Step{4}\;& \boxed{\text{HCF}=x+y.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $(a-b)^3$ and $a^2-2ab+b^2$ by factorization.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a^2-2ab+b^2=(a-b)^2,\\
+\Step{2}\;& (a-b)^3=(a-b)^2(a-b),\\
+\Step{3}\;& \Rightarrow\ \text{Common factor with least power is } (a-b)^2.\\
+\Step{4}\;& \boxed{\text{HCF}=(a-b)^2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $a^3b-ab^3$ and $a^5b^2-a^2b^5$ by factorization.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a^3b-ab^3=ab(a^2-b^2)=ab(a-b)(a+b).\\
+\Step{2}\;& a^5b^2-a^2b^5=a^2b^2(a^3-b^3)=a^2b^2(a-b)(a^2+ab+b^2).\\
+\Step{3}\;& \text{Common factors: } ab \text{ (least power) and } (a-b).\\
+\Step{4}\;& \boxed{\text{HCF}=ab(a-b).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $x^2-49$ and $x^2-4x-21$ by factorization.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2-49=(x-7)(x+7).\\
+\Step{2}\;& x^2-4x-21=(x-7)(x+3).\\
+\Step{3}\;& \Rightarrow\ \text{Common factor is } (x-7).\\
+\Step{4}\;& \boxed{\text{HCF}=x-7.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $12x^2+x-1$ and $15x^2+8x+1$ by factorization.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 12x^2+x-1=12x^2+4x-3x-1\\
+&=4x(3x+1)-1(3x+1)=(3x+1)(4x-1).\\
+\Step{2}\;& 15x^2+8x+1=15x^2+5x+3x+1\\
+&=5x(3x+1)+1(3x+1)=(3x+1)(5x+1).\\
+\Step{3}\;& \Rightarrow\ \text{Common factor is } (3x+1).\\
+\Step{4}\;& \boxed{\text{HCF}=3x+1.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $c^2x^2-d^2$ and $acx^2-bcx+adx-bd$ by factorization.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& c^2x^2-d^2=(cx-d)(cx+d).\\
+\Step{2}\;& acx^2-bcx+adx-bd=(acx^2-bcx)+(adx-bd)\\
+&=cx(ax-b)+d(ax-b)=(ax-b)(cx+d).\\
+\Step{3}\;& \Rightarrow\ \text{Common factor is } (cx+d).\\
+\Step{4}\;& \boxed{\text{HCF}=cx+d.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $m^2-n^2,\; m^4-n^4,\; m^6-n^6$ by factorization.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m^2-n^2=(m-n)(m+n).\\
+\Step{2}\;& m^4-n^4=(m^2-n^2)(m^2+n^2)\ \Rightarrow\ (m^2-n^2)\text{ is a factor.}\\
+\Step{3}\;& m^6-n^6=(m^3-n^3)(m^3+n^3)\ \Rightarrow\ (m-n)(m+n)\text{ are factors.}\\
+\Step{4}\;& \Rightarrow\ \text{Common factor in all three is } (m-n)(m+n)=m^2-n^2.\\
+\Step{5}\;& \boxed{\text{HCF}=m^2-n^2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Find the HCF of
+\[
+ax^2+2a^2x+a^3,\quad 2ax^2-4a^2x-6a^3,\quad 3(ax+a^2)^2.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& ax^2+2a^2x+a^3=a(x^2+2ax+a^2)=a(x+a)^2.\\
+\Step{2}\;& 2ax^2-4a^2x-6a^3=2a(x^2-2ax-3a^2)=2a(x+a)(x-3a).\\
+\Step{3}\;& 3(ax+a^2)^2=3[a(x+a)]^2=3a^2(x+a)^2.\\
+\Step{4}\;& \text{Common numerical factor: } \gcd(1,2,3)=1.\\
+\Step{5}\;& \text{Common } a\text{-power: } a^{\min(1,1,2)}=a.\\
+\Step{6}\;& \text{Common } (x+a)\text{-power: } (x+a)^{\min(2,1,2)}=(x+a).\\
+\Step{7}\;& \boxed{\text{HCF}=a(x+a).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

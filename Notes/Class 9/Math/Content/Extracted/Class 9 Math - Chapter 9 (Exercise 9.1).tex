@@ -1,0 +1,428 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 9.1 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick ideas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Mathematical statement:} A sentence that is \textbf{either true or false} (but not both).
+\item \textbf{Open sentence:} Has variables (like $a+b=9$) with \textbf{no fixed truth value} until values/conditions are given.
+\item \textbf{Axiom:} Accepted as true \textbf{without proof}.
+\item \textbf{Postulate:} An axiom used specifically in \textbf{geometry}.
+\item \textbf{Conjecture:} A \textbf{guess} based on patterns/observations; becomes a \textbf{theorem} after proof.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} What is the difference between axiom and conjecture?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \textbf{Axiom:} \text{A basic fact accepted as true without proof.}\\
+\Step{2}\;& \textbf{Conjecture:} \text{A statement guessed from patterns/observations.}\\
+\Step{3}\;& \text{A conjecture must be proved to become a \textbf{theorem}.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Difference of 19 and 12 is 7. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 19-12=7 \text{ is true.}\\
+\Step{2}\;& \Rightarrow \text{It has a definite truth value.}\\
+\Step{3}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} $-2+7-3=2$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& -2+7=5,\quad 5-3=2.\\
+\Step{2}\;& \Rightarrow \text{The sentence is True.}\\
+\Step{3}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} $34+16\neq 50$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 34+16=50.\\
+\Step{2}\;& \Rightarrow \text{The sentence } (34+16\neq 50) \text{ is False.}\\
+\Step{3}\;& \Rightarrow \text{Since it is definitely false, it has a truth value.}\\
+\Step{4}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} $a+b=9$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{The truth depends on the specific values of }a\text{ and }b.\\
+\Step{2}\;& \Rightarrow \text{It is an open sentence with no fixed truth value.}\\
+\Step{3}\;& \Rightarrow \textbf{No, it is not a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (v)}
+\textcolor{gold}{\bfseries Question:} $(a+b)^2=a^2+2ab+b^2$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{This is a standard algebraic identity.}\\
+\Step{2}\;& \Rightarrow \text{It is True for all real values of }a\text{ and }b.\\
+\Step{3}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (vi)}
+\textcolor{gold}{\bfseries Question:} $2+2\times 2=6$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Using BODMAS/PEMDAS: } 2\times 2=4,\text{ then } 2+4=6.\\
+\Step{2}\;& \Rightarrow \text{The sentence is True.}\\
+\Step{3}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (vii)}
+\textcolor{gold}{\bfseries Question:} The product of $x$ and $y$ is smaller than $5$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{This translates to } xy < 5.\\
+\Step{2}\;& \Rightarrow \text{Truth depends on }x\text{ and }y \text{ (open sentence).}\\
+\Step{3}\;& \Rightarrow \textbf{No, it is not a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (viii)}
+\textcolor{gold}{\bfseries Question:} If $x$ is real then either $x<0$ or $x>0$ or $x=0$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Trichotomy property of real numbers states exactly this.}\\
+\Step{2}\;& \Rightarrow \text{Always True.}\\
+\Step{3}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ix)}
+\textcolor{gold}{\bfseries Question:} If $a>b$ and $b>c$ then $a<c$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Transitive property implies } a>c.\\
+\Step{2}\;& \Rightarrow \text{The conclusion } a<c \text{ is False.}\\
+\Step{3}\;& \Rightarrow \text{Since it is definitely false, it is a statement.}\\
+\Step{4}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (x)}
+\textcolor{gold}{\bfseries Question:} $xy+z=12$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Truth depends on variables }x, y, z.\\
+\Step{2}\;& \Rightarrow \text{Open sentence.}\\
+\Step{3}\;& \Rightarrow \textbf{No, it is not a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (xi)}
+\textcolor{gold}{\bfseries Question:} $s-t=4$ if $s=4$ and $t=0$. \textbf{Is this a mathematical statement?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Substitute the values: } 4-0=4.\\
+\Step{2}\;& \Rightarrow \text{The condition makes the sentence True.}\\
+\Step{3}\;& \Rightarrow \textbf{Yes, it is a mathematical statement.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} ``The sum of $a$ and $b$ is equal to $0$.''\\
+Is this sentence a mathematical statement? If no, how can we make it a mathematical statement?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{As written } (a+b=0), \text{ it depends on variables.}\\
+\Step{2}\;& \Rightarrow \textbf{No, it is not a mathematical statement.}\\
+\Step{3}\;& \textbf{To make it a statement:} Assign values (e.g., Let $a=2, b=-2$).\\
+\Step{4}\;& \textbf{Or use quantifiers:} ``For all real numbers $a$, there exists $b=-a$ such that $a+b=0$.''
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Prove $(x+1)^2+5=x^2+2x+6$ by taking $x=2,5,10$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{For }x=2:\ (3)^2+5=14;\quad 2^2+4+6=14 \Rightarrow \text{True.}\\
+\Step{2}\;& \text{For }x=5:\ (6)^2+5=41;\quad 5^2+10+6=41 \Rightarrow \text{True.}\\
+\Step{3}\;& \text{For }x=10:\ (11)^2+5=126;\quad 10^2+20+6=126 \Rightarrow \text{True.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Find the next number in the pattern using conjecture: $1,3,7,15,31,\_\_\_\_$. State the conjecture used.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Pattern: } \text{Next} = 2 \times \text{Previous} + 1.\\
+\Step{2}\;& 1\to 3, 3\to 7, 7\to 15, 15\to 31.\\
+\Step{3}\;& \text{Next term: } 2(31)+1=63.\\
+\Step{4}\;& \Rightarrow \boxed{63}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Question 6 Classifications}}\\[-2pt]
+\end{center}
+
+\begin{QAPair}{Question 6 (i)}
+\textcolor{gold}{\bfseries Question:} If $a=b$ then $b=a$. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.} (Symmetric property of equality).
+\item \textbf{Is it a postulate?} \textbf{No.} (It is a general algebraic truth, not specific to geometry).
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (ii)}
+\textcolor{gold}{\bfseries Question:} $2$ plus $2$ make $4$. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.} (Basic arithmetic truth).
+\item \textbf{Is it a postulate?} \textbf{No.}
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iii)}
+\textcolor{gold}{\bfseries Question:} One and only one line can pass through two points. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.} (Accepted without proof).
+\item \textbf{Is it a postulate?} \textbf{Yes.} (It is a fundamental assumption of Geometry, specifically Euclid's Postulate 1).
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iv)}
+\textcolor{gold}{\bfseries Question:} If two sides of a triangle are equal then opposite angles are also equal. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{No.} (This is a Theorem that can be proved).
+\item \textbf{Is it a postulate?} \textbf{No.}
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (v)}
+\textcolor{gold}{\bfseries Question:} Product of two negative real numbers is always greater than zero. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.} (Property of real numbers).
+\item \textbf{Is it a postulate?} \textbf{No.}
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (vi)}
+\textcolor{gold}{\bfseries Question:} All right angles are equal to one another. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.}
+\item \textbf{Is it a postulate?} \textbf{Yes.} (Euclid's Postulate 4).
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (vii)}
+\textcolor{gold}{\bfseries Question:} The whole is greater than its part. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.} (Euclid's Common Notion).
+\item \textbf{Is it a postulate?} \textbf{No.} (Usually classified as a general axiom, not a geometric postulate).
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (viii)}
+\textcolor{gold}{\bfseries Question:} If $a>b$ and $c>d$ then $a+c>b+d$. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.} (Order axiom of inequalities).
+\item \textbf{Is it a postulate?} \textbf{No.}
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (ix)}
+\textcolor{gold}{\bfseries Question:} It is possible to extend a line segment continuously in both directions. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{Yes.}
+\item \textbf{Is it a postulate?} \textbf{Yes.} (Euclid's Postulate 2).
+\end{itemize}
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (x)}
+\textcolor{gold}{\bfseries Question:} When we add three consecutive even numbers, their sum is even. \textbf{Is this an axiom? Is this also a postulate?}\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\begin{itemize}
+\item \textbf{Is it an axiom?} \textbf{No.} (This is a statement that can be proved).
+\item \textbf{Is it a postulate?} \textbf{No.}
+\end{itemize}
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Explain all the steps of geometrical proof.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+A formal geometrical proof follows a systematic procedure involving the following steps:
+\begin{itemize}
+\item First, we write the \textbf{Statement}, which clearly describes the theorem to be proved.
+\item Next, we draw a \textbf{Figure} (a labeled diagram) that visually represents the information given in the statement.
+\item We then write the \textbf{Given} data and what is \textbf{Required to Prove} (To Prove) using the symbolic labels from our figure.
+\item If necessary, we include a \textbf{Construction} step to describe any additional lines or points drawn to aid the solution.
+\item Finally, we write the \textbf{Proof}, which consists of a logical sequence of \textbf{Statements} (mathematical steps) and corresponding \textbf{Reasons} (axioms, postulates, or previously proved theorems) that lead to the final conclusion.
+\end{itemize}
+\end{QAPair}
+
+\end{document}

@@ -1,0 +1,498 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 5.2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick reminders (rational expressions)}\par\medskip
+\begin{itemize}
+\item \textbf{Add/Subtract fractions:} make a common denominator, then add/subtract numerators.
+\item \textbf{Divide by a fraction:} $\displaystyle \frac{A}{B}\div\frac{C}{D}=\frac{A}{B}\cdot\frac{D}{C}$.
+\item \textbf{Factor first:} cancel common factors in numerator and denominator.
+\item \textbf{Useful factorizations:} $a^2-b^2=(a-b)(a+b)$,\;\; $x^3-y^3=(x-y)(x^2+xy+y^2)$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% 1. Add the following expressions
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x}{2}+\dfrac{x}{5}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{x}{2}+\frac{x}{5}=\frac{5x}{10}+\frac{2x}{10}\\
+\Step{2}\;&=\frac{7x}{10}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x-2}{2}+\dfrac{x+10}{9}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{x-2}{2}+\frac{x+10}{9}
+=\frac{9(x-2)}{18}+\frac{2(x+10)}{18}\\
+\Step{2}\;&=\frac{9x-18+2x+20}{18}
+=\frac{11x+2}{18}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x+4}{4}+\dfrac{x-1}{7}+\dfrac{5x}{2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{LCM}(4,7,2)=28.\\
+\Step{2}\;& \frac{x+4}{4}=\frac{7(x+4)}{28},\quad
+\frac{x-1}{7}=\frac{4(x-1)}{28},\quad
+\frac{5x}{2}=\frac{70x}{28}.\\
+\Step{3}\;& \Rightarrow\;
+\frac{7(x+4)+4(x-1)+70x}{28}
+=\frac{(7x+28)+(4x-4)+70x}{28}\\
+\Step{4}\;&=\frac{81x+24}{28}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{3x}{x+5}+\dfrac{10}{5x+25}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 5x+25=5(x+5)\;\Rightarrow\;\frac{10}{5x+25}=\frac{10}{5(x+5)}=\frac{2}{x+5}.\\
+\Step{2}\;& \frac{3x}{x+5}+\frac{2}{x+5}=\frac{3x+2}{x+5}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{24x}{6x-18}+\dfrac{3(1+x)}{x-3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 6x-18=6(x-3)\;\Rightarrow\;\frac{24x}{6x-18}=\frac{24x}{6(x-3)}=\frac{4x}{x-3}.\\
+\Step{2}\;& \frac{4x}{x-3}+\frac{3(x+1)}{x-3}
+=\frac{4x+3(x+1)}{x-3}\\
+\Step{3}\;&=\frac{4x+3x+3}{x-3}=\frac{7x+3}{x-3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 2. Subtract
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Subtract $\dfrac{23-x}{5}$ from $7$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 7-\frac{23-x}{5}
+=\frac{35}{5}-\frac{23-x}{5}\\
+\Step{2}\;&=\frac{35-(23-x)}{5}
+=\frac{35-23+x}{5}
+=\frac{x+12}{5}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Subtract $\dfrac{6(x-8)}{7}$ from $\dfrac{5(x-7)}{3}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{5(x-7)}{3}-\frac{6(x-8)}{7}
+=\frac{35(x-7)}{21}-\frac{18(x-8)}{21}\\
+\Step{2}\;&=\frac{35x-245-(18x-144)}{21}
+=\frac{35x-245-18x+144}{21}\\
+\Step{3}\;&=\frac{17x-101}{21}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Subtract $2x^2-2x+1$ from $\dfrac{x+1}{x}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{x+1}{x}-(2x^2-2x+1)
+=\frac{x+1}{x}-\frac{x(2x^2-2x+1)}{x}\\
+\Step{2}\;&=\frac{x+1-(2x^3-2x^2+x)}{x}\\
+\Step{3}\;&=\frac{-2x^3+2x^2+1}{x}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 3. Divide the first expression by the second
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} $\left(x^4-10x^2+9\right)\div\left(x^2-2x-3\right)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^4-10x^2+9=(x^2-1)(x^2-9)\\
+\Step{2}\;&=(x-1)(x+1)(x-3)(x+3),\quad
+x^2-2x-3=(x-3)(x+1).\\
+\Step{3}\;& \frac{(x-1)(x+1)(x-3)(x+3)}{(x-3)(x+1)}
+=(x-1)(x+3).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} $\left(x^3-3x^2y+3xy^2-y^3\right)\div(x-y)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^3-3x^2y+3xy^2-y^3=(x-y)^3.\\
+\Step{2}\;& \frac{(x-y)^3}{x-y}=(x-y)^2
+=x^2-2xy+y^2.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{4x^2-16}{5x}\div\dfrac{2x+4}{15}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{4x^2-16}{5x}\div\frac{2x+4}{15}
+=\frac{4x^2-16}{5x}\cdot\frac{15}{2x+4}.\\
+\Step{2}\;& 4x^2-16=4(x-2)(x+2),\quad 2x+4=2(x+2).\\
+\Step{3}\;& \Rightarrow\; \frac{4(x-2)(x+2)}{5x}\cdot\frac{15}{2(x+2)}
+=\frac{4(x-2)}{5x}\cdot\frac{15}{2}.\\
+\Step{4}\;&=\frac{60}{10}\cdot\frac{x-2}{x}
+=6\cdot\frac{x-2}{x}
+=\frac{6(x-2)}{x}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x^2+5x}{x-3}\div\dfrac{x^2-25}{x-3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{x^2+5x}{x-3}\div\frac{x^2-25}{x-3}
+=\frac{x(x+5)}{x-3}\cdot\frac{x-3}{(x-5)(x+5)}.\\
+\Step{2}\;& \text{Cancel }(x-3)\text{ and }(x+5):\quad
+=\frac{x}{x-5}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 4. Simplify the following
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x}{2}+\dfrac{x}{3}-\dfrac{x}{4}+\dfrac{x}{5}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{LCM}(2,3,4,5)=60.\\
+\Step{2}\;& \frac{x}{2}=\frac{30x}{60},\;
+\frac{x}{3}=\frac{20x}{60},\;
+-\frac{x}{4}=-\frac{15x}{60},\;
+\frac{x}{5}=\frac{12x}{60}.\\
+\Step{3}\;& \Rightarrow\; \frac{30x+20x-15x+12x}{60}=\frac{47x}{60}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac12\!\left(4-\dfrac{x}{3}\right)-\dfrac56+\dfrac13\!\left(11-\dfrac{x}{2}\right)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac12\left(4-\frac{x}{3}\right)=2-\frac{x}{6},\qquad
+\frac13\left(11-\frac{x}{2}\right)=\frac{11}{3}-\frac{x}{6}.\\
+\Step{2}\;& \Rightarrow\; \left(2-\frac{x}{6}\right)-\frac56+\left(\frac{11}{3}-\frac{x}{6}\right)
+=\left(2+\frac{11}{3}-\frac56\right)-\frac{x}{3}.\\
+\Step{3}\;& 2+\frac{11}{3}=\frac{17}{3}=\frac{34}{6},\quad
+\frac{34}{6}-\frac{5}{6}=\frac{29}{6}.\\
+\Step{4}\;& \Rightarrow\; \frac{29}{6}-\frac{x}{3}=\frac{29-2x}{6}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{2}{x+1}+\dfrac{x}{x-1}-\dfrac{x+2}{x-1}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{x}{x-1}-\frac{x+2}{x-1}=\frac{x-(x+2)}{x-1}=-\frac{2}{x-1}.\\
+\Step{2}\;& \Rightarrow\; \frac{2}{x+1}-\frac{2}{x-1}
+=\frac{2(x-1)-2(x+1)}{(x+1)(x-1)}\\
+\Step{3}\;&=\frac{2x-2-2x-2}{x^2-1}
+=\frac{-4}{x^2-1}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iv)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x^2-25}{5}-\dfrac{x}{4}\div\dfrac{3x}{20}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{x}{4}\div\frac{3x}{20}=\frac{x}{4}\cdot\frac{20}{3x}=\frac{5}{3}.\\
+\Step{2}\;& \Rightarrow\; \frac{x^2-25}{5}-\frac{5}{3}
+=\frac{3(x^2-25)}{15}-\frac{25}{15}\\
+\Step{3}\;&=\frac{3x^2-75-25}{15}
+=\frac{3x^2-100}{15}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (v)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{45a^2b^3c^4}{27x^4y^3z}\times\dfrac{243xy^2z^3}{180a^2bc^3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{45a^2b^3c^4}{27x^4y^3z}\cdot\frac{243xy^2z^3}{180a^2bc^3}
+=\left(\frac{45\cdot243}{27\cdot180}\right)\cdot
+\frac{a^2}{a^2}\cdot\frac{b^3}{b}\cdot\frac{c^4}{c^3}\cdot
+\frac{x}{x^4}\cdot\frac{y^2}{y^3}\cdot\frac{z^3}{z}.\\
+\Step{2}\;& \frac{45\cdot243}{27\cdot180}
+=\frac{45}{180}\cdot\frac{243}{27}
+=\frac{1}{4}\cdot 9=\frac{9}{4}.\\
+\Step{3}\;& \Rightarrow\; \frac{9}{4}\cdot b^2\cdot c\cdot \frac{1}{x^3}\cdot \frac{1}{y}\cdot z^2
+=\frac{9b^2cz^2}{4x^3y}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (vi)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{m^2}{8n}\times\dfrac{36p^3q^2}{81mn}\div\dfrac{15mpx^5}{270n^2x^3y}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{m^2}{8n}\cdot\frac{36p^3q^2}{81mn}
+=\frac{m\cdot36p^3q^2}{8\cdot81\,n^2}
+=\frac{mp^3q^2}{18n^2}.\\
+\Step{2}\;& \div\frac{15mpx^5}{270n^2x^3y}
+=\cdot\frac{270n^2x^3y}{15mpx^5}.\\
+\Step{3}\;& \Rightarrow\; \frac{mp^3q^2}{18n^2}\cdot\frac{270n^2x^3y}{15mpx^5}
+=\left(\frac{270}{18\cdot15}\right)\cdot\frac{p^3}{p}\cdot q^2\cdot\frac{x^3}{x^5}\cdot y\\
+\Step{4}\;&=1\cdot p^2 q^2\cdot\frac{1}{x^2}\cdot y
+=\frac{p^2q^2y}{x^2}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (vii)}
+\textcolor{gold}{\bfseries Question:} $3x\div\dfrac{3x^2-27}{x+3}+\dfrac{1}{x-3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 3x\div\frac{3x^2-27}{x+3}
+=3x\cdot\frac{x+3}{3x^2-27}.\\
+\Step{2}\;& 3x^2-27=3(x^2-9)=3(x-3)(x+3).\\
+\Step{3}\;& \Rightarrow\; 3x\cdot\frac{x+3}{3(x-3)(x+3)}=\frac{x}{x-3}.\\
+\Step{4}\;& \frac{x}{x-3}+\frac{1}{x-3}=\frac{x+1}{x-3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (viii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{5x+5}{3(2x-1)}+\dfrac{6-2x}{2(1-2x)}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{5x+5}{3(2x-1)}=\frac{5(x+1)}{3(2x-1)}.\\
+\Step{2}\;& \frac{6-2x}{2(1-2x)}
+=\frac{2(3-x)}{2(1-2x)}
+=\frac{3-x}{1-2x}
+=\frac{x-3}{2x-1}.\\
+\Step{3}\;& \Rightarrow\; \frac{5(x+1)}{3(2x-1)}+\frac{x-3}{2x-1}
+=\frac{5(x+1)+3(x-3)}{3(2x-1)}\\
+\Step{4}\;&=\frac{5x+5+3x-9}{3(2x-1)}
+=\frac{8x-4}{3(2x-1)}
+=\frac{4(2x-1)}{3(2x-1)}
+=\frac{4}{3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ix)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{2a}{2a-3}-\dfrac{5}{6a+9}-\dfrac{4(3a+2)}{3(4a^2-9)}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 6a+9=3(2a+3),\qquad 4a^2-9=(2a-3)(2a+3).\\
+\Step{2}\;& \text{Common denominator: } 3(2a-3)(2a+3)=3(4a^2-9).\\
+\Step{3}\;& \Rightarrow\;
+\frac{2a}{2a-3}-\frac{5}{3(2a+3)}-\frac{4(3a+2)}{3(2a-3)(2a+3)}
+=\frac{12a^2-4a+7}{3(4a^2-9)}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (x)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{5}{5+x-18x^2}-\dfrac{2}{2+5x+2x^2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 5+x-18x^2=-(2x+1)(9x-5),\qquad 2+5x+2x^2=(x+2)(2x+1).\\
+\Step{2}\;& \Rightarrow\;
+\frac{5}{-(2x+1)(9x-5)}-\frac{2}{(x+2)(2x+1)}
+=\frac{-5}{(2x+1)(9x-5)}-\frac{2}{(x+2)(2x+1)}.\\
+\Step{3}\;& \text{Common denominator } (x+2)(2x+1)(9x-5):\\
+\Step{4}\;& \frac{-5(x+2)-2(9x-5)}{(x+2)(2x+1)(9x-5)}
+=\frac{-5x-10-18x+10}{(x+2)(2x+1)(9x-5)}\\
+\Step{5}\;&=\frac{-23x}{(x+2)(2x+1)(9x-5)}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (xi)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{m+3}{24m}-\dfrac{m+1}{24m}+\dfrac{3m-1}{6m^2+18m}\div\dfrac{12m-4}{m+3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{m+3}{24m}-\frac{m+1}{24m}
+=\frac{(m+3)-(m+1)}{24m}
+=\frac{2}{24m}
+=\frac{1}{12m}.\\
+\Step{2}\;& \frac{3m-1}{6m^2+18m}\div\frac{12m-4}{m+3}
+=\frac{3m-1}{6m(m+3)}\cdot\frac{m+3}{12m-4}.\\
+\Step{3}\;& 12m-4=4(3m-1)\;\Rightarrow\;
+\frac{3m-1}{6m(m+3)}\cdot\frac{m+3}{4(3m-1)}=\frac{1}{24m}.\\
+\Step{4}\;& \Rightarrow\; \frac{1}{12m}+\frac{1}{24m}
+=\frac{2+1}{24m}
+=\frac{1}{8m}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (xii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{1-p^2}{1+q}\times\dfrac{1-q^2}{p+p^2}\times\left(1+\dfrac{p}{1-p}\right)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 1-p^2=(1-p)(1+p),\quad 1-q^2=(1-q)(1+q),\quad p+p^2=p(1+p).\\
+\Step{2}\;& 1+\frac{p}{1-p}=\frac{1-p+p}{1-p}=\frac{1}{1-p}.\\
+\Step{3}\;& \Rightarrow\;
+\frac{(1-p)(1+p)}{1+q}\cdot\frac{(1-q)(1+q)}{p(1+p)}\cdot\frac{1}{1-p}.\\
+\Step{4}\;& \text{Cancel }(1+q),\ (1+p),\ (1-p):\quad
+=\frac{1-q}{p}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (xiii)}
+\textcolor{gold}{\bfseries Question:} $\left(1-\dfrac{x}{1+\dfrac{x}{1-x}}\right)\div(1+x^3)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 1+\frac{x}{1-x}=\frac{1-x+x}{1-x}=\frac{1}{1-x}.\\
+\Step{2}\;& \Rightarrow\; \frac{x}{1+\frac{x}{1-x}}=\frac{x}{\frac{1}{1-x}}=x(1-x)=x-x^2.\\
+\Step{3}\;& 1-(x-x^2)=1-x+x^2=x^2-x+1.\\
+\Step{4}\;& \frac{x^2-x+1}{1+x^3},\quad 1+x^3=(x+1)(x^2-x+1).\\
+\Step{5}\;& \Rightarrow\; \frac{x^2-x+1}{(x+1)(x^2-x+1)}=\frac{1}{x+1}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

@@ -1,0 +1,285 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 5.1 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick tips for linear equations}\par\medskip
+\begin{itemize}
+\item \textbf{Distribute:} $k(a\pm b)=ka\pm kb$.
+\item \textbf{Collect like terms:} move all variables to one side, constants to the other.
+\item \textbf{Clear fractions:} multiply both sides by the LCM of denominators.
+\item \textbf{Decimals:} convert to fractions (e.g., $0.3=\tfrac{3}{10}$) or multiply by $10,100,\dots$
+\item \textbf{Final check:} substitute the value back (optional).
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} $5x-2-x=4-3x-27$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 5x-2-x=4x-2,\qquad 4-3x-27=-3x-23.\\
+\Step{2}\;& 4x-2=-3x-23.\\
+\Step{3}\;& 4x+3x=-23+2 \;\Rightarrow\; 7x=-21.\\
+\Step{4}\;& x=\boxed{-3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} $4a-3(5a-14)=5(7+a)-9$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 4a-3(5a-14)=4a-15a+42=-11a+42.\\
+\Step{2}\;& 5(7+a)-9=35+5a-9=26+5a.\\
+\Step{3}\;& -11a+42=5a+26 \;\Rightarrow\; -16a=-16.\\
+\Step{4}\;& a=\boxed{1}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} $7(2-5x)+27=18x-3(8-4x)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 7(2-5x)+27=14-35x+27=41-35x.\\
+\Step{2}\;& 18x-3(8-4x)=18x-24+12x=30x-24.\\
+\Step{3}\;& 41-35x=30x-24 \;\Rightarrow\; 41=65x-24.\\
+\Step{4}\;& 65=65x \;\Rightarrow\; x=\boxed{1}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} $\dfrac{5x}{4}+\dfrac12=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Multiply both sides by }4:\\
+& 5x+2=0.\\
+\Step{2}\;& 5x=-2 \;\Rightarrow\; x=\boxed{-\frac{2}{5}}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x-2}{2}+\dfrac{x+10}{9}=5$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{LCM}(2,9)=18.\ \text{Multiply both sides by }18:\\
+& 9(x-2)+2(x+10)=90.\\
+\Step{2}\;& 9x-18+2x+20=90 \;\Rightarrow\; 11x+2=90.\\
+\Step{3}\;& 11x=88 \;\Rightarrow\; x=\boxed{8}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} $\dfrac{4(x+2)}{3}-\dfrac{6(x-7)}{7}=12$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{LCM}(3,7)=21.\ \text{Multiply both sides by }21:\\
+& 28(x+2)-18(x-7)=252.\\
+\Step{2}\;& 28x+56-18x+126=252 \;\Rightarrow\; 10x+182=252.\\
+\Step{3}\;& 10x=70 \;\Rightarrow\; x=\boxed{7}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} $\dfrac{x}{2}+\dfrac{x}{3}-\dfrac{x}{4}+\dfrac{x}{5}=7\dfrac{5}{6}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 7\dfrac{5}{6}=\frac{47}{6}.\\
+\Step{2}\;& \frac{x}{2}+\frac{x}{3}-\frac{x}{4}+\frac{x}{5}
+=\frac{30x+20x-15x+12x}{60}=\frac{47x}{60}.\\
+\Step{3}\;& \frac{47x}{60}=\frac{47}{6}.\\
+\Step{4}\;& \text{Multiply both sides by }60:\ 47x=470 \;\Rightarrow\; x=\boxed{10}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} $\dfrac{y+1}{3}+\dfrac{y+1}{2}=2-\dfrac{y+3}{2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{LCM}(3,2)=6.\ \text{Multiply both sides by }6:\\
+& 2(y+1)+3(y+1)=12-3(y+3).\\
+\Step{2}\;& 5(y+1)=12-3y-9=3-3y.\\
+\Step{3}\;& 5y+5=3-3y \;\Rightarrow\; 8y=-2.\\
+\Step{4}\;& y=\boxed{-\frac{1}{4}}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} $\dfrac{1}{5}(x-8)+\dfrac{4+x}{7}=7-\dfrac{23-x}{5}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{1}{5}(x-8)=\frac{x-8}{5},\qquad
+7-\frac{23-x}{5}=7-\frac{23}{5}+\frac{x}{5}=\frac{x+12}{5}.\\
+\Step{2}\;& \frac{x-8}{5}+\frac{x+4}{7}=\frac{x+12}{5}.\\
+\Step{3}\;& \frac{x+4}{7}=\frac{x+12}{5}-\frac{x-8}{5}=\frac{20}{5}=4.\\
+\Step{4}\;& x+4=28 \;\Rightarrow\; x=\boxed{24}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} $\dfrac{1}{2y}-\dfrac{1}{6}=\dfrac{1}{4y}-1-\dfrac{1}{y}\,;\; y\neq 0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Multiply both sides by }12y\ (y\neq 0):\\
+& 12y\left(\frac{1}{2y}\right)-12y\left(\frac{1}{6}\right)
+=12y\left(\frac{1}{4y}\right)-12y(1)-12y\left(\frac{1}{y}\right).\\
+\Step{2}\;& 6-2y=3-12y-12=-9-12y.\\
+\Step{3}\;& 6+10y=-9 \;\Rightarrow\; 10y=-15.\\
+\Step{4}\;& y=\boxed{-\frac{3}{2}} \quad (\text{satisfies }y\neq 0).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} $4-0.3(1-x)=7$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.3=\frac{3}{10}. \ \Rightarrow\ 4-\frac{3}{10}(1-x)=7.\\
+\Step{2}\;& 4-\frac{3}{10}+\frac{3}{10}x=7
+\;\Rightarrow\; \frac{37}{10}+\frac{3}{10}x=7.\\
+\Step{3}\;& \frac{3}{10}x=7-\frac{37}{10}=\frac{33}{10}.\\
+\Step{4}\;& x=\frac{\frac{33}{10}}{\frac{3}{10}}=11 \;\Rightarrow\; x=\boxed{11}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} $0.5x=6.3-0.2x$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.5=\frac{1}{2},\ 6.3=\frac{63}{10},\ 0.2=\frac{1}{5}.\\
+\Step{2}\;& \frac{1}{2}x=\frac{63}{10}-\frac{1}{5}x
+\;\Rightarrow\; \left(\frac{1}{2}+\frac{1}{5}\right)x=\frac{63}{10}.\\
+\Step{3}\;& \frac{7}{10}x=\frac{63}{10}\;\Rightarrow\; x=9.\\
+\Step{4}\;& x=\boxed{9}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} $1.3x-0.2=0.3x-1.5$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 1.3=\frac{13}{10},\ 0.2=\frac{1}{5},\ 0.3=\frac{3}{10},\ 1.5=\frac{3}{2}.\\
+\Step{2}\;& \frac{13}{10}x-\frac{1}{5}=\frac{3}{10}x-\frac{3}{2}.\\
+\Step{3}\;& \left(\frac{13}{10}-\frac{3}{10}\right)x=-\frac{3}{2}+\frac{1}{5}
+\;\Rightarrow\; x=-\frac{15}{10}+\frac{2}{10}=-\frac{13}{10}.\\
+\Step{4}\;& x=\boxed{-\frac{13}{10}}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

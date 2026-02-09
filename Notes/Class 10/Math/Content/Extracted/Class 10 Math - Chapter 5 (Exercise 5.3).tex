@@ -1,0 +1,284 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 5.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (rational equations \& work problems)}\par\medskip
+\begin{itemize}
+\item \textbf{Restrictions:} Denominators \textbf{cannot be zero}. Write restrictions first.
+\item \textbf{Solve rational equations:} Multiply both sides by the \textbf{LCD} to clear denominators.
+\item \textbf{Check:} Substitute answers back into the \textbf{original} equation (to remove extraneous solutions).
+\item \textbf{Work rate:} If a job takes $t$ hours, then rate $=\dfrac{1}{t}$ job/hour. Together: add rates.
+\item \textbf{Mixture percent:} $\dfrac{\text{amount of ingredient}}{\text{total amount}}=\text{desired fraction}$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% 1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} $\displaystyle \frac{6x}{x-11}+1=\frac{3}{x-11}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Restriction: } x-11\ne 0 \Rightarrow x\ne 11.\\
+\Step{2}\;& \text{Multiply by }(x-11):\quad 6x+(x-11)=3.\\
+\Step{3}\;& 7x-11=3 \Rightarrow 7x=14 \Rightarrow x=2.\\
+\Step{4}\;& \text{Check: }x=2\Rightarrow \frac{12}{-9}+1=-\frac{4}{3}+1=-\frac{1}{3},\;
+\frac{3}{-9}=-\frac{1}{3}.\\
+&\Rightarrow \boxed{x=2}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} $\displaystyle \frac{2y}{y+3}=\frac{-4}{y-7}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Restrictions: } y\ne -3,\; y\ne 7.\\
+\Step{2}\;& \text{Cross-multiply:}\quad 2y(y-7)=-4(y+3).\\
+\Step{3}\;& 2y^2-14y=-4y-12 \Rightarrow 2y^2-10y+12=0.\\
+\Step{4}\;& y^2-5y+6=0 \Rightarrow (y-2)(y-3)=0.\\
+\Step{5}\;& y=2 \text{ or } y=3.\\
+\Step{6}\;& \text{Check: }y=2:\ \frac{4}{5}=\frac{-4}{-5};\quad
+y=3:\ \frac{6}{6}=\frac{-4}{-4}.\\
+&\Rightarrow \boxed{y=2,\ 3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} $\displaystyle \frac{x+7}{x+4}-1=\frac{x+10}{2x+8}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Restriction: }x+4\ne 0 \Rightarrow x\ne -4 \quad (\text{since }2x+8=2(x+4)).\\
+\Step{2}\;& \frac{x+7}{x+4}-1=\frac{x+7-(x+4)}{x+4}=\frac{3}{x+4}.\\
+\Step{3}\;& \frac{3}{x+4}=\frac{x+10}{2(x+4)}.\\
+\Step{4}\;& \text{Multiply by }2(x+4):\quad 6=x+10 \Rightarrow x=-4.\\
+\Step{5}\;& x=-4 \text{ is not allowed (denominator becomes }0).\\
+&\Rightarrow \boxed{\text{No solution.}}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} $\displaystyle \frac{3y}{y+1}=\frac{12}{y^2-1}+\frac{y+4}{y+1}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Restrictions: }y^2-1\ne 0,\ y+1\ne 0 \Rightarrow y\ne 1,\ y\ne -1.\\
+\Step{2}\;& y^2-1=(y-1)(y+1).\ \text{Multiply by }(y+1)(y-1).\\
+\Step{3}\;& 3y(y-1)=12+(y+4)(y-1).\\
+\Step{4}\;& 3y^2-3y=12+(y^2+3y-4)=y^2+3y+8.\\
+\Step{5}\;& 2y^2-6y-8=0 \Rightarrow y^2-3y-4=0 \Rightarrow (y-4)(y+1)=0.\\
+\Step{6}\;& y=4 \text{ or } y=-1,\ \text{but }y=-1\text{ is not allowed}.\\
+\Step{7}\;& \text{Check }y=4:\ \frac{12}{5}=\frac{12}{15}+\frac{8}{5}=\frac{4}{5}+\frac{8}{5}=\frac{12}{5}.\\
+&\Rightarrow \boxed{y=4}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} $\displaystyle x+\frac{5}{x}=-6$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Restriction: }x\ne 0.\\
+\Step{2}\;& \text{Multiply by }x:\quad x^2+5=-6x.\\
+\Step{3}\;& x^2+6x+5=0 \Rightarrow (x+1)(x+5)=0.\\
+\Step{4}\;& x=-1 \text{ or } x=-5.\\
+\Step{5}\;& \text{Check: }-1+\frac{5}{-1}=-6,\quad -5+\frac{5}{-5}=-6.\\
+&\Rightarrow \boxed{x=-1,\ -5}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} $\displaystyle \frac{y+2}{y^2+6y-7}=\frac{8}{y^2+3y-4}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Factor: }y^2+6y-7=(y+7)(y-1),\quad y^2+3y-4=(y+4)(y-1).\\
+\Step{2}\;& \text{Restrictions: }y\ne -7,\ -4,\ 1.\\
+\Step{3}\;& \frac{y+2}{(y+7)(y-1)}=\frac{8}{(y+4)(y-1)}
+\Rightarrow \frac{y+2}{y+7}=\frac{8}{y+4}\quad (\text{cancel }y-1).\\
+\Step{4}\;& (y+2)(y+4)=8(y+7).\\
+\Step{5}\;& y^2+6y+8=8y+56 \Rightarrow y^2-2y-48=0.\\
+\Step{6}\;& y=\frac{2\pm \sqrt{196}}{2}=\frac{2\pm 14}{2} \Rightarrow y=8\ \text{or}\ y=-6.\\
+\Step{7}\;& \text{Both satisfy restrictions.}\\
+&\Rightarrow \boxed{y=8,\ -6}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} $\displaystyle \frac{5}{y+1}+\frac{3y+5}{y^2+4y+3}=\frac{2}{y+3}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& y^2+4y+3=(y+1)(y+3).\\
+\Step{2}\;& \text{Restrictions: }y\ne -1,\ -3.\\
+\Step{3}\;& \text{Multiply by }(y+1)(y+3):\quad 5(y+3)+(3y+5)=2(y+1).\\
+\Step{4}\;& 5y+15+3y+5=2y+2 \Rightarrow 8y+20=2y+2.\\
+\Step{5}\;& 6y=-18 \Rightarrow y=-3.\\
+\Step{6}\;& y=-3 \text{ is not allowed (denominator becomes }0).\\
+&\Rightarrow \boxed{\text{No solution.}}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Kaleem can mow a lawn in 4 hours. Moiz can mow the same lawn in 5 hours. How long would it take both working together?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Rates: } \frac{1}{4}\ \text{lawn/hr and } \frac{1}{5}\ \text{lawn/hr}.\\
+\Step{2}\;& \text{Together: } \frac{1}{4}+\frac{1}{5}=\frac{5+4}{20}=\frac{9}{20}.\\
+\Step{3}\;& \text{Time}=\frac{1}{\frac{9}{20}}=\frac{20}{9}\ \text{hours}
+=2\frac{2}{9}\ \text{hours}.\\
+&\Rightarrow \boxed{\frac{20}{9}\text{ hours } \approx 2.22\text{ hours (about 2 h 13 min)}.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} You have an 8-pint mixture made of equal amounts of yellow and blue. To make it 80\% yellow, how many pints of yellow paint must be added?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Initially: }4\text{ pints yellow and }4\text{ pints blue (total }8).\\
+\Step{2}\;& \text{Add }x\text{ pints yellow. Then yellow }=4+x,\ \text{total }=8+x.\\
+\Step{3}\;& \frac{4+x}{8+x}=0.8=\frac{4}{5}.\\
+\Step{4}\;& 5(4+x)=4(8+x)\Rightarrow 20+5x=32+4x\Rightarrow x=12.\\
+&\Rightarrow \boxed{12\text{ pints of yellow paint}}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Waqar takes 9 hours longer to build a wall than Wasi. Together they can build it in 20 hours. How long would it take each alone?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Let Wasi take }t\text{ hours, so Waqar takes }t+9\text{ hours}.\\
+\Step{2}\;& \frac{1}{t}+\frac{1}{t+9}=\frac{1}{20}.\\
+\Step{3}\;& \frac{2t+9}{t(t+9)}=\frac{1}{20}\Rightarrow 20(2t+9)=t(t+9).\\
+\Step{4}\;& 40t+180=t^2+9t \Rightarrow t^2-31t-180=0.\\
+\Step{5}\;& t=\frac{31\pm \sqrt{31^2+4\cdot 180}}{2}=\frac{31\pm \sqrt{1681}}{2}
+=\frac{31\pm 41}{2}.\\
+\Step{6}\;& t=36\ \text{or}\ t=-5\ (\text{reject}).\\
+\Step{7}\;& \Rightarrow \text{Wasi }=36\text{ hours, Waqar }=36+9=45\text{ hours}.\\
+&\Rightarrow \boxed{\text{Wasi: }36\text{ h},\ \text{Waqar: }45\text{ h}.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

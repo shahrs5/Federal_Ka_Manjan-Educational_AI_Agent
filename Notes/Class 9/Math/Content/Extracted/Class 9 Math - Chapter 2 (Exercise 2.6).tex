@@ -1,0 +1,342 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% Bar characteristic helper (for logs of numbers < 1)
+\newcommand{\barch}[1]{\overline{#1}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 2.6 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Product rule:} $\log(ab)=\log a+\log b$.
+\item \textbf{Quotient rule:} $\log\!\left(\dfrac{a}{b}\right)=\log a-\log b$.
+\item \textbf{Power rule:} $\log(a^n)=n\log a$.
+\item \textbf{Root rule:} $\log\!\left(\sqrt[n]{a}\right)=\dfrac{1}{n}\log a$.
+\item \textbf{Characteristic \& mantissa:} $\log N = (\text{integer part})+(\text{decimal part})$.
+For $0<N<1$, write e.g.\ $-0.2469=-1+0.7531=\barch{1}.7531$ (bar characteristic).
+\item \textbf{Digits:} If $N$ is a positive integer, \;\#digits $= \lfloor \log_{10}N \rfloor+1$.
+So for $a^b$, \;\#digits $=\lfloor b\log_{10}a\rfloor+1$.
+\item \textbf{Richter scale:} Strength (amplitude) ratio $=10^{(M_1-M_2)}$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1: Number of digits
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} Find the number of digits in $3^{30}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log(3^{30})=30\log 3.\\
+\Step{2}\;& \log 3 \approx 0.4771 \;\Rightarrow\; 30\log 3 \approx 30(0.4771)=14.313.\\
+\Step{3}\;& \#\text{digits}=\lfloor 14.313\rfloor+1=14+1=15.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} Find the number of digits in $100^{100}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 100^{100}=(10^2)^{100}=10^{200}.\\
+\Step{2}\;& 10^{200}\text{ is }1\text{ followed by }200\text{ zeros } \Rightarrow 200+1=201\text{ digits.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} Find the number of digits in $2^{10}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log(2^{10})=10\log 2.\\
+\Step{2}\;& \log 2 \approx 0.3010 \;\Rightarrow\; 10\log 2 \approx 3.010.\\
+\Step{3}\;& \#\text{digits}=\lfloor 3.010\rfloor+1=3+1=4.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} Find the number of digits in $5^{37}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log(5^{37})=37\log 5.\\
+\Step{2}\;& \log 5 \approx 0.6990 \;\Rightarrow\; 37\log 5 \approx 37(0.6990)=25.863.\\
+\Step{3}\;& \#\text{digits}=\lfloor 25.863\rfloor+1=25+1=26.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} Find the number of digits in $529^{30}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log(529^{30})=30\log 529.\\
+\Step{2}\;& \log 529 \approx 2.7235 \;\Rightarrow\; 30\log 529 \approx 30(2.7235)=81.705.\\
+\Step{3}\;& \#\text{digits}=\lfloor 81.705\rfloor+1=81+1=82.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi)}
+\textcolor{gold}{\bfseries Question:} Find the number of digits in $23^{15}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log(23^{15})=15\log 23.\\
+\Step{2}\;& \log 23 \approx 1.3617 \;\Rightarrow\; 15\log 23 \approx 15(1.3617)=20.4255.\\
+\Step{3}\;& \#\text{digits}=\lfloor 20.4255\rfloor+1=20+1=21.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2: Evaluate using laws of logarithms
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Evaluate $23.57 \times 5.967$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log(23.57\times 5.967)=\log 23.57+\log 5.967.\\
+\Step{2}\;& \log 23.57 \approx 1.3724 \ (C=1,\ M=0.3724),\\
+&\log 5.967 \approx 0.7757 \ (C=0,\ M=0.7757).\\
+\Step{3}\;& \Rightarrow\ \log(\text{product}) \approx 1.3724+0.7757=2.1481\\
+& (C=2,\ M=0.1481).\\
+\Step{4}\;& \text{Antilog}(0.1481)\approx 1.4064.\\
+\Step{5}\;& \Rightarrow\ 23.57\times 5.967 \approx 1.4064\times 10^2=140.64.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\dfrac{65.89}{7.392}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log\!\left(\frac{65.89}{7.392}\right)=\log 65.89-\log 7.392.\\
+\Step{2}\;& \log 65.89 \approx 1.8188 \ (C=1,\ M=0.8188),\\
+&\log 7.392 \approx 0.8688 \ (C=0,\ M=0.8688).\\
+\Step{3}\;& \Rightarrow\ \log(\text{quotient}) \approx 1.8188-0.8688=0.9501\\
+& (C=0,\ M=0.9501).\\
+\Step{4}\;& \text{Antilog}(0.9501)\approx 8.9137.\\
+\Step{5}\;& \Rightarrow\ \dfrac{65.89}{7.392}\approx 8.9137.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\dfrac{47.27\times 5.321}{9.712\times 4.171}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log\!\left(\frac{47.27\cdot 5.321}{9.712\cdot 4.171}\right)
+=\log 47.27+\log 5.321-\log 9.712-\log 4.171.\\
+\Step{2}\;& \log 47.27 \approx 1.6746,\ \log 5.321 \approx 0.7260,\\
+&\log 9.712 \approx 0.9873,\ \log 4.171 \approx 0.6203.\\
+\Step{3}\;& \Rightarrow\ \log(\text{value}) \approx (1.6746+0.7260)-(0.9873+0.6203)=0.7930\\
+& (C=0,\ M=0.7930).\\
+\Step{4}\;& \text{Antilog}(0.7930)\approx 6.2091.\\
+\Step{5}\;& \Rightarrow\ \dfrac{47.27\times 5.321}{9.712\times 4.171}\approx 6.2091.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\dfrac{\sqrt[3]{27.98}}{\sqrt{28.73}}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log\!\left(\frac{\sqrt[3]{27.98}}{\sqrt{28.73}}\right)
+=\frac{1}{3}\log 27.98-\frac{1}{2}\log 28.73.\\
+\Step{2}\;& \log 27.98 \approx 1.4469,\qquad \log 28.73 \approx 1.4583.\\
+\Step{3}\;& \Rightarrow\ \log(\text{value}) \approx \frac{1}{3}(1.4469)-\frac{1}{2}(1.4583)
+=0.4823-0.7292=-0.2469.\\
+\Step{4}\;& -0.2469=-1+0.7531=\barch{1}.7531
+\quad(\text{bar characteristic } \barch{1},\ \text{mantissa }0.7531).\\
+\Step{5}\;& \text{Antilog}(0.7531)\approx 5.6639.\\
+\Step{6}\;& \Rightarrow\ \text{value}\approx 5.6639\times 10^{-1}=0.5664.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (v)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\dfrac{\sqrt[7]{129.4}}{\sqrt[3]{27.37}}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log\!\left(\frac{\sqrt[7]{129.4}}{\sqrt[3]{27.37}}\right)
+=\frac{1}{7}\log 129.4-\frac{1}{3}\log 27.37.\\
+\Step{2}\;& \log 129.4 \approx 2.1123,\qquad \log 27.37 \approx 1.4373.\\
+\Step{3}\;& \Rightarrow\ \log(\text{value}) \approx \frac{1}{7}(2.1123)-\frac{1}{3}(1.4373)
+=0.3018-0.4791=-0.1774.\\
+\Step{4}\;& -0.1774=-1+0.8226=\barch{1}.8226.\\
+\Step{5}\;& \text{Antilog}(0.8226)\approx 6.6468.\\
+\Step{6}\;& \Rightarrow\ \text{value}\approx 6.6468\times 10^{-1}=0.6647.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (vi)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\dfrac{\sqrt{39.24}\,\sqrt[3]{1.931}}{\sqrt[4]{64.4}\,\sqrt{23.91}}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log\!\left(\frac{\sqrt{39.24}\,\sqrt[3]{1.931}}{\sqrt[4]{64.4}\,\sqrt{23.91}}\right)
+=\frac12\log 39.24+\frac13\log 1.931-\frac14\log 64.4-\frac12\log 23.91.\\
+\Step{2}\;& \log 39.24 \approx 1.5937,\ \log 1.931 \approx 0.2858,\\
+&\log 64.4 \approx 1.8096,\ \log 23.91 \approx 1.3786.\\
+\Step{3}\;& \Rightarrow\ \log(\text{value}) \approx \frac12(1.5937)+\frac13(0.2858)-\frac14(1.8096)-\frac12(1.3786)\\
+&=0.7969+0.0953-0.4524-0.6893=-0.2494.\\
+\Step{4}\;& -0.2494=-1+0.7506=\barch{1}.7506.\\
+\Step{5}\;& \text{Antilog}(0.7506)\approx 5.6314.\\
+\Step{6}\;& \Rightarrow\ \text{value}\approx 5.6314\times 10^{-1}=0.5631.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (vii)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\dfrac{\sqrt{16\frac{3}{4}}}{\sqrt[3]{53}}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 16\frac{3}{4}=16.75.\\
+\Step{2}\;& \log\!\left(\frac{\sqrt{16.75}}{\sqrt[3]{53}}\right)
+=\frac12\log 16.75-\frac13\log 53.\\
+\Step{3}\;& \log 16.75 \approx 1.2230,\qquad \log 53 \approx 1.7243.\\
+\Step{4}\;& \Rightarrow\ \log(\text{value}) \approx \frac12(1.2230)-\frac13(1.7243)=0.6115-0.5748=0.0373.\\
+\Step{5}\;& \text{Antilog}(0.0373)\approx 1.0896.\\
+\Step{6}\;& \Rightarrow\ \dfrac{\sqrt{16\frac34}}{\sqrt[3]{53}}\approx 1.0896.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (viii)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\dfrac{(27.98)^2}{(28.73)^3}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log\!\left(\frac{(27.98)^2}{(28.73)^3}\right)=2\log 27.98-3\log 28.73.\\
+\Step{2}\;& \log 27.98 \approx 1.4469,\qquad \log 28.73 \approx 1.4583.\\
+\Step{3}\;& \Rightarrow\ \log(\text{value}) \approx 2(1.4469)-3(1.4583)=2.8938-4.3749=-1.4813.\\
+\Step{4}\;& -1.4813=-2+0.5187=\barch{2}.5187.\\
+\Step{5}\;& \text{Antilog}(0.5187)\approx 3.3013.\\
+\Step{6}\;& \Rightarrow\ \text{value}\approx 3.3013\times 10^{-2}=0.03301.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3: Richter scale
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} The Kansu, China earthquake of 1920 was about $8.5$ on the Richter scale and the Tokyo, Japan earthquake of 1923 was $7.8$. How many times stronger was the 1920 earthquake?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Richter strength (amplitude) ratio}=10^{(M_1-M_2)}.\\
+\Step{2}\;& M_1-M_2=8.5-7.8=0.7.\\
+\Step{3}\;& \text{Ratio}=10^{0.7}=\text{Antilog}(0.7000)\approx 5.01.
+\end{aligned}
+\]
+\[
+\boxed{\text{The 1920 earthquake was approximately }5\text{ times stronger than the 1923 earthquake.}}
+\]
+\end{QAPair}
+
+\end{document}

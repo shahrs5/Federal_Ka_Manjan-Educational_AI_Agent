@@ -1,0 +1,543 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 4.2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Difference of squares:} $a^2-b^2=(a-b)(a+b)$.
+\item \textbf{Sum of cubes:} $a^3+b^3=(a+b)(a^2-ab+b^2)$.
+\item \textbf{Difference of cubes:} $a^3-b^3=(a-b)(a^2+ab+b^2)$.
+\item \textbf{Perfect cube patterns:}
+\[
+(u+v)^3=u^3+3u^2v+3uv^2+v^3,\qquad
+(u-v)^3=u^3-3u^2v+3uv^2-v^3.
+\]
+\item \textbf{Substitution trick:} If an expression repeats, set $A=\text{(repeated part)}$ to make factoring easier.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% 1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} $x^3-125$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^3-125=x^3-5^3 \qquad (\text{difference of cubes})\\
+\Step{2}\;&=(x-5)\bigl(x^2+5x+25\bigr).
+\end{aligned}
+\]
+\end{QAPair}
+
+% 2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} $8x^3+1$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&8x^3+1=(2x)^3+1^3 \qquad (\text{sum of cubes})\\
+\Step{2}\;&=(2x+1)\bigl((2x)^2-(2x)(1)+1^2\bigr)\\
+\Step{3}\;&=(2x+1)\bigl(4x^2-2x+1\bigr).
+\end{aligned}
+\]
+\end{QAPair}
+
+% 3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} $3p^3q^3-81x^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&3p^3q^3-81x^3=3\bigl(p^3q^3-27x^3\bigr)\\
+\Step{2}\;&=3\bigl((pq)^3-(3x)^3\bigr)\qquad (\text{difference of cubes})\\
+\Step{3}\;&=3(pq-3x)\bigl((pq)^2+(pq)(3x)+(3x)^2\bigr)\\
+\Step{4}\;&=3(pq-3x)\bigl(p^2q^2+3pqx+9x^2\bigr).
+\end{aligned}
+\]
+\end{QAPair}
+
+% 4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} $27+512x^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&27+512x^3=3^3+(8x)^3 \qquad (\text{sum of cubes})\\
+\Step{2}\;&=(3+8x)\bigl(3^2-3(8x)+(8x)^2\bigr)\\
+\Step{3}\;&=(3+8x)\bigl(9-24x+64x^2\bigr).
+\end{aligned}
+\]
+\end{QAPair}
+
+% 5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} $t^6-64$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&t^6-64=(t^2)^3-4^3 \qquad (\text{difference of cubes})\\
+\Step{2}\;&=(t^2-4)\bigl(t^4+4t^2+16\bigr)\\
+\Step{3}\;&t^2-4=(t-2)(t+2)\\
+\Step{4}\;&t^4+4t^2+16=(t^2+4)^2-(2t)^2\\
+\Step{5}\;&=(t^2-2t+4)(t^2+2t+4).
+\end{aligned}
+\]
+\[
+\boxed{\,t^6-64=(t-2)(t+2)(t^2-2t+4)(t^2+2t+4)\,}
+\]
+\end{QAPair}
+
+% 6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} $x^6+y^6$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^6+y^6=(x^2)^3+(y^2)^3 \qquad (\text{sum of cubes})\\
+\Step{2}\;&=(x^2+y^2)\bigl(x^4-x^2y^2+y^4\bigr).
+\end{aligned}
+\]
+\end{QAPair}
+
+% 7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} $(2-x)^3+(y-2)^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $a=2-x$ and $b=y-2$. Then $a^3+b^3=(a+b)(a^2-ab+b^2)$.
+\[
+\begin{aligned}
+\Step{1}\;&(2-x)^3+(y-2)^3=(a^3+b^3)\\
+\Step{2}\;&=(a+b)(a^2-ab+b^2)\\
+\Step{3}\;&=(y-x)\Bigl((2-x)^2-(2-x)(y-2)+(y-2)^2\Bigr)\\
+\Step{4}\;&=(y-x)\bigl(x^2+xy+y^2-6x-6y+12\bigr).
+\end{aligned}
+\]
+\end{QAPair}
+
+% 8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} $64(x+y)^3-z^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&64(x+y)^3-z^3=\bigl(4(x+y)\bigr)^3-z^3 \qquad (\text{difference of cubes})\\
+\Step{2}\;&=\bigl(4(x+y)-z\bigr)\Bigl(\bigl(4(x+y)\bigr)^2+z\cdot 4(x+y)+z^2\Bigr)\\
+\Step{3}\;&=\bigl(4(x+y)-z\bigr)\bigl(16(x+y)^2+4z(x+y)+z^2\bigr).
+\end{aligned}
+\]
+\end{QAPair}
+
+% 9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} $27p^3+144pq^2-108p^2q-64q^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(3p-4q)^3=27p^3-3(9p^2)(4q)+3(3p)(16q^2)-64q^3\\
+&=27p^3-108p^2q+144pq^2-64q^3,
+\end{aligned}
+\]
+which matches the given expression (just rearranged).
+\[
+\boxed{\,27p^3+144pq^2-108p^2q-64q^3=(3p-4q)^3\,}
+\]
+\end{QAPair}
+
+% 10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} $8p^3+q^3+12p^2q+6pq^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(2p+q)^3=8p^3+3(4p^2)q+3(2p)q^2+q^3\\
+\Step{2}\;&=8p^3+12p^2q+6pq^2+q^3,
+\end{aligned}
+\]
+so it matches exactly.
+\[
+\boxed{\,8p^3+q^3+12p^2q+6pq^2=(2p+q)^3\,}
+\]
+\end{QAPair}
+
+% 11
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} $125x^3-y^3-75x^2y+15xy^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(5x-y)^3=125x^3-3(25x^2)y+3(5x)y^2-y^3\\
+\Step{2}\;&=125x^3-75x^2y+15xy^2-y^3,
+\end{aligned}
+\]
+which is the given expression.
+\[
+\boxed{\,125x^3-y^3-75x^2y+15xy^2=(5x-y)^3\,}
+\]
+\end{QAPair}
+
+% 12
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} $p^3-9p^2q+27pq^2-27q^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(p-3q)^3=p^3-3p^2(3q)+3p(3q)^2-(3q)^3\\
+\Step{2}\;&=p^3-9p^2q+27pq^2-27q^3.
+\end{aligned}
+\]
+\[
+\boxed{\,p^3-9p^2q+27pq^2-27q^3=(p-3q)^3\,}
+\]
+\end{QAPair}
+
+% 13
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} $(2x^2-3x+6)(2x^2-3x)-55$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $A=2x^2-3x$.
+\[
+\begin{aligned}
+\Step{1}\;&(2x^2-3x+6)(2x^2-3x)-55=(A+6)A-55\\
+\Step{2}\;&=A^2+6A-55\\
+\Step{3}\;&=(A+11)(A-5).
+\end{aligned}
+\]
+Substitute back:
+\[
+(2x^2-3x+11)(2x^2-3x-5).
+\]
+Finally,
+\[
+2x^2-3x-5=(2x-5)(x+1).
+\]
+\[
+\boxed{\, (2x^2-3x+6)(2x^2-3x)-55=(2x^2-3x+11)(2x-5)(x+1)\,}
+\]
+\end{QAPair}
+
+% 14
+\begin{QAPair}{Question 14}
+\textcolor{gold}{\bfseries Question:} $(y^2+2y-3)(y^2+2y+11)+48$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $B=y^2+2y$.
+\[
+\begin{aligned}
+\Step{1}\;&(y^2+2y-3)(y^2+2y+11)+48=(B-3)(B+11)+48\\
+\Step{2}\;&=B^2+8B-33+48\\
+\Step{3}\;&=B^2+8B+15\\
+\Step{4}\;&=(B+3)(B+5).
+\end{aligned}
+\]
+Substitute back:
+\[
+\boxed{\, (y^2+2y-3)(y^2+2y+11)+48=(y^2+2y+3)(y^2+2y+5)\,}
+\]
+\end{QAPair}
+
+% 15
+\begin{QAPair}{Question 15}
+\textcolor{gold}{\bfseries Question:} $y(y-1)(y-3)(y-4)+2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&y(y-1)(y-3)(y-4)
+=\bigl(y(y-4)\bigr)\bigl((y-1)(y-3)\bigr)\\
+\Step{2}\;&=\bigl(y^2-4y\bigr)\bigl(y^2-4y+3\bigr).
+\end{aligned}
+\]
+Let $C=y^2-4y$.
+\[
+\begin{aligned}
+\Step{3}\;&C(C+3)+2=C^2+3C+2\\
+\Step{4}\;&=(C+1)(C+2).
+\end{aligned}
+\]
+Substitute back:
+\[
+\boxed{\,y(y-1)(y-3)(y-4)+2=(y^2-4y+1)(y^2-4y+2)\,}
+\]
+\end{QAPair}
+
+% 16
+\begin{QAPair}{Question 16}
+\textcolor{gold}{\bfseries Question:} $(k+2)(k-3)(k+5)(k+10)+375$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(k+2)(k+5)=k^2+7k+10,\quad (k-3)(k+10)=k^2+7k-30.\\
+\Step{2}\;&\Rightarrow (k+2)(k-3)(k+5)(k+10)\\
+&=(k^2+7k+10)(k^2+7k-30).
+\end{aligned}
+\]
+Let $D=k^2+7k$.
+\[
+\begin{aligned}
+\Step{3}\;&(D+10)(D-30)+375\\
+\Step{4}\;&=D^2-20D-300+375\\
+\Step{5}\;&=D^2-20D+75\\
+\Step{6}\;&=(D-5)(D-15).
+\end{aligned}
+\]
+Substitute back:
+\[
+\boxed{\, (k+2)(k-3)(k+5)(k+10)+375=(k^2+7k-5)(k^2+7k-15)\,}
+\]
+\end{QAPair}
+
+% 17
+\begin{QAPair}{Question 17}
+\textcolor{gold}{\bfseries Question:} $(x-5)(x-6)(x+3)(x+2)+12$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(x-5)(x+2)=x^2-3x-10,\quad (x-6)(x+3)=x^2-3x-18.\\
+\Step{2}\;&\Rightarrow (x-5)(x-6)(x+3)(x+2)\\
+&=(x^2-3x-10)(x^2-3x-18).
+\end{aligned}
+\]
+Let $F=x^2-3x$.
+\[
+\begin{aligned}
+\Step{3}\;&(F-10)(F-18)+12\\
+\Step{4}\;&=F^2-28F+180+12\\
+\Step{5}\;&=F^2-28F+192\\
+\Step{6}\;&=(F-12)(F-16).
+\end{aligned}
+\]
+Substitute back:
+\[
+\boxed{\, (x-5)(x-6)(x+3)(x+2)+12=(x^2-3x-12)(x^2-3x-16)\,}
+\]
+\end{QAPair}
+
+% 18
+\begin{QAPair}{Question 18}
+\textcolor{gold}{\bfseries Question:} $(x+1)(x+2)(x-3)(x-6)-21x^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Pair the factors:
+\[
+(x+1)(x-6)=x^2-5x-6,\quad (x+2)(x-3)=x^2-x-6.
+\]
+Let $U=x^2-6$. Then
+\[
+x^2-5x-6=U-5x,\qquad x^2-x-6=U-x.
+\]
+\[
+\begin{aligned}
+\Step{1}\;&(U-5x)(U-x)-21x^2\\
+\Step{2}\;&=\bigl(U^2-6xU+5x^2\bigr)-21x^2\\
+\Step{3}\;&=U^2-6xU-16x^2\\
+\Step{4}\;&=(U-8x)(U+2x).
+\end{aligned}
+\]
+Substitute $U=x^2-6$:
+\[
+\boxed{\, (x+1)(x+2)(x-3)(x-6)-21x^2=(x^2-8x-6)(x^2+2x-6)\,}
+\]
+\end{QAPair}
+
+% 19
+\begin{QAPair}{Question 19}
+\textcolor{gold}{\bfseries Question:} $(x-2)(x-6)(x-3)(x-4)-2x^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Pair the factors:
+\[
+(x-2)(x-6)=x^2-8x+12,\quad (x-3)(x-4)=x^2-7x+12.
+\]
+Let $V=x^2+12$. Then
+\[
+x^2-8x+12=V-8x,\qquad x^2-7x+12=V-7x.
+\]
+\[
+\begin{aligned}
+\Step{1}\;&(V-8x)(V-7x)-2x^2\\
+\Step{2}\;&=\bigl(V^2-15xV+56x^2\bigr)-2x^2\\
+\Step{3}\;&=V^2-15xV+54x^2\\
+\Step{4}\;&=(V-6x)(V-9x).
+\end{aligned}
+\]
+Substitute $V=x^2+12$:
+\[
+\boxed{\, (x-2)(x-6)(x-3)(x-4)-2x^2=(x^2-6x+12)(x^2-9x+12)\,}
+\]
+\end{QAPair}
+
+% 20
+\begin{QAPair}{Question 20}
+\textcolor{gold}{\bfseries Question:} $(5-x)(2+x)(10-x)(1+x)-7x^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+First regroup:
+\[
+(5-x)(x+2)= -x^2+3x+10,\quad (10-x)(x+1)= -x^2+9x+10.
+\]
+Let $W=10-x^2$. Then
+\[
+-x^2+3x+10=W+3x,\qquad -x^2+9x+10=W+9x.
+\]
+\[
+\begin{aligned}
+\Step{1}\;&(W+3x)(W+9x)-7x^2\\
+\Step{2}\;&=W^2+12xW+27x^2-7x^2\\
+\Step{3}\;&=W^2+12xW+20x^2\\
+\Step{4}\;&=(W+2x)(W+10x).
+\end{aligned}
+\]
+Substitute $W=10-x^2$ and simplify signs:
+\[
+W+2x=10-x^2+2x=-(x^2-2x-10),
+\]
+\[
+W+10x=10-x^2+10x=-(x^2-10x-10).
+\]
+So the product stays positive:
+\[
+\boxed{\, (5-x)(2+x)(10-x)(1+x)-7x^2=(x^2-2x-10)(x^2-10x-10)\,}
+\]
+\end{QAPair}
+
+% 21
+\begin{QAPair}{Question 21}
+\textcolor{gold}{\bfseries Question:} The expression $a^6+729$ can be written as\\
+(a) sum of two squares \quad (b) sum of two cubes.\\
+Which one is used for factoring and why? Also factorize the expression.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Two ways:}\qquad
+a^6+729=(a^3)^2+27^2 \;(\text{sum of squares}),
+\quad
+a^6+729=(a^2)^3+9^3 \;(\text{sum of cubes}).
+\]
+\[
+\Step{2}\; \textbf{We use sum of cubes} \text{ because } a^3+b^3 \text{ factors over real/rational polynomials,}
+\]
+while a sum of two squares does not factor (over real numbers) into factors with real coefficients.
+\[
+\begin{aligned}
+\Step{3}\;&a^6+729=(a^2)^3+9^3\\
+\Step{4}\;&=(a^2+9)\bigl((a^2)^2-(a^2)(9)+9^2\bigr)\\
+\Step{5}\;&=(a^2+9)\bigl(a^4-9a^2+81\bigr).
+\end{aligned}
+\]
+\[
+\boxed{\,a^6+729=(a^2+9)(a^4-9a^2+81)\,}
+\]
+\end{QAPair}
+
+% 22
+\begin{QAPair}{Question 22}
+\textcolor{gold}{\bfseries Question:} Express $8+12t+6t^2+t^3$ as the product of three factors.\\
+Is each factor a binomial or a trinomial?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&8+12t+6t^2+t^3=t^3+6t^2+12t+8\\
+\Step{2}\;&=(t+2)^3 \qquad (\text{perfect cube})\\
+\Step{3}\;&=(t+2)(t+2)(t+2).
+\end{aligned}
+\]
+Each factor is a \textbf{binomial}.
+\end{QAPair}
+
+\end{document}

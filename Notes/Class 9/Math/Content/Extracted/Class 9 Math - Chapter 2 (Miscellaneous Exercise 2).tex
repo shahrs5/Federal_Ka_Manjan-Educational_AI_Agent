@@ -1,0 +1,621 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Scientific notation:} $a=b\times 10^n$ with $1\le b<10$ and $n\in\mathbb{Z}$.
+\item \textbf{Product law:} $\log_b(MN)=\log_b M+\log_b N$.
+\item \textbf{Quotient law:} $\log_b\!\left(\frac{M}{N}\right)=\log_b M-\log_b N$.
+\item \textbf{Power law:} $\log_b(M^k)=k\,\log_b M$.
+\item \textbf{Basic facts:} $\log_b(b^k)=k$, \; $\log_b(1)=0$, \; $\log_b(b)=1$.
+\item \textbf{Change of base ratio:} $\dfrac{\log_a M}{\log_a N}=\log_N M$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 (MCQs)
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} If $a=b\times 10^n$ is written in scientific notation then
+\begin{itemize}
+\item[(a)] $0\le b\le 10$ \qquad
+(b) $0\le b<10$ \qquad
+(c) $1\le b\le 10$ \qquad
+(d) $1\le b<10$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (d)}
+\[
+\Step{1}\; \text{In scientific notation the coefficient must satisfy } 1\le b<10.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} In $0.537$, reference position is
+\begin{itemize}
+\item[(a)] after $0$ \qquad
+(b) after $7$ \qquad
+(c) after $5$ \qquad
+(d) before $7$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (a)}
+\[
+\Step{1}\; \text{For a number }<1,\text{ the reference position is just after the }0\text{ (decimal point).}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} $\log 100$ is
+\begin{itemize}
+\item[(a)] $2$ \qquad (b) $-2$ \qquad (c) $0$ \qquad (d) impossible
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (a)}
+\[
+\Step{1}\; 100=10^2 \;\Rightarrow\; \log 100=\log(10^2)=2.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} If $\log(x+3)=\log(15x-4)$ then $x$ is
+\begin{itemize}
+\item[(a)] $0.5$ \qquad (b) $7$ \qquad (c) $14$ \qquad (d) $2$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (a)}
+\[
+\begin{aligned}
+\Step{1}\;& \log(x+3)=\log(15x-4)\;\Rightarrow\; x+3=15x-4.\\
+\Step{2}\;& 14x=7 \;\Rightarrow\; x=\frac{1}{2}=0.5.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} $\log_{7} 7^{-3} + \log_{2} 4^{3}$ is
+\begin{itemize}
+\item[(a)] $3$ \qquad (b) $-3$ \qquad (c) $0$ \qquad (d) $\pm 3$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (a)}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{7} 7^{-3}=-3, \qquad 4^3=64.\\
+\Step{2}\;& \log_2 64=6 \;\Rightarrow\; (-3)+6=3.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi)}
+\textcolor{gold}{\bfseries Question:} For $\log(0.00327)$, characteristic is
+\begin{itemize}
+\item[(a)] $-2$ \qquad (b) $-3$ \qquad (c) $3$ \qquad (d) $0$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (b)}
+\[
+\Step{1}\; 0.00327=3.27\times 10^{-3}\;\Rightarrow\; \log(0.00327)=\log(3.27)-3.
+\]
+So the \textbf{characteristic} is $-3$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii)}
+\textcolor{gold}{\bfseries Question:} $\log_b(M+N)$ is
+\begin{itemize}
+\item[(a)] $\log_b(MN)$ \qquad
+(b) $\log_b M+\log_b N$ \qquad
+(c) both a and b \qquad
+(d) none of these
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (d)}
+\[
+\Step{1}\; \text{There is \emph{no} logarithm law to split a sum: }\log_b(M+N)\neq \log_b M+\log_b N.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii)}
+\textcolor{gold}{\bfseries Question:} $\log_b(g^{h})$ is
+\begin{itemize}
+\item[(a)] $g\log_b h$ \qquad
+(b) $\log_b(gh)$ \qquad
+(c) $(\log_b g)\times h$ \qquad
+(d) $h\log_g b$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (c)}
+\[
+\Step{1}\; \log_b(g^{h})=h\log_b g \qquad (\text{power law}).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix)}
+\textcolor{gold}{\bfseries Question:} $\log_b M-\log_b N$ is
+\begin{itemize}
+\item[(a)] $\dfrac{\log_b M}{\log_b N}$ \qquad
+(b) $\log_b\!\left(\dfrac{M}{N}\right)$ \qquad
+(c) $\log_N M$ \qquad
+(d) $\dfrac{\log_b N}{\log_b M}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (b)}
+\[
+\Step{1}\; \log_b M-\log_b N=\log_b\!\left(\frac{M}{N}\right)\qquad (\text{quotient law}).
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x)}
+\textcolor{gold}{\bfseries Question:} $\log_{\sqrt{10}}(100^{2})$ is
+\begin{itemize}
+\item[(a)] $2$ \qquad (b) $1$ \qquad (c) $4$ \qquad (d) $8$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (d)}
+\[
+\begin{aligned}
+\Step{1}\;& \sqrt{10}=10^{1/2},\quad 100^2=(10^2)^2=10^4.\\
+\Step{2}\;& \log_{10^{1/2}}(10^4)=\frac{4}{1/2}=8.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi)}
+\textcolor{gold}{\bfseries Question:} $\log 18$ is
+\begin{itemize}
+\item[(a)] $3\log 2+\log 3$ \qquad
+(b) $\log 2+2\log 3$ \qquad
+(c) $3\log 3+2\log 2$ \qquad
+(d) $2\log 3+3\log 2$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (b)}
+\[
+\Step{1}\; 18=2\cdot 3^2 \;\Rightarrow\; \log 18=\log 2+\log(3^2)=\log 2+2\log 3.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xii)}
+\textcolor{gold}{\bfseries Question:} $\log 5-\log 8+\log 3-\log 2$ is
+\begin{itemize}
+\item[(a)] $\log\!\left(\dfrac{5\times 2}{8\times 3}\right)$ \qquad
+(b) $\log\!\left(\dfrac{15}{16}\right)$ \qquad
+(c) $\log\!\left(\dfrac{30}{8}\right)$ \qquad
+(d) $\log(-2)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (b)}
+\[
+\begin{aligned}
+\Step{1}\;& \log 5+\log 3-\log 8-\log 2=\log\!\left(\frac{5\cdot 3}{8\cdot 2}\right)\\
+\Step{2}\;&=\log\!\left(\frac{15}{16}\right).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii)}
+\textcolor{gold}{\bfseries Question:} $\log_{10}(100^{0})$ is
+\begin{itemize}
+\item[(a)] $2$ \qquad (b) $0$ \qquad (c) $1$ \qquad (d) impossible
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (b)}
+\[
+\Step{1}\; 100^{0}=1 \;\Rightarrow\; \log_{10}(1)=0.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiv)}
+\textcolor{gold}{\bfseries Question:} Scientific notation of $6.25$ is
+\begin{itemize}
+\item[(a)] $6.25\times 10^{1}$ \qquad
+(b) $6.25\times 10^{0}$ \qquad
+(c) $6.25\times 10$ \qquad
+(d) $0.625\times 10^{2}$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (b)}
+\[
+\Step{1}\; 6.25 \text{ already satisfies } 1\le 6.25<10 \;\Rightarrow\; 6.25=6.25\times 10^0.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xv)}
+\textcolor{gold}{\bfseries Question:} Base of natural logarithm is
+\begin{itemize}
+\item[(a)] rational number \qquad
+(b) integer \qquad
+(c) irrational number \qquad
+(d) $10$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (c)}
+\[
+\Step{1}\; \text{Natural logarithm has base } e,\text{ and } e \text{ is irrational.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvi)}
+\textcolor{gold}{\bfseries Question:} If $\log_{\sqrt{x}} 25=4$ then $x$ is
+\begin{itemize}
+\item[(a)] $+5$ \qquad (b) $-5$ \qquad (c) $\pm 5$ \qquad (d) impossible
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (a)}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{\sqrt{x}} 25=4 \;\Rightarrow\; (\sqrt{x})^{4}=25.\\
+\Step{2}\;& x^{2}=25 \;\Rightarrow\; x=\pm 5.\\
+\Step{3}\;& \sqrt{x}\text{ is real only if }x>0 \;\Rightarrow\; x=5.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvii)}
+\textcolor{gold}{\bfseries Question:} $\log_{\sqrt{b}} 10^{4}\div \log_{\sqrt{b}} 10$ is
+\begin{itemize}
+\item[(a)] $\log_{\sqrt{b}}\!\left(\dfrac{10^{4}}{10}\right)$ \qquad
+(b) $\log_{\sqrt{b}}10^{4}-\log_{\sqrt{b}}10$ \qquad
+(c) $4$ \qquad
+(d) $\log_{\sqrt{b}}(10^{4}-10)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (c)}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{\log_{\sqrt{b}} 10^{4}}{\log_{\sqrt{b}} 10}
+=\frac{4\log_{\sqrt{b}} 10}{1\cdot \log_{\sqrt{b}} 10}\\
+\Step{2}\;&=4.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xviii)}
+\textcolor{gold}{\bfseries Question:} $5\log 2-2\log 5$ is
+\begin{itemize}
+\item[(a)] $\dfrac{(\log 2)^{5}}{(\log 5)^{2}}$ \qquad
+(b) $\dfrac{\log 2^{5}}{\log 5^{2}}$ \qquad
+(c) $\log\!\left(\dfrac{2^{5}}{5^{2}}\right)$ \qquad
+(d) $\dfrac{5}{2}\log\!\left(\dfrac{2}{5}\right)$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Correct option: (c)}
+\[
+\begin{aligned}
+\Step{1}\;& 5\log 2=\log(2^{5}),\qquad 2\log 5=\log(5^{2}).\\
+\Step{2}\;& 5\log 2-2\log 5=\log(2^{5})-\log(5^{2})
+=\log\!\left(\frac{2^{5}}{5^{2}}\right).
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Convert $53.36$ into scientific notation.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 53.36 = 5.336\times 10^{1}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Convert $0.0000000000000102$ into scientific notation.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.0000000000000102
+=1.02\times 10^{-14}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Convert $523.4\times 10^{-3}$ into scientific notation.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 523.4\times 10^{-3}=\frac{523.4}{1000}=0.5234.\\
+\Step{2}\;& 0.5234=5.234\times 10^{-1}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} Convert $7.232\times 10^{-2}$ into standard notation.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; 7.232\times 10^{-2}=7.232\times 0.01=0.07232.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} Convert $10.53\times 10^{2}\times 20.31$ into standard notation.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 10.53\times 10^{2}=10.53\times 100=1053.\\
+\Step{2}\;& 1053\times 20.31=1053(20)+1053(0.31)=21060+326.43=21386.43.
+\end{aligned}
+\]
+\[
+\boxed{10.53\times 10^{2}\times 20.31=21386.43}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} Convert $5.6\times 10^{0}$ into standard notation.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; 10^0=1 \;\Rightarrow\; 5.6\times 10^{0}=5.6.
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\log_{5} 5^{3}-\log_{2} 2^{3}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{5}5^{3}=3,\qquad \log_{2}2^{3}=3.\\
+\Step{2}\;& \Rightarrow\; 3-3=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\log_{2}4-\log_{3}1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{2}4=\log_{2}(2^{2})=2.\\
+\Step{2}\;& \log_{3}1=0.\\
+\Step{3}\;& \Rightarrow\; 2-0=2.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} Evaluate $\log_{8}\bigl(\log_{x}x-\log_{b}b^{-7}\bigr)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{x}x=1,\qquad \log_{b}(b^{-7})=-7.\\
+\Step{2}\;& \log_{x}x-\log_{b}b^{-7}=1-(-7)=8.\\
+\Step{3}\;& \log_{8}(8)=1.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 (i)}
+\textcolor{gold}{\bfseries Question:} Find $x$ if $\log_{3}9-\log_{b}1=x$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{3}9=\log_{3}(3^{2})=2,\qquad \log_{b}1=0.\\
+\Step{2}\;& x=2-0=2.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (ii)}
+\textcolor{gold}{\bfseries Question:} Find $x$ if $\log_{2}x-\log_{2}16^{1/4}=3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 16^{1/4}=(2^{4})^{1/4}=2 \;\Rightarrow\; \log_{2}16^{1/4}=\log_{2}2=1.\\
+\Step{2}\;& \log_{2}x-1=3 \;\Rightarrow\; \log_{2}x=4.\\
+\Step{3}\;& x=2^{4}=16.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iii)}
+\textcolor{gold}{\bfseries Question:} Find $x$ if $\log_{2}(x^{2}-1)=\log_{2}3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{2}(x^{2}-1)=\log_{2}3 \;\Rightarrow\; x^{2}-1=3.\\
+\Step{2}\;& x^{2}=4 \;\Rightarrow\; x=\pm 2 \quad (\text{both satisfy }x^{2}-1>0).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iv)}
+\textcolor{gold}{\bfseries Question:} Find $x$ if $\log_{7}x=\log_{7}\bigl(8\log_{y}y\bigr)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{y}y=1 \;\Rightarrow\; 8\log_{y}y=8.\\
+\Step{2}\;& \log_{7}x=\log_{7}8 \;\Rightarrow\; x=8.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 (i)}
+\textcolor{gold}{\bfseries Question:} If $\log_b 2=0.3010$, $\log_b 3=0.4771$, $\log_b 5=0.6990$, find $\log_b 30$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 30=2\cdot 3\cdot 5\\
+\Step{2}\;& \log_b 30=\log_b 2+\log_b 3+\log_b 5\\
+\Step{3}\;&=0.3010+0.4771+0.6990=1.4771.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (ii)}
+\textcolor{gold}{\bfseries Question:} Using the same data, find $\log_b 0.24$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.24=\frac{24}{100}=\frac{2^{3}\cdot 3}{2^{2}\cdot 5^{2}}=\frac{2\cdot 3}{5^{2}}=\frac{6}{25}.\\
+\Step{2}\;& \log_b 0.24=\log_b 6-\log_b 25\\
+\Step{3}\;&=(\log_b 2+\log_b 3)-2\log_b 5\\
+\Step{4}\;&=(0.3010+0.4771)-2(0.6990)=0.7781-1.3980=-0.6199.
+\end{aligned}
+\]
+(Also, $-0.6199=-1+0.3801=\overline{1}.3801$ in bar notation.)
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iii)}
+\textcolor{gold}{\bfseries Question:} Using the same data, find $\log_b 360$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 360=2^{3}\cdot 3^{2}\cdot 5.\\
+\Step{2}\;& \log_b 360=3\log_b 2+2\log_b 3+\log_b 5\\
+\Step{3}\;&=3(0.3010)+2(0.4771)+0.6990\\
+\Step{4}\;&=0.9030+0.9542+0.6990=2.5562.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Simplify
+\[
+\left(\frac{0.5327\times \sqrt[3]{42.97}}{0.0059}\right)^{3}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \left(\frac{0.5327\times \sqrt[3]{42.97}}{0.0059}\right)^{3}
+=\left(\frac{0.5327}{0.0059}\right)^3 \left(\sqrt[3]{42.97}\right)^3\\
+\Step{2}\;&=\left(\frac{0.5327}{0.0059}\right)^3 (42.97).
+\end{aligned}
+\]
+Numerically,
+\[
+\left(\frac{0.5327\times \sqrt[3]{42.97}}{0.0059}\right)^{3}\approx 3.1627\times 10^{7}\approx 31{,}626{,}957.
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Prove that
+\[
+\log_{v}u \times \log_{w}v \times \log_{u}w = 1.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{v}u=\frac{\ln u}{\ln v},\quad
+\log_{w}v=\frac{\ln v}{\ln w},\quad
+\log_{u}w=\frac{\ln w}{\ln u}.\\
+\Step{2}\;& \Rightarrow\; \log_{v}u\cdot \log_{w}v\cdot \log_{u}w
+=\frac{\ln u}{\ln v}\cdot \frac{\ln v}{\ln w}\cdot \frac{\ln w}{\ln u}=1.
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

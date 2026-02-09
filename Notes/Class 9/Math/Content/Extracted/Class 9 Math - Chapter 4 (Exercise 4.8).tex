@@ -1,0 +1,225 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 4.8 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Factorization:} $x^2+bx+c=(x+m)(x+n)$ where $m+n=b$ and $mn=c$.
+\item \textbf{Rectangle:} Area $A=lb$, \;Perimeter $P=2(l+b)$.
+\item \textbf{Square:} Area $A=s^2$, \;Boundary (perimeter) $=4s$.
+\item \textbf{Cube:} Volume $V=s^3$, \;Surface area $=6s^2$.
+\item \textbf{Circle:} Area $A=\pi r^2$.
+\item \textbf{Difference of squares:} $a^2-b^2=(a-b)(a+b)$.
+\end{itemize}
+\end{QuickBox}
+% ============================================================
+% Q1 (FIXED)
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} Area of a rectangular veranda is $(x^2-2x-3)\,m^2$. Find:\\
+(a) expressions for both dimensions, (b) perimeter, (c) cost of fencing @ Rs.\ 200/m, (d) cost of carpeting @ Rs.\ 250/$m^2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2-2x-3=(x-3)(x+1).\\
+\Step{2}\;& \text{So possible dimensions are } (x-3)\,m \text{ and } (x+1)\,m.\\
+\Step{3}\;& P=2\bigl[(x-3)+(x+1)\bigr]\,m=2(2x-2)\,m=(4x-4)\,m.\\
+\Step{4}\;& C_f=200\cdot P=200(4x-4)=800x-800\ \text{Rs}.\\
+\Step{5}\;& C_c=250\cdot \text{Area}=250(x^2-2x-3)\ \text{Rs}.
+\end{aligned}
+\]
+\[
+\boxed{
+\begin{aligned}
+\text{Dimensions: }& (x-3)m,\ (x+1)m\\
+\text{Perimeter: }& P=(4x-4)m\\
+\text{Fencing cost: }& C_f=800x-800\ \text{Rs}\\
+\text{Carpeting cost: }& C_c=250(x^2-2x-3)\ \text{Rs}
+\end{aligned}}
+\]
+\end{QAPair}
+
+
+% ============================================================
+% Q2 (FIXED)
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} Area of a square surface is $(25x^2-30x+9)\,m^2$. Find:\\
+(a) length of the surface, (b) boundary, (c) cost of polishing @ Rs.\ 75/$m^2$, (d) cost of edging around 2 sides @ Rs.\ 28/m.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&25x^2-30x+9=(5x-3)^2.\\
+\Step{2}\;& \text{Side length } s=\sqrt{(5x-3)^2}=(5x-3)\,m.\\
+\Step{3}\;& \text{Boundary}=4s=4(5x-3)=(20x-12)\,m.\\
+\Step{4}\;& C_p=75\cdot \text{Area}=75(25x^2-30x+9)\ \text{Rs}.\\
+\Step{5}\;& \text{2 sides length}=2s=2(5x-3)=(10x-6)\,m,\\
+& C_e=28(10x-6)=280x-168\ \text{Rs}.
+\end{aligned}
+\]
+\[
+\boxed{
+\begin{aligned}
+\text{Side length: }& s=(5x-3)m\\
+\text{Boundary: }& (20x-12)m\\
+\text{Polishing cost: }& C_p=75(25x^2-30x+9)\ \text{Rs}\\
+\text{Edging cost (2 sides): }& C_e=280x-168\ \text{Rs}
+\end{aligned}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} Volume of a cubical oil tank is $(125x^3-150x^2+60x-8)\,m^3$. Find:\\
+(a) height (side) of tank, (b) surface area, (c) cost of painting outside @ Rs.\ 32/$m^2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&125x^3-150x^2+60x-8=(5x-2)^3.\\
+\Step{2}\;&\text{For a cube, }V=s^3\Rightarrow s=\sqrt[3]{V}=(5x-2)\,m.\\
+\Step{3}\;&\text{Surface area}=6s^2=6(5x-2)^2\ m^2.\\
+\Step{4}\;&\text{Painting cost}=32\cdot \text{surface area}=32\cdot 6(5x-2)^2=192(5x-2)^2\ \text{Rs}.\\[4pt]
+&\boxed{s=(5x-2)m;\ \text{S.A.}=6(5x-2)^2;\ \text{Cost}=192(5x-2)^2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Areas of two wheels are
+\[
+A_1=\pi x^2-6\pi x+9\pi,\qquad
+A_2=\pi x^2-10\pi x+25\pi.
+\]
+Find radii of both wheels.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&A_1=\pi(x^2-6x+9)=\pi(x-3)^2.\\
+\Step{2}\;&A_2=\pi(x^2-10x+25)=\pi(x-5)^2.\\
+\Step{3}\;&\text{Since }A=\pi r^2,\ \ r_1=x-3,\ \ r_2=x-5\ (\text{taking positive radii}).\\[4pt]
+&\boxed{r_1=x-3,\qquad r_2=x-5\ \ (\text{usually }x>5\text{ so both are positive}).}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Two squared shape pressers have areas $25m^2$ and $36n^2$. Their difference gives a rectangular presser. Find dimensions of the rectangular presser.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&25m^2=(5m)^2,\qquad 36n^2=(6n)^2.\\
+\Step{2}\;&\text{Difference of areas }=36n^2-25m^2=(6n)^2-(5m)^2.\\
+\Step{3}\;&(6n)^2-(5m)^2=(6n-5m)(6n+5m).\\
+\Step{4}\;&\text{So the rectangle can have dimensions }(6n-5m)\ \text{and}\ (6n+5m).\\[4pt]
+&\boxed{\text{Dimensions: }(6n-5m)\ \text{ and }\ (6n+5m).}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Distance covered by a missile is $(x^2+5x+6)\,m$. Find possible expressions for\\
+(a) speed of missile, (b) time to reach the target.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2+5x+6=(x+2)(x+3).\\
+\Step{2}\;&\text{Distance}=\text{Speed}\times\text{Time}.\\
+\Step{3}\;&\text{So one possible pair is: Speed }=(x+2)\ \text{and Time }=(x+3).\\
+\Step{4}\;&\text{Another possible pair is: Speed }=(x+3)\ \text{and Time }=(x+2).\\[4pt]
+&\boxed{\text{Possible: }(v,t)=((x+2),(x+3))\ \text{or}\ ((x+3),(x+2)).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

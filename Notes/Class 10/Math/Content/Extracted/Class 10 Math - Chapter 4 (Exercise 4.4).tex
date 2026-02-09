@@ -1,0 +1,543 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc} % (fixed)
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+\definecolor{redx}{HTML}{FB7185}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- Graph helper (fixed window) --------------------
+% Window: x in [-6,10], y in [-6,10]
+\newenvironment{Graph}{%
+\begin{center}
+\begin{tikzpicture}[scale=0.55]
+  \draw[step=1,very thin,color=border] (-6,-6) grid (10,10);
+  \draw[->,cyan,line width=0.9pt] (-6,0)--(10.6,0) node[right]{\small $x$};
+  \draw[->,cyan,line width=0.9pt] (0,-6)--(0,10.6) node[above]{\small $y$};
+  \node[anchor=north east,text=muted] at (10,10) {\scriptsize window $[-6,10]\times[-6,10]$};
+}{%
+\end{tikzpicture}
+\end{center}
+}
+
+% Point styles for checks
+\tikzset{
+  goodpt/.style={circle,fill=green,draw=green,inner sep=1.4pt},
+  badpt/.style={circle,fill=redx,draw=redx,inner sep=1.4pt},
+  lbl/.style={text=muted,font=\scriptsize}
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 4.4 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick guide: Graphing a system of linear inequalities}\par\medskip
+\begin{itemize}
+\item Rewrite each inequality in slope-intercept form (if possible): $y=mx+b$.
+\item Draw the \textbf{boundary line}:
+  \begin{itemize}
+    \item \textbf{Solid line} for $\le$ or $\ge$
+    \item \textbf{Dashed line} for $<$ or $>$
+  \end{itemize}
+\item Pick a \textbf{test point} (usually $(0,0)$ if it is not on the line).
+\item Shade the half-plane that satisfies each inequality.
+\item The \textbf{solution} is the \textbf{overlap (intersection)} of all shaded regions.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} Describe the steps to graph the system:
+\[
+x-y<6 \quad (\text{I}),\qquad y\ge 3 \quad (\text{II})
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; \text{Rewrite (I): } x-y<6 \Rightarrow -y<6-x \Rightarrow y>x-6.
+\]
+\[
+\Step{2}\; \text{Draw boundary lines: }
+y=x-6 \text{ (dashed)},\quad y=3 \text{ (solid)}.
+\]
+\[
+\Step{3}\; \text{Shade: } y>x-6 \text{ means shade \emph{above} }y=x-6,\;
+y\ge 3 \text{ means shade \emph{on/above} }y=3.
+\]
+\[
+\Step{4}\; \text{The solution is the overlap of both shaded regions.}
+\]
+
+\begin{Graph}
+  % Shade intersection: (y>=3) AND (y > x-6)
+  \begin{scope}
+    \clip (-6,3) rectangle (10,10); % y>=3
+    \clip (-6,-6)--(0,-6)--(10,4)--(10,10)--(-6,10)--cycle; % y > x-6 (above line)
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  % Boundary lines
+  \draw[gold,dashed,line width=1.0pt] (0,-6)--(10,4) node[lbl,above right] {$y=x-6$ (dashed)};
+  \draw[gold,line width=1.0pt] (-6,3)--(10,3) node[lbl,above right] {$y=3$ (solid)};
+\end{Graph}
+
+\textbf{Solution region:} points \textbf{above} $y=x-6$ and \textbf{on/above} $y=3$.
+\end{QAPair}
+
+% ============================================================
+% Q2a
+\begin{QAPair}{Question 2(a)}
+\textcolor{gold}{\bfseries Question:} Check whether each ordered pair is a solution of:
+\[
+x+y<1,\qquad x-y<2
+\]
+for \ $(3,1),(0,0),(-3,1),(4,1)$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+First rewrite $x-y<2$ as $y>x-2$.
+
+\begin{itemize}
+\item $(3,1)$: $x+y=4\not<1$ $\Rightarrow$ \textbf{Not a solution}.
+\item $(0,0)$: $x+y=0<1$ and $x-y=0<2$ $\Rightarrow$ \textbf{Solution}.
+\item $(-3,1)$: $x+y=-2<1$ and $x-y=-4<2$ $\Rightarrow$ \textbf{Solution}.
+\item $(4,1)$: $x+y=5\not<1$ $\Rightarrow$ \textbf{Not a solution}.
+\end{itemize}
+
+\begin{Graph}
+  % Shade intersection: y < 1-x AND y > x-2
+  \begin{scope}
+    \clip (-6,-6) rectangle (10,10);
+    % y < 1-x  (below the line). In-window triangle: (-6,-6)--(7,-6)--(-6,7)
+    \clip (-6,-6)--(7,-6)--(-6,7)--cycle;
+    % y > x-2 (above the line). In-window polygon: (-6,-6)--(-4,-6)--(10,8)--(10,10)--(-6,10)
+    \clip (-6,-6)--(-4,-6)--(10,8)--(10,10)--(-6,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  % boundary lines
+  \draw[gold,dashed,line width=1.0pt] (-6,7)--(7,-6) node[lbl,above left] {$x+y=1$ (dashed)};
+  \draw[gold,dashed,line width=1.0pt] (-4,-6)--(10,8) node[lbl,above right] {$x-y=2$ (dashed)};
+
+  % points
+  \node[badpt,label={[lbl]right:$(3,1)$}] at (3,1) {};
+  \node[goodpt,label={[lbl]right:$(0,0)$}] at (0,0) {};
+  \node[goodpt,label={[lbl]left:$(-3,1)$}] at (-3,1) {};
+  \node[badpt,label={[lbl]right:$(4,1)$}] at (4,1) {};
+\end{Graph}
+
+\end{QAPair}
+
+% ============================================================
+% Q2b
+\begin{QAPair}{Question 2(b)}
+\textcolor{gold}{\bfseries Question:} Check whether each ordered pair is a solution of:
+\[
+2x-y\le 5,\qquad x+2y>2
+\]
+for \ $(1,-1),(4,1),(2,0),(3,2)$.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Rewrite:
+\[
+2x-y\le 5 \Rightarrow y\ge 2x-5,\qquad
+x+2y>2 \Rightarrow y>1-\frac{x}{2}.
+\]
+
+\begin{itemize}
+\item $(1,-1)$: $2x-y=3\le5$ (true), but $x+2y=-1\not>2$ $\Rightarrow$ \textbf{Not a solution}.
+\item $(4,1)$: $2x-y=7\not\le 5$ $\Rightarrow$ \textbf{Not a solution}.
+\item $(2,0)$: $2x-y=4\le5$ (true), but $x+2y=2\not>2$ $\Rightarrow$ \textbf{Not a solution}.
+\item $(3,2)$: $2x-y=4\le5$ and $x+2y=7>2$ $\Rightarrow$ \textbf{Solution}.
+\end{itemize}
+
+\begin{Graph}
+  % Shade intersection: y >= 2x-5 AND y > 1 - x/2
+  \begin{scope}
+    \clip (-6,-6) rectangle (10,10);
+    % y >= 2x-5 (above line). In-window polygon:
+    % line y=2x-5 hits bottom at x=-0.5, top at x=7.5, left at y=-17 (out), right at y=15 (out)
+    % Safe above polygon in window: (-6,-6)--(-0.5,-6)--(7.5,10)--(-6,10)
+    \clip (-6,-6)--(-0.5,-6)--(7.5,10)--(-6,10)--cycle;
+    % y > 1 - x/2 (above dashed line). Line hits left: (-6,4), right:(10,-4), top y=10 at x=-18(out), bottom y=-6 at x=14(out)
+    % Above polygon: (-6,4)--(10,-4)--(10,10)--(-6,10)
+    \clip (-6,4)--(10,-4)--(10,10)--(-6,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  % boundary lines
+  \draw[gold,line width=1.0pt] (-0.5,-6)--(7.5,10) node[lbl,above right] {$2x-y=5$ (solid)};
+  \draw[gold,dashed,line width=1.0pt] (-6,4)--(10,-4) node[lbl,above right] {$x+2y=2$ (dashed)};
+
+  % points
+  \node[badpt,label={[lbl]below:$(1,-1)$}] at (1,-1) {};
+  \node[badpt,label={[lbl]right:$(4,1)$}] at (4,1) {};
+  \node[badpt,label={[lbl]below:$(2,0)$}] at (2,0) {};
+  \node[goodpt,label={[lbl]right:$(3,2)$}] at (3,2) {};
+\end{Graph}
+
+\end{QAPair}
+
+% ============================================================
+% Q3a
+\begin{QAPair}{Question 3(a)}
+\textcolor{gold}{\bfseries Question:} Graph the system:
+\[
+-x+y<0,\qquad x+y>3
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+-x+y<0 \Rightarrow y<x \quad (\text{dashed }y=x),\qquad
+x+y>3 \Rightarrow y>3-x \quad (\text{dashed }y=3-x).
+\]
+Shade \textbf{below} $y=x$ and \textbf{above} $y=3-x$.
+
+\begin{Graph}
+  \begin{scope}
+    \clip (-6,-6) rectangle (10,10);
+    % below y=x : triangle (-6,-6)--(10,-6)--(10,10)
+    \clip (-6,-6)--(10,-6)--(10,10)--cycle;
+    % above y=3-x : polygon (-6,9)--(9,-6)--(10,-6)--(10,10)--(-6,10)
+    \clip (-6,9)--(9,-6)--(10,-6)--(10,10)--(-6,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  \draw[gold,dashed,line width=1.0pt] (-6,-6)--(10,10) node[lbl,above right] {$y=x$};
+  \draw[gold,dashed,line width=1.0pt] (-6,9)--(9,-6) node[lbl,above left] {$y=3-x$};
+\end{Graph}
+\end{QAPair}
+
+% Q3b
+\begin{QAPair}{Question 3(b)}
+\textcolor{gold}{\bfseries Question:} Graph the system:
+\[
+x-y<0,\qquad x+y<1
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x-y<0 \Rightarrow y>x \ (\text{dashed }y=x),\qquad
+x+y<1 \Rightarrow y<1-x \ (\text{dashed }y=1-x).
+\]
+Shade \textbf{above} $y=x$ and \textbf{below} $y=1-x$.
+
+\begin{Graph}
+  \begin{scope}
+    \clip (-6,-6) rectangle (10,10);
+    % above y=x : triangle (-6,-6)--(-6,10)--(10,10)
+    \clip (-6,-6)--(-6,10)--(10,10)--cycle;
+    % below y=1-x : triangle (-6,-6)--(7,-6)--(-6,7)
+    \clip (-6,-6)--(7,-6)--(-6,7)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  \draw[gold,dashed,line width=1.0pt] (-6,-6)--(10,10) node[lbl,above right] {$y=x$};
+  \draw[gold,dashed,line width=1.0pt] (-6,7)--(7,-6) node[lbl,above left] {$y=1-x$};
+\end{Graph}
+\end{QAPair}
+
+% Q3c
+\begin{QAPair}{Question 3(c)}
+\textcolor{gold}{\bfseries Question:} Graph the system:
+\[
+y-2x\ge 3,\qquad y-2x\le 3
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Both inequalities together mean:
+\[
+y-2x=3 \quad \Rightarrow \quad y=2x+3.
+\]
+So the \textbf{solution is exactly the line} $y=2x+3$.
+
+\begin{Graph}
+  % Line y=2x+3 intersects bottom at x=-4.5, top at x=3.5
+  \draw[gold,line width=1.2pt] (-4.5,-6)--(3.5,10) node[lbl,above right] {$y=2x+3$ (only solutions)};
+\end{Graph}
+\end{QAPair}
+
+% Q3d
+\begin{QAPair}{Question 3(d)}
+\textcolor{gold}{\bfseries Question:} Graph the system:
+\[
+y\le -2,\qquad x\ge 2
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Shade \textbf{on/below} $y=-2$ and \textbf{on/right} of $x=2$.
+
+\begin{Graph}
+  \begin{scope}
+    \clip (2,-6) rectangle (10,-2); % intersection rectangle
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  \draw[gold,line width=1.0pt] (-6,-2)--(10,-2) node[lbl,above right] {$y=-2$ (solid)};
+  \draw[gold,line width=1.0pt] (2,-6)--(2,10) node[lbl,above right] {$x=2$ (solid)};
+\end{Graph}
+\end{QAPair}
+
+% Q3e
+\begin{QAPair}{Question 3(e)}
+\textcolor{gold}{\bfseries Question:} Graph the system:
+\[
+x>-2,\qquad 2x+y<3
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+2x+y<3 \Rightarrow y<3-2x \quad (\text{dashed line}).
+\]
+Shade \textbf{right} of $x=-2$ and \textbf{below} $y=3-2x$.
+
+\begin{Graph}
+  \begin{scope}
+    \clip (-2,-6) rectangle (10,10); % x>-2
+    % below y=3-2x: in-window polygon (-6,-6)--(4.5,-6)--(-3.5,10)--(-6,10)
+    \clip (-6,-6)--(4.5,-6)--(-3.5,10)--(-6,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  \draw[gold,dashed,line width=1.0pt] (-3.5,10)--(4.5,-6) node[lbl,above left] {$y=3-2x$ (dashed)};
+  \draw[gold,dashed,line width=1.0pt] (-2,-6)--(-2,10) node[lbl,above right] {$x=-2$ (dashed)};
+\end{Graph}
+\end{QAPair}
+
+% Q3f
+\begin{QAPair}{Question 3(f)}
+\textcolor{gold}{\bfseries Question:} Graph the system:
+\[
+x+y\le 3,\qquad x-y\le 4,\qquad x<8
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Rewrite:
+\[
+x+y\le 3 \Rightarrow y\le 3-x,\qquad
+x-y\le 4 \Rightarrow y\ge x-4.
+\]
+Shade \textbf{below} $y=3-x$, \textbf{above} $y=x-4$, and \textbf{left} of $x=8$.
+
+\begin{Graph}
+  \begin{scope}
+    \clip (-6,-6) rectangle (8,10); % x<8
+    % below y=3-x : triangle (-6,-6)--(9,-6)--(-6,9)
+    \clip (-6,-6)--(9,-6)--(-6,9)--cycle;
+    % above y=x-4 : polygon (-6,-6)--(-2,-6)--(10,6)--(10,10)--(-6,10)
+    \clip (-6,-6)--(-2,-6)--(10,6)--(10,10)--(-6,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  \draw[gold,line width=1.0pt] (-6,9)--(9,-6) node[lbl,above left] {$x+y=3$ (solid)};
+  \draw[gold,line width=1.0pt] (-2,-6)--(10,6) node[lbl,above right] {$x-y=4$ (solid)};
+  \draw[gold,dashed,line width=1.0pt] (8,-6)--(8,10) node[lbl,above right] {$x=8$ (dashed)};
+\end{Graph}
+\end{QAPair}
+
+% Q3g
+\begin{QAPair}{Question 3(g)}
+\textcolor{gold}{\bfseries Question:} Graph the system:
+\[
+y\ge 2x-1,\qquad y<-x+4
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Shade \textbf{on/above} $y=2x-1$ (solid) and \textbf{below} $y=-x+4$ (dashed).
+
+\begin{Graph}
+  \begin{scope}
+    \clip (-6,-6) rectangle (10,10);
+    % above y=2x-1 : polygon (-6,-6)--(-2.5,-6)--(5.5,10)--(-6,10)
+    \clip (-6,-6)--(-2.5,-6)--(5.5,10)--(-6,10)--cycle;
+    % below y=-x+4 : triangle (-6,-6)--(10,-6)--(-6,10)
+    \clip (-6,-6)--(10,-6)--(-6,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  \draw[gold,line width=1.0pt] (-2.5,-6)--(5.5,10) node[lbl,above right] {$y=2x-1$ (solid)};
+  \draw[gold,dashed,line width=1.0pt] (-6,10)--(10,-6) node[lbl,above left] {$y=-x+4$ (dashed)};
+
+  % mark intersection point of the two lines
+  \node[goodpt,label={[lbl]right:$\left(\tfrac{5}{3},\tfrac{7}{3}\right)$}] at (1.6667,2.3333) {};
+\end{Graph}
+\end{QAPair}
+
+% Q3h
+\begin{QAPair}{Question 3(h)}
+\textcolor{gold}{\bfseries Question:} Graph the inequality:
+\[
+x-4y\le -8
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+x-4y\le -8 \Rightarrow -4y\le -8-x \Rightarrow y\ge \frac{x+8}{4}=\frac14x+2.
+\]
+Draw the solid line $y=\frac14x+2$ and shade \textbf{on/above} it.
+
+\begin{Graph}
+  \begin{scope}
+    \clip (-6,-6) rectangle (10,10);
+    % above y=0.25x+2 : polygon (-6,0.5)--(10,4.5)--(10,10)--(-6,10)
+    \clip (-6,0.5)--(10,4.5)--(10,10)--(-6,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  \draw[gold,line width=1.1pt] (-6,0.5)--(10,4.5) node[lbl,above right] {$y=\frac14x+2$ (solid)};
+\end{Graph}
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Does the system have any solution?
+\[
+x-y>5,\qquad x-y<1
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Rewrite:
+\[
+x-y>5 \Rightarrow y<x-5,\qquad x-y<1 \Rightarrow y>x-1.
+\]
+A point cannot be \textbf{below} $y=x-5$ and \textbf{above} $y=x-1$ at the same time (the lines are parallel and $x-5$ is always 4 units below $x-1$).
+\[
+\textbf{Therefore, there is \underline{no solution}.}
+\]
+
+\begin{Graph}
+  \draw[gold,dashed,line width=1.0pt] (-1,-6)--(10,5) node[lbl,above right] {$y=x-5$ (dashed)};
+  \draw[gold,dashed,line width=1.0pt] (-5,-6)--(10,9) node[lbl,above right] {$y=x-1$ (dashed)};
+  \node[text=redx,font=\bfseries] at (3,2) {No overlap $\Rightarrow$ no solution};
+\end{Graph}
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 (Open-Ended)}
+\textcolor{gold}{\bfseries Question:} Describe a real-world situation modeled by a system of linear inequalities. Then write and graph the system.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textbf{Example situation (school supplies):}\\
+Let $x$ = number of notebooks, $y$ = number of pens.
+\begin{itemize}
+\item Budget is \$50; notebooks cost \$3 and pens cost \$2:
+\[
+3x+2y\le 50
+\]
+\item Need at least $5$ notebooks:
+\[
+x\ge 5
+\]
+\item Want at least $10$ total items:
+\[
+x+y\ge 10
+\]
+\item Also $x\ge 0,\;y\ge 0$.
+\end{itemize}
+
+\begin{Graph}
+  \begin{scope}
+    \clip (0,0) rectangle (10,10); % first quadrant within our window
+    % x >= 5
+    \clip (5,0) rectangle (10,10);
+    % x+y >= 10  (above y=10-x): polygon (0,10)--(10,0)--(10,10)--(0,10)
+    \clip (0,10)--(10,0)--(10,10)--(0,10)--cycle;
+    % 3x+2y <= 50 => y <= 25 - 1.5x : below that line
+    % In our window, line hits y=10 at x=10, and y=0 at x=16.67(out). Use segment (10,10) to (0,25)(out)
+    % Below-line region inside window includes rectangle bottom; safe clip polygon:
+    \clip (0,0)--(10,0)--(10,10)--(0,10)--cycle;
+    % additionally clip below the line using a large polygon under it
+    \clip (-6,-20)--(30,-20)--(30,25)--(0,25)--(10,10)--cycle;
+    \fill[cyan,opacity=0.14] (-6,-6) rectangle (10,10);
+  \end{scope}
+
+  % draw boundary lines
+  \draw[gold,line width=1.0pt] (5,0)--(5,10) node[lbl,above right] {$x=5$};
+  \draw[gold,line width=1.0pt] (0,10)--(10,0) node[lbl,above left] {$x+y=10$};
+  \draw[gold,line width=1.0pt] (10,10)--(6.6667,15) node[lbl,above right] {$3x+2y=50$};
+
+  \node[lbl] at (7,6.5) {feasible region};
+\end{Graph}
+
+\end{QAPair}
+
+\end{document}

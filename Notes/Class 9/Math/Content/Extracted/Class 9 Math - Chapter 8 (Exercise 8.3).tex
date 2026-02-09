@@ -1,0 +1,631 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=0.75in]{geometry} % Increased width
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=12pt,right=12pt,top=12pt,bottom=12pt % Slightly reduced padding
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title={\parbox{\linewidth}{\textcolor{gold}{\bfseries #1}}}, % Fixes title wrapping
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 8.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Slope (two points):} for $P(x_1,y_1),Q(x_2,y_2)$,\;
+$m=\dfrac{y_2-y_1}{x_2-x_1}$.
+\item \textbf{Angle (from $l_1$ to $l_2$):}\;
+$\tan\theta=\dfrac{m_2-m_1}{1+m_1m_2}$.
+\item \textbf{Angle between lines:}\;
+$\tan\theta=\left|\dfrac{a_1b_2-a_2b_1}{a_1a_2+b_1b_2}\right|$.
+\item \textbf{Dot-product angle:}\;
+$\cos\angle A=\dfrac{\vec{AB}\cdot\vec{AC}}{\lVert\vec{AB}\rVert\lVert\vec{AC}\rVert}$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (i)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if: slope of $l_1 = 0$ and slope of $l_2 = 1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \tan\theta=\frac{m_2-m_1}{1+m_1m_2}.\\
+\Step{2}\;& \tan\theta=\frac{1-0}{1+0}=1.\\
+\Step{3}\;& \theta=\tan^{-1}(1)=45^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if: slope of $l_1 = -0.5$ and slope of $l_2 = 4.5$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \tan\theta=\frac{m_2-m_1}{1+m_1m_2}
+=\frac{4.5-(-0.5)}{1+(-0.5)(4.5)}.\\
+\Step{2}\;& \tan\theta=\frac{5}{1-2.25}=\frac{5}{-1.25}=-4.\\
+\Step{3}\;& \theta=\tan^{-1}(-4)\approx -75.96^\circ.\\
+\Step{4}\;& \Rightarrow\; \theta\approx -75.96^\circ+180^\circ=104.04^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if: slope of $l_1 = \tan45^\circ$ and slope of $l_2 = \tan135^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=\tan45^\circ=1,\quad m_2=\tan135^\circ=-1.\\
+\Step{2}\;& 1+m_1m_2=1+(1)(-1)=0\;\Rightarrow\;\text{lines are perpendicular}.\\
+\Step{3}\;& \theta=90^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if:\\ $l_1$: joining $(2, 0)$ and $(5, 0)$ \quad $l_2$: joining $(2, 0)$ and $(5, 5)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=\frac{0-0}{5-2}=0,\qquad m_2=\frac{5-0}{5-2}=\frac{5}{3}.\\
+\Step{2}\;& \tan\theta=\frac{m_2-m_1}{1+m_1m_2}=\frac{\frac53-0}{1+0}=\frac53.\\
+\Step{3}\;& \theta=\tan^{-1}\!\left(\frac53\right)\approx 59.04^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if:\\ $l_1$: joining $(-2, 1)$ and $(3, 4)$ \quad $l_2$: joining $(-1, 3)$ and $(4, 8)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=\frac{4-1}{3-(-2)}=\frac35,\qquad m_2=\frac{8-3}{4-(-1)}=\frac55=1.\\
+\Step{2}\;& \tan\theta=\frac{1-\frac35}{1+\frac35\cdot 1}
+=\frac{\frac25}{\frac85}=\frac14.\\
+\Step{3}\;& \theta=\tan^{-1}\!\left(\frac14\right)\approx 14.04^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if:\\ $l_1$: joining $(-5, -4)$ and $(5, 1)$ \quad $l_2$: joining $(-3, 2)$ and $(0, 5)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=\frac{1-(-4)}{5-(-5)}=\frac{5}{10}=\frac12,\qquad
+m_2=\frac{5-2}{0-(-3)}=\frac33=1.\\
+\Step{2}\;& \tan\theta=\frac{1-\frac12}{1+\frac12\cdot 1}
+=\frac{\frac12}{\frac32}=\frac13.\\
+\Step{3}\;& \theta=\tan^{-1}\!\left(\frac13\right)\approx 18.43^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if:\\ $l_1$: joining $(2, -6)$ and $(5, -9)$ \quad $l_2$: joining $(5, -5)$ and $(-10, -5)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=\frac{-9-(-6)}{5-2}=\frac{-3}{3}=-1,\qquad
+m_2=\frac{-5-(-5)}{-10-5}=0.\\
+\Step{2}\;& \tan\theta=\frac{0-(-1)}{1+(-1)\cdot 0}=1.\\
+\Step{3}\;& \theta=\tan^{-1}(1)=45^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (v)}
+\textbf{Question:} Find the measure of angle from $l_1$ to $l_2$ if:\\ $l_1$: joining $(0, -3)$ and $(7, -9)$ \quad $l_2$: joining $(2, -2)$ and $(-8, -12)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=\frac{-9-(-3)}{7-0}=\frac{-6}{7}=-\frac67,\qquad
+m_2=\frac{-12-(-2)}{-8-2}=\frac{-10}{-10}=1.\\
+\Step{2}\;& \tan\theta=\frac{1-(-\frac67)}{1+(-\frac67)(1)}
+=\frac{\frac{13}{7}}{\frac{1}{7}}=13.\\
+\Step{3}\;& \theta=\tan^{-1}(13)\approx 85.60^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (i)}
+\textbf{Question:} Find the interior angles of triangle ABC when: Slope of AB = 0, Slope of BC = -1, Slope of AC = 1.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \angle A:\ \tan A=\left|\frac{m_{AC}-m_{AB}}{1+m_{AB}m_{AC}}\right|
+=\left|\frac{1-0}{1+0}\right|=1 \Rightarrow A=45^\circ.\\
+\Step{2}\;& \angle B:\ \tan B=\left|\frac{m_{BC}-m_{AB}}{1+m_{AB}m_{BC}}\right|
+=\left|\frac{-1-0}{1+0}\right|=1 \Rightarrow B=45^\circ.\\
+\Step{3}\;& \angle C:\ 1+m_{AC}m_{BC}=1+(1)(-1)=0 \Rightarrow C=90^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle A=45^\circ,\ \angle B=45^\circ,\ \angle C=90^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textbf{Question:} Find the interior angles of triangle ABC when: Slope of AB = 0.25, Slope of BC = 1.25, Slope of AC = 1.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \angle A:\ \tan A=\left|\frac{1-0.25}{1+(0.25)(1)}\right|
+=\frac{0.75}{1.25}=0.6\Rightarrow A\approx 30.96^\circ.\\
+\Step{2}\;& \text{Acute angle between }AB\text{ and }BC:\ \\
+&\quad \tan B_{\text{acute}}=\left|\frac{1.25-0.25}{1+(0.25)(1.25)}\right|
+=\frac{1}{1.3125}\Rightarrow B_{\text{acute}}\approx 37.30^\circ.\\
+\Step{3}\;& \angle C:\ \tan C=\left|\frac{1.25-1}{1+(1)(1.25)}\right|
+=\frac{0.25}{2.25}\Rightarrow C\approx 6.34^\circ.\\
+\Step{4}\;& \text{Interior angles must sum to }180^\circ \Rightarrow B \approx 180^\circ-37.30^\circ=142.70^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle A\approx 30.96^\circ,\ \angle B\approx 142.70^\circ,\ \angle C\approx 6.34^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textbf{Question:} Find the interior angles of triangle ABC when: Slope of AB = 0.4, Slope of BC = -1.5, Slope of AC = 1.667.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} (using $m_{AC}\approx 1.667$)
+\[
+\begin{aligned}
+\Step{1}\;& \angle A:\ \tan A=\left|\frac{1.667-0.4}{1+(0.4)(1.667)}\right|
+\Rightarrow A\approx 37.23^\circ.\\
+\Step{2}\;& \angle B:\ \tan B=\left|\frac{-1.5-0.4}{1+(0.4)(-1.5)}\right|
+=\left|\frac{-1.9}{0.4}\right|=4.75 \Rightarrow B\approx 78.11^\circ.\\
+\Step{3}\;& \angle C:\ \tan C=\left|\frac{-1.5-1.667}{1+(1.667)(-1.5)}\right|
+\Rightarrow C\approx 64.65^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle A\approx 37.23^\circ,\ \angle B\approx 78.11^\circ,\ \angle C\approx 64.65^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textbf{Question:} Find the interior angles of triangle ABC when: Slope of AB = -1, Slope of BC = 0.8, Slope of AC = 0.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \angle A:\ \tan A=\left|\frac{0-(-1)}{1+(-1)(0)}\right|=1
+\Rightarrow A=45^\circ.\\
+\Step{2}\;& \text{Acute angle between }AB\text{ and }BC:\ \\
+&\quad \tan B_{\text{acute}}=\left|\frac{0.8-(-1)}{1+(-1)(0.8)}\right|
+=\frac{1.8}{0.2}=9 \Rightarrow B_{\text{acute}}\approx 83.66^\circ.\\
+\Step{3}\;& \angle C:\ \tan C=\left|\frac{0.8-0}{1+0}\right|=0.8
+\Rightarrow C\approx 38.66^\circ.\\
+\Step{4}\;& B=180^\circ-B_{\text{acute}}\approx 96.34^\circ\ \ (\text{so that }A+B+C=180^\circ).
+\end{aligned}
+\]
+\[
+\boxed{\angle A=45^\circ,\ \angle B\approx 96.34^\circ,\ \angle C\approx 38.66^\circ.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (i)}
+\textbf{Question:} Find angle between lines: $3x + 2y + 5 = 0$ and $2x - 3y + 8 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=-\frac{3}{2},\qquad m_2=\frac{2}{3}.\\
+\Step{2}\;& m_1m_2=\left(-\frac{3}{2}\right)\left(\frac{2}{3}\right)=-1
+\Rightarrow \text{perpendicular}.\\
+\Step{3}\;& \theta=90^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textbf{Question:} Find angle between lines: $x + 2y - 6 = 0$ and $2x - 4y + 9 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=-\frac12,\qquad m_2=\frac12.\\
+\Step{2}\;& \tan\theta=\left|\frac{m_2-m_1}{1+m_1m_2}\right|
+=\left|\frac{\frac12-(-\frac12)}{1+(-\frac12)(\frac12)}\right|
+=\frac{1}{\frac34}=\frac43.\\
+\Step{3}\;& \theta=\tan^{-1}\!\left(\frac43\right)\approx 53.13^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textbf{Question:} Find angle between lines: $6x - y + 1 = 0$ and $x - 7y + 12 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m_1=6,\qquad m_2=\frac17.\\
+\Step{2}\;& \tan\theta=\left|\frac{\frac17-6}{1+6\cdot\frac17}\right|
+=\left|\frac{-\frac{41}{7}}{\frac{13}{7}}\right|=\frac{41}{13}.\\
+\Step{3}\;& \theta=\tan^{-1}\!\left(\frac{41}{13}\right)\approx 72.41^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 (i)}
+\textbf{Question:} Find the interior angles of triangle XYZ whose vertices are: $X(-2, 3),\ Y(-3, -4),\ Z(5, 2)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \vec{XY}=(-1,-7),\quad \vec{XZ}=(7,-1).\\
+\Step{2}\;& \vec{XY}\cdot\vec{XZ}=(-1)(7)+(-7)(-1)=-7+7=0\Rightarrow \angle X=90^\circ.\\
+\Step{3}\;& |\vec{XY}|=\sqrt{1+49}=\sqrt{50},\quad |\vec{XZ}|=\sqrt{49+1}=\sqrt{50}
+\Rightarrow \text{isosceles}.\\
+\Step{4}\;& \angle Y=\angle Z=\frac{180^\circ-90^\circ}{2}=45^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle X=90^\circ,\ \angle Y=45^\circ,\ \angle Z=45^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (ii)}
+\textbf{Question:} Find the interior angles of triangle XYZ whose vertices are: $X(-3, 2),\ Y(0, -1),\ Z(3, 3)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} (use dot product)
+\[
+\begin{aligned}
+\Step{1}\;& \vec{XY}=(3,-3),\quad \vec{XZ}=(6,1).\\
+\Step{2}\;& \cos\angle X=\frac{\vec{XY}\cdot\vec{XZ}}{|\vec{XY}||\vec{XZ}|}
+=\frac{15}{\sqrt{18}\sqrt{37}}\Rightarrow \angle X\approx 54.46^\circ.\\
+\Step{3}\;& \vec{YX}=(-3,3),\quad \vec{YZ}=(3,4),\ 
+\cos\angle Y=\frac{3}{\sqrt{18}\cdot 5}\Rightarrow \angle Y\approx 81.87^\circ.\\
+\Step{4}\;& \angle Z=180^\circ-\angle X-\angle Y\approx 43.67^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle X\approx 54.46^\circ,\ \angle Y\approx 81.87^\circ,\ \angle Z\approx 43.67^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iii)}
+\textbf{Question:} Find the interior angles of triangle XYZ whose vertices are: $X(-2, 0),\ Y(1, -4),\ Z(6, 6)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \vec{XY}=(3,-4),\quad \vec{XZ}=(8,6).\\
+\Step{2}\;& \vec{XY}\cdot\vec{XZ}=24-24=0\Rightarrow \angle X=90^\circ.\\
+\Step{3}\;& |XY|=5,\quad |XZ|=10,\quad |YZ|=\sqrt{5^2+10^2}=5\sqrt5.\\
+\Step{4}\;& \cos\angle Y=\frac{XY^2+YZ^2-XZ^2}{2\cdot XY\cdot YZ}
+=\frac{25+125-100}{2\cdot 5\cdot 5\sqrt5}=\frac{1}{\sqrt5}.\\
+\Step{5}\;& \Rightarrow \angle Y\approx 63.43^\circ,\quad \angle Z\approx 26.57^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle X=90^\circ,\ \angle Y\approx 63.43^\circ,\ \angle Z\approx 26.57^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iv)}
+\textbf{Question:} Find the interior angles of triangle XYZ whose vertices are: $X(-4, 1),\ Y(0, -3),\ Z(4, 3)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \vec{XY}=(4,-4),\quad \vec{XZ}=(8,2).\\
+\Step{2}\;& \cos\angle X=\frac{(4,-4)\cdot(8,2)}{\sqrt{32}\sqrt{68}}
+=\frac{24}{(4\sqrt2)(2\sqrt{17})}\Rightarrow \angle X\approx 59.04^\circ.\\
+\Step{3}\;& \vec{YX}=(-4,4),\ \vec{YZ}=(4,6),\ 
+\cos\angle Y=\frac{8}{\sqrt{32}\sqrt{52}}\Rightarrow \angle Y\approx 78.69^\circ.\\
+\Step{4}\;& \angle Z=180^\circ-\angle X-\angle Y\approx 42.27^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle X\approx 59.04^\circ,\ \angle Y\approx 78.69^\circ,\ \angle Z\approx 42.27^\circ.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 (i)}
+\textbf{Question:} Find the point of intersection of lines: $2x + y + 1 = 0$ and $x - y - 4 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x+y=-1,\quad x-y=4.\\
+\Step{2}\;& (2x+y)+(x-y)= -1+4\Rightarrow 3x=3\Rightarrow x=1.\\
+\Step{3}\;& x-y=4\Rightarrow 1-y=4\Rightarrow y=-3.
+\end{aligned}
+\]
+\[
+\boxed{(x,y)=(1,-3).}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (ii)}
+\textbf{Question:} Find the point of intersection of lines: $x + y + 3 = 0$ and $2x - 5y + 8 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x+y=-3\Rightarrow x=-3-y.\\
+\Step{2}\;& 2(-3-y)-5y+8=0\Rightarrow -6-2y-5y+8=0\\
+&\Rightarrow 2-7y=0\Rightarrow y=\frac{2}{7}.\\
+\Step{3}\;& x=-3-\frac{2}{7}=-\frac{23}{7}.
+\end{aligned}
+\]
+\[
+\boxed{(x,y)=\left(-\frac{23}{7},\frac{2}{7}\right).}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iii)}
+\textbf{Question:} Find the point of intersection of lines: $2x + 5y + 3 = 0$ and $3x - 4y - 5 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x+5y=-3,\quad 3x-4y=5.\\
+\Step{2}\;& \text{Eliminate }x:\ 6x+15y=-9,\ 6x-8y=10.\\
+\Step{3}\;& (6x+15y)-(6x-8y)=-9-10\Rightarrow 23y=-19\Rightarrow y=-\frac{19}{23}.\\
+\Step{4}\;& 3x-4\!\left(-\frac{19}{23}\right)=5\Rightarrow 3x=\frac{39}{23}\Rightarrow x=\frac{13}{23}.
+\end{aligned}
+\]
+\[
+\boxed{(x,y)=\left(\frac{13}{23},-\frac{19}{23}\right).}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7 (a)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $3x + 2y + 1 = 0$, $x - 2y + 3 = 0$ and (a) passing through point $(-1, 0)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Find intersection: }3x+2y=-1,\ x-2y=-3.\\
+\Step{2}\;& (3x+2y)+(x-2y)=-1-3\Rightarrow 4x=-4\Rightarrow x=-1.\\
+\Step{3}\;& x-2y=-3\Rightarrow -1-2y=-3\Rightarrow y=1.\\
+\Step{4}\;& \text{Intersection point }P(-1,1).\ \text{Line through }(-1,1)\text{ and }(-1,0)\text{ is vertical.}
+\end{aligned}
+\]
+\[
+\boxed{x=-1.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7 (b)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $3x + 2y + 1 = 0$, $x - 2y + 3 = 0$ and (b) parallel to $3x - 4y + 3 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Intersection from (a): }P(-1,1).\\
+\Step{2}\;& \text{Parallel to }3x-4y+3=0\Rightarrow \text{required line }3x-4y+k=0.\\
+\Step{3}\;& \text{Use }P(-1,1):\ 3(-1)-4(1)+k=0\Rightarrow -7+k=0\Rightarrow k=7.
+\end{aligned}
+\]
+\[
+\boxed{3x-4y+7=0.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textbf{Question:} Find the equation of family of lines passing through point of intersection of $6x + 5y + 3 = 0$ and $2x - 5y + 13 = 0$ with slope 3.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 6x+5y=-3,\quad 2x-5y=-13.\\
+\Step{2}\;& \text{Add: }8x=-16\Rightarrow x=-2.\\
+\Step{3}\;& 2(-2)-5y=-13\Rightarrow -4-5y=-13\Rightarrow y=\frac95.\\
+\Step{4}\;& \text{Point }Q\!\left(-2,\frac95\right),\ \text{slope }3:\ y-\frac95=3(x+2).
+\end{aligned}
+\]
+\[
+\boxed{y=3x+\frac{39}{5}}
+\qquad\text{or}\qquad
+\boxed{15x-5y+39=0.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9 (a)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $2x - 5y + 4 = 0$, $6x - 4y + 5 = 0$ and (a) parallel to x-axis.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x-5y=-4,\quad 6x-4y=-5.\\
+\Step{2}\;& \text{Solve: intersection }R\!\left(-\frac{9}{22},\frac{7}{11}\right).\\
+\Step{3}\;& \text{Parallel to }x\text{-axis}\Rightarrow y=\text{constant}=\frac{7}{11}.
+\end{aligned}
+\]
+\[
+\boxed{y=\frac{7}{11}}\qquad\text{or}\qquad \boxed{11y-7=0.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9 (b)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $2x - 5y + 4 = 0$, $6x - 4y + 5 = 0$ and (b) parallel to y-axis.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Intersection }R\!\left(-\frac{9}{22},\frac{7}{11}\right).\\
+\Step{2}\;& \text{Parallel to }y\text{-axis}\Rightarrow x=\text{constant}=-\frac{9}{22}.
+\end{aligned}
+\]
+\[
+\boxed{x=-\frac{9}{22}}\qquad\text{or}\qquad \boxed{22x+9=0.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10 (a)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $2x - y + 2 = 0, x - 2y + 1 = 0$ and (a) parallel to $x - 2y + 11 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Find intersection: }2x-y=-2,\ x-2y=-1.\\
+\Step{2}\;& \text{From }x-2y=-1\Rightarrow x=2y-1.\\
+\Step{3}\;& 2(2y-1)-y=-2\Rightarrow 3y=0\Rightarrow y=0,\ x=-1.\\
+\Step{4}\;& S(-1,0).\ \text{Parallel to }x-2y+11=0\Rightarrow \text{required line }x-2y+k=0.\\
+\Step{5}\;& \text{Use }S:\ -1-0+k=0\Rightarrow k=1.
+\end{aligned}
+\]
+\[
+\boxed{x-2y+1=0.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (b)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $2x - y + 2 = 0, x - 2y + 1 = 0$ and (b) perpendicular to $2x + 5y + 2 = 0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Intersection }S(-1,0).\\
+\Step{2}\;& 2x+5y+2=0\Rightarrow m=-\frac{2}{5}\Rightarrow m_\perp=\frac{5}{2}.\\
+\Step{3}\;& y-0=\frac{5}{2}(x+1)\Rightarrow 2y=5x+5.
+\end{aligned}
+\]
+\[
+\boxed{5x-2y+5=0.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q11
+\begin{QAPair}{Question 11 (a)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $x - 2y + 4 = 0$, $3x - y - 3 = 0$ and (a) parallel to line passing through $(2, -3)$ and $(0, 4)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Intersection: }x-2y=-4,\ 3x-y=3
+\Rightarrow (x,y)=(2,3).\\
+\Step{2}\;& \text{Slope through }(2,-3)\text{ and }(0,4):\ 
+m=\frac{4-(-3)}{0-2}=\frac{7}{-2}=-\frac{7}{2}.\\
+\Step{3}\;& \text{Parallel line through }(2,3):\ y-3=-\frac{7}{2}(x-2).\\
+\Step{4}\;& 2y-6=-7x+14\Rightarrow 7x+2y-20=0.
+\end{aligned}
+\]
+\[
+\boxed{7x+2y-20=0.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 11 (b)}
+\textbf{Question:} Find equation of line passing through point of intersection of lines $x - 2y + 4 = 0$, $3x - y - 3 = 0$ and (b) perpendicular to line passing through $(2, -3)$ and $(0, 4)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Intersection point }T(2,3).\\
+\Step{2}\;& m_{\parallel}=-\frac72\Rightarrow m_{\perp}=\frac{2}{7}.\\
+\Step{3}\;& y-3=\frac{2}{7}(x-2)\Rightarrow 7y-21=2x-4.\\
+\Step{4}\;& 2x-7y+17=0.
+\end{aligned}
+\]
+\[
+\boxed{2x-7y+17=0.}
+\]
+\end{QAPair}
+
+\end{document}

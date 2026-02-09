@@ -1,0 +1,535 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 4.1 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Common factor:} $ab+ac=a(b+c)$.
+\item \textbf{Grouping:} $(ab+ac)+(db+dc)=(a+d)(b+c)$.
+\item \textbf{Difference of squares:} $A^2-B^2=(A-B)(A+B)$.
+\item \textbf{Perfect square trinomials:} $A^2\pm 2AB+B^2=(A\pm B)^2$.
+\item \textbf{Sophie Germain:} $a^4+4b^4=(a^2-2ab+2b^2)(a^2+2ab+2b^2)$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% 1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} $2x^2y^3-6x^2y^2+2xy^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x^2y^3-6x^2y^2+2xy^3
+=2xy^2\bigl(xy-3x+y\bigr) \qquad (\text{common factor }2xy^2).\\
+\Step{2}\;& \boxed{\,2xy^2(xy-3x+y)\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} $3nx-3x-3ny+3y$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 3nx-3x-3ny+3y = 3(nx-x-ny+y).\\
+\Step{2}\;&=3\bigl(x(n-1)-y(n-1)\bigr).\\
+\Step{3}\;&=3(n-1)(x-y).\\
+\Step{4}\;& \boxed{\,3(n-1)(x-y)\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} $18x^4+108x^2y^2+162y^4$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 18x^4+108x^2y^2+162y^4
+=18\bigl(x^4+6x^2y^2+9y^4\bigr).\\
+\Step{2}\;& x^4+6x^2y^2+9y^4=(x^2)^2+2(x^2)(3y^2)+(3y^2)^2\\
+&=(x^2+3y^2)^2.\\
+\Step{3}\;& \boxed{\,18(x^2+3y^2)^2\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} $(k+2)^2-8(k+2)+16$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Let } t=k+2. \text{ Then } t^2-8t+16=(t-4)^2.\\
+\Step{2}\;& (k+2-4)^2=(k-2)^2.\\
+\Step{3}\;& \boxed{\, (k-2)^2\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} $9x^2+4-169y^2-12x$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 9x^2+4-169y^2-12x = (9x^2-12x+4)-169y^2.\\
+\Step{2}\;& 9x^2-12x+4=(3x-2)^2,\quad 169y^2=(13y)^2.\\
+\Step{3}\;& (3x-2)^2-(13y)^2=\bigl((3x-2)-13y\bigr)\bigl((3x-2)+13y\bigr).\\
+\Step{4}\;& \boxed{\, (3x-2-13y)(3x-2+13y)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} $(x^2-1)(y+1)-(y+3)(x^2-1)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (x^2-1)(y+1)-(y+3)(x^2-1)
+=(x^2-1)\bigl((y+1)-(y+3)\bigr).\\
+\Step{2}\;&=(x^2-1)(-2)=2(1-x^2).\\
+\Step{3}\;& 1-x^2=(1-x)(1+x).\\
+\Step{4}\;& \boxed{\,2(1-x)(1+x)\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} $x^2-6ax+9a^2-16b^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2-6ax+9a^2-16b^2 = (x^2-6ax+9a^2)-(4b)^2.\\
+\Step{2}\;& x^2-6ax+9a^2=(x-3a)^2.\\
+\Step{3}\;& (x-3a)^2-(4b)^2=\bigl((x-3a)-4b\bigr)\bigl((x-3a)+4b\bigr).\\
+\Step{4}\;& \boxed{\, (x-3a-4b)(x-3a+4b)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} $1-x^2-2xy-y^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 1-x^2-2xy-y^2 = 1-(x^2+2xy+y^2).\\
+\Step{2}\;& x^2+2xy+y^2=(x+y)^2.\\
+\Step{3}\;& 1-(x+y)^2=\bigl(1-(x+y)\bigr)\bigl(1+(x+y)\bigr).\\
+\Step{4}\;& \boxed{\, (1-x-y)(1+x+y)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Find a polynomial whose factorization is $(x+y-2c)(x+2c+y)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (x+y-2c)(x+y+2c)=\bigl((x+y)-2c\bigr)\bigl((x+y)+2c\bigr).\\
+\Step{2}\;&=\,(x+y)^2-(2c)^2 \qquad (\text{difference of squares}).\\
+\Step{3}\;&=(x^2+2xy+y^2)-4c^2.\\
+\Step{4}\;& \boxed{\,x^2+2xy+y^2-4c^2\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Show $x^2+4y^2-z^2+4xy$ as the difference of two squares.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2+4y^2-z^2+4xy=(x^2+4xy+4y^2)-z^2.\\
+\Step{2}\;& x^2+4xy+4y^2=(x+2y)^2.\\
+\Step{3}\;& (x+2y)^2-z^2=\bigl((x+2y)-z\bigr)\bigl((x+2y)+z\bigr).\\
+\Step{4}\;& \boxed{\, (x+2y-z)(x+2y+z)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 11(a)
+\begin{QAPair}{Question 11(a)}
+\textcolor{gold}{\bfseries Question:} $(2y^2-3y-27)=(y+3)(\ \ )$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Divide } 2y^2-3y-27 \text{ by } (y+3).\\
+\Step{2}\;& 2y^2-3y-27 = (y+3)(2y-9).\\
+\Step{3}\;& \boxed{\,2y-9\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 11(b)
+\begin{QAPair}{Question 11(b)}
+\textcolor{gold}{\bfseries Question:} $(5x^2+12x-9)=(\ \ )(x+3)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Divide } 5x^2+12x-9 \text{ by } (x+3).\\
+\Step{2}\;& 5x^2+12x-9=(5x-3)(x+3).\\
+\Step{3}\;& \boxed{\,5x-3\,}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 12
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} $x^4+4m^4$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^4+4m^4 \text{ fits } a^4+4b^4.\\
+\Step{2}\;& x^4+4m^4=(x^2-2xm+2m^2)(x^2+2xm+2m^2).\\
+\Step{3}\;& \boxed{\, (x^2-2xm+2m^2)(x^2+2xm+2m^2)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 13
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} $m^4+m^2+1$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m^4+m^2+1=(m^2+m+1)(m^2-m+1).\\
+\Step{2}\;& \boxed{\, (m^2+m+1)(m^2-m+1)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 14
+\begin{QAPair}{Question 14}
+\textcolor{gold}{\bfseries Question:} $-3x^4-21x^3+24x^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& -3x^4-21x^3+24x^2=-3x^2(x^2+7x-8).\\
+\Step{2}\;& x^2+7x-8=(x+8)(x-1).\\
+\Step{3}\;& \boxed{\, -3x^2(x+8)(x-1)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 15
+\begin{QAPair}{Question 15}
+\textcolor{gold}{\bfseries Question:} $x^8+x^4+1$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^8+x^4+1=(x^4+1)^2-(x^2)^2.\\
+\Step{2}\;&=\bigl((x^4+1)-x^2\bigr)\bigl((x^4+1)+x^2\bigr).\\
+\Step{3}\;&=\,(x^4-x^2+1)(x^4+x^2+1).\\
+\Step{4}\;& \boxed{\, (x^4+x^2+1)(x^4-x^2+1)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 16
+\begin{QAPair}{Question 16}
+\textcolor{gold}{\bfseries Question:} $4x^4+256y^4$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 4x^4+256y^4=4(x^4+64y^4)=4\bigl(x^4+4(2y)^4\bigr).\\
+\Step{2}\;& x^4+4(2y)^4=(x^2-4xy+8y^2)(x^2+4xy+8y^2).\\
+\Step{3}\;& \boxed{\,4(x^2-4xy+8y^2)(x^2+4xy+8y^2)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 17
+\begin{QAPair}{Question 17}
+\textcolor{gold}{\bfseries Question:} $12-7x+x^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 12-7x+x^2=x^2-7x+12.\\
+\Step{2}\;& x^2-7x+12=(x-3)(x-4).\\
+\Step{3}\;& \boxed{\, (x-3)(x-4)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 18
+\begin{QAPair}{Question 18}
+\textcolor{gold}{\bfseries Question:} $x^2-9x+8$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2-9x+8=(x-1)(x-8).\\
+\Step{2}\;& \boxed{\, (x-1)(x-8)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 19
+\begin{QAPair}{Question 19}
+\textcolor{gold}{\bfseries Question:} $10z^2-29z+10$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 10z^2-29z+10=10z^2-25z-4z+10.\\
+\Step{2}\;&=5z(2z-5)-2(2z-5).\\
+\Step{3}\;&=(2z-5)(5z-2).\\
+\Step{4}\;& \boxed{\, (2z-5)(5z-2)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 20
+\begin{QAPair}{Question 20}
+\textcolor{gold}{\bfseries Question:} $-3y^2+13y-4$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& -3y^2+13y-4=-(3y^2-13y+4).\\
+\Step{2}\;& 3y^2-13y+4=3y^2-12y-y+4\\
+&=3y(y-4)-1(y-4)=(3y-1)(y-4).\\
+\Step{3}\;& -\,(3y-1)(y-4)=(3y-1)(4-y).\\
+\Step{4}\;& \boxed{\, (3y-1)(4-y)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 21
+\begin{QAPair}{Question 21}
+\textcolor{gold}{\bfseries Question:} $x^2-21x+90$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2-21x+90=(x-15)(x-6).\\
+\Step{2}\;& \boxed{\, (x-15)(x-6)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 22
+\begin{QAPair}{Question 22}
+\textcolor{gold}{\bfseries Question:} $x^2+x-2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2+x-2=(x+2)(x-1).\\
+\Step{2}\;& \boxed{\, (x+2)(x-1)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 23
+\begin{QAPair}{Question 23}
+\textcolor{gold}{\bfseries Question:} $3x^2+11x+6$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 3x^2+11x+6=3x^2+9x+2x+6.\\
+\Step{2}\;&=3x(x+3)+2(x+3).\\
+\Step{3}\;&=(3x+2)(x+3).\\
+\Step{4}\;& \boxed{\, (3x+2)(x+3)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 24
+\begin{QAPair}{Question 24}
+\textcolor{gold}{\bfseries Question:} $2x^2-5xy-3y^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x^2-5xy-3y^2=(2x+y)(x-3y) \quad (\text{check by FOIL}).\\
+\Step{2}\;& \boxed{\, (2x+y)(x-3y)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 25
+\begin{QAPair}{Question 25}
+\textcolor{gold}{\bfseries Question:} $8+6x-5x^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 8+6x-5x^2=-(5x^2-6x-8).\\
+\Step{2}\;& 5x^2-6x-8=5x^2+4x-10x-8\\
+&=x(5x+4)-2(5x+4)=(5x+4)(x-2).\\
+\Step{3}\;& -(5x+4)(x-2)=(5x+4)(2-x).\\
+\Step{4}\;& \boxed{\, (5x+4)(2-x)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 26
+\begin{QAPair}{Question 26}
+\textcolor{gold}{\bfseries Question:} $6-7x-5x^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 6-7x-5x^2=-(5x^2+7x-6).\\
+\Step{2}\;& 5x^2+7x-6=5x^2+10x-3x-6\\
+&=5x(x+2)-3(x+2)=(5x-3)(x+2).\\
+\Step{3}\;& -(5x-3)(x+2)=(3-5x)(x+2).\\
+\Step{4}\;& \boxed{\, (3-5x)(x+2)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 27
+\begin{QAPair}{Question 27}
+\textcolor{gold}{\bfseries Question:} $2a^2-4a-6$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2a^2-4a-6=2(a^2-2a-3).\\
+\Step{2}\;& a^2-2a-3=(a-3)(a+1).\\
+\Step{3}\;& \boxed{\,2(a-3)(a+1)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 28
+\begin{QAPair}{Question 28}
+\textcolor{gold}{\bfseries Question:} $u^4-13u^2+36$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& u^4-13u^2+36 \text{ is quadratic in } u^2.\\
+\Step{2}\;& \text{Let } t=u^2:\quad t^2-13t+36=(t-9)(t-4).\\
+\Step{3}\;& \Rightarrow (u^2-9)(u^2-4).\\
+\Step{4}\;&=(u-3)(u+3)(u-2)(u+2).\\
+\Step{5}\;& \boxed{\, (u-3)(u+3)(u-2)(u+2)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+% 29
+\begin{QAPair}{Question 29}
+\textcolor{gold}{\bfseries Question:} $y^4-12y^2-64$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& y^4-12y^2-64 \text{ is quadratic in } y^2.\\
+\Step{2}\;& \text{Let } t=y^2:\quad t^2-12t-64=(t-16)(t+4).\\
+\Step{3}\;& \Rightarrow (y^2-16)(y^2+4).\\
+\Step{4}\;& y^2-16=(y-4)(y+4).\\
+\Step{5}\;& \boxed{\, (y-4)(y+4)(y^2+4)\, }.
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

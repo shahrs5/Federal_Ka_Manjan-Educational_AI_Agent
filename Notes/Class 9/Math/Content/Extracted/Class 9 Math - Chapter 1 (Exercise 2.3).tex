@@ -1,0 +1,349 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% Bar characteristic helper
+\newcommand{\barc}[1]{\overline{#1}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 2.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (Characteristic \& Mantissa)}\par\medskip
+\begin{itemize}
+\item We use \textbf{common logarithm}: $\log(x)=\log_{10}(x)$.
+\item Write the number in \textbf{standard/scientific form}: $N=a\times 10^{k}$ where $1\le a<10$.
+\item Then
+\[
+\log(N)=\log(a\times 10^{k})=\log(a)+k.
+\]
+\item \textbf{Characteristic} $C$ is the \textbf{integer part} (coming from $k$), and \textbf{Mantissa} $M$ is the \textbf{decimal part}:
+\[
+\log(N)=C+M,\qquad 0\le M<1.
+\]
+\item For $0<N<1$, the characteristic is negative. Using \textbf{bar notation}:
+\[
+\log(N)=\barc{k}+M \quad \text{means} \quad \barc{k}+M = -k + M.
+\]
+(So the mantissa stays positive.)
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(5313)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 5313 = 5.313\times 10^{3}.\\
+\Step{2}\;& \text{Characteristic } C = 3.\\
+\Step{3}\;& \text{Mantissa } M = \log_{10}(5.313)\approx 0.72534.\\
+\Step{4}\;& \log_{10}(5313)=C+M=3+0.72534=3.72534.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(4580)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 4580 = 4.580\times 10^{3}.\\
+\Step{2}\;& C = 3.\\
+\Step{3}\;& M=\log_{10}(4.58)\approx 0.66087.\\
+\Step{4}\;& \log_{10}(4580)=3+0.66087=3.66087.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(9.613)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 9.613 = 9.613\times 10^{0}.\\
+\Step{2}\;& C=0.\\
+\Step{3}\;& M=\log_{10}(9.613)\approx 0.98286.\\
+\Step{4}\;& \log_{10}(9.613)=0+0.98286=0.98286.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(110.9)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 110.9 = 1.109\times 10^{2}.\\
+\Step{2}\;& C=2.\\
+\Step{3}\;& M=\log_{10}(1.109)\approx 0.04493.\\
+\Step{4}\;& \log_{10}(110.9)=2+0.04493=2.04493.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(52.39)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 52.39 = 5.239\times 10^{1}.\\
+\Step{2}\;& C=1.\\
+\Step{3}\;& M=\log_{10}(5.239)\approx 0.71925.\\
+\Step{4}\;& \log_{10}(52.39)=1+0.71925=1.71925.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(0.01207)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.01207 = 1.207\times 10^{-2}.\\
+\Step{2}\;& \text{Characteristic } C=-2\;\;(\text{write as } \barc{2}).\\
+\Step{3}\;& \text{Mantissa } M=\log_{10}(1.207)\approx 0.08171.\\
+\Step{4}\;& \log_{10}(0.01207)= -2 + 0.08171 = -1.91829.\\
+\Step{5}\;& \text{In bar form: }\;\log_{10}(0.01207)=\barc{2}+0.08171.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(0.0093)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.0093 = 9.3\times 10^{-3}.\\
+\Step{2}\;& C=-3\;\;(\text{write as } \barc{3}).\\
+\Step{3}\;& M=\log_{10}(9.3)\approx 0.96848.\\
+\Step{4}\;& \log_{10}(0.0093)= -3 + 0.96848 = -2.03152.\\
+\Step{5}\;& \text{Bar form: }\;\log_{10}(0.0093)=\barc{3}+0.96848.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(1\text{ Trillion})$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 1\text{ Trillion}=1,000,000,000,000 = 1\times 10^{12}.\\
+\Step{2}\;& C=12.\\
+\Step{3}\;& M=\log_{10}(1)=0.00000.\\
+\Step{4}\;& \log_{10}(1\text{ Trillion})=12+0=12.00000.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(0.00004)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.00004 = 4\times 10^{-5}.\\
+\Step{2}\;& C=-5\;\;(\text{write as } \barc{5}).\\
+\Step{3}\;& M=\log_{10}(4)\approx 0.60206.\\
+\Step{4}\;& \log_{10}(0.00004)= -5 + 0.60206 = -4.39794.\\
+\Step{5}\;& \text{Bar form: }\;\log_{10}(0.00004)=\barc{5}+0.60206.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(4)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 4 = 4\times 10^{0}.\\
+\Step{2}\;& C=0.\\
+\Step{3}\;& M=\log_{10}(4)\approx 0.60206.\\
+\Step{4}\;& \log_{10}(4)=0+0.60206=0.60206.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q11
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(4000)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 4000 = 4\times 10^{3}.\\
+\Step{2}\;& C=3.\\
+\Step{3}\;& M=\log_{10}(4)\approx 0.60206.\\
+\Step{4}\;& \log_{10}(4000)=3+0.60206=3.60206.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q12
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(54)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 54 = 5.4\times 10^{1}.\\
+\Step{2}\;& C=1.\\
+\Step{3}\;& M=\log_{10}(5.4)\approx 0.73239.\\
+\Step{4}\;& \log_{10}(54)=1+0.73239=1.73239.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(1.009)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 1.009 = 1.009\times 10^{0}.\\
+\Step{2}\;& C=0.\\
+\Step{3}\;& M=\log_{10}(1.009)\approx 0.00389.\\
+\Step{4}\;& \log_{10}(1.009)=0+0.00389=0.00389.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q14
+\begin{QAPair}{Question 14}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(0.1009)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 0.1009 = 1.009\times 10^{-1}.\\
+\Step{2}\;& C=-1\;\;(\text{write as } \barc{1}).\\
+\Step{3}\;& M=\log_{10}(1.009)\approx 0.00389.\\
+\Step{4}\;& \log_{10}(0.1009)= -1 + 0.00389 = -0.99611.\\
+\Step{5}\;& \text{Bar form: }\;\log_{10}(0.1009)=\barc{1}+0.00389.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q15
+\begin{QAPair}{Question 15}
+\textcolor{gold}{\bfseries Question:} Find $\log_{10}(-4)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \log_{10}(x)\ \text{(in real numbers) is defined only for } x>0.\\
+\Step{2}\;& \text{Since } -4<0,\ \log_{10}(-4)\ \textbf{is not possible in real numbers.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

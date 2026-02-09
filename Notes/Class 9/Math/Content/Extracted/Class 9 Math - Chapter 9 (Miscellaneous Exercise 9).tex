@@ -1,0 +1,921 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes,arrows.meta,intersections}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt}
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- TikZ Styles --------------------
+\tikzset{
+  geoLine/.style={draw=muted, line width=0.9pt},
+  geoBold/.style={draw=text, line width=1.1pt},
+  geoDash/.style={draw=muted, dashed, line width=0.9pt},
+  geoFill/.style={fill=cyan, fill opacity=0.18, draw=none},
+  geoPoint/.style={fill=text, draw=none}, % used with \fill[geoPoint] ... circle(...)
+  geoLabel/.style={text=text, font=\small},
+  geoSmall/.style={text=text, font=\scriptsize},
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 9 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Sum of interior angles (any $n$-gon):} $(n-2)\times 180^\circ$.
+\item \textbf{Each interior angle (regular $n$-gon):} $\displaystyle \frac{(n-2)180^\circ}{n}$.
+\item \textbf{Sum of exterior angles (any polygon):} $360^\circ$.
+\item \textbf{Each exterior angle (regular $n$-gon):} $\displaystyle \frac{360^\circ}{n}$.
+\item \textbf{Similar triangles:} corresponding sides are proportional.
+\item \textbf{Scaling for similar solids:} linear ratio $k \Rightarrow$ surface area ratio $k^2$, volume ratio $k^3$.
+\item \textbf{Angle bisector theorem:} if a line bisects a triangle angle, it divides the opposite side in the ratio of adjacent sides.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 (MCQs)
+
+\begin{QAPair}{Question 1 (i) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which of the following is polygon?
+\begin{itemize}
+\item[(a)] circle \hfill (b) pyramid \hfill (c) quadrilateral \hfill (d) sphere
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) quadrilateral}
+\[
+\begin{aligned}
+\Step{1}\;& \text{A polygon is a \emph{closed plane figure} made of straight line segments.}\\
+\Step{2}\;& \text{A quadrilateral is a 4-sided polygon.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which of the following is regular polygon?
+\begin{itemize}
+\item[(a)] kite \hfill (b) rhombus \hfill (c) rectangle \hfill (d) square
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) square}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Regular polygon: all sides equal and all angles equal.}\\
+\Step{2}\;& \text{Only a square has both equal sides and equal angles among the options.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If two triangles are similar, their corresponding sides are:
+\begin{itemize}
+\item[(a)] proportional \hfill (b) equal \hfill (c) congruent \hfill (d) parallel
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) proportional}
+\[
+\begin{aligned}
+\Step{1}\;& \triangle_1 \sim \triangle_2 \Rightarrow \frac{a_1}{a_2}=\frac{b_1}{b_2}=\frac{c_1}{c_2}.\\
+\Step{2}\;& \text{So corresponding sides are proportional.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the sum of interior angles for an irregular hexagon?
+\begin{itemize}
+\item[(a)] $120^\circ$ \hfill (b) $720^\circ$ \hfill (c) $135^\circ$ \hfill (d) $360^\circ$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $720^\circ$}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Sum of interior angles of an $n$-gon}=(n-2)\cdot 180^\circ.\\
+\Step{2}\;& n=6 \Rightarrow (6-2)\cdot 180^\circ=4\cdot 180^\circ=720^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the sum of interior angles for a regular 12 sided polygon?
+\begin{itemize}
+\item[(a)] $1800^\circ$ \hfill (b) $2160^\circ$ \hfill (c) $1980^\circ$ \hfill (d) $360^\circ$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $1800^\circ$}
+\[
+\begin{aligned}
+\Step{1}\;& (n-2)\cdot 180^\circ \text{ with } n=12.\\
+\Step{2}\;& (12-2)\cdot 180^\circ=10\cdot 180^\circ=1800^\circ.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} How many sides a regular polygon has if its exterior angle is $15^\circ$?
+\begin{itemize}
+\item[(a)] 20 \hfill (b) 21 \hfill (c) 24 \hfill (d) 25
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) 24}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Each exterior angle of a regular $n$-gon}=\frac{360^\circ}{n}.\\
+\Step{2}\;& \frac{360^\circ}{n}=15^\circ \Rightarrow n=\frac{360}{15}=24.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} In the figure, $AB=21$ cm and $P$ divides $AB$ in the ratio $3:4$. What is length of $\overline{AP}$?
+\begin{itemize}
+\item[(a)] $8$ cm \hfill (b) $10$ cm \hfill (c) $12$ cm \hfill (d) $9$ cm
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1]
+  \draw[geoLine] (0,0) -- (8,0);
+  \node[geoLabel] at (0,-0.35) {$A$};
+  \node[geoLabel] at (8,-0.35) {$B$};
+  \fill[geoPoint] (0,0) circle (0.8pt);
+  \fill[geoPoint] (8,0) circle (0.8pt);
+  \fill[geoPoint] (3.2,0) circle (1.2pt);
+  \node[geoLabel] at (3.2,-0.35) {$P$};
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $9$ cm}
+\[
+\begin{aligned}
+\Step{1}\;& AP:PB = 3:4 \Rightarrow AB \text{ has } 3+4=7 \text{ equal parts.}\\
+\Step{2}\;& AB=21 \Rightarrow 1\text{ part}=\frac{21}{7}=3.\\
+\Step{3}\;& AP=3 \text{ parts}=3\times 3=9\text{ cm.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} In the figure, $\dfrac{a}{b}=\dfrac{c}{d}$. Which one is true?
+\begin{itemize}
+\item[(a)] $DE=BC$ \hfill (b) $DE>BC$ \hfill (c) $DE\cong BC$ \hfill (d) $DE \parallel BC$
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6,0);
+  \coordinate (A) at (2.8,4.2);
+  \coordinate (D) at ($(A)!0.55!(B)$);
+  \coordinate (E) at ($(A)!0.55!(C)$);
+
+  \draw[geoLine] (B)--(A)--(C)--cycle;
+  \draw[geoBold] (D)--(E);
+
+  \node[geoLabel] at ($(A)+(0,0.35)$) {$A$};
+  \node[geoLabel] at ($(B)+(-0.25,-0.35)$) {$B$};
+  \node[geoLabel] at ($(C)+(0.25,-0.35)$) {$C$};
+  \node[geoLabel] at ($(D)+(-0.3,0.1)$) {$D$};
+  \node[geoLabel] at ($(E)+(0.3,0.1)$) {$E$};
+
+  \node[geoSmall, text=muted] at ($(A)!0.25!(D)$) {$a$};
+  \node[geoSmall, text=muted] at ($(D)!0.5!(B)$) {$b$};
+  \node[geoSmall, text=muted] at ($(A)!0.25!(E)$) {$c$};
+  \node[geoSmall, text=muted] at ($(E)!0.5!(C)$) {$d$};
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $DE \parallel BC$}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{AD}{DB}=\frac{AE}{EC}\ (\text{same as } \frac{a}{b}=\frac{c}{d}).\\
+\Step{2}\;& \text{By the converse of Basic Proportionality Theorem, } DE \parallel BC.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix) --- MCQ}
+\textcolor{gold}{\bfseries Question:} In the figure if $x=y$, then the value of $b$ is:
+\begin{itemize}
+\item[(a)] $\dfrac{ac}{d}$ \hfill (b) $\dfrac{ad}{c}$ \hfill (c) $\dfrac{cd}{a}$ \hfill (d) $\dfrac{c}{cd}$
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (L) at (0,0);
+  \coordinate (R) at (6,0);
+  \coordinate (T) at (2.8,4.2);
+  \coordinate (A) at (2.8,0);
+
+  \draw[geoLine] (L)--(T)--(R)--cycle;
+  \draw[geoDash] (T)--(A);
+  \draw[geoDash] (A)--(2.8,0.7);
+
+  % right angle at A
+  \draw[geoLine] (A) ++(0.25,0) -- ++(0,0.25) -- ++(-0.25,0);
+
+  \node[geoLabel] at ($(A)+(0,-0.35)$) {$A$};
+
+  \node[geoSmall, text=muted] at ($(T)!0.45!(L)$) {$a$};
+  \node[geoSmall, text=muted] at ($(T)!0.45!(R)$) {$b$};
+  \node[geoSmall, text=muted] at ($(L)!0.5!(A)$) {$c$};
+  \node[geoSmall, text=muted] at ($(A)!0.5!(R)$) {$d$};
+
+  \node[geoSmall, text=muted] at ($(T)!0.35!(A)$)+(-0.35,0.2) {$x$};
+  \node[geoSmall, text=muted] at ($(T)!0.35!(A)$)+(0.35,0.2) {$y$};
+
+  \fill[geoPoint] (L) circle (0.8pt);
+  \fill[geoPoint] (R) circle (0.8pt);
+  \fill[geoPoint] (T) circle (0.8pt);
+  \fill[geoPoint] (A) circle (0.8pt);
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $\dfrac{ad}{c}$}
+\[
+\begin{aligned}
+\Step{1}\;& x=y \Rightarrow TA \text{ is an angle bisector at the top vertex.}\\
+\Step{2}\;& \text{Angle bisector theorem: }\frac{c}{d}=\frac{a}{b}.\\
+\Step{3}\;& \Rightarrow b=\frac{ad}{c}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x) --- MCQ}
+\textcolor{gold}{\bfseries Question:} In the figure, $\triangle ABC$ is equilateral and $DE\parallel BC$, then $\triangle ADE$ is:
+\begin{itemize}
+\item[(a)] right angled \hfill (b) scalene \hfill (c) isosceles \hfill (d) equilateral
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6,0);
+  \coordinate (A) at (3,4.2);
+  \coordinate (D) at ($(A)!0.55!(B)$);
+  \coordinate (E) at ($(A)!0.55!(C)$);
+
+  \draw[geoLine] (B)--(A)--(C)--cycle;
+  \draw[geoBold] (D)--(E);
+
+  \node[geoLabel] at ($(A)+(0,0.35)$) {$A$};
+  \node[geoLabel] at ($(B)+(-0.25,-0.35)$) {$B$};
+  \node[geoLabel] at ($(C)+(0.25,-0.35)$) {$C$};
+  \node[geoLabel] at ($(D)+(-0.25,0.1)$) {$D$};
+  \node[geoLabel] at ($(E)+(0.25,0.1)$) {$E$};
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) equilateral}
+\[
+\begin{aligned}
+\Step{1}\;& DE\parallel BC \Rightarrow \triangle ADE \sim \triangle ABC.\\
+\Step{2}\;& \triangle ABC \text{ is equilateral} \Rightarrow \angle A=\angle B=\angle C=60^\circ.\\
+\Step{3}\;& \text{So } \triangle ADE \text{ also has all angles } 60^\circ \Rightarrow \text{equilateral.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} In the figure, $GH\parallel EF$. Then $a:b=?$
+\begin{itemize}
+\item[(a)] $DG:DE$ \hfill (b) $DG:DH$ \hfill (c) $DG:GE$ \hfill (d) $DE:EF$
+\end{itemize}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \coordinate (E) at (0,0);
+  \coordinate (F) at (6,0);
+  \coordinate (D) at (3,4.3);
+  \coordinate (G) at ($(D)!0.55!(E)$);
+  \coordinate (H) at ($(D)!0.55!(F)$);
+
+  \draw[geoLine] (E)--(D)--(F)--cycle;
+  \draw[geoBold] (G)--(H);
+
+  \node[geoLabel] at ($(D)+(0,0.35)$) {$D$};
+  \node[geoLabel] at ($(E)+(-0.25,-0.35)$) {$E$};
+  \node[geoLabel] at ($(F)+(0.25,-0.35)$) {$F$};
+  \node[geoLabel] at ($(G)+(-0.25,0.1)$) {$G$};
+  \node[geoLabel] at ($(H)+(0.25,0.1)$) {$H$};
+
+  \node[geoSmall, text=muted] at ($(G)!0.5!(H)$)+(0,0.25) {$a$};
+  \node[geoSmall, text=muted] at ($(E)!0.5!(F)$)+(0,-0.35) {$b$};
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $DG:DE$}
+\[
+\begin{aligned}
+\Step{1}\;& GH\parallel EF \Rightarrow \triangle DGH \sim \triangle DEF.\\
+\Step{2}\;& \frac{a}{b}=\frac{GH}{EF}=\frac{DG}{DE}=\frac{DH}{DF}.\\
+\Step{3}\;& \Rightarrow a:b = DG:DE.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} What is the sum of all the exterior angles of a 13-sided polygon whose one interior angle is equal to $x^\circ$?
+\begin{itemize}
+\item[(a)] $90^\circ+x$ \hfill (b) $360^\circ$ \hfill (c) $360^\circ+x$ \hfill (d) $180^\circ+x$
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $360^\circ$}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Sum of exterior angles of \emph{any} polygon (one at each vertex) is }360^\circ.\\
+\Step{2}\;& \text{It does not depend on }n\text{ or on }x.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which polygon has both its interior and exterior angles the same?
+\begin{itemize}
+\item[(a)] pentagon \hfill (b) triangle \hfill (c) square \hfill (d) hexagon
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) square}
+\[
+\begin{aligned}
+\Step{1}\;& \text{For a regular }n\text{-gon: exterior }=\frac{360^\circ}{n},\ \text{interior}=180^\circ-\frac{360^\circ}{n}.\\
+\Step{2}\;& \text{Set them equal: } 180^\circ-\frac{360^\circ}{n}=\frac{360^\circ}{n}.\\
+\Step{3}\;& 180^\circ=\frac{720^\circ}{n}\Rightarrow n=4 \Rightarrow \text{square.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} The formation or expression of an opinion or theory without sufficient evidence for proof is known as:
+\begin{itemize}
+\item[(a)] axiom \hfill (b) conjecture \hfill (c) corollary \hfill (d) theorem
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) conjecture}
+\[
+\begin{aligned}
+\Step{1}\;& \text{A conjecture is a statement believed to be true but not yet proved.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} A mathematical statement that is proved true based on already accepted statements is called:
+\begin{itemize}
+\item[(a)] axiom \hfill (b) conjecture \hfill (c) postulate \hfill (d) theorem
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) theorem}
+\[
+\begin{aligned}
+\Step{1}\;& \text{A theorem is proved using axioms/postulates and earlier results.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} A mathematical statement that is assumed to be true without proof is called:
+\begin{itemize}
+\item[(a)] axiom \hfill (b) conjecture \hfill (c) postulate \hfill (d) theorem
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) postulate}
+\[
+\begin{aligned}
+\Step{1}\;& \text{A postulate (axiom) is accepted as true without proof.}\\
+\Step{2}\;& \text{Here the intended option is \textbf{postulate}.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Two solids with equal ratios of corresponding linear measures:
+\begin{itemize}
+\item[(a)] are similar \hfill (b) are congruent \hfill (c) have different area \hfill (d) have same volume
+\end{itemize}
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) are similar}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Equal ratios of corresponding linear measures is the definition of similar solids.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} Find the exterior angle of a polygon with 6 sides.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{For a regular }n\text{-gon, each exterior angle}=\frac{360^\circ}{n}.\\
+\Step{2}\;& n=6 \Rightarrow \frac{360^\circ}{6}=60^\circ.
+\end{aligned}
+\]
+\[
+\boxed{60^\circ}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} Is it possible to have a polygon in which sum of interior angles is 9 right angles?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+9\text{ right angles}=9\times 90^\circ=810^\circ.
+\]
+\[
+\begin{aligned}
+\Step{1}\;& (n-2)\cdot 180^\circ = 810^\circ\\
+\Step{2}\;& n-2 = \frac{810}{180}=4.5 \Rightarrow n=6.5
+\end{aligned}
+\]
+Since $n$ must be a whole number, \textbf{it is not possible.}
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Is it possible to have a polygon whose sum of interior angles is $7200^\circ$?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (n-2)\cdot 180^\circ = 7200^\circ\\
+\Step{2}\;& n-2 = \frac{7200}{180}=40 \Rightarrow n=42
+\end{aligned}
+\]
+\[
+\boxed{\text{Yes. It is a }42\text{-sided polygon (42-gon).}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Find the measure of each angle of a regular nonagon.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} A nonagon has $n=9$ sides.
+\[
+\begin{aligned}
+\Step{1}\;& \text{Each interior angle}=\frac{(n-2)180^\circ}{n}=\frac{(9-2)180^\circ}{9}\\
+\Step{2}\;& =\frac{7\cdot 180^\circ}{9}=\frac{1260^\circ}{9}=140^\circ
+\end{aligned}
+\]
+\[
+\boxed{140^\circ}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} In the figure $XY$ is a concave mirror, $OA$ is object and $IB$ is its image.\\
+(i) Show that $\triangle OAP \sim \triangle IBP$.\\
+(ii) Find height of object if $IB=2$ cm, $OP=10$ cm, $IP=4$ cm.\\
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  % axis
+  \draw[geoLine] (0,0) -- (9,0);
+  \node[geoSmall, text=muted] at (8.7,-0.35) {principal axis};
+
+  % mirror arc at right, pole P
+  \draw[geoBold] (8.4,-2.0) arc (-70:70:2.2);
+  \coordinate (P) at (8.4,0);
+  \fill[geoPoint] (P) circle (1.1pt);
+  \node[geoLabel] at ($(P)+(0.25,-0.35)$) {$P$};
+
+  % object OA
+  \coordinate (O) at (1.3,0);
+  \coordinate (A) at (1.3,2.2);
+  \draw[geoBold] (O)--(A);
+  \fill[geoPoint] (O) circle (0.9pt);
+  \fill[geoPoint] (A) circle (0.9pt);
+  \node[geoLabel] at ($(O)+(0,-0.35)$) {$O$};
+  \node[geoLabel] at ($(A)+(0,0.35)$) {$A$};
+
+  % image IB (inverted)
+  \coordinate (I) at (6.2,0);
+  \coordinate (B) at (6.2,-1.5);
+  \draw[geoBold] (I)--(B);
+  \fill[geoPoint] (I) circle (0.9pt);
+  \fill[geoPoint] (B) circle (0.9pt);
+  \node[geoLabel] at ($(I)+(0,-0.35)$) {$I$};
+  \node[geoLabel] at ($(B)+(0,-0.35)$) {$B$};
+
+  % rays to P (schematic)
+  \draw[geoLine] (A) -- (P);
+  \draw[geoLine] (B) -- (P);
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{\bfseries (i) Similarity:}
+\[
+\begin{aligned}
+\Step{1}\;& \angle OAP = 90^\circ \ \text{and}\ \angle IBP = 90^\circ.\\
+\Step{2}\;& \angle OPA = \angle IPB \quad (\text{angles with principal axis are equal by reflection}).\\
+\Step{3}\;& \Rightarrow \triangle OAP \sim \triangle IBP \quad (\text{AA similarity}).
+\end{aligned}
+\]
+
+\textcolor{muted}{\bfseries (ii) Height of object:}
+\[
+\begin{aligned}
+\Step{1}\;& \triangle OAP \sim \triangle IBP \Rightarrow \frac{OA}{IB}=\frac{OP}{IP}.\\
+\Step{2}\;& OA = IB\cdot \frac{OP}{IP}=2\cdot \frac{10}{4}=5.
+\end{aligned}
+\]
+\[
+\boxed{OA=5\text{ cm}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} In the figure, $AB=6$ cm, $BD=9$ cm. Find the diameter of smaller circle, if diameter of bigger circle is $80$ cm.\\
+
+\begin{center}
+\begin{tikzpicture}[scale=0.9]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (3,0);
+  \coordinate (D) at (7.5,0);
+
+  \def\r{1.2}
+  \def\R{2.4}
+
+  \coordinate (C) at ($(B)+(0,\r)$);
+  \coordinate (E) at ($(D)+(0,\R)$);
+
+  \draw[geoLine] (C) circle (\r);
+  \draw[geoLine] (E) circle (\R);
+
+  \draw[geoLine] (A)--(10,0);
+  \draw[geoLine] (A)--(E);
+
+  \draw[geoDash] (C)--(B);
+  \draw[geoDash] (E)--(D);
+
+  \fill[geoPoint] (A) circle (0.9pt);
+  \fill[geoPoint] (B) circle (0.9pt);
+  \fill[geoPoint] (D) circle (0.9pt);
+  \fill[geoPoint] (C) circle (0.9pt);
+  \fill[geoPoint] (E) circle (0.9pt);
+
+  \node[geoLabel] at ($(A)+(-0.15,-0.35)$) {$A$};
+  \node[geoLabel] at ($(B)+(0,-0.35)$) {$B$};
+  \node[geoLabel] at ($(D)+(0,-0.35)$) {$D$};
+  \node[geoLabel] at ($(C)+(0,0.3)$) {$C$};
+  \node[geoLabel] at ($(E)+(0,0.3)$) {$E$};
+
+  \node[geoSmall, text=muted] at ($(A)!0.5!(B)$)+(0,-0.55) {$AB=6$};
+  \node[geoSmall, text=muted] at ($(B)!0.5!(D)$)+(0,-0.55) {$BD=9$};
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Let the radius of smaller circle be $r$ and radius of bigger circle be $R$.
+Given diameter of bigger circle $=80$ cm $\Rightarrow R=40$ cm.
+
+\[
+\begin{aligned}
+\Step{1}\;& AB=6,\ BD=9 \Rightarrow AD=AB+BD=15.\\
+\Step{2}\;& \triangle ABC \sim \triangle ADE \quad (\text{both right-angled and share }\angle A).\\
+\Step{3}\;& \frac{BC}{DE}=\frac{AB}{AD}\Rightarrow \frac{r}{R}=\frac{6}{15}=\frac{2}{5}.\\
+\Step{4}\;& r=\frac{2}{5}R=\frac{2}{5}\cdot 40=16\text{ cm}.
+\end{aligned}
+\]
+Diameter of smaller circle $=2r=32$ cm.
+\[
+\boxed{32\text{ cm}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Prove that if vertex angles of two isosceles triangles are equal, then the two triangles are similar.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Let $\triangle ABC$ and $\triangle PQR$ be isosceles triangles with vertex angles
+\[
+\angle A=\angle P.
+\]
+Since the triangles are isosceles:
+\[
+\angle B=\angle C \quad\text{and}\quad \angle Q=\angle R.
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \angle A+\angle B+\angle C = 180^\circ \Rightarrow \angle B=\angle C=\frac{180^\circ-\angle A}{2}.\\
+\Step{2}\;& \angle P+\angle Q+\angle R = 180^\circ \Rightarrow \angle Q=\angle R=\frac{180^\circ-\angle P}{2}.\\
+\Step{3}\;& \angle A=\angle P \Rightarrow \angle B=\angle Q \text{ and } \angle C=\angle R.\\
+\Step{4}\;& \Rightarrow \triangle ABC \sim \triangle PQR \quad (\text{AA similarity}).
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Find the length of $\overline{BC}$ and $\overline{DE}$ in the figure.\\
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (4,0);
+  \coordinate (D) at (6,0);
+
+  \coordinate (C) at (4,2.0);
+  \coordinate (E) at (6,3.5);
+
+  \draw[geoLine] (A)--(D);
+  \draw[geoLine] (B)--(C);
+  \draw[geoLine] (D)--(E);
+  \draw[geoBold] (A)--(E);
+
+  % right angles at B and D
+  \draw[geoLine] (B) ++(0.25,0) -- ++(0,0.25) -- ++(-0.25,0);
+  \draw[geoLine] (D) ++(0.25,0) -- ++(0,0.25) -- ++(-0.25,0);
+
+  \fill[geoPoint] (A) circle (0.9pt);
+  \fill[geoPoint] (B) circle (0.9pt);
+  \fill[geoPoint] (D) circle (0.9pt);
+  \fill[geoPoint] (C) circle (0.9pt);
+  \fill[geoPoint] (E) circle (0.9pt);
+
+  \node[geoLabel] at ($(A)+(-0.2,-0.35)$) {$A$};
+  \node[geoLabel] at ($(B)+(0,-0.35)$) {$B$};
+  \node[geoLabel] at ($(D)+(0,-0.35)$) {$D$};
+  \node[geoLabel] at ($(C)+(0,0.35)$) {$C$};
+  \node[geoLabel] at ($(E)+(0,0.35)$) {$E$};
+
+  \node[geoSmall, text=muted] at ($(A)!0.5!(B)$)+(0,-0.55) {$8\text{ cm}$};
+  \node[geoSmall, text=muted] at ($(B)!0.5!(D)$)+(0,-0.55) {$4\text{ cm}$};
+
+  \node[geoSmall, text=muted] at ($(B)!0.5!(C)$)+(0.55,0) {$x+2$};
+  \node[geoSmall, text=muted] at ($(D)!0.5!(E)$)+(0.55,0) {$2x$};
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+AB=8,\quad BD=4 \Rightarrow AD=12.
+\]
+Triangles $\triangle ABC$ and $\triangle ADE$ are similar (both right-angled and share $\angle A$).
+\[
+\begin{aligned}
+\Step{1}\;& \frac{BC}{DE}=\frac{AB}{AD}\\
+\Step{2}\;& \frac{x+2}{2x}=\frac{8}{12}=\frac{2}{3}\\
+\Step{3}\;& 3(x+2)=4x \Rightarrow x=6
+\end{aligned}
+\]
+So
+\[
+BC=x+2=8\text{ cm},\qquad DE=2x=12\text{ cm}.
+\]
+\[
+\boxed{BC=8\text{ cm},\ \ DE=12\text{ cm}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Triangles $SQT$ and $PQR$ are similar. Find the ratio of area of triangle $SQT$ to that of triangle $PQR$.\\
+
+\begin{center}
+\begin{tikzpicture}[scale=0.95]
+  \coordinate (Q) at (0,0);
+  \coordinate (R) at (6,0);
+  \coordinate (P) at (5,5);
+
+  \coordinate (T) at (2,0);
+  \coordinate (S) at ($(Q)!0.333!(P)$);
+
+  \draw[geoLine] (Q)--(P)--(R)--cycle;
+  \draw[geoBold] (S)--(T);
+
+  \fill[geoPoint] (Q) circle (0.9pt);
+  \fill[geoPoint] (R) circle (0.9pt);
+  \fill[geoPoint] (P) circle (0.9pt);
+  \fill[geoPoint] (T) circle (0.9pt);
+  \fill[geoPoint] (S) circle (0.9pt);
+
+  \node[geoLabel] at ($(Q)+(-0.2,-0.35)$) {$Q$};
+  \node[geoLabel] at ($(R)+(0.2,-0.35)$) {$R$};
+  \node[geoLabel] at ($(P)+(0.2,0.2)$) {$P$};
+  \node[geoLabel] at ($(T)+(0,-0.35)$) {$T$};
+  \node[geoLabel] at ($(S)+(-0.3,0.1)$) {$S$};
+
+  \node[geoSmall, text=muted] at ($(Q)!0.5!(T)$)+(0,-0.55) {$2\text{ cm}$};
+  \node[geoSmall, text=muted] at ($(T)!0.5!(R)$)+(0,-0.55) {$4\text{ cm}$};
+  \node[geoSmall, text=muted] at ($(Q)!0.5!(S)$)+(-0.4,0.1) {$3\text{ cm}$};
+  \node[geoSmall, text=muted] at ($(S)!0.5!(P)$)+(-0.4,0.1) {$6\text{ cm}$};
+\end{tikzpicture}
+\end{center}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+QT=2,\ TR=4 \Rightarrow QR=6.
+\]
+\[
+QS=3,\ SP=6 \Rightarrow QP=9.
+\]
+Similarity ratio (small to big):
+\[
+\begin{aligned}
+\Step{1}\;& \frac{QT}{QR}=\frac{2}{6}=\frac{1}{3}\quad \text{(also } \frac{QS}{QP}=\frac{3}{9}=\frac{1}{3}\text{).}\\
+\Step{2}\;& \text{Area ratio}=\left(\frac{1}{3}\right)^2=\frac{1}{9}.
+\end{aligned}
+\]
+\[
+\boxed{\text{Area}(SQT):\text{Area}(PQR)=1:9}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q11
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} The following pyramids are similar and larger pyramid has a surface area of $392\ \text{cm}^2$. What is the surface area of smaller pyramid? (Corresponding lengths: $14$ cm and $10$ cm.)\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+Linear scale factor (small to large):
+\[
+k=\frac{10}{14}=\frac{5}{7}.
+\]
+Surface area scales as $k^2$:
+\[
+\begin{aligned}
+\Step{1}\;& SA_{\text{small}}=SA_{\text{large}}\cdot k^2\\
+\Step{2}\;& =392\cdot \left(\frac{5}{7}\right)^2
+=392\cdot \frac{25}{49}
+\end{aligned}
+\]
+Since $392/49=8$,
+\[
+SA_{\text{small}}=8\cdot 25=200.
+\]
+\[
+\boxed{200\ \text{cm}^2}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q12
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} The two cylinders are similar. What is the volume of the larger cylinder if the volume of the smaller cylinder is $40\ \text{ft}^3$? (Given $R=3r$ and $r=3$ ft.)\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\[
+R=3r \Rightarrow k=\frac{R}{r}=3.
+\]
+For similar solids, volume scales as $k^3$:
+\[
+\begin{aligned}
+\Step{1}\;& V_{\text{large}}=V_{\text{small}}\cdot k^3\\
+\Step{2}\;& =40\cdot 3^3=40\cdot 27=1080
+\end{aligned}
+\]
+\[
+\boxed{1080\ \text{ft}^3}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} The following pairs of solids are similar. Find the surface area of red solid.\\
+(i) Blue: length $4$ m, surface area $336\ \text{m}^2$; Red: length $6$ m.\\
+(ii) Blue: $20$ in, surface area $1800\ \text{in}^2$; Red: $15$ in.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{\bfseries (i)}\;
+Linear factor (red to blue):
+\[
+k=\frac{6}{4}=\frac{3}{2}.
+\]
+Surface area scales as $k^2$:
+\[
+SA_{\text{red}}=336\left(\frac{3}{2}\right)^2
+=336\cdot \frac{9}{4}
+=84\cdot 9
+=756.
+\]
+\[
+\boxed{SA_{\text{red}}=756\ \text{m}^2}
+\]
+
+\textcolor{muted}{\bfseries (ii)}\;
+Linear factor (red to blue):
+\[
+k=\frac{15}{20}=\frac{3}{4}.
+\]
+\[
+SA_{\text{red}}=1800\left(\frac{3}{4}\right)^2
+=1800\cdot \frac{9}{16}
+=\frac{16200}{16}
+=1012.5.
+\]
+\[
+\boxed{SA_{\text{red}}=1012.5\ \text{in}^2 \; \left(=\frac{2025}{2}\ \text{in}^2\right)}
+\]
+\end{QAPair}
+
+\end{document}

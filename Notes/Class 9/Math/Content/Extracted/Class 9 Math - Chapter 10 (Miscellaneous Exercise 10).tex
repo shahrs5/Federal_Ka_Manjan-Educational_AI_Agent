@@ -1,0 +1,1010 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes,intersections}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- TikZ Styles --------------------
+\tikzset{
+  geom/.style={draw=muted, line width=0.95pt},
+  strong/.style={draw=cyan, line width=1.05pt},
+  helper/.style={draw=muted, dashed, line width=0.75pt},
+  arcH/.style={draw=muted, dashed, line width=0.75pt},
+  pt/.style={circle, fill=cyan, inner sep=1.2pt},
+  lab/.style={text=text, font=\small},
+  ang/.style={draw=cyan, line width=0.9pt},
+  note/.style={text=muted, font=\small}
+}
+
+% -------------------- Step + Diagram Macro --------------------
+% Usage:
+% \StepFig{1}{<text>}{<tikzpicture contents ONLY>}
+\newcommand{\StepFig}[3]{%
+  \Step{#1} #2\par\medskip
+  \begin{center}
+    \begin{tikzpicture}[scale=0.92]
+      #3
+    \end{tikzpicture}
+  \end{center}
+  \vspace{-2pt}
+}
+
+% tiny right-angle mark macro
+\newcommand{\RightAngleMark}[2]{%
+  % #1 = corner point, #2 = size
+  \draw[ang] ($(#1)+(#2,0)$) -- ($(#1)+(#2,#2)$) -- ($(#1)+(0,#2)$);
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 10 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick facts (very useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Angle bisector:} divides an angle into two equal parts.
+\item \textbf{Perpendicular (right) bisector of a segment:} passes through the \textbf{midpoint} and is \textbf{perpendicular} to the segment.
+\item \textbf{Medians of a triangle are concurrent} at the \textbf{centroid} $G$.
+\item \textbf{Centroid ratio:} each median is divided as \; $VG:GM = 2:1$ \; (equivalently $GM:GV=1:2$).
+\item \textbf{Right triangle:} perpendicular bisectors meet at the \textbf{midpoint of the hypotenuse}.
+\item \textbf{Equilateral triangle:} incenter = circumcenter = orthocenter = centroid (all coincide).
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 (MCQs)
+\begin{QAPair}{Question 1 (i) --- MCQ}
+\textcolor{gold}{\bfseries Question:} A line which bisects an angle into two equal parts is\par
+(a) right bisector \quad (b) angle bisector \quad (c) altitude \quad (d) median
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) angle bisector}\par
+
+\StepFig{1}{An \emph{angle bisector} divides an angle into two equal angles.}{%
+  \coordinate (O) at (0,0);
+  \coordinate (A) at (2.8,0.3);
+  \coordinate (B) at (1.1,2.4);
+  \coordinate (C) at (2.0,1.3); % bisector direction (illustrative)
+
+  \draw[geom] (O)--(A);
+  \draw[geom] (O)--(B);
+  \draw[strong] (O)--(C);
+
+  \fill[pt] (O) circle(1.2pt) node[lab, below left] {$O$};
+
+  \pic[ang, angle radius=0.65cm, "$\alpha$"] {angle = A--O--C};
+  \pic[ang, angle radius=0.95cm, "$\alpha$"] {angle = C--O--B};
+
+  \node[note] at (1.8,-0.65) {Bisector makes equal angles};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Which of the following is divided by a point called midpoint?\par
+(a) an angle \quad (b) a line \quad (c) a line segment \quad (d) a ray
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) a line segment}\par
+
+\StepFig{1}{A \emph{midpoint} divides a \emph{line segment} into two equal parts.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.0,0);
+  \coordinate (M) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B);
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (M) circle(1.2pt) node[lab, above] {$M$};
+
+  % tick marks (AM = MB)
+  \draw[helper] ($(A)!0.25!(M)$) ++(0,0.15) -- ++(0,-0.30);
+  \draw[helper] ($(M)!0.75!(B)$) ++(0,0.15) -- ++(0,-0.30);
+
+  \node[note] at (2.5,-0.65) {$AM = MB$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} A line passing through midpoint and perpendicular to a side of a triangle is called\par
+(a) right bisector \quad (b) angle bisector \quad (c) mid point \quad (d) altitude
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) right (perpendicular) bisector}\par
+
+\StepFig{1}{Through midpoint + perpendicular to the segment $\Rightarrow$ \emph{perpendicular (right) bisector}.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.0,0);
+  \coordinate (M) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B);
+  \draw[strong] (M) -- ++(0,2.2);
+  \draw[strong] (M) -- ++(0,-1.2);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (M) circle(1.2pt) node[lab, above right] {$M$};
+
+  \RightAngleMark{M}{0.20}
+  \node[note] at (2.5,-0.70) {Perpendicular at midpoint};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Two sides making arms of a right angle in right triangle are its\par
+(a) altitudes \quad (b) medians \quad (c) vertices \quad (d) bisectors
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) altitudes}\par
+
+\StepFig{1}{In a right triangle, the two perpendicular sides act as altitudes to each other.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (A) at (0,2.8);
+  \coordinate (C) at (4.4,0);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \RightAngleMark{B}{0.22}
+
+  \fill[pt] (A) circle(1.2pt) node[lab, left] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below left] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+
+  \node[note] at (2.2,-0.70) {$AB \perp BC$ so $AB$ and $BC$ are altitudes};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Right (perpendicular) bisectors of a right triangle meet at midpoint of\par
+(a) medians \quad (b) altitude \quad (c) side \quad (d) hypotenuse
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) hypotenuse}\par
+
+\StepFig{1}{In a right triangle, circumcenter is the midpoint of the hypotenuse.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (A) at (0,3.0);
+  \coordinate (C) at (4.8,0);
+  \coordinate (M) at ($(A)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \RightAngleMark{B}{0.22}
+
+  \draw[strong] (M) circle[radius=2.55];
+
+  \fill[pt] (A) circle(1.2pt) node[lab, left] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below left] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+  \fill[pt] (M) circle(1.2pt) node[lab, above right] {$M$};
+
+  \node[note] at (2.2,-0.75) {$M$ (midpoint of hypotenuse) is circumcenter};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Medians of a triangle are\par
+(a) collinear \quad (b) concurrent \quad (c) perpendicular \quad (d) parallel
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) concurrent}\par
+
+\StepFig{1}{All three medians meet at one point (the centroid).}{%
+  \coordinate (A) at (1.0,3.0);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (5.6,0);
+
+  \coordinate (M) at ($(B)!0.5!(C)$);
+  \coordinate (N) at ($(A)!0.5!(C)$);
+  \coordinate (P) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (A)--(M);
+  \draw[strong] (B)--(N);
+  \draw[strong] (C)--(P);
+
+  \coordinate (G) at (intersection of A--M and B--N);
+  \fill[pt] (G) circle(1.4pt) node[lab, right] {$G$};
+
+  \fill[pt] (A) circle(1.2pt) node[lab, left] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below left] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+
+  \node[note] at (2.8,-0.75) {Medians intersect at $G$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} In an equilateral triangle angle bisectors, medians, altitudes and right bisectors\par
+(a) are parallel \quad (b) are perpendicular \quad (c) coincide \quad (d) are collinear
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) coincide}\par
+
+\StepFig{1}{In an equilateral triangle, these lines are the same line from each vertex.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.0,0);
+  \coordinate (C) at (2.5,4.33);
+  \coordinate (M) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (C)--(M);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+  \fill[pt] (M) circle(1.2pt) node[lab, below] {$M$};
+
+  \node[note] at (2.5,-0.75) {Median = altitude = bisector = perp.\ bisector};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Right bisectors of equiangular triangle are its\par
+(a) angle bisectors \quad (b) altitudes \quad (c) medians \quad (d) All a, b, c
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) All a, b, c}\par
+
+\StepFig{1}{Equiangular $\Rightarrow$ equilateral, so all coincide.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.0,0);
+  \coordinate (C) at (2.5,4.33);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+
+  \coordinate (Mab) at ($(A)!0.5!(B)$);
+  \coordinate (G) at (2.5,1.44);
+
+  \draw[strong] (C)--(Mab);
+
+  \fill[pt] (G) circle(1.4pt) node[lab, right] {$G$};
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \node[note] at (2.5,-0.75) {All special lines meet at one point};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If three lines meet at a point, they are called\par
+(a) intersecting \quad (b) perpendicular \quad (c) collinear \quad (d) concurrent
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) concurrent}\par
+
+\StepFig{1}{Three (or more) lines passing through one common point are \emph{concurrent}.}{%
+  \coordinate (O) at (0,0);
+  \draw[strong] (O) -- ++(2.6,0.4);
+  \draw[strong] (O) -- ++(-2.2,1.0);
+  \draw[strong] (O) -- ++(0.2,-2.3);
+
+  \fill[pt] (O) circle(1.4pt) node[lab, right] {$O$};
+  \node[note] at (0,-2.7) {All lines pass through $O$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Medians of a triangle intersect each other in the ratio\par
+(a) $1:2$ \quad (b) $1:3$ \quad (c) $3:1$ \quad (d) $2:3$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $1:2$}\par
+
+\StepFig{1}{Centroid divides each median in ratio $2:1$ (vertex $\to$ centroid : centroid $\to$ midpoint).}{%
+  \coordinate (A) at (1.0,3.2);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (5.8,0);
+  \coordinate (M) at ($(B)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (A)--(M);
+
+  \coordinate (G) at ($(A)!0.666!(M)$);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, left] {$A$};
+  \fill[pt] (M) circle(1.2pt) node[lab, below] {$M$};
+  \fill[pt] (G) circle(1.4pt) node[lab, right] {$G$};
+
+  \node[note] at (2.6,-0.75) {$AG:GM = 2:1$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q2 (Constructions) — Step-by-step diagrams for every step
+\begin{QAPair}{Question 2 (i) --- Construct $\triangle PQR$ when $PQ=6$ cm, $\angle P=30^\circ$, $\angle R=90^\circ$}
+\textcolor{gold}{\bfseries Construction (each step with a diagram):}\par
+
+\StepFig{1}{Draw the base $PQ=6$ cm.}{%
+  \coordinate (P) at (0,0);
+  \coordinate (Q) at (6,0);
+  \draw[geom] (P)--(Q);
+  \fill[pt] (P) circle(1.2pt) node[lab, below] {$P$};
+  \fill[pt] (Q) circle(1.2pt) node[lab, below] {$Q$};
+  \node[note] at (3,-0.75) {$PQ=6$ cm};
+}
+
+\StepFig{2}{Find midpoint $O$ of $PQ$ and draw a circle (or semicircle) with centre $O$ and radius $OP$ (so $PQ$ is a diameter).}{%
+  \coordinate (P) at (0,0);
+  \coordinate (Q) at (6,0);
+  \coordinate (O) at ($(P)!0.5!(Q)$);
+  \draw[geom] (P)--(Q);
+  \fill[pt] (P) circle(1.2pt) node[lab, below] {$P$};
+  \fill[pt] (Q) circle(1.2pt) node[lab, below] {$Q$};
+  \fill[pt] (O) circle(1.2pt) node[lab, below right] {$O$};
+  \draw[helper] (O) circle (3);
+  \draw[geom] (Q) arc (0:180:3);
+  \node[note] at (3,-0.75) {Circle on diameter $PQ$};
+}
+
+\StepFig{3}{At $P$, construct a ray making $30^\circ$ with $PQ$.}{%
+  \coordinate (P) at (0,0);
+  \coordinate (Q) at (6,0);
+  \coordinate (O) at (3,0);
+  \draw[geom] (P)--(Q);
+  \draw[helper] (O) circle (3);
+  \draw[geom] (Q) arc (0:180:3);
+
+  % 30-degree ray
+  \coordinate (Rray) at ($(P)+(30:6.6)$);
+  \draw[strong] (P)--(Rray);
+
+  \fill[pt] (P) circle(1.2pt) node[lab, below] {$P$};
+  \fill[pt] (Q) circle(1.2pt) node[lab, below] {$Q$};
+
+  \pic[ang, angle radius=0.7cm, "$30^\circ$"] {angle = Q--P--Rray};
+  \node[note] at (3,-0.75) {Draw $30^\circ$ ray from $P$};
+}
+
+\StepFig{4}{Let the $30^\circ$ ray cut the semicircle at $R$. Mark $R$.}{%
+  \coordinate (P) at (0,0);
+  \coordinate (Q) at (6,0);
+  \coordinate (O) at (3,0);
+
+  \draw[geom] (P)--(Q);
+  \draw[helper] (O) circle (3);
+  \draw[geom] (Q) arc (0:180:3);
+
+  \coordinate (Rray) at ($(P)+(30:6.6)$);
+  \draw[strong] (P)--(Rray);
+
+  % intersection point (chosen on circle & ray; illustrative)
+  \coordinate (R) at (4.5,2.598); % on circle center (3,0) radius 3 and on ray approx
+  \fill[pt] (R) circle(1.2pt) node[lab, above] {$R$};
+
+  \fill[pt] (P) circle(1.2pt) node[lab, below] {$P$};
+  \fill[pt] (Q) circle(1.2pt) node[lab, below] {$Q$};
+
+  \pic[ang, angle radius=0.7cm, "$30^\circ$"] {angle = Q--P--R};
+  \node[note] at (3,-0.75) {$R$ is intersection of ray and semicircle};
+}
+
+\StepFig{5}{Join $RP$ and $RQ$ to get $\triangle PQR$. Then $\angle PRQ=90^\circ$.}{%
+  \coordinate (P) at (0,0);
+  \coordinate (Q) at (6,0);
+  \coordinate (O) at (3,0);
+  \coordinate (R) at (4.5,2.598);
+
+  \draw[geom] (P)--(Q);
+  \draw[helper] (O) circle (3);
+  \draw[geom] (Q) arc (0:180:3);
+
+  \draw[strong] (P)--(R);
+  \draw[strong] (Q)--(R);
+
+  \fill[pt] (P) circle(1.2pt) node[lab, below] {$P$};
+  \fill[pt] (Q) circle(1.2pt) node[lab, below] {$Q$};
+  \fill[pt] (R) circle(1.2pt) node[lab, above] {$R$};
+
+  % right angle at R (illustrative small mark)
+  \draw[ang] ($(R)+(-0.28,0)$) -- ($(R)+(-0.28,-0.28)$) -- ($(R)+(0,-0.28)$);
+
+  \node[note] at (3,-0.75) {Angle in semicircle is $90^\circ$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Conclusion:} The triangle is obtained where the $30^\circ$ ray from $P$ meets the semicircle on diameter $PQ$.
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii) --- Construct $\triangle XYZ$ when $XY=5.6$ cm, $XZ=5.2$ cm, $\angle Y=60^\circ$}
+\textcolor{gold}{\bfseries Construction (each step with a diagram):}\par
+
+\StepFig{1}{Draw $XY=5.6$ cm.}{%
+  \coordinate (X) at (0,0);
+  \coordinate (Y) at (5.6,0);
+  \draw[geom] (X)--(Y);
+  \fill[pt] (X) circle(1.2pt) node[lab, below] {$X$};
+  \fill[pt] (Y) circle(1.2pt) node[lab, below] {$Y$};
+  \node[note] at (2.8,-0.75) {$XY=5.6$ cm};
+}
+
+\StepFig{2}{At $Y$, construct a ray $YZ$ such that $\angle XYZ=60^\circ$.}{%
+  \coordinate (X) at (0,0);
+  \coordinate (Y) at (5.6,0);
+  \draw[geom] (X)--(Y);
+
+  % choose ray such that angle at Y is 60 between YX and YZ
+  \coordinate (Zray) at ($(Y)+(120:4.8)$);
+  \draw[strong] (Y)--(Zray);
+
+  \fill[pt] (X) circle(1.2pt) node[lab, below] {$X$};
+  \fill[pt] (Y) circle(1.2pt) node[lab, below] {$Y$};
+
+  \pic[ang, angle radius=0.75cm, "$60^\circ$"] {angle = X--Y--Zray};
+  \node[note] at (2.8,-0.75) {Ray at $60^\circ$ from $YX$};
+}
+
+\StepFig{3}{With centre $X$ and radius $5.2$ cm, draw an arc to cut the ray at $Z$.}{%
+  \coordinate (X) at (0,0);
+  \coordinate (Y) at (5.6,0);
+  \draw[geom] (X)--(Y);
+
+  \coordinate (Zray) at ($(Y)+(120:5.5)$);
+  \draw[strong] (Y)--(Zray);
+
+  % circle centered at X
+  \draw[helper] (X) circle (5.2);
+
+  \fill[pt] (X) circle(1.2pt) node[lab, below] {$X$};
+  \fill[pt] (Y) circle(1.2pt) node[lab, below] {$Y$};
+
+  \pic[ang, angle radius=0.75cm, "$60^\circ$"] {angle = X--Y--Zray};
+  \node[note] at (2.8,-0.75) {Arc: centre $X$, radius $XZ=5.2$};
+}
+
+\StepFig{4}{Mark the intersection point as $Z$.}{%
+  \coordinate (X) at (0,0);
+  \coordinate (Y) at (5.6,0);
+
+  \draw[geom] (X)--(Y);
+  \coordinate (Zray) at ($(Y)+(120:5.5)$);
+  \draw[strong] (Y)--(Zray);
+
+  \draw[helper] (X) circle (5.2);
+
+  % choose an approximate intersection point on that ray
+  \coordinate (Z) at (2.6,3.0);
+  \fill[pt] (Z) circle(1.2pt) node[lab, above] {$Z$};
+
+  \fill[pt] (X) circle(1.2pt) node[lab, below] {$X$};
+  \fill[pt] (Y) circle(1.2pt) node[lab, below] {$Y$};
+
+  \pic[ang, angle radius=0.75cm, "$60^\circ$"] {angle = X--Y--Z};
+  \node[note] at (2.8,-0.75) {$Z$ is where arc meets the ray};
+}
+
+\StepFig{5}{Join $XZ$ and $YZ$ to complete $\triangle XYZ$.}{%
+  \coordinate (X) at (0,0);
+  \coordinate (Y) at (5.6,0);
+  \coordinate (Z) at (2.6,3.0);
+
+  \draw[geom] (X)--(Y);
+  \draw[strong] (Y)--(Z);
+  \draw[strong] (X)--(Z);
+
+  \fill[pt] (X) circle(1.2pt) node[lab, below] {$X$};
+  \fill[pt] (Y) circle(1.2pt) node[lab, below] {$Y$};
+  \fill[pt] (Z) circle(1.2pt) node[lab, above] {$Z$};
+
+  \pic[ang, angle radius=0.75cm, "$60^\circ$"] {angle = X--Y--Z};
+  \node[note] at (2.8,-0.75) {Triangle formed};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Note:} If the circle cuts the $60^\circ$ ray at two points, both give possible triangles; usually take the point above the base.
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii) --- Construct $\triangle ABC$ when $BC=7$ cm, $AC=4.3$ cm, $\angle B=45^\circ$}
+\textcolor{gold}{\bfseries Construction (each step with a diagram):}\par
+
+\StepFig{1}{Draw $BC=7$ cm.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (7,0);
+  \draw[geom] (B)--(C);
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+  \node[note] at (3.5,-0.75) {$BC=7$ cm};
+}
+
+\StepFig{2}{At $B$, construct a ray $BA$ such that $\angle ABC=45^\circ$.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (7,0);
+  \draw[geom] (B)--(C);
+
+  \coordinate (Aray) at ($(B)+(45:6.0)$);
+  \draw[strong] (B)--(Aray);
+
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+
+  \pic[ang, angle radius=0.75cm, "$45^\circ$"] {angle = C--B--Aray};
+  \node[note] at (3.5,-0.75) {Draw $45^\circ$ ray from $B$};
+}
+
+\StepFig{3}{With centre $C$ and radius $4.3$ cm, draw an arc to cut the ray at $A$.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (7,0);
+  \draw[geom] (B)--(C);
+
+  \coordinate (Aray) at ($(B)+(45:6.2)$);
+  \draw[strong] (B)--(Aray);
+
+  \draw[helper] (C) circle (4.3);
+
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+
+  \pic[ang, angle radius=0.75cm, "$45^\circ$"] {angle = C--B--Aray};
+  \node[note] at (3.5,-0.75) {Arc: centre $C$, radius $AC=4.3$};
+}
+
+\StepFig{4}{Mark the intersection point as $A$.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (7,0);
+  \draw[geom] (B)--(C);
+
+  \coordinate (Aray) at ($(B)+(45:6.2)$);
+  \draw[strong] (B)--(Aray);
+
+  \draw[helper] (C) circle (4.3);
+
+  % approximate intersection location
+  \coordinate (A) at (3.2,3.2);
+  \fill[pt] (A) circle(1.2pt) node[lab, above] {$A$};
+
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+
+  \pic[ang, angle radius=0.75cm, "$45^\circ$"] {angle = C--B--A};
+  \node[note] at (3.5,-0.75) {$A$ is where arc meets the ray};
+}
+
+\StepFig{5}{Join $AB$ and $AC$ to complete $\triangle ABC$.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (7,0);
+  \coordinate (A) at (3.2,3.2);
+
+  \draw[geom] (B)--(C);
+  \draw[strong] (A)--(B);
+  \draw[strong] (A)--(C);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, above] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below] {$C$};
+
+  \pic[ang, angle radius=0.75cm, "$45^\circ$"] {angle = C--B--A};
+  \node[note] at (3.5,-0.75) {Triangle formed};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Result:} $\triangle ABC$ is constructed.
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 --- Construct a right isosceles triangle whose hypotenuse is $6$ cm}
+\textcolor{gold}{\bfseries Construction (each step with a diagram):}\par
+
+\StepFig{1}{Draw $AB=6$ cm (this will be the hypotenuse).}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (6,0);
+  \draw[geom] (A)--(B);
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \node[note] at (3,-0.75) {$AB=6$ cm};
+}
+
+\StepFig{2}{Construct the perpendicular bisector of $AB$ to locate midpoint $O$.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (6,0);
+  \coordinate (O) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B);
+  \draw[helper] (A) circle (3.6);
+  \draw[helper] (B) circle (3.6);
+  \draw[strong] (3,-3.0)--(3,3.0);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (O) circle(1.2pt) node[lab, below right] {$O$};
+
+  \node[note] at (3,-0.75) {Perp.\ bisector passes through midpoint $O$};
+}
+
+\StepFig{3}{With centre $O$ and radius $OA$, draw the circle (diameter $AB$).}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (6,0);
+  \coordinate (O) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B);
+  \draw[strong] (3,-3.0)--(3,3.0);
+  \draw[helper] (O) circle(3);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (O) circle(1.2pt) node[lab, below right] {$O$};
+
+  \node[note] at (3,-0.75) {Circle with diameter $AB$};
+}
+
+\StepFig{4}{Let the circle cut the perpendicular bisector at $C$ (choose the upper point).}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (6,0);
+  \coordinate (O) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B);
+  \draw[strong] (3,-3.0)--(3,3.0);
+  \draw[helper] (O) circle(3);
+
+  \coordinate (C) at (3,3);
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+
+  \node[note] at (3,-0.75) {$C$ chosen on perpendicular bisector};
+}
+
+\StepFig{5}{Join $CA$ and $CB$ to get the right isosceles $\triangle ABC$.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (6,0);
+  \coordinate (C) at (3,3);
+
+  \draw[geom] (A)--(B);
+  \draw[strong] (C)--(A);
+  \draw[strong] (C)--(B);
+
+  % right angle at C (angle in semicircle/circle with diameter AB)
+  \draw[ang] ($(C)+(-0.28,0)$) -- ($(C)+(-0.28,-0.28)$) -- ($(C)+(0,-0.28)$);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \node[note] at (3,-0.75) {$C$ on perp.\ bisector $\Rightarrow AC=BC$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Why it works:} Circle with diameter $AB$ gives $\angle ACB=90^\circ$, and the perpendicular bisector gives $AC=BC$.
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 --- Construct an equilateral $\triangle ABC$. Find incenter, circumcenter, orthocenter, centroid. Do they coincide?}
+\textcolor{gold}{\bfseries Construction + centres (each step with a diagram):}\par
+
+\StepFig{1}{Draw a segment $AB$ of any suitable length.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \draw[geom] (A)--(B);
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \node[note] at (2.8,-0.75) {Base $AB$};
+}
+
+\StepFig{2}{With centre $A$ and radius $AB$, draw an arc (circle).}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \draw[geom] (A)--(B);
+  \draw[helper] (A) circle (5.6);
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \node[note] at (2.8,-0.75) {Arc with centre $A$};
+}
+
+\StepFig{3}{With centre $B$ and radius $AB$, draw another arc cutting the first at $C$.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \draw[geom] (A)--(B);
+  \draw[helper] (A) circle (5.6);
+  \draw[helper] (B) circle (5.6);
+
+  % intersection (equilateral point)
+  \coordinate (C) at (2.8,4.85);
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+
+  \node[note] at (2.8,-0.75) {$C$ is intersection of the two arcs};
+}
+
+\StepFig{4}{Join $AC$ and $BC$ to form the equilateral triangle.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \coordinate (C) at (2.8,4.85);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \node[note] at (2.8,-0.75) {Equilateral $\triangle ABC$};
+}
+
+\StepFig{5}{Draw a median (e.g.\ from $C$ to midpoint $M$ of $AB$). In an equilateral triangle, this same line is also altitude, angle bisector, and perpendicular bisector.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \coordinate (C) at (2.8,4.85);
+  \coordinate (M) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (C)--(M);
+
+  % right angle at M (since CM is perpendicular to AB)
+  \RightAngleMark{M}{0.20}
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+  \fill[pt] (M) circle(1.2pt) node[lab, below] {$M$};
+
+  \node[note] at (2.8,-0.75) {$CM$ is median/altitude/bisector/perp.\ bisector};
+}
+
+\StepFig{6}{The common intersection point of these special lines is the same point: incenter = circumcenter = orthocenter = centroid. Mark it as $G$.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \coordinate (C) at (2.8,4.85);
+
+  \coordinate (Mab) at ($(A)!0.5!(B)$);
+  \coordinate (Mbc) at ($(B)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+
+  % two medians to show concurrency
+  \draw[strong] (C)--(Mab);
+  \draw[strong] (A)--(Mbc);
+
+  \coordinate (G) at (intersection of C--Mab and A--Mbc);
+  \fill[pt] (G) circle(1.6pt) node[lab, right] {$G$};
+
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \node[note] at (2.8,-0.75) {$G$ is all centres (they coincide)};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Yes, they coincide in an equilateral triangle.}
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 --- A student wants the incenter of an equilateral triangle but cannot bisect angles. Can he find it by another method?}
+\textcolor{gold}{\bfseries Explanation (each step with a diagram):}\par
+
+\StepFig{1}{In an equilateral triangle, each angle is $60^\circ$.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \coordinate (C) at (2.8,4.85);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \fill[pt] (A) circle(1.2pt) node[lab, below] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \pic[ang, angle radius=0.55cm, "$60^\circ$"] {angle = B--A--C};
+  \pic[ang, angle radius=0.55cm, "$60^\circ$"] {angle = C--B--A};
+  \node[note] at (2.8,-0.75) {All angles are $60^\circ$};
+}
+
+\StepFig{2}{A median from a vertex splits the triangle into two congruent triangles, so it also bisects the $60^\circ$ angle.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \coordinate (C) at (2.8,4.85);
+  \coordinate (M) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (C)--(M);
+
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+  \fill[pt] (M) circle(1.2pt) node[lab, below] {$M$};
+
+  \pic[ang, angle radius=0.65cm, "$30^\circ$"] {angle = A--C--M};
+  \pic[ang, angle radius=0.95cm, "$30^\circ$"] {angle = M--C--B};
+
+  \node[note] at (2.8,-0.75) {Median is also angle bisector in equilateral};
+}
+
+\StepFig{3}{That same median is perpendicular to the opposite side and passes through its midpoint, so it is also an altitude and a perpendicular bisector.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \coordinate (C) at (2.8,4.85);
+  \coordinate (M) at ($(A)!0.5!(B)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (C)--(M);
+
+  \RightAngleMark{M}{0.20}
+
+  \fill[pt] (M) circle(1.2pt) node[lab, below] {$M$};
+  \fill[pt] (C) circle(1.2pt) node[lab, above] {$C$};
+
+  \node[note] at (2.8,-0.75) {Same line is altitude and perp.\ bisector};
+}
+
+\StepFig{4}{Therefore, the intersection found by \emph{medians} or \emph{perpendicular bisectors} is the same as the incenter.}{%
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5.6,0);
+  \coordinate (C) at (2.8,4.85);
+  \coordinate (Mab) at ($(A)!0.5!(B)$);
+  \coordinate (Mbc) at ($(B)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (C)--(Mab);
+  \draw[strong] (A)--(Mbc);
+
+  \coordinate (G) at (intersection of C--Mab and A--Mbc);
+  \fill[pt] (G) circle(1.6pt) node[lab, right] {$G$};
+
+  \node[note] at (2.8,-0.75) {$G$ is incenter (also centroid/circumcenter/orthocenter)};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Yes.} He can find the incenter by constructing two medians (or two perpendicular bisectors, or two altitudes) and taking their intersection.
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 --- Construct a triangle and find its centre of gravity (Hint: Find centroid)}
+\textcolor{gold}{\bfseries Construction (each step with a diagram):}\par
+
+\StepFig{1}{Draw any triangle $\triangle ABC$.}{%
+  \coordinate (A) at (1.0,4.0);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6.8,0.4);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+
+  \fill[pt] (A) circle(1.2pt) node[lab, above] {$A$};
+  \fill[pt] (B) circle(1.2pt) node[lab, below left] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below right] {$C$};
+
+  \node[note] at (3.4,-0.75) {Any triangle};
+}
+
+\StepFig{2}{Construct midpoint $M$ of $BC$ (use equal arcs from $B$ and $C$), then mark $M$.}{%
+  \coordinate (A) at (1.0,4.0);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6.8,0.4);
+  \coordinate (M) at ($(B)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+
+  % arcs to get midpoint (illustrative)
+  \draw[helper] (B) circle (2.2);
+  \draw[helper] (C) circle (2.2);
+
+  \fill[pt] (M) circle(1.2pt) node[lab, below] {$M$};
+
+  \fill[pt] (B) circle(1.2pt) node[lab, below left] {$B$};
+  \fill[pt] (C) circle(1.2pt) node[lab, below right] {$C$};
+
+  \node[note] at (3.4,-0.75) {$M$ is midpoint of $BC$};
+}
+
+\StepFig{3}{Join $A$ to midpoint $M$ to form median $AM$.}{%
+  \coordinate (A) at (1.0,4.0);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6.8,0.4);
+  \coordinate (M) at ($(B)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (A)--(M);
+
+  \fill[pt] (A) circle(1.2pt) node[lab, above] {$A$};
+  \fill[pt] (M) circle(1.2pt) node[lab, below] {$M$};
+
+  \node[note] at (3.4,-0.75) {Median $AM$};
+}
+
+\StepFig{4}{Construct midpoint $N$ of $AC$ and join $B$ to $N$ to form median $BN$.}{%
+  \coordinate (A) at (1.0,4.0);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6.8,0.4);
+  \coordinate (M) at ($(B)!0.5!(C)$);
+  \coordinate (N) at ($(A)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (A)--(M);
+
+  % arcs to get midpoint N (illustrative)
+  \draw[helper] (A) circle (2.0);
+  \draw[helper] (C) circle (2.0);
+
+  \fill[pt] (N) circle(1.2pt) node[lab, right] {$N$};
+  \draw[strong] (B)--(N);
+
+  \fill[pt] (B) circle(1.2pt) node[lab, below left] {$B$};
+
+  \node[note] at (3.4,-0.75) {Second median $BN$};
+}
+
+\StepFig{5}{Let $AM$ and $BN$ intersect at $G$. This point $G$ is the centroid (centre of gravity).}{%
+  \coordinate (A) at (1.0,4.0);
+  \coordinate (B) at (0,0);
+  \coordinate (C) at (6.8,0.4);
+  \coordinate (M) at ($(B)!0.5!(C)$);
+  \coordinate (N) at ($(A)!0.5!(C)$);
+
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \draw[strong] (A)--(M);
+  \draw[strong] (B)--(N);
+
+  \coordinate (G) at (intersection of A--M and B--N);
+  \fill[pt] (G) circle(1.6pt) node[lab, right] {$G$};
+
+  \node[note] at (3.4,-0.75) {$G$ is centroid $\Rightarrow$ centre of gravity};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} The medians intersect at $G$, which is the centroid (centre of gravity) of the triangle.
+\end{QAPair}
+
+\end{document}

@@ -23,7 +23,7 @@ class DocumentIngestionPipeline:
         self,
         supabase_url: str,
         supabase_key: str,
-        embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2",
+        embedding_model: str = "gemini",
         chunk_size: int = 500,
         chunk_overlap: int = 50,
     ):

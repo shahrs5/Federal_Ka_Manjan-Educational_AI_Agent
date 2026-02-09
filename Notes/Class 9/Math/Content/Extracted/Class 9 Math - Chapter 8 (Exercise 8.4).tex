@@ -1,0 +1,565 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 8.4 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Slope:} $m=\dfrac{y_2-y_1}{x_2-x_1}$.
+\item \textbf{Slope--intercept form:} $y=mx+c$.
+\item \textbf{Point--slope form:} $y-y_1=m(x-x_1)$.
+\item \textbf{Standard form:} $Ax+By=C$.
+\item \textbf{Using a rate:} $\text{Total}=\text{fixed amount} + (\text{rate})\times(\text{quantity})$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1}
+\textcolor{gold}{\bfseries Question:}
+Nasir sold ``fruiters'' @ Rs.\ 120 per dozen and ``Shakri Malta'' @ Rs.\ 150 per dozen and earned Rs.\ 1200.
+Write an equation in standard form that describes the situation.
+If he sold 4 dozen of ``Shakri Malta'', how many dozens of ``fruiters'' did he sell?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = dozens of \emph{fruiters}, $y$ = dozens of \emph{Shakri Malta}.
+\[
+\begin{aligned}
+\Step{1}\;& \text{Total earning} = 120x+150y.\\
+\Step{2}\;& 120x+150y=1200 \quad (\text{standard form } Ax+By=C).\\
+\Step{3}\;& \text{(Optional simplification)}\; \div 30:\; 4x+5y=40.\\[4pt]
+\Step{4}\;& \text{If } y=4:\; 120x+150(4)=1200\\
+&\Rightarrow 120x+600=1200\\
+&\Rightarrow 120x=600\\
+&\Rightarrow x=5.
+\end{aligned}
+\]
+\[
+\boxed{\text{He sold } 5 \text{ dozen fruiters.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:}
+The linear equation $y=1450x+2000$ gives the total hotel cost for one day.
+Find the cost if a group of $7$ people stays for one day.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x=7.\\
+\Step{2}\;& y=1450(7)+2000=10150+2000=12150.
+\end{aligned}
+\]
+\[
+\boxed{y=\text{Rs.\ }12{,}150}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:}
+How many people can stay for Rs.\ 13,600 for one day?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 13600=1450x+2000\\
+\Step{2}\;& 1450x=13600-2000=11600\\
+\Step{3}\;& x=\frac{11600}{1450}=8.
+\end{aligned}
+\]
+\[
+\boxed{8 \text{ people}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:}
+One company provides Rs.\ 5500 per week along with an extra bonus of Rs.\ 700.
+The other offers Rs.\ 800 per day.
+Convert into linear equations and tell which is better for two weeks.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = number of weeks, $y$ = total earning (in Rs.).
+\[
+\begin{aligned}
+\Step{1}\;& \text{Company A: } y_A=5500x+700.\\
+\Step{2}\;& \text{Company B: } 800 \text{ per day }=800(7)=5600 \text{ per week}\\
+&\Rightarrow y_B=5600x.\\[4pt]
+\Step{3}\;& \text{For } x=2:\\
+&y_A=5500(2)+700=11000+700=11700,\\
+&y_B=5600(2)=11200.
+\end{aligned}
+\]
+\[
+\boxed{\text{Company A is better for two weeks (Rs.\ 11,700 vs Rs.\ 11,200).}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:}
+A man earns Rs.\ 120 per hour and has Rs.\ 500 initially.
+Write a linear equation and find how much he will have after 12 hours.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = hours worked, $y$ = total money (Rs.).
+\[
+\begin{aligned}
+\Step{1}\;& y=120x+500.\\
+\Step{2}\;& \text{After } 12 \text{ hours: } y=120(12)+500=1440+500=1940.
+\end{aligned}
+\]
+\[
+\boxed{y=\text{Rs.\ }1{,}940}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} What does slope show in this situation?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+In $y=120x+500$, the slope is $120$.
+\[
+\boxed{\text{Slope }=120 \text{ means he earns Rs.\ 120 per hour (rate of earning).}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} What does $y$-intercept represent here?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+The $y$-intercept is $500$ (value of $y$ when $x=0$).
+\[
+\boxed{\text{$y$-intercept }=500 \text{ means he already has Rs.\ 500 before working.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 (i)}
+\textcolor{gold}{\bfseries Question:}
+Ali shifted on 1st September. Meter reading was 44 units. Average use is 18 units/day.
+Represent the situation through a linear equation.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = number of days after 1st September, $y$ = meter reading (units).
+\[
+\begin{aligned}
+\Step{1}\;& \text{Initial reading }=44 \text{ at } x=0.\\
+\Step{2}\;& \text{Daily increase }=18 \Rightarrow \text{slope}=18.\\
+\Step{3}\;& y=18x+44.
+\end{aligned}
+\]
+\[
+\boxed{y=18x+44}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (ii)}
+\textcolor{gold}{\bfseries Question:} How many units are consumed till 30 September?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+From 1st to 30th September is $30$ days of usage.
+\[
+\begin{aligned}
+\Step{1}\;& \text{Units consumed}=18\times 30=540.
+\end{aligned}
+\]
+\[
+\boxed{540 \text{ units}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iii)}
+\textcolor{gold}{\bfseries Question:} What will be the bill after one month @ Rs.\ 20 per unit?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Monthly consumption}=540 \text{ units}.\\
+\Step{2}\;& \text{Bill}=540\times 20=10800.
+\end{aligned}
+\]
+\[
+\boxed{\text{Bill}=\text{Rs.\ }10{,}800}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iv)}
+\textcolor{gold}{\bfseries Question:} After how many days, the meter shows 404 units?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Using $y=18x+44$,
+\[
+\begin{aligned}
+\Step{1}\;& 404=18x+44\\
+\Step{2}\;& 18x=404-44=360\\
+\Step{3}\;& x=\frac{360}{18}=20.
+\end{aligned}
+\]
+\[
+\boxed{20 \text{ days}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 (i)}
+\textcolor{gold}{\bfseries Question:}
+Alia hired a taxi with fixed charge Rs.\ 1500 plus Rs.\ 450 per 30 minutes.
+Represent the relation as a linear equation.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = time in hours, $y$ = total fare (Rs.).
+\[
+\begin{aligned}
+\Step{1}\;& 450 \text{ per 30 min} = 450 \text{ per } \tfrac{1}{2}\text{ hour}\\
+&\Rightarrow 900 \text{ per hour}.\\
+\Step{2}\;& y=900x+1500.
+\end{aligned}
+\]
+\[
+\boxed{y=900x+1500}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (ii)}
+\textcolor{gold}{\bfseries Question:} What will be the taxi fare after 5 hours?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x=5\\
+\Step{2}\;& y=900(5)+1500=4500+1500=6000.
+\end{aligned}
+\]
+\[
+\boxed{\text{Rs.\ }6{,}000}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iii)}
+\textcolor{gold}{\bfseries Question:} What is the slope of the equation in this case?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+In $y=900x+1500$, the slope is $900$.
+\[
+\boxed{\text{Slope }=900 \text{ means Rs.\ 900 per hour (rate of fare).}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7 (i)}
+\textcolor{gold}{\bfseries Question:}
+Derive the relation between Fahrenheit and Celsius scales in slope-intercept form.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $C$ be Celsius and $F$ be Fahrenheit.
+\[
+\begin{aligned}
+\Step{1}\;& 0^\circ C = 32^\circ F,\quad 100^\circ C = 212^\circ F.\\
+\Step{2}\;& m=\frac{212-32}{100-0}=\frac{180}{100}=\frac{9}{5}.\\
+\Step{3}\;& F = \frac{9}{5}C + 32.
+\end{aligned}
+\]
+\[
+\boxed{F=\frac{9}{5}C+32}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7 (ii)}
+\textcolor{gold}{\bfseries Question:} What do $y$-intercept and slope show in the equation?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+For $F=\frac{9}{5}C+32$:
+\[
+\boxed{\text{Slope }=\frac{9}{5} \text{ means } 1^\circ C \text{ increase gives } 1.8^\circ F \text{ increase.}}
+\]
+\[
+\boxed{\text{$y$-intercept }=32 \text{ means when } C=0^\circ,\; F=32^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7 (iii)}
+\textcolor{gold}{\bfseries Question:} What is Fahrenheit temperature when Celsius is $5^\circ C$?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& F=\frac{9}{5}(5)+32\\
+\Step{2}\;& F=9+32=41.
+\end{aligned}
+\]
+\[
+\boxed{41^\circ F}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8 (i)}
+\textcolor{gold}{\bfseries Question:}
+A cricket team scores 96 runs in 16 overs and 180 runs in 30 overs.
+Write an equation of the line for this situation.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = overs, $y$ = runs. Points: $(16,96)$ and $(30,180)$.
+\[
+\begin{aligned}
+\Step{1}\;& m=\frac{180-96}{30-16}=\frac{84}{14}=6.\\
+\Step{2}\;& y=mx+b \Rightarrow 96=6(16)+b \Rightarrow 96=96+b \Rightarrow b=0.\\
+\Step{3}\;& y=6x.
+\end{aligned}
+\]
+\[
+\boxed{y=6x}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8 (ii)}
+\textcolor{gold}{\bfseries Question:} What does the gradient mean in terms of scores?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\boxed{\text{Gradient }=6 \text{ means the team scores } 6 \text{ runs per over (run rate).}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8 (iii)}
+\textcolor{gold}{\bfseries Question:} What does the $y$-intercept mean in terms of scores?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+In $y=6x$, the $y$-intercept is $0$.
+\[
+\boxed{\text{$y$-intercept }=0 \text{ means at } 0 \text{ overs, predicted score is } 0 \text{ runs.}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8 (iv)}
+\textcolor{gold}{\bfseries Question:} What will be the predicted score after 45 overs?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& y=6x,\; x=45\\
+\Step{2}\;& y=6(45)=270.
+\end{aligned}
+\]
+\[
+\boxed{270 \text{ runs}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8 (v)}
+\textcolor{gold}{\bfseries Question:} After how many overs will the predicted score be 240?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 240=6x\\
+\Step{2}\;& x=\frac{240}{6}=40.
+\end{aligned}
+\]
+\[
+\boxed{40 \text{ overs}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9 (i)}
+\textcolor{gold}{\bfseries Question:}
+A truck company charges Rs.\ 5000 per day plus some money per kilometre.
+Abdullah drove 125 km and paid Rs.\ 30,000.
+Write an equation in point-slope form for this situation.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = kilometres driven, $y$ = total cost (Rs.).
+We know one point is $(125,30000)$ and the fixed cost gives $(0,5000)$.
+\[
+\begin{aligned}
+\Step{1}\;& m=\frac{30000-5000}{125-0}=\frac{25000}{125}=200.\\
+\Step{2}\;& \text{Point-slope form (using }(125,30000)\text{):}\\
+& y-30000=200(x-125).
+\end{aligned}
+\]
+\[
+\boxed{y-30000=200(x-125)}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9 (ii)}
+\textcolor{gold}{\bfseries Question:}
+Find the amount per kilometre the company charges and relate it with slope.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+From above, $m=200$.
+\[
+\boxed{\text{The company charges Rs.\ }200 \text{ per km, and this is the slope of the line.}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9 (iii)}
+\textcolor{gold}{\bfseries Question:} How much would it cost if Abdullah drove 180 km?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Using $y=5000+200x$:
+\[
+\begin{aligned}
+\Step{1}\;& x=180\\
+\Step{2}\;& y=5000+200(180)=5000+36000=41000.
+\end{aligned}
+\]
+\[
+\boxed{\text{Rs.\ }41{,}000}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:}
+A ship starts from Karachi at latitude $25^\circ$N and longitude $67^\circ$E and reaches latitude $32^\circ$N and longitude $54^\circ$E.
+Derive the equation of the line in point-slope form.
+If the ship moves to latitude $39^\circ$N, what is the longitude?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Take longitude as $x$ and latitude as $y$.
+Points: $(67,25)$ and $(54,32)$.
+\[
+\begin{aligned}
+\Step{1}\;& m=\frac{32-25}{54-67}=\frac{7}{-13}=-\frac{7}{13}.\\
+\Step{2}\;& \text{Point-slope (using Karachi }(67,25)\text{):}\\
+& y-25=-\frac{7}{13}(x-67).\\[4pt]
+\Step{3}\;& \text{For latitude } y=39:\\
+& 39-25=-\frac{7}{13}(x-67)\\
+& 14=-\frac{7}{13}(x-67)\\
+& 14\cdot 13=-7(x-67)\\
+& 182=-7x+469\\
+& -7x=-287\\
+& x=41.
+\end{aligned}
+\]
+\[
+\boxed{y-25=-\frac{7}{13}(x-67)},\qquad
+\boxed{\text{Longitude }=41^\circ \text{E when latitude }=39^\circ \text{N}.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q11
+\begin{QAPair}{Question 11 (i)}
+\textcolor{gold}{\bfseries Question:}
+Length and width of a plot are in the ratio $2:1$.
+Write the equation of the line and find the length if the width is 30 feet.
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $x$ = width (ft), $y$ = length (ft).
+\[
+\begin{aligned}
+\Step{1}\;& \frac{y}{x}=\frac{2}{1}\Rightarrow y=2x.\\
+\Step{2}\;& \text{If } x=30:\; y=2(30)=60.
+\end{aligned}
+\]
+\[
+\boxed{y=2x},\qquad \boxed{\text{Length}=60\text{ ft}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 11 (ii)}
+\textcolor{gold}{\bfseries Question:} What is slope in this case and what does it mean?
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+In $y=2x$, the slope is $2$.
+\[
+\boxed{\text{Slope }=2 \text{ means length is } 2 \text{ times the width (2 ft length per 1 ft width).}}
+\]
+\end{QAPair}
+
+\end{document}

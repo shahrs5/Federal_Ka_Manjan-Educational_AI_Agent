@@ -1,0 +1,463 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes,intersections}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+% FIXED: Removed the hardcoded colon ":" so "\Step{1:}" doesn't produce "Step 1::"
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1}}}
+
+% -------------------- TikZ Styles --------------------
+\tikzset{
+  geom/.style={draw=muted, line width=0.95pt},
+  strong/.style={draw=cyan, line width=1.05pt},
+  helper/.style={draw=muted, dashed, line width=0.75pt},
+  arcH/.style={draw=muted, dashed, line width=0.75pt},
+  pt/.style={circle, fill=cyan, inner sep=1.2pt},
+  lab/.style={text=text, font=\small},
+  ang/.style={draw=cyan, line width=0.9pt},
+  note/.style={text=muted, font=\small}
+}
+
+% -------------------- Step + Diagram Macro --------------------
+% Usage:
+% \StepFig{1}{<text>}{<tikzpicture contents ONLY>}
+\newcommand{\StepFig}[3]{%
+  \Step{#1} #2\par\medskip
+  \begin{center}
+    \begin{tikzpicture}[scale=0.92]
+      #3
+    \end{tikzpicture}
+  \end{center}
+  \vspace{-2pt}
+}
+
+% tiny right-angle mark macro
+\newcommand{\RightAngleMark}[2]{%
+  % #1 = corner point, #2 = size
+  \draw[ang] ($(#1)+(#2,0)$) -- ($(#1)+(#2,#2)$) -- ($(#1)+(0,#2)$);
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick facts (very useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Transpose:} $(A^t)_{ij}=A_{ji}$ and $(AB)^t=B^tA^t$.
+\item \textbf{Identity matrix:} $I_n$ has 1's on the diagonal and 0 elsewhere.
+\item \textbf{Additive inverse:} $-A$ is the matrix such that $A+(-A)=0$.
+\item \textbf{Inverse (2$\times$2):} If $A=\begin{bmatrix}a&b\\c&d\end{bmatrix}$ and $|A|=ad-bc\neq 0$, then
+\[
+A^{-1}=\frac{1}{|A|}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}.
+\]
+\item \textbf{Adjugate:} $A^{-1}=\dfrac{1}{|A|}\,\mathrm{adj}(A)$ (when inverse exists).
+\item \textbf{Determinant properties:} $|A^t|=|A|$ and for $2\times2$, $|-A|=|A|$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 (MCQs)
+
+\begin{QAPair}{Question 1 (i) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+If $\begin{bmatrix}5 & 3\end{bmatrix}^{t}
+=\begin{bmatrix}5\\ \dfrac{x}{2}\end{bmatrix}$ then $x=$
+\quad (a) $6$ \quad (b) $4$ \quad (c) $-6$ \quad (d) $-4$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $6$}\par
+\Step{1:} $\begin{bmatrix}5 & 3\end{bmatrix}^{t}=\begin{bmatrix}5\\3\end{bmatrix}$.\par
+\Step{2:} So $\dfrac{x}{2}=3 \Rightarrow x=6$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+If $I_3=\begin{bmatrix}y&0&x\\0&z&0\\x&0&1\end{bmatrix}$ then\par
+(a) $y=x=1$ \quad (b) $x=z=0$ \quad (c) $x=z=1$ \quad (d) $y=z=1,\;x=0$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $y=z=1,\;x=0$}\par
+\Step{1:} In $I_3$, diagonal entries are 1 and off-diagonal are 0.\par
+\Step{2:} Hence $y=1$, $z=1$, and $x=0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+Additive inverse of unit matrix of order $2$ is\par
+(a) $\begin{bmatrix}0&0\\0&0\end{bmatrix}$ \quad
+(b) $\begin{bmatrix}-1&0\\0&-1\end{bmatrix}$ \quad
+(c) $\begin{bmatrix}0&1\\1&0\end{bmatrix}$ \quad
+(d) $\begin{bmatrix}1&0\\0&-1\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $-I_2$}\par
+\Step{1:} Additive inverse of $I_2$ is $-I_2$ since $I_2+(-I_2)=0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+Multiplicative inverse of a null matrix of order $2$ is\par
+(a) $\begin{bmatrix}0&0\\0&0\end{bmatrix}$ \quad
+(b) $\begin{bmatrix}0\\0\end{bmatrix}$ \quad
+(c) $\begin{bmatrix}0&0\end{bmatrix}$ \quad
+(d) impossible
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) impossible}\par
+\Step{1:} Null matrix has determinant $0$, so it is singular and has no inverse.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+$A$ is a symmetric matrix if\par
+(a) $A^t\neq A$ \quad
+(b) $(A^t)^t\neq -A$ \quad
+(c) $(A^t)^t=-A$ \quad
+(d) $(A^t)^t=A^t$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $(A^t)^t=A^t$}\par
+\Step{1:} Always $(A^t)^t=A$.\par
+\Step{2:} If $(A^t)^t=A^t$, then $A=A^t$, which is the definition of symmetric matrix.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}1\\2\end{bmatrix}+\begin{bmatrix}0\\0\end{bmatrix}=$\par
+(a) $\begin{bmatrix}1\\2\end{bmatrix}$ \quad
+(b) $\begin{bmatrix}1\\2\end{bmatrix}$ \quad
+(c) $\begin{bmatrix}\tfrac12&0\end{bmatrix}$ \quad
+(d) impossible
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{$\begin{bmatrix}1\\2\end{bmatrix}$}\par
+\Step{1:} Adding the zero (null) matrix/vector does not change the matrix/vector.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+Order of matrix $A$ is $1\times 2$ and order of matrix $B$ is $2\times 3$ then order of $AB$ is\par
+(a) $1\times 3$ \quad (b) $3\times 1$ \quad (c) $2\times 2$ \quad (d) $3\times 2$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $1\times 3$}\par
+\Step{1:} $(m\times n)(n\times p)=(m\times p)$.\par
+\Step{2:} So $(1\times2)(2\times3)=(1\times3)$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+If $AB=B$, then $A=\ldots$\par
+(a) $I$ \quad (b) $A^{-1}$ \quad (c) $B$ \quad (d) $B^{-1}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $I$}\par
+\Step{1:} $AB=B \Rightarrow (A-I)B=0$.\par
+\Step{2:} In MCQs, the intended standard choice is $A=I$ (so $IB=B$).
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}15\\25\end{bmatrix}\times\begin{bmatrix}3&2\end{bmatrix}=$\par
+(a) $\begin{bmatrix}95\end{bmatrix}$ \quad
+(b) $\begin{bmatrix}45\\50\end{bmatrix}$ \quad
+(c) $\begin{bmatrix}45&50\end{bmatrix}$ \quad
+(d) $\begin{bmatrix}45&30\\75&50\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $\begin{bmatrix}45&30\\75&50\end{bmatrix}$}\par
+\Step{1:} $(2\times1)(1\times2)=(2\times2)$ (outer product).\par
+\Step{2:}
+\[
+\begin{bmatrix}15\\25\end{bmatrix}\begin{bmatrix}3&2\end{bmatrix}
+=
+\begin{bmatrix}
+15\cdot3 & 15\cdot2\\
+25\cdot3 & 25\cdot2
+\end{bmatrix}
+=
+\begin{bmatrix}45&30\\75&50\end{bmatrix}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+If $|T|=-1$ then $T^{-1}=$\par
+(a) $-T$ \quad (b) $\mathrm{adj}\,T$ \quad (c) $-\mathrm{adj}\,T$ \quad (d) $T$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $-\mathrm{adj}\,T$}\par
+\Step{1:} $T^{-1}=\dfrac{1}{|T|}\,\mathrm{adj}(T)$.\par
+\Step{2:} If $|T|=-1$, then $T^{-1}=-\,\mathrm{adj}(T)$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+Matrix equation for $y+x=144+y$ and $x+2y=x+13$ is\par
+(a) $\begin{bmatrix}1&1\\1&2\end{bmatrix}\!\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}144\\13\end{bmatrix}$
+\quad
+(b) $\begin{bmatrix}1&0\\1&2\end{bmatrix}\!\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}144\\13\end{bmatrix}$\par
+(c) $\begin{bmatrix}1&0\\0&2\end{bmatrix}\!\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}144\\13\end{bmatrix}$
+\quad
+(d) $\begin{bmatrix}1&0\\0&2\end{bmatrix}\!\begin{bmatrix}y\\x\end{bmatrix}=\begin{bmatrix}144\\13\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}\par
+\Step{1:} From $y+x=144+y \Rightarrow x=144$.\par
+\Step{2:} From $x+2y=x+13 \Rightarrow 2y=13$.\par
+\Step{3:} So $\begin{bmatrix}1&0\\0&2\end{bmatrix}\begin{bmatrix}x\\y\end{bmatrix}=\begin{bmatrix}144\\13\end{bmatrix}$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xii) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+The matrix of coefficients for $x-y=3$ is\par
+(a) $\begin{bmatrix}3\end{bmatrix}$ \quad
+(b) $\begin{bmatrix}1&-1\end{bmatrix}$ \quad
+(c) $\begin{bmatrix}x\\y\end{bmatrix}$ \quad
+(d) $\begin{bmatrix}1\\-1\end{bmatrix}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $\begin{bmatrix}1&-1\end{bmatrix}$}\par
+\Step{1:} Coefficients of $(x,y)$ in $x-y=3$ are $(1,-1)$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+$\begin{bmatrix}1&2\end{bmatrix}^{t}\!\begin{bmatrix}3\end{bmatrix}=$\par
+(a) $\begin{bmatrix}3&6\end{bmatrix}$ \quad
+(b) $\begin{bmatrix}3\\6\end{bmatrix}$ \quad
+(c) $\begin{bmatrix}5\end{bmatrix}$ \quad
+(d) impossible
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $\begin{bmatrix}3\\6\end{bmatrix}$}\par
+\Step{1:} $\begin{bmatrix}1&2\end{bmatrix}^{t}=\begin{bmatrix}1\\2\end{bmatrix}$.\par
+\Step{2:} Multiplying by scalar $3$ gives $\begin{bmatrix}3\\6\end{bmatrix}$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiv) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+If $A$ and $B$ are conformable for the product $AB$ then $(AB)^t=$\par
+(a) $A^tB^t$ \quad (b) $(BA)^t$ \quad (c) $B^tA^t$ \quad (d) $AB$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $B^tA^t$}\par
+\Step{1:} Property of transpose: $(AB)^t=B^tA^t$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xv) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+If $\begin{bmatrix}-3&5\\-3&x-1\end{bmatrix}$ is singular matrix, then $x=$\par
+(a) $4$ \quad (b) $6$ \quad (c) $-6$ \quad (d) $-4$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $6$}\par
+\Step{1:} Singular $\Rightarrow$ determinant $=0$.\par
+\Step{2:}
+\[
+\left|\begin{bmatrix}-3&5\\-3&x-1\end{bmatrix}\right|
+=(-3)(x-1)-5(-3)=-3x+18=0 \Rightarrow x=6.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xvi) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+If $\mathrm{adj}\,A=\begin{bmatrix}5&6\\2&3\end{bmatrix}$ then $|A|=$\par
+(a) $|\mathrm{adj}\,A|$ \quad (b) $|A^t|$ \quad (c) $|-A|$ \quad (d) all a, b, c
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) all a, b, c}\par
+\Step{1:} For $n\times n$, $|\mathrm{adj}\,A|=|A|^{\,n-1}$. For $2\times2$, $|\mathrm{adj}\,A|=|A|$.\par
+\Step{2:} Also $|A^t|=|A|$ and for $2\times2$, $|-A|=|A|$.\par
+\Step{3:} Hence all (a), (b), (c) equal $|A|$.
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 --- If $P=\begin{bmatrix}5&-1\\2&-4\end{bmatrix}$, show that $PP^{-1}=P^{-1}P=I$}
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1:} Compute determinant:
+\[
+|P|=5(-4)-(-1)\cdot2=-20+2=-18\neq 0 \;\Rightarrow\; P^{-1}\ \text{exists.}
+\]
+\Step{2:} Inverse (2$\times$2 formula):
+\[
+P^{-1}=\frac{1}{|P|}\begin{bmatrix}-4&1\\-2&5\end{bmatrix}
+= -\frac{1}{18}\begin{bmatrix}-4&1\\-2&5\end{bmatrix}
+=\frac{1}{18}\begin{bmatrix}4&-1\\2&-5\end{bmatrix}.
+\]
+\Step{3:} Multiply:
+\[
+PP^{-1}
+=
+\begin{bmatrix}5&-1\\2&-4\end{bmatrix}
+\cdot
+\frac{1}{18}\begin{bmatrix}4&-1\\2&-5\end{bmatrix}
+=
+\frac{1}{18}
+\begin{bmatrix}
+20-2 & -5+5\\
+8-8 & -2+20
+\end{bmatrix}
+=
+\frac{1}{18}\begin{bmatrix}18&0\\0&18\end{bmatrix}
+=
+I.
+\]
+Similarly,
+\[
+P^{-1}P
+=
+\frac{1}{18}\begin{bmatrix}4&-1\\2&-5\end{bmatrix}
+\cdot
+\begin{bmatrix}5&-1\\2&-4\end{bmatrix}
+=
+\frac{1}{18}\begin{bmatrix}18&0\\0&18\end{bmatrix}
+=
+I.
+\]
+\tcblower
+\textcolor{green}{\bfseries Conclusion:} Hence $PP^{-1}=P^{-1}P=I$.
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 --- Solve $5x-4=y$ and $2y+8=10x$ by Matrix Inversion Method (if possible)}
+\textcolor{gold}{\bfseries Convert to standard linear form:}\par
+From $5x-4=y$:
+\[
+-5x+y=-4.
+\]
+From $2y+8=10x$:
+\[
+-10x+2y=-8 \;\Rightarrow\; -5x+y=-4.
+\]
+So both equations are the \emph{same}.\par
+
+\textcolor{gold}{\bfseries Matrix form:}\par
+\[
+\underbrace{\begin{bmatrix}-5&1\\-5&1\end{bmatrix}}_{A}
+\begin{bmatrix}x\\y\end{bmatrix}
+=
+\begin{bmatrix}-4\\-4\end{bmatrix}.
+\]
+\Step{1:} $|A|=(-5)(1)-(1)(-5)= -5+5=0 \Rightarrow A$ is singular.\par
+\Step{2:} Since $A^{-1}$ does not exist, \textbf{matrix inversion method is not possible}.\par
+\Step{3:} The system has infinitely many solutions:
+\[
+y=5x-4,\quad \text{where } x \text{ is any real number.}
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:} Not solvable by inversion (singular matrix). General solution: $x=t,\;y=5t-4$.
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 --- Use Cramer's rule for $5x+2y=19$ and $10x+4y=38$ (if possible)}
+\textcolor{gold}{\bfseries Coefficient determinant:}\par
+\[
+D=\begin{vmatrix}5&2\\10&4\end{vmatrix}=5\cdot4-2\cdot10=20-20=0.
+\]
+\Step{1:} Since $D=0$, Cramer's rule does \textbf{not} give a unique solution.\par
+\Step{2:} Check dependence: the second equation is exactly $2\times$ the first:
+\[
+10x+4y=2(5x+2y),\quad 38=2(19).
+\]
+So the system is \textbf{consistent and dependent} $\Rightarrow$ infinitely many solutions.\par
+\[
+5x+2y=19 \;\Rightarrow\; y=\frac{19-5x}{2}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:} Cramer's rule not applicable (since $D=0$). Infinitely many solutions: $y=\dfrac{19-5x}{2}$.
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 --- Labour/Material cost problem (Home Industries)}
+\textcolor{gold}{\bfseries Given:}\par
+Haani's daily total cost $=20000$, with $6$ workers and $80$ items.\par
+Massab's daily total cost $=40000$, with $12$ workers and $160$ items.\par
+Labour and material rates are the same for both industries.\par
+
+\textcolor{gold}{\bfseries Let:}\par
+$l=$ labour cost \textit{per worker per day}, \quad $m=$ material cost \textit{per item}.\par
+Then:
+\[
+6l+80m=20000,\qquad 12l+160m=40000.
+\]
+
+\Step{1:} Notice the second equation is $2\times$ the first, so the system is dependent.\par
+\[
+D=\begin{vmatrix}6&80\\12&160\end{vmatrix}=6\cdot160-80\cdot12=960-960=0.
+\]
+\Step{2:} Hence, \textbf{labour rate and material rate cannot be found uniquely} from the given information.\par
+
+\textcolor{gold}{\bfseries General relation:}\par
+From $6l+80m=20000$,
+\[
+l=\frac{20000-80m}{6}.
+\]
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} Not uniquely determinable (infinitely many solutions). Any pair $(l,m)$ satisfying $6l+80m=20000$ works.
+\end{QAPair}
+
+\end{document}

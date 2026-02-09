@@ -1,0 +1,398 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes,intersections}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- TikZ Styles (kept as in template) --------------------
+\tikzset{
+  geom/.style={draw=muted, line width=0.95pt},
+  strong/.style={draw=cyan, line width=1.05pt},
+  helper/.style={draw=muted, dashed, line width=0.75pt},
+  arcH/.style={draw=muted, dashed, line width=0.75pt},
+  pt/.style={circle, fill=cyan, inner sep=1.2pt},
+  lab/.style={text=text, font=\small},
+  ang/.style={draw=cyan, line width=0.9pt},
+  note/.style={text=muted, font=\small}
+}
+
+% -------------------- Step + Diagram Macro (kept as in template) --------------------
+% Usage:
+% \StepFig{1}{<text>}{<tikzpicture contents ONLY>}
+\newcommand{\StepFig}[3]{%
+  \Step{#1} #2\par\medskip
+  \begin{center}
+    \begin{tikzpicture}[scale=0.92]
+      #3
+    \end{tikzpicture}
+  \end{center}
+  \vspace{-2pt}
+}
+
+% tiny right-angle mark macro (kept)
+\newcommand{\RightAngleMark}[2]{%
+  \draw[ang] ($(#1)+(#2,0)$) -- ($(#1)+(#2,#2)$) -- ($(#1)+(0,#2)$);
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 2 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick facts (very useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Quadratic equation:} $ax^2+bx+c=0$ with $a\neq 0$.
+\item \textbf{Discriminant:} $D=b^2-4ac$.
+  \begin{itemize}
+    \item $D>0$: two distinct real roots
+    \item $D=0$: equal (repeated) real roots
+    \item $D<0$: no real roots (imaginary/complex)
+  \end{itemize}
+\item \textbf{Sum and product of roots:} If roots are $S_1,S_2$, then
+\[
+S_1+S_2=-\frac{b}{a},\qquad S_1S_2=\frac{c}{a}.
+\]
+\item \textbf{Complete square idea:} $x^2+x+\dfrac14=\left(x+\dfrac12\right)^2$.
+\item \textbf{Reciprocal equation (idea):} coefficients read the same forwards and backwards (e.g.\ $x^4+x^3+x^2+x+1$).
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 (MCQs)
+
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} Which of the following is a quadratic equation?\par
+(a) $ax+b=c$ \quad
+(b) $ax^2+bx+c$ \quad
+(c) $ax^2+bx+c=0,\ a\neq 0$ \quad
+(d) $ax^2+bx+c=0,\ a=0$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}\par
+\Step{1} A quadratic equation must be an \emph{equation} of degree $2$ and must have $a\neq 0$.\par
+\Step{2} Option (c) matches $ax^2+bx+c=0$ with $a\neq 0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} How many roots of $(x-3)(x-2)=6$ exist?\par
+(a) no \quad (b) $0$ \quad (c) $1$ \quad (d) $2$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) 2}\par
+\Step{1} Expand: $(x-3)(x-2)=x^2-5x+6$.\par
+\Step{2} Set equal to $6$: $x^2-5x+6=6 \Rightarrow x^2-5x=0$.\par
+\Step{3} Factor: $x(x-5)=0 \Rightarrow x=0,\ 5$ (two roots).
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} What should be added to $x^2+x$ to make it a complete square?\par
+(a) $1$ \quad (b) $\dfrac14$ \quad (c) $\dfrac12$ \quad (d) $4$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $\dfrac14$}\par
+\Step{1} For $x^2+bx$, add $\left(\dfrac{b}{2}\right)^2$.\par
+\Step{2} Here $b=1$, so add $\left(\dfrac12\right)^2=\dfrac14$.\par
+\Step{3} $x^2+x+\dfrac14=\left(x+\dfrac12\right)^2$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} Solution set of $x^2-4=0$ is:\par
+(a) $\{0,4\}$ \quad (b) $\{2,-2\}$ \quad (c) $\{4,-4\}$ \quad (d) $\{\}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $\{2,-2\}$}\par
+\Step{1} $x^2-4=0 \Rightarrow x^2=4$.\par
+\Step{2} $x=\pm 2$.\par
+\Step{3} Solution set is $\{2,-2\}$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} Roots of the equation $(x-1)^2=9$ are:\par
+(a) $-2,4$ \quad (b) $2,4$ \quad (c) $-4,2$ \quad (d) $-2,-4$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $-2,4$}\par
+\Step{1} $(x-1)^2=9 \Rightarrow x-1=\pm 3$.\par
+\Step{2} If $x-1=3$, then $x=4$.\par
+\Step{3} If $x-1=-3$, then $x=-2$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi)}
+\textcolor{gold}{\bfseries Question:} Solution set of $2^{2x}-2^{x+1}+1=0$?\par
+(a) $\{0\}$ \quad (b) $\{1\}$ \quad (c) $\{0,1\}$ \quad (d) $\{0,-1\}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $\{0\}$}\par
+\Step{1} Put $t=2^x$ so $2^{2x}=t^2$ and $2^{x+1}=2t$.\par
+\Step{2} Equation becomes $t^2-2t+1=0 \Rightarrow (t-1)^2=0 \Rightarrow t=1$.\par
+\Step{3} $2^x=1 \Rightarrow x=0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii)}
+\textcolor{gold}{\bfseries Question:} Solution set of $x+\dfrac1x=2$ is:\par
+(a) $\{0\}$ \quad (b) $\{-1\}$ \quad (c) $\{-1,1\}$ \quad (d) $\{1\}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $\{1\}$}\par
+\Step{1} Multiply by $x$ (note $x\neq 0$): $x^2+1=2x$.\par
+\Step{2} $x^2-2x+1=0 \Rightarrow (x-1)^2=0$.\par
+\Step{3} $x=1$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii)}
+\textcolor{gold}{\bfseries Question:} Which of the following is a reciprocal equation?\par
+(a) $x^2+2x+2=0$ \quad
+(b) $x^4+x^3+x^2+x+1=0$ \quad
+(c) $\sqrt{2x+3}=0$ \quad
+(d) $x^4+2x^3+x^2+4x=0$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b)}\par
+\Step{1} A reciprocal equation has symmetric coefficients (same forwards/backwards).\par
+\Step{2} In (b), coefficients are $1,1,1,1,1$ which are symmetric.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix)}
+\textcolor{gold}{\bfseries Question:} $2$ and $-3$ are roots of:\par
+(a) $(x-2)(x-3)=0$ \quad
+(b) $(x+2)(x+3)=0$ \quad
+(c) $(x-2)(x+3)=0$ \quad
+(d) $(x+2)(x-3)=0$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c)}\par
+\Step{1} Root $2$ gives factor $(x-2)$.\par
+\Step{2} Root $-3$ gives factor $(x+3)$.\par
+\Step{3} Hence $(x-2)(x+3)=0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x)}
+\textcolor{gold}{\bfseries Question:} The discriminant of $ax^2+bx+c=0$ is:\par
+(a) $b^2+4ac$ \quad (b) $b^2-4ac$ \quad (c) $4ac-b^2$ \quad (d) $b^2-4ac$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) $b^2-4ac$}\par
+\Step{1} For quadratic $ax^2+bx+c=0$, discriminant is $D=b^2-4ac$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi)}
+\textcolor{gold}{\bfseries Question:} If $S_1,S_2$ are the roots of $ax^2+bx+c=0$, then sum of roots is:\par
+(a) $\dfrac{c}{a}$ \quad (b) $\dfrac{a}{c}$ \quad (c) $-\dfrac{b}{a}$ \quad (d) $\dfrac{a}{b}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $-\dfrac{b}{a}$}\par
+\Step{1} By Vieta's formula, $S_1+S_2=-\dfrac{b}{a}$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xii)}
+\textcolor{gold}{\bfseries Question:} Roots of the equation $x^2-5x+5=0$ are:\par
+(a) imaginary \quad (b) rational \quad (c) equal \quad (d) irrational
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) irrational}\par
+\Step{1} $D=b^2-4ac=(-5)^2-4(1)(5)=25-20=5$.\par
+\Step{2} $D>0$ but $\sqrt{5}$ is not an integer $\Rightarrow$ roots are irrational.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii)}
+\textcolor{gold}{\bfseries Question:} Sum and product of roots of a quadratic equation are respectively $2$ and $5$. The equation is:\par
+(a) $x^2-2x+5=0$ \quad
+(b) $x^2+2x+5=0$ \quad
+(c) $x^2-2x-5=0$ \quad
+(d) $x^2+2x-5=0$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $x^2-2x+5=0$}\par
+\Step{1} For a monic quadratic with sum $S$ and product $P$: $x^2-Sx+P=0$.\par
+\Step{2} Here $S=2,\ P=5 \Rightarrow x^2-2x+5=0$.
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 --- Find all roots of $8x^6-7x^3-1=0$}
+\textcolor{gold}{\bfseries Solution:}\par
+\Step{1} Put $y=x^3$. Then $x^6=(x^3)^2=y^2$.\par
+\[
+8x^6-7x^3-1=0 \;\Rightarrow\; 8y^2-7y-1=0.
+\]
+\Step{2} Solve the quadratic in $y$:
+\[
+D=(-7)^2-4(8)(-1)=49+32=81,\quad \sqrt{D}=9.
+\]
+\[
+y=\frac{7\pm 9}{16}\Rightarrow
+y_1=\frac{16}{16}=1,\qquad
+y_2=\frac{-2}{16}=-\frac18.
+\]
+\Step{3} Convert back to $x$:
+\[
+x^3=1 \Rightarrow x=1,\ \omega,\ \omega^2,
+\qquad
+x^3=-\frac18 \Rightarrow x=-\frac12,\ -\frac12\omega,\ -\frac12\omega^2,
+\]
+where $\omega=-\dfrac12+\dfrac{\sqrt3}{2}i$ is a cube root of unity.\par\medskip
+\textcolor{muted}{(If only real roots are required: $x=1$ and $x=-\tfrac12$.)}
+\tcblower
+\textcolor{green}{\bfseries Answer:} $x\in\left\{1,\omega,\omega^2,-\dfrac12,-\dfrac12\omega,-\dfrac12\omega^2\right\}$.
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 --- For what values of $m$ are the roots of $(m-1)x^2+2mx+m+3=0$ equal? Also solve it.}
+\textcolor{gold}{\bfseries Solution:}\par
+Here $a=m-1,\ b=2m,\ c=m+3$.\par
+\Step{1} Equal roots $\Rightarrow D=0$:
+\[
+D=b^2-4ac=(2m)^2-4(m-1)(m+3).
+\]
+Compute $(m-1)(m+3)=m^2+2m-3$.\par
+\[
+D=4m^2-4(m^2+2m-3)=4m^2-4m^2-8m+12=4(3-2m).
+\]
+\Step{2} Set $D=0$:
+\[
+4(3-2m)=0 \Rightarrow 3-2m=0 \Rightarrow m=\frac32.
+\]
+\Step{3} Substitute $m=\frac32$:
+\[
+\left(\frac32-1\right)x^2+2\left(\frac32\right)x+\left(\frac32+3\right)=0
+\Rightarrow \frac12 x^2+3x+\frac92=0.
+\]
+Multiply by $2$:
+\[
+x^2+6x+9=0 \Rightarrow (x+3)^2=0.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:} $m=\dfrac32$ and the (equal) root is $x=-3$ (double root).\par
+\textcolor{muted}{Note: if $m=1$, the equation becomes linear (not quadratic).}
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 --- If $S_1,S_2$ are roots of $ax^2+bx+c=0$, find $(S_1-3)(S_2-3)$.}
+\textcolor{gold}{\bfseries Solution:}\par
+\Step{1} Use Vieta’s formulas:
+\[
+S_1+S_2=-\frac{b}{a},\qquad S_1S_2=\frac{c}{a}.
+\]
+\Step{2} Expand:
+\[
+(S_1-3)(S_2-3)=S_1S_2-3(S_1+S_2)+9.
+\]
+\Step{3} Substitute:
+\[
+(S_1-3)(S_2-3)=\frac{c}{a}-3\left(-\frac{b}{a}\right)+9
+=\frac{c+3b}{a}+9=\frac{c+3b+9a}{a}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:} \(\displaystyle (S_1-3)(S_2-3)=\frac{c+3b+9a}{a}.\)
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 --- If roots of $25x^2-5ax-b=0$ are equal, find $a$ and $b$ if $a^2+b=6$.}
+\textcolor{gold}{\bfseries Solution:}\par
+Here $A=25,\ B=-5a,\ C=-b$.\par
+\Step{1} Equal roots $\Rightarrow D=0$:
+\[
+D=B^2-4AC=(-5a)^2-4(25)(-b)=25a^2+100b.
+\]
+So,
+\[
+25a^2+100b=0 \Rightarrow a^2+4b=0 \Rightarrow b=-\frac{a^2}{4}.
+\]
+\Step{2} Use $a^2+b=6$:
+\[
+a^2-\frac{a^2}{4}=6 \Rightarrow \frac34 a^2=6 \Rightarrow a^2=8.
+\]
+\[
+a=\pm 2\sqrt2,\qquad b=-\frac{8}{4}=-2.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:} \(\displaystyle a=2\sqrt2 \text{ or } a=-2\sqrt2,\quad b=-2.\)
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 --- A rectangular chocolate box has volume $x^3+2x^2-5x-6$. Find length and width if height is $x-2$.}
+\textcolor{gold}{\bfseries Solution:}\par
+\Step{1} Volume $=$ (length)(width)(height). Given height $=x-2$, so factor the polynomial by $(x-2)$.\par
+\Step{2} Divide (or factor): since $x=2$ makes $x^3+2x^2-5x-6=0$, $(x-2)$ is a factor.\par
+\[
+x^3+2x^2-5x-6=(x-2)(x^2+4x+3).
+\]
+\Step{3} Factor the quadratic:
+\[
+x^2+4x+3=(x+1)(x+3).
+\]
+So the dimensions can be:
+\[
+\text{height}=x-2,\quad \text{length}=x+1,\quad \text{width}=x+3
+\]
+(in any order for length/width).
+\tcblower
+\textcolor{green}{\bfseries Answer:} Length and width are \(\boxed{x+1 \text{ and } x+3}\) (height is \(x-2\)).
+\end{QAPair}
+
+\end{document}

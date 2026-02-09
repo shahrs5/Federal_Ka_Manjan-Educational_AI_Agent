@@ -1,0 +1,744 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes,intersections}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- TikZ Styles --------------------
+\tikzset{
+  geom/.style={draw=muted, line width=0.95pt},
+  strong/.style={draw=cyan, line width=1.05pt},
+  helper/.style={draw=muted, dashed, line width=0.75pt},
+  arcH/.style={draw=muted, dashed, line width=0.75pt},
+  pt/.style={circle, fill=cyan, inner sep=1.2pt},
+  lab/.style={text=text, font=\small},
+  ang/.style={draw=cyan, line width=0.9pt},
+  note/.style={text=muted, font=\small}
+}
+
+% -------------------- Step + Diagram Macro --------------------
+% Usage:
+% \StepFig{1}{<text>}{<tikzpicture contents ONLY>}
+%
+% FIX: add transform shape so nodes/text scale with coordinates (prevents overlap)
+%      also remove negative vspace
+\newcommand{\StepFig}[3]{%
+  \Step{#1} #2\par\medskip
+  \begin{center}
+    \begin{tikzpicture}[
+      scale=0.92,
+      transform shape,
+      every node/.style={font=\small}
+    ]
+      #3
+    \end{tikzpicture}
+  \end{center}
+}
+
+% tiny right-angle mark macro
+\newcommand{\RightAngleMark}[2]{%
+  % #1 = corner point, #2 = size
+  \draw[ang] ($(#1)+(#2,0)$) -- ($(#1)+(#2,#2)$) -- ($(#1)+(0,#2)$);
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Miscellaneous Exercise 5 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick facts (very useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Rational expression:} $\dfrac{P(x)}{Q(x)}$ where $P,Q$ are polynomials and $Q(x)\neq 0$.
+\item \textbf{Degree of a term:} sum of exponents in the term (e.g.\ $x^2y^3$ has degree $2+3=5$).
+\item \textbf{Constant polynomial:} degree $0$.
+\item \textbf{Difference of squares:} $x^2-y^2=(x-y)(x+y)$.
+\item \textbf{Circumference:} $C=2\pi r$.
+\item \textbf{Sphere surface area:} $S=4\pi r^2$.
+\item \textbf{Right triangle:} $c^2=a^2+b^2$ (Pythagoras).
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1 (MCQs)
+\begin{QAPair}{Question 1 (i) --- MCQ}
+\textcolor{gold}{\bfseries Question:} An expression which is the ratio of two polynomials but the polynomial in denominator is non-zero is called\par
+(a) polynomial \quad (b) rational expression \quad (c) compound expression \quad (d) irrational expression
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(b) rational expression}\par
+
+\StepFig{1}{A rational expression is a \emph{fraction} of polynomials.}{%
+  \node[draw=cyan, rounded corners=10pt, inner sep=8pt, text=text] (num) at (0,0.9) {$P(x)$};
+  \draw[geom] (-1.2,0.4) -- (1.2,0.4);
+  \node[draw=cyan, rounded corners=10pt, inner sep=8pt, text=text] (den) at (0,-0.1) {$Q(x)\neq 0$};
+  \node[note] at (0,-0.9) {$\dfrac{P(x)}{Q(x)}$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} The degree of $x^2y^3-\dfrac{xy^2z^3}{y}-\sqrt{25}\,z^5$ is\par
+(a) 5 \quad (b) 6 \quad (c) 7 \quad (d) none
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) 5}\par
+
+\StepFig{1}{Find degrees of each term and take the maximum.}{%
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,1.2)
+  {$x^2y^3:\ 2+3=5$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,0.2)
+  {$\dfrac{xy^2z^3}{y}=xyz^3:\ 1+1+3=5$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,-0.8)
+  {$\sqrt{25}\,z^5=5z^5:\ 5$};
+  \node[note] at (0,-1.55) {Maximum degree $=5$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Constant polynomial is also called\par
+(a) linear polynomial \quad (b) no degree polynomial \quad (c) expression \quad (d) zero degree polynomial
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) zero degree polynomial}\par
+
+\StepFig{1}{A constant polynomial has a horizontal graph (degree $0$).}{%
+  \draw[geom,->] (-3,0) -- (3,0) node[lab, right] {$x$};
+  \draw[geom,->] (0,-1.4) -- (0,1.8) node[lab, above] {$y$};
+  \draw[strong] (-2.6,1.0) -- (2.6,1.0);
+  \node[note] at (0,1.35) {$y=c$ (constant)};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Ali is 2 years younger than his sister Ayesha. If Ayesha's present age is $x$ years, then the age of Ali after 5 years will be\par
+(a) $(x+7)$ \quad (b) $(x-2)$ \quad (c) $(x+3)$ \quad (d) $(x-7)$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $(x+3)$ years}\par
+
+\StepFig{1}{Timeline idea: Ali is $x-2$ now, so after 5 years $\Rightarrow x-2+5=x+3$.}{%
+  \draw[geom,->] (-3.2,0) -- (3.2,0);
+  \node[lab] at (-2.6,0.35) {now};
+  \node[lab] at (2.6,0.35) {after 5 yrs};
+  \draw[strong] (-2.6,0) -- (2.6,0);
+  \node[note] at (-2.6,-0.55) {Ali: $x-2$};
+  \node[note] at (2.6,-0.55) {Ali: $x+3$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v) --- MCQ}
+\textcolor{gold}{\bfseries Question:} The value of $2\Big\{x^3-(x^2-3-2x)^2\Big\}$ at $x=2$ is\par
+(a) 2 \quad (b) 14 \quad (c) $-2$ \quad (d) 6
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $-2$}\par
+\textcolor{muted}{\small (In the scan, the inner bracket looks like it is squared; that gives the MCQ option.)}\par
+
+\StepFig{1}{Substitute $x=2$ carefully.}{%
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,0.9)
+  {$2\{2^3-(2^2-3-2\cdot 2)^2\}$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,-0.05)
+  {$=2\{8-(4-3-4)^2\}=2\{8-(-3)^2\}$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,-1.0)
+  {$=2(8-9)=2(-1)=-2$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Reduced form of the expression
+$\dfrac{x^2y^3-y^2x^3+x^2y^2z}{x-y-z}$ is\par
+(a) $x^2y^2$ \quad (b) not possible \quad (c) $\dfrac{x^2y^2(x-y-z)}{y-x+z}$ \quad (d) $-x^2y^2$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $-x^2y^2$}\par
+
+\StepFig{1}{Factor and cancel the common factor $(x-y-z)$.}{%
+  \node[draw=cyan, rounded corners=10pt, inner sep=8pt, text=text] at (0,1.1)
+  {$x^2y^3-y^2x^3+x^2y^2z=x^2y^2(y-x+z)$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text] at (0,0.05)
+  {$y-x+z=-(x-y-z)$};
+  \node[draw=cyan, rounded corners=10pt, inner sep=8pt, text=text] at (0,-1.0)
+  {$\dfrac{x^2y^2\big(-(x-y-z)\big)}{x-y-z}=-x^2y^2$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} If $y=2-\dfrac{1}{y}$, then the value of $y^2+\dfrac{1}{y^2}$ is\par
+(a) 4 \quad (b) zero \quad (c) not possible \quad (d) 2
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) 2}\par
+
+\StepFig{1}{Solve for $y$ first, then evaluate.}{%
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text] at (0,0.9)
+  {$y=2-\dfrac{1}{y}\ \Rightarrow\ y^2=2y-1$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text] at (0,-0.05)
+  {$y^2-2y+1=0\ \Rightarrow\ (y-1)^2=0\Rightarrow y=1$};
+  \node[draw=cyan, rounded corners=10pt, inner sep=8pt, text=text] at (0,-1.0)
+  {$y^2+\dfrac{1}{y^2}=1+1=2$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Simplified form of
+$\dfrac{(a+b)^2-(a-b)^2}{8ab}$ is\par
+(a) $\dfrac{2(a^2+b^2)}{8ab}$ \quad (b) 2 \quad (c) $\dfrac{a^2+b^2}{ab}$ \quad (d) $\dfrac12$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $\dfrac12$}\par
+
+\StepFig{1}{Use expansion and subtract.}{%
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,0.8)
+  {$(a+b)^2=a^2+2ab+b^2$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,-0.05)
+  {$(a-b)^2=a^2-2ab+b^2$};
+  \node[draw=cyan, rounded corners=10pt, inner sep=8pt, text=text, align=left] at (0,-0.9)
+  {$\dfrac{4ab}{8ab}=\dfrac12$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Difference of the sum of $a$ and $b$ from the product of $a$ and $b$ is\par
+(a) $ab-a-b$ \quad (b) $a+b-ab$ \quad (c) $2ab-b$ \quad (d) none
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(a) $ab-a-b$}\par
+
+\StepFig{1}{``Difference of the sum from the product'' means $ab-(a+b)$.}{%
+  \node[draw=cyan, rounded corners=10pt, inner sep=10pt, text=text] at (0,0.6) {$ab-(a+b)=ab-a-b$};
+  \node[note] at (0,-0.35) {Product minus sum};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x) --- MCQ}
+\textcolor{gold}{\bfseries Question:}
+$\dfrac{x^3y^3+y^3z^3+z^3x^3}{x^3y^3z^3}=$\par
+(a) $x^3+y^3+z^3$ \quad (b) $x^6+y^6+z^6$ \quad
+(c) $\dfrac1{x^3}+\dfrac1{y^3}+\dfrac1{z^3}$ \quad
+(d) $\dfrac1{x^6}+\dfrac1{y^6}+\dfrac1{z^6}$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) $\dfrac1{x^3}+\dfrac1{y^3}+\dfrac1{z^3}$}\par
+
+\StepFig{1}{Split the fraction term-by-term.}{%
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text] at (0,0.9)
+  {$\dfrac{x^3y^3}{x^3y^3z^3}=\dfrac1{z^3}$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text] at (0,0.05)
+  {$\dfrac{y^3z^3}{x^3y^3z^3}=\dfrac1{x^3}$};
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text] at (0,-0.8)
+  {$\dfrac{z^3x^3}{x^3y^3z^3}=\dfrac1{y^3}$};
+  \node[note] at (0,-1.55) {Sum $\Rightarrow \dfrac1{x^3}+\dfrac1{y^3}+\dfrac1{z^3}$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xi) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Leading coefficient in
+$\dfrac{x^2}{2}-\dfrac18-\dfrac{x^4}{4}+\dfrac{x^3}{7}$ is\par
+(a) $\dfrac12$ \quad (b) $\dfrac14$ \quad (c) $\dfrac17$ \quad (d) $-\dfrac14$
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) $-\dfrac14$}\par
+
+\StepFig{1}{Highest power is $x^4$, so leading coefficient is the coefficient of $x^4$.}{%
+  \node[draw=cyan, rounded corners=10pt, inner sep=10pt, text=text] at (0,0.65)
+  {$-\dfrac{x^4}{4}+\dfrac{x^3}{7}+\dfrac{x^2}{2}-\dfrac18$};
+  \node[note] at (0,-0.2) {Highest degree term is $-\dfrac{x^4}{4}$};
+  \node[draw=border, rounded corners=10pt, inner sep=10pt, text=text] at (0,-1.0)
+  {Leading coefficient $=-\dfrac14$};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} Coefficients in the polynomial
+$\sqrt{16}\,x^2y-\dfrac12y^3+\dfrac{22}{7}z$ are the elements of the set of:\par
+(a) Integers \quad (b) Irrational numbers \quad (c) Odd numbers \quad (d) Rational numbers
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(d) Rational numbers}\par
+
+\StepFig{1}{Compute $\sqrt{16}=4$, then list coefficients.}{%
+  \node[draw=border, rounded corners=10pt, inner sep=8pt, text=text] at (0,0.9)
+  {$\sqrt{16}\,x^2y=4x^2y$};
+  \node[draw=cyan, rounded corners=10pt, inner sep=8pt, text=text] at (0,-0.05)
+  {Coefficients: $4,\ -\dfrac12,\ \dfrac{22}{7}$};
+  \node[note] at (0,-1.05) {All are rational numbers};
+}
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (xiii) --- MCQ}
+\textcolor{gold}{\bfseries Question:} The degree of the quotient in $(x-y)^3\div (x-y)^2$ will be\par
+(a) 3 \quad (b) 2 \quad (c) 1 \quad (d) no
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{(c) 1}\par
+
+\StepFig{1}{Use exponent rule: $(x-y)^3/(x-y)^2=(x-y)^{3-2}=x-y$ (degree 1).}{%
+  \node[draw=cyan, rounded corners=10pt, inner sep=10pt, text=text] at (0,0.5)
+  {$(x-y)^3\div (x-y)^2=(x-y)$};
+  \node[note] at (0,-0.4) {Degree of $x-y$ is $1$};
+}
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 --- Circumference of a circle ($r=12.5$ cm, take $\pi=\frac{22}{7}$)}
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1} Use $C=2\pi r$.\par
+\[
+C=2\left(\frac{22}{7}\right)(12.5)=\frac{44\times 12.5}{7}=\frac{550}{7}
+=78\frac{4}{7}\text{ cm}.
+\]
+
+\StepFig{2}{Diagram (radius shown).}{%
+  \coordinate (O) at (0,0);
+  \draw[strong] (O) circle (2.0);
+  \draw[geom,->] (O) -- (2.0,0) node[lab, below right] {$r=12.5$ cm};
+  \fill[pt] (O) circle(1.3pt) node[lab, left] {$O$};
+  \node[note] at (0,-2.55) {$C=2\pi r$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} $\boxed{\dfrac{550}{7}\text{ cm }=78\dfrac{4}{7}\text{ cm}}$
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 --- Surface area of a sphere ($S=4\times \frac{22}{7}r^2$)}
+\textcolor{gold}{\bfseries (i) Radius $r=1.4$ inches}\par
+\Step{1} $S=\dfrac{88}{7}r^2$ and $r^2=(1.4)^2=1.96=\dfrac{49}{25}$.\par
+\[
+S=\frac{88}{7}\cdot \frac{49}{25}=\frac{88\cdot 7}{25}=\frac{616}{25}=24.64\ \text{in}^2.
+\]
+
+\StepFig{2}{Sphere sketch with radius.}{%
+  \coordinate (O) at (0,0);
+  \draw[strong] (O) circle (2.0);
+  \draw[helper] (-2.0,0) arc (180:360:2.0 and 0.6);
+  \draw[geom] (-2.0,0) arc (180:0:2.0 and 0.6);
+  \draw[geom,->] (O) -- (1.4,1.4) node[lab, above right] {$r$};
+  \fill[pt] (O) circle(1.2pt) node[lab, left] {$O$};
+}
+
+\textcolor{gold}{\bfseries (ii) Surface $S=38\frac{1}{2}$ square feet}\par
+\Step{1} $S=\dfrac{88}{7}r^2$, so
+\[
+r^2=\frac{38.5}{88/7}=\frac{77/2}{88/7}=\frac{77}{2}\cdot\frac{7}{88}
+=\frac{49}{16}
+\Rightarrow r=\frac{7}{4}=1.75\ \text{ft}.
+\]
+
+\StepFig{2}{Same idea: solve for $r$ from $S=4\pi r^2$.}{%
+  \node[draw=cyan, rounded corners=12pt, inner sep=10pt, text=text] at (0,0.4)
+  {$r=\sqrt{\dfrac{S}{4\pi}}$};
+  \node[note] at (0,-0.55) {Here $\pi=\dfrac{22}{7}$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answers:}\par
+(i) $\boxed{24.64\ \text{in}^2}$\qquad
+(ii) $\boxed{r=1.75\ \text{ft}}$
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 --- Which sets represent sides of a right-angled triangle?}
+\textcolor{gold}{\bfseries Condition:} The largest number is $c$ and must satisfy $c^2=a^2+b^2$.\par
+
+\StepFig{1}{Right triangle model (label $a,b$ and hypotenuse $c$).}{%
+  \coordinate (B) at (0,0);
+  \coordinate (A) at (0,2.6);
+  \coordinate (C) at (4.0,0);
+  \draw[geom] (A)--(B)--(C)--cycle;
+  \RightAngleMark{B}{0.22}
+  \node[lab] at (-0.25,1.3) {$a$};
+  \node[lab] at (2.0,-0.25) {$b$};
+  \node[lab] at (2.3,1.5) {$c$};
+}
+
+\textcolor{gold}{\bfseries (i) $7,24,25$}\par
+\[
+7^2+24^2=49+576=625=25^2 \Rightarrow \text{Yes.}
+\]
+
+\StepFig{2}{Scaled sketch for $(7,24,25)$ (illustrative).}{%
+  \coordinate (B) at (0,0);
+  \coordinate (A) at (0,1.2);
+  \coordinate (C) at (4.1,0);
+  \draw[strong] (A)--(B)--(C)--cycle;
+  \RightAngleMark{B}{0.18}
+  \node[note] at (0.2,0.6) {$7$};
+  \node[note] at (2.0,-0.35) {$24$};
+  \node[note] at (2.2,0.9) {$25$};
+}
+
+\textcolor{gold}{\bfseries (ii) $1.6,6.3,6.5$}\par
+\[
+1.6^2+6.3^2=2.56+39.69=42.25=6.5^2 \Rightarrow \text{Yes.}
+\]
+
+\StepFig{3}{Scaled sketch for $(1.6,6.3,6.5)$ (illustrative).}{%
+  \coordinate (B) at (0,0);
+  \coordinate (A) at (0,0.65);
+  \coordinate (C) at (3.0,0);
+  \draw[strong] (A)--(B)--(C)--cycle;
+  \RightAngleMark{B}{0.15}
+  \node[note] at (0.25,0.3) {$1.6$};
+  \node[note] at (1.5,-0.35) {$6.3$};
+  \node[note] at (1.7,0.45) {$6.5$};
+}
+
+\textcolor{gold}{\bfseries (iii) $12,35,36$}\par
+\[
+12^2+35^2=144+1225=1369=37^2\neq 36^2 \Rightarrow \text{No.}
+\]
+
+\StepFig{4}{Mismatch shown: $\sqrt{12^2+35^2}=37\neq 36$.}{%
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text] at (0,0.5)
+  {$12^2+35^2=37^2\ \Rightarrow\ \text{not }36^2$};
+  \node[note] at (0,-0.45) {So it is NOT a right triangle set.};
+}
+
+\textcolor{gold}{\bfseries (iv) $3,4,5$}\par
+\[
+3^2+4^2=9+16=25=5^2 \Rightarrow \text{Yes.}
+\]
+
+\StepFig{5}{Classic $3$-$4$-$5$ right triangle.}{%
+  \coordinate (B) at (0,0);
+  \coordinate (A) at (0,1.2);
+  \coordinate (C) at (1.6,0);
+  \draw[strong] (A)--(B)--(C)--cycle;
+  \RightAngleMark{B}{0.16}
+  \node[note] at (0.2,0.6) {$3$};
+  \node[note] at (0.8,-0.35) {$4$};
+  \node[note] at (0.9,0.35) {$5$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} Sets \textbf{(i), (ii), and (iv)} represent right-angled triangles.
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5 --- If $a=3$, $b=4$ and $c=1$, find the value of $\sqrt{2ab+4ac}+\sqrt{9b}+\dfrac{2abc}{3}$}
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1} Compute each part.\par
+\[
+\sqrt{2ab+4ac}=\sqrt{2(3)(4)+4(3)(1)}=\sqrt{24+12}=\sqrt{36}=6
+\]
+\[
+\sqrt{9b}=\sqrt{9\cdot 4}=\sqrt{36}=6,\qquad
+\frac{2abc}{3}=\frac{2(3)(4)(1)}{3}=\frac{24}{3}=8
+\]
+\[
+\Rightarrow\ 6+6+8=20
+\]
+
+\StepFig{2}{Substitution diagram (plug in values).}{%
+  \node[draw=cyan, rounded corners=12pt, inner sep=10pt, text=text, align=center] at (0,0.6)
+  {$a=3,\ b=4,\ c=1$};
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text, align=center] at (0,-0.55)
+  {$\sqrt{2ab+4ac}=6,\ \sqrt{9b}=6,\ \dfrac{2abc}{3}=8$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} $\boxed{20}$
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 --- Subtract the sum from the given expression}
+\textcolor{gold}{\bfseries Question:}\par
+Subtract the sum of $\,2x^3-3x+4$ and $-3x^2+2x-7$ from
+$\,4x^3-3x^2+x-6-\{2x^3-(x-6)\}$.
+
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1} Find the sum:
+\[
+(2x^3-3x+4)+(-3x^2+2x-7)=2x^3-3x^2-x-3
+\]
+\Step{2} Simplify the big expression:
+\[
+\{2x^3-(x-6)\}=2x^3-x+6
+\]
+\[
+4x^3-3x^2+x-6-(2x^3-x+6)=2x^3-3x^2+2x-12
+\]
+\Step{3} Subtract:
+\[
+(2x^3-3x^2+2x-12)-(2x^3-3x^2-x-3)=3x-9=3(x-3)
+\]
+
+\StepFig{4}{Flow diagram: (Big expression) $-$ (Sum).}{%
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text, align=center] (B) at (0,1.1)
+  {$B=2x^3-3x^2+2x-12$};
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text, align=center] (A) at (0,0)
+  {$A=2x^3-3x^2-x-3$};
+  \draw[strong,->] (B) -- (A) node[midway, right, note] {$B-A$};
+  \node[draw=cyan, rounded corners=12pt, inner sep=10pt, text=text] at (0,-1.1)
+  {$3x-9=3(x-3)$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} $\boxed{3x-9=3(x-3)}$
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7 --- Division of algebraic expressions}
+\textcolor{gold}{\bfseries Question:}\par
+Divide the product of $(x-2)$, $(x+3)$ and $(2x-7)$ by the sum of $3(x^2-2x-2)$ and $5x-x^2-15$.
+
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1} Denominator:
+\[
+3(x^2-2x-2)+(5x-x^2-15)=3x^2-6x-6+5x-x^2-15
+\]
+\[
+=2x^2-x-21=(2x-7)(x+3)
+\]
+\Step{2} Now divide:
+\[
+\frac{(x-2)(x+3)(2x-7)}{(2x-7)(x+3)}=x-2
+\]
+
+\StepFig{3}{Cancellation picture: common factors cancel.}{%
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text] (N) at (0,1.0)
+  {Numerator: $(x-2)\,(x+3)\,(2x-7)$};
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text] (D) at (0,0.0)
+  {Denominator: $(x+3)\,(2x-7)$};
+  \draw[strong] (-2.3,0.55) -- (2.3,0.55);
+  \node[draw=cyan, rounded corners=12pt, inner sep=10pt, text=text] at (0,-1.05)
+  {Result: $x-2$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} $\boxed{x-2}$ \quad (with $x\neq -3,\ \frac72$)
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8 --- Simplify}
+\textcolor{gold}{\bfseries (i)} $\displaystyle \frac{x}{x+2}-\frac{5x+3}{x-2}+\frac12$\par
+
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1} Take common denominator $2(x+2)(x-2)$:
+\[
+\frac{2x(x-2)-2(5x+3)(x+2)+(x^2-4)}{2(x+2)(x-2)}
+\]
+\Step{2} Simplify numerator:
+\[
+2x(x-2)=2x^2-4x,\quad (5x+3)(x+2)=5x^2+13x+6
+\]
+\[
+\Rightarrow \text{numerator}= (2x^2-4x)-2(5x^2+13x+6)+(x^2-4)
+\]
+\[
+= -7x^2-30x-16=-(7x+16)(x+2)
+\]
+\Step{3} Cancel $(x+2)$:
+\[
+\frac{-(7x+16)(x+2)}{2(x+2)(x-2)}=-\frac{7x+16}{2(x-2)}
+\]
+
+\StepFig{4}{Common denominator idea.}{%
+  \node[draw=cyan, rounded corners=12pt, inner sep=10pt, text=text] at (0,0.65)
+  {$\text{LCD}=2(x+2)(x-2)$};
+  \node[note] at (0,-0.25) {Convert each term to the same denominator, then combine.};
+}
+
+\textcolor{gold}{\bfseries (ii)} $\displaystyle \frac{x}{x^2-y^2}\times\frac{x^2+2xy+y^2}{x+y}\div\frac{3x}{x-y}$\par
+
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1} Factor:
+\[
+x^2-y^2=(x-y)(x+y),\qquad x^2+2xy+y^2=(x+y)^2
+\]
+\Step{2} Simplify step-by-step:
+\[
+\frac{x}{(x-y)(x+y)}\times\frac{(x+y)^2}{x+y}=\frac{x}{x-y}
+\]
+\[
+\frac{x}{x-y}\div\frac{3x}{x-y}=\frac{x}{x-y}\times\frac{x-y}{3x}=\frac13
+\]
+
+\StepFig{3}{Factor-cancel picture.}{%
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text] at (0,0.9)
+  {$\frac{x}{(x-y)(x+y)}\times(x+y)\times\frac{x-y}{3x}$};
+  \node[draw=cyan, rounded corners=12pt, inner sep=10pt, text=text] at (0,-0.2)
+  {Cancel $(x+y)$, $(x-y)$, and $x$};
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text] at (0,-1.2)
+  {$=\dfrac13$};
+}
+
+\tcblower
+\textcolor{green}{\bfseries Answers:}\par
+(i) $\boxed{-\dfrac{7x+16}{2(x-2)}}$\quad ($x\neq \pm 2$)\par
+(ii) $\boxed{\dfrac13}$\quad ($x\neq 0,\ x\neq \pm y$)
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9 --- Solve}
+\textcolor{gold}{\bfseries (i)} $\displaystyle \frac{12}{x^2-16}-\frac{24}{x-4}=3$\par
+
+\textcolor{gold}{\bfseries Working:}\par
+\Step{1} Factor $x^2-16=(x-4)(x+4)$ (so $x\neq \pm 4$).\par
+\Step{2} Multiply both sides by $(x-4)(x+4)$:
+\[
+12-24(x+4)=3(x^2-16)
+\]
+\[
+12-24x-96=3x^2-48\Rightarrow -24x-84=3x^2-48
+\]
+\[
+3x^2+24x+36=0\Rightarrow x^2+8x+12=0
+\]
+\[
+(x+2)(x+6)=0\Rightarrow x=-2,\,-6
+\]
+
+\StepFig{3}{Number line: forbidden points and solutions.}{%
+  \draw[geom,->] (-4.8,0) -- (4.8,0);
+  \foreach \t/\lab in {-4/$-4$,4/$4$,-2/$-2$,-3.2/$-6$}{
+    \draw[geom] (\t,0.12) -- (\t,-0.12);
+    \node[lab, below] at (\t,-0.2) {\lab};
+  }
+  \node[note] at (-4,0.65) {$\times$ not allowed};
+  \node[note] at (4,0.65) {$\times$ not allowed};
+  \fill[pt] (-2,0) circle(1.5pt);
+  \fill[pt] (-3.2,0) circle(1.5pt);
+  \node[note] at (-2,0.55) {$\checkmark$};
+  \node[note] at (-3.2,0.55) {$\checkmark$};
+}
+
+\textcolor{gold}{\bfseries (ii)} $\displaystyle \frac{y}{2y-6}-\frac{3}{x^2-6x+9}=\frac{y-2}{3y-9}$\par
+\textcolor{muted}{\small In the scan, the middle denominator is printed with $x$ while the rest uses $y$.\;
+Usually it should be one variable. Below are both cases.}\par
+
+\textcolor{gold}{\bfseries Case A (most likely): take it as } $\displaystyle \frac{y}{2y-6}-\frac{3}{y^2-6y+9}=\frac{y-2}{3y-9}$\par
+\Step{1} Note $2y-6=2(y-3)$, $y^2-6y+9=(y-3)^2$, $3y-9=3(y-3)$, so $y\neq 3$.\par
+Multiply by $6(y-3)^2$:
+\[
+3y(y-3)-18=2(y-2)(y-3)
+\]
+\[
+3y^2-9y-18=2y^2-10y+12
+\]
+\[
+y^2+y-30=0\Rightarrow (y+6)(y-5)=0
+\Rightarrow y=-6,\ 5
+\]
+
+\StepFig{4}{Number line for Case A ($y\neq 3$).}{%
+  \draw[geom,->] (-5.6,0) -- (5.8,0);
+  \draw[geom] (0,0.12) -- (0,-0.12);
+  \node[lab, below] at (0,-0.2) {$3$};
+  \node[note] at (0,0.65) {$\times$ not allowed};
+
+  \draw[geom] (-3.0,0.12) -- (-3.0,-0.12);
+  \node[lab, below] at (-3.0,-0.2) {$-6$};
+  \fill[pt] (-3.0,0) circle(1.5pt);
+
+  \draw[geom] (2.2,0.12) -- (2.2,-0.12);
+  \node[lab, below] at (2.2,-0.2) {$5$};
+  \fill[pt] (2.2,0) circle(1.5pt);
+}
+
+\textcolor{gold}{\bfseries Case B (if $x$ is really intended):}\par
+\[
+\frac{y}{2(y-3)}-\frac{y-2}{3(y-3)}=\frac{3}{(x-3)^2}
+\Rightarrow \frac{y+4}{6(y-3)}=\frac{3}{(x-3)^2}
+\]
+\[
+(x-3)^2=\frac{18(y-3)}{y+4}\quad (y\neq 3,\ -4)
+\Rightarrow x=3\pm \sqrt{\frac{18(y-3)}{y+4}}.
+\]
+
+\tcblower
+\textcolor{green}{\bfseries Answers:}\par
+(i) $\boxed{x=-2,\,-6}$\par
+(ii) Case A: $\boxed{y=5,\,-6}$ (and $y\neq 3$)\par
+\textcolor{muted}{\small If the book truly meant two variables (Case B), then $x=3\pm \sqrt{\frac{18(y-3)}{y+4}}$.}
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10 --- Check denominators in a rational equation (Why?)}
+\textcolor{gold}{\bfseries Question:} When checking a possible solution of a rational equation, is it necessary to check that the solution does not make any denominator equal $0$? Why or why not?
+
+\tcblower
+\textcolor{green}{\bfseries Answer:} \textbf{Yes, it is necessary.}\par
+If a value makes any denominator $0$, then the expression is \textbf{undefined} (division by zero is not allowed). Also, when we solve rational equations we often \emph{multiply} both sides by denominators to remove fractions; that step can create \textbf{extraneous solutions}. So we must substitute the answer back and confirm no denominator becomes $0$.
+
+\StepFig{1}{Visual: denominator $0$ means the fraction is not defined.}{%
+  \node[draw=border, rounded corners=12pt, inner sep=10pt, text=text] at (0,0.8)
+  {$\dfrac{P(x)}{Q(x)}$};
+  \node[draw=cyan, rounded corners=12pt, inner sep=10pt, text=text] at (0,-0.1)
+  {$Q(x)=0\ \Rightarrow\ \text{NOT defined}$};
+  \draw[strong] (-1.4,-0.65) -- (1.4,0.65);
+  \draw[strong] (-1.4,0.65) -- (1.4,-0.65);
+}
+\end{QAPair}
+
+\end{document}

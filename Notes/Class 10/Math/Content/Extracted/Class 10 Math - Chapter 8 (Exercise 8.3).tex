@@ -1,0 +1,1507 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{calc,angles,quotes}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% Safety net for rare overfull lines
+\setlength{\emergencystretch}{2em}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% -------------------- Internal-angle helper (ALWAYS draws the smaller / inside angle) --------------------
+% Usage: \IntAngleLabel{P1}{V}{P2}{<label>}
+% It automatically swaps rays if TikZ would draw the reflex/external angle.
+\newcommand{\IntAngleLabel}[4]{%
+  \pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}{\pgfpointanchor{#1}{center}}%
+  \let\AngOne\pgfmathresult%
+  \pgfmathanglebetweenpoints{\pgfpointanchor{#2}{center}}{\pgfpointanchor{#3}{center}}%
+  \let\AngTwo\pgfmathresult%
+  \pgfmathsetmacro{\DeltaAng}{mod(\AngTwo-\AngOne+360,360)}%
+  \ifdim \DeltaAng pt > 180pt
+    \draw pic[
+      draw=gold, fill=gold!15, text=gold,
+      angle radius=8mm, angle eccentricity=1.12, line width=0.8pt
+    ] {angle=#3--#2--#1};
+  \else
+    \draw pic[
+      draw=gold, fill=gold!15, text=gold,
+      angle radius=8mm, angle eccentricity=1.12, line width=0.8pt
+    ] {angle=#1--#2--#3};
+  \fi
+}
+
+% -------------------- Diagram Macros --------------------
+% Generic triangle ABC (not to scale)
+% Convention: a=BC, b=CA, c=AB ; alpha at A, beta at B, gamma at C
+\newcommand{\TriABC}[6]{%
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (C) at (0,0);
+  \coordinate (B) at (5,0);
+  \coordinate (A) at (1.7,3.0);
+  \draw (A)--(B)--(C)--cycle;
+
+  \node[above] at (A) {$A$};
+  \node[below] at (B) {$B$};
+  \node[below] at (C) {$C$};
+
+  % side labels (only if provided)
+  \if\relax\detokenize{#1}\relax\else \node[below] at ($(B)!0.5!(C)$) {#1};\fi
+  \if\relax\detokenize{#2}\relax\else \node[left]  at ($(C)!0.5!(A)$) {#2};\fi
+  \if\relax\detokenize{#3}\relax\else \node[right] at ($(A)!0.5!(B)$) {#3};\fi
+
+  % angle labels (ONLY internal angles)
+  \if\relax\detokenize{#4}\relax\else \IntAngleLabel{B}{A}{C}{#4}\fi
+  \if\relax\detokenize{#5}\relax\else \IntAngleLabel{A}{B}{C}{#5}\fi
+  \if\relax\detokenize{#6}\relax\else \IntAngleLabel{B}{C}{A}{#6}\fi
+\end{tikzpicture}%
+}
+
+% Right triangle marker at C (use for gamma = 90° cases)
+\newcommand{\TriABCrightC}[6]{%
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (C) at (0,0);
+  \coordinate (B) at (5,0);
+  \coordinate (A) at (1.7,3.0);
+  \draw (A)--(B)--(C)--cycle;
+
+  \node[above] at (A) {$A$};
+  \node[below] at (B) {$B$};
+  \node[below] at (C) {$C$};
+
+  % right-angle marker at C
+  \draw ($(C)+(0.55,0)$) -- ($(C)+(0.55,0.55)$) -- ($(C)+(0,0.55)$);
+
+  % side labels
+  \if\relax\detokenize{#1}\relax\else \node[below] at ($(B)!0.5!(C)$) {#1};\fi
+  \if\relax\detokenize{#2}\relax\else \node[left]  at ($(C)!0.5!(A)$) {#2};\fi
+  \if\relax\detokenize{#3}\relax\else \node[right] at ($(A)!0.5!(B)$) {#3};\fi
+
+  % angle labels (ONLY internal angles)
+  \if\relax\detokenize{#4}\relax\else \IntAngleLabel{B}{A}{C}{#4}\fi
+  \if\relax\detokenize{#5}\relax\else \IntAngleLabel{A}{B}{C}{#5}\fi
+  \if\relax\detokenize{#6}\relax\else \IntAngleLabel{B}{C}{A}{#6}\fi
+\end{tikzpicture}%
+}
+
+% Parallelogram with diagonals (not to scale)
+\newcommand{\ParaDiag}[3]{% #1 side AB label, #2 side AD label, #3 angle at A label
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (5,0);
+  \coordinate (D) at (1.6,2.4);
+  \coordinate (C) at ($(B)+(D)-(A)$);
+
+  \draw (A)--(B)--(C)--(D)--cycle;
+  \draw[dashed] (A)--(C);
+  \draw[dashed] (B)--(D);
+
+  \node[below left]  at (A) {$A$};
+  \node[below right] at (B) {$B$};
+  \node[above right] at (C) {$C$};
+  \node[above left]  at (D) {$D$};
+
+  \if\relax\detokenize{#1}\relax\else \node[below] at ($(A)!0.5!(B)$) {#1};\fi
+  \if\relax\detokenize{#2}\relax\else \node[left]  at ($(A)!0.5!(D)$) {#2};\fi
+
+  \node at ($(A)!0.55!(C)$) [above] {$d_1$};
+  \node at ($(B)!0.55!(D)$) [above] {$d_2$};
+
+  \if\relax\detokenize{#3}\relax\else \IntAngleLabel{B}{A}{D}{#3}\fi
+\end{tikzpicture}%
+}
+
+% Building / two observation points (Q12)
+\newcommand{\BuildingDiag}{%
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (B) at (0,0);    % building base
+  \coordinate (T) at (0,3.3);  % building top (not to scale)
+  \coordinate (P) at (3,0);    % nearer point
+  \coordinate (Q) at (7,0);    % farther point
+
+  % ground and building
+  \draw (B)--(Q);
+  \draw (B)--(T);
+
+  % sight lines
+  \draw (P)--(T);
+  \draw (Q)--(T);
+
+  % labels
+  \node[below left] at (B) {Base};
+  \node[left] at (T) {Top};
+  \node[below] at (P) {$P$};
+  \node[below] at (Q) {$Q$};
+
+  % distance between points
+  \node[below] at ($(P)!0.5!(Q)$) {$150$ ft};
+
+  % angles of elevation (always acute / internal)
+  \IntAngleLabel{B}{P}{T}{$48^\circ$}
+  \IntAngleLabel{B}{Q}{T}{$35^\circ$}
+\end{tikzpicture}%
+}
+
+% Fire towers (Q13)
+\newcommand{\FireTowerDiag}{%
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (6,0);
+  \coordinate (F) at (2.3,3.2);
+
+  \draw (A)--(B)--(F)--cycle;
+
+  \node[below left] at (A) {$A$};
+  \node[below right] at (B) {$B$};
+  \node[above] at (F) {Fire};
+
+  \node[below] at ($(A)!0.5!(B)$) {$10$ mi};
+
+  \IntAngleLabel{B}{A}{F}{$42^\circ$}
+  \IntAngleLabel{A}{B}{F}{$64^\circ$}
+\end{tikzpicture}%
+}
+
+% Circle chord (Q14)
+\newcommand{\ChordDiag}{%
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (O) at (0,0);
+  \coordinate (A) at ({2*cos(60)},{2*sin(60)});
+  \coordinate (B) at ({2*cos(-60)},{2*sin(-60)});
+
+  \draw (O) circle (2);
+  \draw (O)--(A);
+  \draw (O)--(B);
+  \draw (A)--(B);
+
+  \node at (O) [below left] {$O$};
+  \node at (A) [above] {$A$};
+  \node at (B) [below] {$B$};
+
+  \node at ($(O)!0.55!(A)$) [left] {$15$ cm};
+
+  \IntAngleLabel{B}{O}{A}{$120^\circ$}
+\end{tikzpicture}%
+}
+
+% Ship and two lighthouses (Q15)
+\newcommand{\ShipDiag}{%
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (L1) at (0,0);
+  \coordinate (L2) at (6,0);
+  \coordinate (S)  at (2.2,3.1);
+
+  \draw (L1)--(L2)--(S)--cycle;
+
+  \node[below] at (L1) {L$_1$};
+  \node[below] at (L2) {L$_2$};
+  \node[above] at (S) {Ship};
+
+  \node[below] at ($(L1)!0.5!(L2)$) {$12$ mi};
+  \node[left]  at ($(L1)!0.5!(S)$) {$15$ mi};
+  \node[right] at ($(L2)!0.5!(S)$) {$20$ mi};
+
+  \IntAngleLabel{L1}{S}{L2}{$\theta$}
+\end{tikzpicture}%
+}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 8.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Law of Sines:}\quad $\displaystyle \frac{a}{\sin\alpha}=\frac{b}{\sin\beta}=\frac{c}{\sin\gamma}$.
+\item \textbf{Law of Cosines:}\quad
+$\displaystyle a^2=b^2+c^2-2bc\cos\alpha$ (and cyclic).
+\item \textbf{Law of Tangents:}\quad
+$\displaystyle \frac{a-b}{a+b}=\frac{\tan\left(\frac{\alpha-\beta}{2}\right)}{\tan\left(\frac{\alpha+\beta}{2}\right)}$ (and cyclic).
+\item \textbf{Half-angle (SSS):}\;
+$s=\frac{a+b+c}{2}$,\;
+$\displaystyle \tan\frac{\alpha}{2}=\sqrt{\frac{(s-b)(s-c)}{s(s-a)}}$ (and cyclic).
+\item \textbf{Area:}\quad $\Delta=\frac12 bc\sin\alpha$ \quad or \quad $\Delta=\sqrt{s(s-a)(s-b)(s-c)}$.
+\end{itemize}
+
+% --- Diagram INSIDE Quick Formula box (as requested) ---
+\medskip
+\textcolor{muted}{Reference diagram (labels for the laws):}
+\[
+\TriABC{$a$}{$b$}{$c$}{$\alpha$}{$\beta$}{$\gamma$}
+\]
+\end{QuickBox}
+
+% ============================================================
+% Q1 FULL STATEMENT
+\begin{QAPair}{Question 1 (Full Question)}
+\textcolor{gold}{\bfseries Question:} Use the \textbf{Law of Cosines} to solve parts (i) to (ix).\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\textcolor{muted}{Diagram (general triangle):}
+\[
+\TriABC{$a$}{$b$}{$c$}{$\alpha$}{$\beta$}{$\gamma$}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q1 (i) to (ix)
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $a=7,\; b=12,\; \gamma=58.5^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{$a=7$}{$b=12$}{}{}{}{$\gamma=58.5^\circ$}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& c^2=a^2+b^2-2ab\cos\gamma
+=7^2+12^2-2(7)(12)\cos 58.5^\circ\\
+&\Rightarrow\; c\approx 10.26.\\[4pt]
+\Step{2}\;& \frac{a}{\sin\alpha}=\frac{c}{\sin\gamma}
+\Rightarrow \sin\alpha=\frac{a\sin\gamma}{c}
+=\frac{7\sin 58.5^\circ}{10.26}
+\Rightarrow \alpha\approx 35.58^\circ.\\[4pt]
+\Step{3}\;& \beta=180^\circ-\alpha-\gamma
+\approx 180^\circ-35.58^\circ-58.5^\circ
+=85.92^\circ.
+\end{aligned}
+\]
+\[
+\boxed{c\approx 10.26,\;\alpha\approx 35.58^\circ,\;\beta\approx 85.92^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $b=20,\; c=15,\; \alpha=36^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{}{$b=20$}{$c=15$}{$\alpha=36^\circ$}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& a^2=b^2+c^2-2bc\cos\alpha
+=20^2+15^2-2(20)(15)\cos 36^\circ
+\Rightarrow a\approx 11.81.\\[4pt]
+\Step{2}\;& \cos\beta=\frac{a^2+c^2-b^2}{2ac}
+\Rightarrow \beta\approx 95.73^\circ.\\[4pt]
+\Step{3}\;& \gamma=180^\circ-\alpha-\beta
+\approx 48.27^\circ.
+\end{aligned}
+\]
+\[
+\boxed{a\approx 11.81,\;\beta\approx 95.73^\circ,\;\gamma\approx 48.27^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $a=150,\; c=150,\; \beta=15^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{$a=150$}{}{$c=150$}{}{$\beta=15^\circ$}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& b^2=a^2+c^2-2ac\cos\beta
+=150^2+150^2-2(150)(150)\cos 15^\circ
+\Rightarrow b\approx 39.16.\\
+\Step{2}\;& a=c\Rightarrow \alpha=\gamma.\\
+\Step{3}\;& \alpha+\gamma=180^\circ-\beta=165^\circ
+\Rightarrow \alpha=\gamma=82.5^\circ.
+\end{aligned}
+\]
+\[
+\boxed{b\approx 39.16,\;\alpha=82.5^\circ,\;\gamma=82.5^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $\beta=45^\circ,\; a=30,\; c=42$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{$a=30$}{}{$c=42$}{}{$\beta=45^\circ$}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& b^2=a^2+c^2-2ac\cos\beta
+=30^2+42^2-2(30)(42)\cos 45^\circ
+\Rightarrow b\approx 29.70.\\
+\Step{2}\;& \cos\alpha=\frac{b^2+c^2-a^2}{2bc}
+\Rightarrow \alpha\approx 45.58^\circ.\\
+\Step{3}\;& \gamma=180^\circ-\alpha-\beta
+\Rightarrow \gamma\approx 89.42^\circ.
+\end{aligned}
+\]
+\[
+\boxed{b\approx 29.70,\;\alpha\approx 45.58^\circ,\;\gamma\approx 89.42^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $a=7,\; b=10,\; c=12$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{$a=7$}{$b=10$}{$c=12$}{}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \cos\alpha=\frac{b^2+c^2-a^2}{2bc}
+=\frac{10^2+12^2-7^2}{2(10)(12)}
+\Rightarrow \alpha\approx 35.66^\circ.\\
+\Step{2}\;& \cos\beta=\frac{a^2+c^2-b^2}{2ac}
+=\frac{7^2+12^2-10^2}{2(7)(12)}
+\Rightarrow \beta\approx 56.39^\circ.\\
+\Step{3}\;& \gamma=180^\circ-\alpha-\beta
+\Rightarrow \gamma\approx 87.95^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 35.66^\circ,\;\beta\approx 56.39^\circ,\;\gamma\approx 87.95^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $a=3,\; b=3,\; c=5$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{$a=3$}{$b=3$}{$c=5$}{}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \cos\gamma=\frac{a^2+b^2-c^2}{2ab}
+=\frac{3^2+3^2-5^2}{2(3)(3)}=\frac{-7}{18}
+\Rightarrow \gamma\approx 112.89^\circ.\\
+\Step{2}\;& a=b \Rightarrow \alpha=\beta.\\
+\Step{3}\;& \alpha=\beta=\frac{180^\circ-\gamma}{2}\approx 33.55^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 33.55^\circ,\;\beta\approx 33.55^\circ,\;\gamma\approx 112.89^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $a=30,\; b=45,\; c=50$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{$a=30$}{$b=45$}{$c=50$}{}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \cos\alpha=\frac{b^2+c^2-a^2}{2bc}\Rightarrow \alpha\approx 35.72^\circ.\\
+\Step{2}\;& \cos\beta=\frac{a^2+c^2-b^2}{2ac}\Rightarrow \beta\approx 54.17^\circ.\\
+\Step{3}\;& \gamma=180^\circ-\alpha-\beta \Rightarrow \gamma\approx 90.11^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 35.72^\circ,\;\beta\approx 54.17^\circ,\;\gamma\approx 90.11^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $a=6,\; b=6,\; c=6$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (equilateral):}
+\[
+\TriABC{$6$}{$6$}{$6$}{}{}{}
+\]
+
+All sides are equal, so the triangle is equilateral:
+\[
+\boxed{\alpha=\beta=\gamma=60^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Cosines to solve triangle $ABC$ if $a=5,\; b=12,\; c=13$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (right triangle at $C$):}
+\[
+\TriABCrightC{$a=5$}{$b=12$}{$c=13$}{}{}{$\gamma=90^\circ$}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& 5^2+12^2=25+144=169=13^2\Rightarrow \text{right triangle.}\\
+\Step{2}\;& c=13\Rightarrow \gamma=90^\circ.\\
+\Step{3}\;& \sin\alpha=\frac{a}{c}=\frac{5}{13}\Rightarrow \alpha\approx 22.62^\circ,\quad
+\beta=90^\circ-\alpha\approx 67.38^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 22.62^\circ,\;\beta\approx 67.38^\circ,\;\gamma=90^\circ.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (Full Question)}
+\textcolor{gold}{\bfseries Question:} Use the \textbf{half-angle formulae} to solve parts (v) to (ix) in Question 1 where possible.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+For SSS triangles, let $s=\dfrac{a+b+c}{2}$ and use:
+\[
+\tan\frac{\alpha}{2}=\sqrt{\frac{(s-b)(s-c)}{s(s-a)}},\quad
+\tan\frac{\beta}{2}=\sqrt{\frac{(s-c)(s-a)}{s(s-b)}},\quad
+\tan\frac{\gamma}{2}=\sqrt{\frac{(s-a)(s-b)}{s(s-c)}}.
+\]
+Then $\alpha=2\tan^{-1}\!\left(\tan\frac{\alpha}{2}\right)$ etc.
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (v)}
+\textcolor{gold}{\bfseries Question:} Use half-angle formulae for $a=7,\; b=10,\; c=12$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$a=7$}{$b=10$}{$c=12$}{}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& s=\frac{7+10+12}{2}=14.5.\\
+\Step{2}\;& \tan\frac{\alpha}{2}=\sqrt{\frac{(14.5-10)(14.5-12)}{14.5(14.5-7)}}\approx 0.3217
+\Rightarrow \alpha\approx 35.66^\circ.\\
+\Step{3}\;& \tan\frac{\beta}{2}\approx 0.5349
+\Rightarrow \beta\approx 56.39^\circ.\\
+\Step{4}\;& \tan\frac{\gamma}{2}\approx 0.9275
+\Rightarrow \gamma\approx 87.95^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 35.66^\circ,\;\beta\approx 56.39^\circ,\;\gamma\approx 87.95^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (vi)}
+\textcolor{gold}{\bfseries Question:} Use half-angle formulae for $a=3,\; b=3,\; c=5$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$a=3$}{$b=3$}{$c=5$}{}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& s=\frac{3+3+5}{2}=5.5.\\
+\Step{2}\;& \tan\frac{\alpha}{2}=\sqrt{\frac{(5.5-3)(5.5-5)}{5.5(5.5-3)}}\approx 0.3015
+\Rightarrow \alpha\approx 33.55^\circ.\\
+\Step{3}\;& a=b\Rightarrow \beta=\alpha\approx 33.55^\circ.\\
+\Step{4}\;& \gamma=180^\circ-\alpha-\beta\approx 112.89^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 33.55^\circ,\;\beta\approx 33.55^\circ,\;\gamma\approx 112.89^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (vii)}
+\textcolor{gold}{\bfseries Question:} Use half-angle formulae for $a=30,\; b=45,\; c=50$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$a=30$}{$b=45$}{$c=50$}{}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& s=\frac{30+45+50}{2}=62.5.\\
+\Step{2}\;& \tan\frac{\alpha}{2}\approx 0.3206 \Rightarrow \alpha\approx 35.72^\circ.\\
+\Step{3}\;& \tan\frac{\beta}{2}\approx 0.5112 \Rightarrow \beta\approx 54.17^\circ.\\
+\Step{4}\;& \gamma=180^\circ-\alpha-\beta\approx 90.11^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 35.72^\circ,\;\beta\approx 54.17^\circ,\;\gamma\approx 90.11^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (viii)}
+\textcolor{gold}{\bfseries Question:} Use half-angle formulae for $a=b=c=6$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$6$}{$6$}{$6$}{}{}{}
+\]
+
+\[
+s=\frac{6+6+6}{2}=9,\quad
+\tan\frac{\alpha}{2}=\sqrt{\frac{(9-6)(9-6)}{9(9-6)}}=\frac{1}{\sqrt3}
+\Rightarrow \alpha=60^\circ.
+\]
+Similarly $\beta=\gamma=60^\circ$.
+\[
+\boxed{\alpha=\beta=\gamma=60^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ix)}
+\textcolor{gold}{\bfseries Question:} Use half-angle formulae for $a=5,\; b=12,\; c=13$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (right triangle at $C$):}
+\[
+\TriABCrightC{$5$}{$12$}{$13$}{}{}{$90^\circ$}
+\]
+
+\[
+s=\frac{5+12+13}{2}=15.
+\]
+\[
+\tan\frac{\gamma}{2}=\sqrt{\frac{(15-5)(15-12)}{15(15-13)}}=1
+\Rightarrow \gamma=90^\circ.
+\]
+Then $\alpha\approx 22.62^\circ$ and $\beta\approx 67.38^\circ$.
+\[
+\boxed{\alpha\approx 22.62^\circ,\;\beta\approx 67.38^\circ,\;\gamma=90^\circ.}
+\]
+\end{QAPair}
+
+% ============================================================
+% FULL QUESTION 3 STATEMENT
+\begin{QAPair}{Question 3 (Full Question)}
+\textcolor{gold}{\bfseries Question:} Use the \textbf{Law of Sines} to solve triangle $ABC$ in the following (where possible):\par
+\begin{enumerate}[label=(\roman*), itemsep=2pt, topsep=4pt]
+  \item $a=10,\; \alpha=40^\circ,\; \beta=60^\circ$
+  \item $b=20,\; \alpha=50^\circ,\; \beta=70^\circ$
+  \item $c=12,\; \alpha=45^\circ,\; \beta=75^\circ$
+  \item $b=18,\; \beta=40^\circ35',\; \gamma=120^\circ$
+  \item $a=14.6,\; \alpha=25^\circ10',\; \beta=85.5^\circ$
+  \item $c=52,\; \alpha=42.3^\circ,\; \gamma=85^\circ14'$
+\end{enumerate}
+\tcblower
+\textcolor{green}{\bfseries Answer:} Solutions are given part-wise below.
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Sines if $a=10,\; \alpha=40^\circ,\; \beta=60^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$a=10$}{}{}{$\alpha=40^\circ$}{$\beta=60^\circ$}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \gamma=180^\circ-40^\circ-60^\circ=80^\circ.\\
+\Step{2}\;& b=10\frac{\sin60^\circ}{\sin40^\circ}\approx 13.47.\\
+\Step{3}\;& c=10\frac{\sin80^\circ}{\sin40^\circ}\approx 15.32.
+\end{aligned}
+\]
+\[
+\boxed{\gamma=80^\circ,\; b\approx 13.47,\; c\approx 15.32.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Sines if $b=20,\; \alpha=50^\circ,\; \beta=70^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{}{$b=20$}{}{$\alpha=50^\circ$}{$\beta=70^\circ$}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \gamma=180^\circ-50^\circ-70^\circ=60^\circ.\\
+\Step{2}\;& a=20\frac{\sin50^\circ}{\sin70^\circ}\approx 16.31.\\
+\Step{3}\;& c=20\frac{\sin60^\circ}{\sin70^\circ}\approx 18.44.
+\end{aligned}
+\]
+\[
+\boxed{\gamma=60^\circ,\; a\approx 16.31,\; c\approx 18.44.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Sines if $c=12,\; \alpha=45^\circ,\; \beta=75^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{}{}{$c=12$}{$\alpha=45^\circ$}{$\beta=75^\circ$}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \gamma=180^\circ-45^\circ-75^\circ=60^\circ.\\
+\Step{2}\;& a=12\frac{\sin45^\circ}{\sin60^\circ}\approx 9.80.\\
+\Step{3}\;& b=12\frac{\sin75^\circ}{\sin60^\circ}\approx 13.39.
+\end{aligned}
+\]
+\[
+\boxed{\gamma=60^\circ,\; a\approx 9.80,\; b\approx 13.39.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Sines if $b=18,\; \beta=40^\circ35',\; \gamma=120^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{}{$b=18$}{}{}{$\beta=40^\circ35'$}{$\gamma=120^\circ$}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \beta=40^\circ35'=40+\frac{35}{60}=40.5833^\circ.\\
+\Step{2}\;& \alpha=180^\circ-\beta-\gamma=19.4167^\circ.\\
+\Step{3}\;& a=18\frac{\sin19.4167^\circ}{\sin40.5833^\circ}\approx 9.19.\\
+\Step{4}\;& c=18\frac{\sin120^\circ}{\sin40.5833^\circ}\approx 23.94.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 19.42^\circ,\; a\approx 9.19,\; c\approx 23.94.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (v)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Sines if $a=14.6,\; \alpha=25^\circ10',\; \beta=85.5^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$a=14.6$}{}{}{$\alpha=25^\circ10'$}{$\beta=85.5^\circ$}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \alpha=25^\circ10'=25+\frac{10}{60}=25.1667^\circ.\\
+\Step{2}\;& \gamma=180^\circ-\alpha-\beta=69.3333^\circ.\\
+\Step{3}\;& b=14.6\frac{\sin85.5^\circ}{\sin25.1667^\circ}\approx 34.20.\\
+\Step{4}\;& c=14.6\frac{\sin69.3333^\circ}{\sin25.1667^\circ}\approx 32.18.
+\end{aligned}
+\]
+\[
+\boxed{\gamma\approx 69.33^\circ,\; b\approx 34.20,\; c\approx 32.18.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (vi)}
+\textcolor{gold}{\bfseries Question:} Use the Law of Sines if $c=52,\; \alpha=42.3^\circ,\; \gamma=85^\circ14'$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{}{}{$c=52$}{$\alpha=42.3^\circ$}{}{$\gamma=85^\circ14'$}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \gamma=85^\circ14' = 85+\frac{14}{60}=85.2333^\circ.\\
+\Step{2}\;& \beta=180^\circ-\alpha-\gamma=52.4667^\circ.\\
+\Step{3}\;& a=52\frac{\sin42.3^\circ}{\sin85.2333^\circ}\approx 36.41.\\
+\Step{4}\;& b=52\frac{\sin52.4667^\circ}{\sin85.2333^\circ}\approx 41.38.
+\end{aligned}
+\]
+\[
+\boxed{\beta\approx 52.47^\circ,\; a\approx 36.41,\; b\approx 41.38.}
+\]
+\end{QAPair}
+
+% ============================================================
+% FULL QUESTION 4 STATEMENT
+\begin{QAPair}{Question 4 (Full Question)}
+\textcolor{gold}{\bfseries Question:} Solve parts (i) to (iv) of Question 1 by using the \textbf{Law of Tangents}.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:} Solutions are shown below (same answers as Q1(i)--Q1(iv)).
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} Solve Question 1(i) using the Law of Tangents.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Given $a=7,\; b=12,\; \gamma=58.5^\circ$.
+\[
+\alpha+\beta=180^\circ-\gamma=121.5^\circ
+\Rightarrow \frac{\alpha+\beta}{2}=60.75^\circ.
+\]
+\[
+\frac{a-b}{a+b}=\frac{\tan\left(\frac{\alpha-\beta}{2}\right)}{\tan\left(\frac{\alpha+\beta}{2}\right)}
+\Rightarrow
+\tan\left(\frac{\alpha-\beta}{2}\right)=\frac{7-12}{7+12}\tan(60.75^\circ).
+\]
+This gives $\alpha\approx 35.58^\circ$ and $\beta\approx 85.92^\circ$ (and $c\approx 10.26$).
+\[
+\boxed{\alpha\approx 35.58^\circ,\;\beta\approx 85.92^\circ,\; c\approx 10.26.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} Solve Question 1(ii) using the Law of Tangents.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Given $b=20,\; c=15,\; \alpha=36^\circ$.
+\[
+\beta+\gamma=180^\circ-\alpha=144^\circ
+\Rightarrow \frac{\beta+\gamma}{2}=72^\circ.
+\]
+\[
+\frac{b-c}{b+c}=\frac{\tan\left(\frac{\beta-\gamma}{2}\right)}{\tan\left(\frac{\beta+\gamma}{2}\right)}
+\Rightarrow
+\tan\left(\frac{\beta-\gamma}{2}\right)=\frac{20-15}{20+15}\tan(72^\circ).
+\]
+Hence $\beta\approx 95.73^\circ$, $\gamma\approx 48.27^\circ$, and $a\approx 11.81$.
+\[
+\boxed{\beta\approx 95.73^\circ,\;\gamma\approx 48.27^\circ,\; a\approx 11.81.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} Solve Question 1(iii) using the Law of Tangents.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Given $a=c=150$ and $\beta=15^\circ$. Since $a=c$, we get $\alpha=\gamma$:
+\[
+\alpha=\gamma=\frac{180^\circ-15^\circ}{2}=82.5^\circ,\qquad b\approx 39.16.
+\]
+\[
+\boxed{\alpha=\gamma=82.5^\circ,\; b\approx 39.16.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iv)}
+\textcolor{gold}{\bfseries Question:} Solve Question 1(iv) using the Law of Tangents.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Given $a=30,\; c=42,\; \beta=45^\circ$.
+\[
+\alpha+\gamma=180^\circ-\beta=135^\circ
+\Rightarrow \frac{\alpha+\gamma}{2}=67.5^\circ.
+\]
+\[
+\frac{a-c}{a+c}=\frac{\tan\left(\frac{\alpha-\gamma}{2}\right)}{\tan\left(\frac{\alpha+\gamma}{2}\right)}
+\Rightarrow
+\tan\left(\frac{\alpha-\gamma}{2}\right)=\frac{30-42}{30+42}\tan(67.5^\circ).
+\]
+So $\alpha\approx 45.58^\circ$, $\gamma\approx 89.42^\circ$, and $b\approx 29.70$.
+\[
+\boxed{\alpha\approx 45.58^\circ,\;\gamma\approx 89.42^\circ,\; b\approx 29.70.}
+\]
+\end{QAPair}
+
+% ============================================================
+% FULL QUESTION 5 STATEMENT
+\begin{QAPair}{Question 5 (Full Question)}
+\textcolor{gold}{\bfseries Question:} Solve by using an appropriate law:\par
+\begin{enumerate}[label=(\roman*), itemsep=2pt, topsep=4pt]
+  \item $a=10,\; b=8,\; \beta=80^\circ$
+  \item $b=20,\; c=14,\; \beta=70^\circ$
+  \item $c=12,\; b=10,\; \gamma=64^\circ$
+  \item $b=18,\; \alpha=55^\circ5',\; a=37$
+  \item $a=14.6,\; b=10.6,\; c=17.2$
+  \item $c=88,\; \beta=23.2^\circ,\; \gamma=73^\circ14'$
+\end{enumerate}
+\tcblower
+\textcolor{green}{\bfseries Answer:} Solutions are given part-wise below.
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (i)}
+\textcolor{gold}{\bfseries Question:} $a=10,\; b=8,\; \beta=80^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (SSA given):}
+\[
+\TriABC{$a=10$}{$b=8$}{}{}{$\beta=80^\circ$}{}
+\]
+
+Try Law of Sines:
+\[
+\sin\alpha=\frac{a\sin\beta}{b}=\frac{10\sin80^\circ}{8}\approx 1.231>1.
+\]
+So \textbf{no triangle is possible}.
+\[
+\boxed{\text{No solution (triangle does not exist).}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (ii)}
+\textcolor{gold}{\bfseries Question:} $b=20,\; c=14,\; \beta=70^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{}{$b=20$}{$c=14$}{}{$\beta=70^\circ$}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \sin\gamma=\frac{c\sin\beta}{b}=\frac{14\sin70^\circ}{20}\approx 0.6578
+\Rightarrow \gamma\approx 41.13^\circ.\\
+\Step{2}\;& \alpha=180^\circ-\beta-\gamma\approx 68.87^\circ.\\
+\Step{3}\;& a=20\frac{\sin\alpha}{\sin\beta}\approx 19.85.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 68.87^\circ,\;\gamma\approx 41.13^\circ,\; a\approx 19.85.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iii)}
+\textcolor{gold}{\bfseries Question:} $c=12,\; b=10,\; \gamma=64^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{}{$b=10$}{$c=12$}{}{}{$\gamma=64^\circ$}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \sin\beta=\frac{b\sin\gamma}{c}=\frac{10\sin64^\circ}{12}\approx 0.7493
+\Rightarrow \beta\approx 48.50^\circ.\\
+\Step{2}\;& \alpha=180^\circ-\beta-\gamma\approx 67.50^\circ.\\
+\Step{3}\;& a=12\frac{\sin\alpha}{\sin\gamma}\approx 12.33.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 67.50^\circ,\;\beta\approx 48.50^\circ,\; a\approx 12.33.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (iv)}
+\textcolor{gold}{\bfseries Question:} $b=18,\; \alpha=55^\circ5',\; a=37$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$a=37$}{$b=18$}{}{$\alpha=55^\circ5'$}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \alpha=55^\circ5'=55+\frac{5}{60}=55.0833^\circ.\\
+\Step{2}\;& \sin\beta=\frac{b\sin\alpha}{a}\approx 0.3988 \Rightarrow \beta\approx 23.51^\circ.\\
+\Step{3}\;& \gamma=180^\circ-\alpha-\beta\approx 101.41^\circ.\\
+\Step{4}\;& c=37\frac{\sin\gamma}{\sin\alpha}\approx 44.23.
+\end{aligned}
+\]
+\[
+\boxed{\beta\approx 23.51^\circ,\;\gamma\approx 101.41^\circ,\; c\approx 44.23.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (v)}
+\textcolor{gold}{\bfseries Question:} $a=14.6,\; b=10.6,\; c=17.2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{$a=14.6$}{$b=10.6$}{$c=17.2$}{}{}{}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \cos\alpha=\frac{b^2+c^2-a^2}{2bc}\Rightarrow \alpha\approx 57.66^\circ.\\
+\Step{2}\;& \cos\beta=\frac{a^2+c^2-b^2}{2ac}\Rightarrow \beta\approx 37.84^\circ.\\
+\Step{3}\;& \gamma=180^\circ-\alpha-\beta\approx 84.50^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 57.66^\circ,\;\beta\approx 37.84^\circ,\;\gamma\approx 84.50^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5 (vi)}
+\textcolor{gold}{\bfseries Question:} $c=88,\; \beta=23.2^\circ,\; \gamma=73^\circ14'$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram:}
+\[
+\TriABC{}{}{$c=88$}{}{$\beta=23.2^\circ$}{$\gamma=73^\circ14'$}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \gamma=73^\circ14'=73+\frac{14}{60}=73.2333^\circ.\\
+\Step{2}\;& \alpha=180^\circ-\beta-\gamma=83.5667^\circ.\\
+\Step{3}\;& a=88\frac{\sin\alpha}{\sin\gamma}\approx 91.33.\\
+\Step{4}\;& b=88\frac{\sin\beta}{\sin\gamma}\approx 36.21.
+\end{aligned}
+\]
+\[
+\boxed{\alpha\approx 83.57^\circ,\; a\approx 91.33,\; b\approx 36.21.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} A pilot is flying from city $A$ to city $C$, $500\,\text{km}$ apart. He starts his flight $20^\circ$ off course and flies on this course for $150\,\text{km}$ and is above city $B$. How far is he from city $C$?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (A) at (0,0);
+  \coordinate (C) at (8,0);
+  \coordinate (B) at (3,2.2);
+  \draw (A)--(C)--(B)--cycle;
+  \node[below left] at (A) {$A$};
+  \node[below] at (C) {$C$};
+  \node[above] at (B) {$B$};
+
+  % INTERNAL angle at A (always)
+  \IntAngleLabel{C}{A}{B}{$20^\circ$}
+
+  \node[below] at ($(A)!0.5!(C)$) {$500$ km};
+  \node[above left] at ($(A)!0.55!(B)$) {$150$ km};
+  \node[above right] at ($(B)!0.5!(C)$) {$x$ km};
+\end{tikzpicture}
+\]
+
+Let $BC=x$. In $\triangle ABC$, $AB=150$, $AC=500$, and $\angle A=20^\circ$.
+\[
+\begin{aligned}
+\Step{1}\;& x^2=150^2+500^2-2(150)(500)\cos 20^\circ.\\
+\Step{2}\;& x\approx 362.67.
+\end{aligned}
+\]
+\[
+\boxed{BC\approx 362.7\text{ km}.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Two sides of a triangular plot have lengths $400\,\text{m}$ and $600\,\text{m}$. The measurement of the angle between the sides is $45^\circ$. Find the perimeter and area of the plot.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (A) at (0,0);
+  \coordinate (B) at (6,0);
+  \coordinate (C) at (2,3.2);
+  \draw (A)--(B)--(C)--cycle;
+  \node[below left] at (A) {$A$};
+  \node[below right] at (B) {$B$};
+  \node[above] at (C) {$C$};
+
+  % INTERNAL angle at A
+  \IntAngleLabel{B}{A}{C}{$45^\circ$}
+
+  \node[below] at ($(A)!0.5!(B)$) {$400$ m};
+  \node[left] at ($(A)!0.5!(C)$) {$600$ m};
+  \node[right] at ($(B)!0.5!(C)$) {$c$};
+\end{tikzpicture}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& c^2=400^2+600^2-2(400)(600)\cos45^\circ
+\Rightarrow c\approx 425.04\text{ m}.\\
+\Step{2}\;& P=400+600+c\approx 1425.04\text{ m}.\\
+\Step{3}\;& \Delta=\tfrac12(400)(600)\sin45^\circ\approx 84852.81\text{ m}^2.
+\end{aligned}
+\]
+\[
+\boxed{P\approx 1425.0\text{ m},\qquad \Delta\approx 8.485\times 10^4\text{ m}^2.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} The sides of a triangle are $6.5\,\text{cm},\; 8.2\,\text{cm}$ and $5.8\,\text{cm}$. Find the measurement of smallest and largest angles.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\TriABC{$6.5$}{$8.2$}{$5.8$}{}{}{}
+\]
+
+Smallest angle is opposite $5.8$ cm and largest angle is opposite $8.2$ cm.
+\[
+\boxed{\text{Smallest angle }\approx 44.64^\circ,\qquad \text{Largest angle }\approx 83.41^\circ.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} The sides of a parallelogram are $50\,\text{cm}$ and $70\,\text{cm}$. Find the length of each diagonal if the larger angle measures $110^\circ$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\ParaDiag{$70$ cm}{$50$ cm}{$110^\circ$}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& d_1^2=50^2+70^2+2(50)(70)\cos110^\circ
+\Rightarrow d_1\approx 70.78\text{ cm}.\\
+\Step{2}\;& d_2^2=50^2+70^2-2(50)(70)\cos110^\circ
+\Rightarrow d_2\approx 98.98\text{ cm}.
+\end{aligned}
+\]
+\[
+\boxed{d_1\approx 70.8\text{ cm},\qquad d_2\approx 99.0\text{ cm}.}
+\]
+\end{QAPair}
+
+% ============================================================
+% FULL QUESTION 10 STATEMENT
+\begin{QAPair}{Question 10 (Full Question)}
+\textcolor{gold}{\bfseries Question:} For parallelogram $ABCD$, find:\par
+\begin{enumerate}[label=(\roman*), itemsep=2pt, topsep=4pt]
+  \item $BC$
+  \item $\angle BDC$
+\end{enumerate}
+\tcblower
+\textcolor{green}{\bfseries Answer:} Solutions are given part-wise below.
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (i)}
+\textcolor{gold}{\bfseries Question:} For parallelogram $ABCD$, find $BC$ (diagram given).\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (D) at (0,0);
+  \coordinate (C) at (6,0);
+  \coordinate (A) at (1.5,2.2);
+  \coordinate (B) at (7.5,2.2);
+  \draw (D)--(C)--(B)--(A)--cycle;
+  \draw[dashed] (D)--(B);
+
+  \node[below left] at (D) {$D$};
+  \node[below right] at (C) {$C$};
+  \node[above left] at (A) {$A$};
+  \node[above right] at (B) {$B$};
+
+  \node at ($(D)!0.5!(B)$) [above] {$20\text{ in}$};
+
+  % INTERNAL angles shown
+  \IntAngleLabel{C}{D}{B}{$30^\circ$}
+  \IntAngleLabel{B}{C}{D}{$100^\circ$}
+\end{tikzpicture}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \angle DBC=180^\circ-100^\circ-30^\circ=50^\circ.\\
+\Step{2}\;& \frac{BC}{\sin30^\circ}=\frac{DB}{\sin100^\circ}
+\Rightarrow BC=20\cdot \frac{\sin30^\circ}{\sin100^\circ}\approx 10.15.
+\end{aligned}
+\]
+\[
+\boxed{BC\approx 10.15\text{ inches}.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10 (ii)}
+\textcolor{gold}{\bfseries Question:} For parallelogram $ABCD$, find $\angle BDC$ (diagram given).\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (D) at (0,0);
+  \coordinate (C) at (6,0);
+  \coordinate (A) at (1.3,2.2);
+  \coordinate (B) at (7.3,2.2);
+  \draw (D)--(C)--(B)--(A)--cycle;
+  \draw[dashed] (D)--(B);
+
+  \node[below left] at (D) {$D$};
+  \node[below right] at (C) {$C$};
+  \node[above left] at (A) {$A$};
+  \node[above right] at (B) {$B$};
+
+  \node[below] at ($(D)!0.5!(C)$) {$15\text{ cm}$};
+  \node at ($(D)!0.55!(B)$) [above] {$20\text{ cm}$};
+
+  % INTERNAL angle at C
+  \IntAngleLabel{B}{C}{D}{$120^\circ$}
+\end{tikzpicture}
+\]
+
+\[
+\begin{aligned}
+\Step{1}\;& \sin\angle DBC=\frac{DC\sin120^\circ}{DB}
+=\frac{15\sin120^\circ}{20}\approx 0.6495.\\
+\Step{2}\;& \angle DBC\approx 40.51^\circ.\\
+\Step{3}\;& \angle BDC=180^\circ-120^\circ-40.51^\circ\approx 19.49^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle BDC\approx 19.49^\circ\ (\text{about }19^\circ30').}
+\]
+\end{QAPair}
+
+% ============================================================
+% FULL QUESTION 11 STATEMENT
+\begin{QAPair}{Question 11 (Full Question)}
+\textcolor{gold}{\bfseries Question:} For the figure below find:\par
+\begin{enumerate}[label=(\roman*), itemsep=2pt, topsep=4pt]
+  \item $BC$
+  \item $\angle EDG$
+\end{enumerate}
+\tcblower
+\textcolor{green}{\bfseries Answer:} Solutions are given part-wise below.
+\end{QAPair}
+
+\begin{QAPair}{Question 11 (i)}
+\textcolor{gold}{\bfseries Question:} For the figure, find $BC$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (B) at (0,0);
+  \coordinate (D) at (7,0);
+  \coordinate (C) at (4.5,0);
+  \coordinate (A) at (0,4);
+  \draw (A)--(B)--(D);
+  \draw (A)--(C);
+  \draw (A)--(D);
+  \draw (0,0) rectangle (0.4,0.4);
+
+  \node[left] at (A) {$A$};
+  \node[below] at (B) {$B$};
+  \node[below] at (C) {$C$};
+  \node[below] at (D) {$D$};
+
+  % INTERNAL angles
+  \IntAngleLabel{A}{C}{B}{$40^\circ$}
+  \IntAngleLabel{A}{D}{C}{$20^\circ$}
+
+  \node[below] at ($(C)!0.5!(D)$) {$15\text{ m}$};
+\end{tikzpicture}
+\]
+
+\[
+\tan40^\circ=\frac{AB}{BC},\qquad \tan20^\circ=\frac{AB}{BD},\qquad BD=BC+15.
+\]
+\[
+BC\tan40^\circ=(BC+15)\tan20^\circ
+\Rightarrow
+BC=\frac{15\tan20^\circ}{\tan40^\circ-\tan20^\circ}\approx 11.49.
+\]
+\[
+\boxed{BC\approx 11.49\text{ m}.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 11 (ii)}
+\textcolor{gold}{\bfseries Question:} For the figure, find $\angle EDG$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\begin{tikzpicture}[
+  line cap=round,line join=round,>=Stealth,
+  every node/.style={text=text},
+  every path/.style={draw=text}
+]
+  \coordinate (E) at (0,0);
+  \coordinate (G) at (7,0);
+  \coordinate (F) at (3.5,0);
+  \coordinate (D) at (0,4);
+  \draw (D)--(E)--(G);
+  \draw (D)--(F);
+  \draw (D)--(G);
+  \draw (0,0) rectangle (0.4,0.4);
+
+  \node[left] at (D) {$D$};
+  \node[below left] at (E) {$E$};
+  \node[below] at (F) {$F$};
+  \node[below right] at (G) {$G$};
+
+  \node at ($(D)!0.55!(F)$) [left] {$20\text{ cm}$};
+  \node at ($(D)!0.55!(G)$) [above] {$30\text{ cm}$};
+
+  % INTERNAL angle at F
+  \IntAngleLabel{D}{F}{G}{$125^\circ$}
+\end{tikzpicture}
+\]
+
+In $\triangle DFG$, $DF=20$, $DG=30$, and $\angle DFG=125^\circ$.
+\[
+\sin\angle DGF=\frac{DF\sin125^\circ}{DG}=\frac{20\sin125^\circ}{30}\approx 0.5461
+\Rightarrow \angle DGF\approx 33.09^\circ.
+\]
+Since $E,F,G$ are collinear, $\angle DGE=\angle DGF\approx 33.09^\circ$.
+In right triangle $DGE$ (right at $E$):
+\[
+\angle EDG=90^\circ-\angle DGE\approx 90^\circ-33.09^\circ=56.91^\circ.
+\]
+\[
+\boxed{\angle EDG\approx 56.91^\circ.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q12
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} Find the height of the building in the figure (angles $35^\circ$ and $48^\circ$, points $150$ ft apart).\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\BuildingDiag
+\]
+
+Let near distance be $x$ and height be $h$:
+\[
+h=x\tan48^\circ,\qquad h=(x+150)\tan35^\circ.
+\]
+\[
+x=\frac{150\tan35^\circ}{\tan48^\circ-\tan35^\circ}\approx 255.92,\qquad
+h=x\tan48^\circ\approx 284.23.
+\]
+\[
+\boxed{h\approx 284.2\text{ ft}.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q13
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} Fire towers $A$ and $B$ are $10$ miles apart on the same level ground. Rangers at tower $A$ spot a fire at $42^\circ$, and rangers at tower $B$ spot the same fire at $64^\circ$. How far from tower $A$ is the fire (nearest tenth of a mile)?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\FireTowerDiag
+\]
+
+\[
+\gamma=180^\circ-42^\circ-64^\circ=74^\circ,\qquad
+AF=10\cdot \frac{\sin64^\circ}{\sin74^\circ}\approx 9.38.
+\]
+\[
+\boxed{AF\approx 9.4\text{ miles}.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q14
+\begin{QAPair}{Question 14}
+\textcolor{gold}{\bfseries Question:} Circle $O$ has radius $15$ cm. The angle between radii $OA$ and $OB$ is $120^\circ$. Find the length of chord $AB$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\ChordDiag
+\]
+
+\[
+AB=2R\sin\left(\frac{120^\circ}{2}\right)=2(15)\sin60^\circ=15\sqrt3\approx 25.98.
+\]
+\[
+\boxed{AB=15\sqrt3\text{ cm}\approx 26.0\text{ cm}.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q15
+\begin{QAPair}{Question 15}
+\textcolor{gold}{\bfseries Question:} Two lighthouses are $12$ miles apart along a straight shore. A ship is $15$ miles from one lighthouse and $20$ miles from the other. Find (nearest degree) the angle between the lines of sight from the ship to each lighthouse.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textcolor{muted}{Diagram (not to scale):}
+\[
+\ShipDiag
+\]
+
+\[
+\cos\theta=\frac{15^2+20^2-12^2}{2(15)(20)}
+=\frac{481}{600}\approx 0.8017
+\Rightarrow \theta\approx 36.7^\circ\approx 37^\circ.
+\]
+\[
+\boxed{\theta\approx 37^\circ.}
+\]
+\end{QAPair}
+
+\end{document}

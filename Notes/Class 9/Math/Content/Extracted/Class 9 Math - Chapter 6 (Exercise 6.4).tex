@@ -1,0 +1,436 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 6.4 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{Pythagorean:} $\sin^2\theta+\cos^2\theta=1$.
+\item \textbf{From Pythagorean:} $1+\tan^2\theta=\sec^2\theta$, \quad $1+\cot^2\theta=\csc^2\theta$.
+\item \textbf{Reciprocal:} $\sec\theta=\dfrac{1}{\cos\theta}$,\; $\csc\theta=\dfrac{1}{\sin\theta}$.
+\item \textbf{Quotient:} $\tan\theta=\dfrac{\sin\theta}{\cos\theta}$,\; $\cot\theta=\dfrac{\cos\theta}{\sin\theta}$.
+\item \textbf{Cosine identities:} $1-2\sin^2\theta=\cos 2\theta$, \quad $2\cos^2\theta-1=\cos 2\theta$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} $(1-\sin^2\theta)\sec^2\theta=1$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 1-\sin^2\theta=\cos^2\theta \qquad (\sin^2\theta+\cos^2\theta=1)\\
+\Step{2}\;& (1-\sin^2\theta)\sec^2\theta=\cos^2\theta\cdot \sec^2\theta
+=\cos^2\theta\cdot \frac{1}{\cos^2\theta}=1.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{1-\sin\theta}{1+\sin\theta}=(\sec\theta-\tan\theta)^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (\sec\theta-\tan\theta)^2
+=\left(\frac{1}{\cos\theta}-\frac{\sin\theta}{\cos\theta}\right)^2
+=\left(\frac{1-\sin\theta}{\cos\theta}\right)^2
+=\frac{(1-\sin\theta)^2}{\cos^2\theta}.\\
+\Step{2}\;& \frac{1-\sin\theta}{1+\sin\theta}\cdot \frac{1-\sin\theta}{1-\sin\theta}
+=\frac{(1-\sin\theta)^2}{1-\sin^2\theta}
+=\frac{(1-\sin\theta)^2}{\cos^2\theta}.\\
+\Step{3}\;& \Rightarrow\; \dfrac{1-\sin\theta}{1+\sin\theta}=(\sec\theta-\tan\theta)^2.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} $\sqrt{\dfrac{1-\cos\theta}{1+\cos\theta}}=\dfrac{\sin\theta}{1+\cos\theta}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \left(\frac{\sin\theta}{1+\cos\theta}\right)^2
+=\frac{\sin^2\theta}{(1+\cos\theta)^2}
+=\frac{1-\cos^2\theta}{(1+\cos\theta)^2}.\\
+\Step{2}\;& \frac{1-\cos^2\theta}{(1+\cos\theta)^2}
+=\frac{(1-\cos\theta)(1+\cos\theta)}{(1+\cos\theta)^2}
+=\frac{1-\cos\theta}{1+\cos\theta}.\\
+\Step{3}\;& \Rightarrow\; \left(\frac{\sin\theta}{1+\cos\theta}\right)^2
+=\frac{1-\cos\theta}{1+\cos\theta}
+\;\Longrightarrow\;
+\sqrt{\frac{1-\cos\theta}{1+\cos\theta}}
+=\frac{\sin\theta}{1+\cos\theta}\;\;(\text{for acute }\theta).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{\sin\theta-2\sin^3\theta}{2\cos^3\theta-\cos\theta}=\tan\theta$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sin\theta-2\sin^3\theta=\sin\theta(1-2\sin^2\theta)=\sin\theta\cos 2\theta.\\
+\Step{2}\;& 2\cos^3\theta-\cos\theta=\cos\theta(2\cos^2\theta-1)=\cos\theta\cos 2\theta.\\
+\Step{3}\;& \frac{\sin\theta-2\sin^3\theta}{2\cos^3\theta-\cos\theta}
+=\frac{\sin\theta\cos 2\theta}{\cos\theta\cos 2\theta}
+=\frac{\sin\theta}{\cos\theta}=\tan\theta.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} $\sqrt{\sec^2\theta+\csc^2\theta}=\tan\theta+\cot\theta$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sec^2\theta+\csc^2\theta=\frac{1}{\cos^2\theta}+\frac{1}{\sin^2\theta}
+=\frac{\sin^2\theta+\cos^2\theta}{\sin^2\theta\cos^2\theta}
+=\frac{1}{\sin^2\theta\cos^2\theta}.\\
+\Step{2}\;& \sqrt{\sec^2\theta+\csc^2\theta}
+=\sqrt{\frac{1}{\sin^2\theta\cos^2\theta}}
+=\frac{1}{\sin\theta\cos\theta}\qquad(\text{acute }\theta).\\
+\Step{3}\;& \tan\theta+\cot\theta=\frac{\sin\theta}{\cos\theta}+\frac{\cos\theta}{\sin\theta}
+=\frac{\sin^2\theta+\cos^2\theta}{\sin\theta\cos\theta}
+=\frac{1}{\sin\theta\cos\theta}.
+\end{aligned}
+\]
+Hence $\sqrt{\sec^2\theta+\csc^2\theta}=\tan\theta+\cot\theta$.
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{1}{\sec\theta-\tan\theta}=\sec\theta+\tan\theta$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{1}{\sec\theta-\tan\theta}\cdot \frac{\sec\theta+\tan\theta}{\sec\theta+\tan\theta}
+=\frac{\sec\theta+\tan\theta}{\sec^2\theta-\tan^2\theta}.\\
+\Step{2}\;& \sec^2\theta-\tan^2\theta=(1+\tan^2\theta)-\tan^2\theta=1.\\
+\Step{3}\;& \Rightarrow\; \frac{1}{\sec\theta-\tan\theta}=\sec\theta+\tan\theta.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vii)}
+\textcolor{gold}{\bfseries Question:} $\sin^2\theta+\cos^4\theta=\sin^4\theta+\cos^2\theta$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sin^2\theta+\cos^4\theta=(1-\cos^2\theta)+\cos^4\theta
+=1-\cos^2\theta+\cos^4\theta
+=1-\cos^2\theta(1-\cos^2\theta).\\
+\Step{2}\;& 1-\cos^2\theta(1-\cos^2\theta)=1-\cos^2\theta\sin^2\theta.\\
+\Step{3}\;& \sin^4\theta+\cos^2\theta=\sin^4\theta+(1-\sin^2\theta)
+=1-\sin^2\theta+\sin^4\theta
+=1-\sin^2\theta(1-\sin^2\theta)\\
+&=1-\sin^2\theta\cos^2\theta.\\
+\Step{4}\;& \Rightarrow\; \sin^2\theta+\cos^4\theta=\sin^4\theta+\cos^2\theta.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (viii)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{\tan\theta+\sin\theta}{\tan\theta-\sin\theta}=\dfrac{\sec\theta+1}{\sec\theta-1}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{\tan\theta+\sin\theta}{\tan\theta-\sin\theta}
+=\frac{\frac{\sin\theta}{\cos\theta}+\sin\theta}{\frac{\sin\theta}{\cos\theta}-\sin\theta}
+=\frac{\sin\theta\left(\frac{1}{\cos\theta}+1\right)}{\sin\theta\left(\frac{1}{\cos\theta}-1\right)}\\
+&=\frac{\frac{1}{\cos\theta}+1}{\frac{1}{\cos\theta}-1}
+=\frac{\sec\theta+1}{\sec\theta-1}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ix)}
+\textcolor{gold}{\bfseries Question:} $\sec^2\theta+\csc^2\theta=\sec^2\theta\,\csc^2\theta$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sec^2\theta+\csc^2\theta=\frac{1}{\cos^2\theta}+\frac{1}{\sin^2\theta}
+=\frac{\sin^2\theta+\cos^2\theta}{\sin^2\theta\cos^2\theta}
+=\frac{1}{\sin^2\theta\cos^2\theta}.\\
+\Step{2}\;& \sec^2\theta\,\csc^2\theta=\frac{1}{\cos^2\theta}\cdot\frac{1}{\sin^2\theta}
+=\frac{1}{\sin^2\theta\cos^2\theta}.\\
+\Step{3}\;& \Rightarrow\; \sec^2\theta+\csc^2\theta=\sec^2\theta\,\csc^2\theta.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (x)}
+\textcolor{gold}{\bfseries Question:} $\sin^6\theta+\cos^6\theta=1-3\sin^2\theta\cos^2\theta$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sin^6\theta+\cos^6\theta=(\sin^2\theta)^3+(\cos^2\theta)^3.\\
+\Step{2}\;& a^3+b^3=(a+b)^3-3ab(a+b).\\
+\Step{3}\;& \text{Let } a=\sin^2\theta,\; b=\cos^2\theta.
+\text{ Then } a+b=1,\; ab=\sin^2\theta\cos^2\theta.\\
+\Step{4}\;& \sin^6\theta+\cos^6\theta
+=1^3-3(\sin^2\theta\cos^2\theta)(1)
+=1-3\sin^2\theta\cos^2\theta.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2}
+\textcolor{gold}{\bfseries Question:} If $x\cos\theta+y\sin\theta=m$ and $x\sin\theta-y\cos\theta=n$, prove that $x^2+y^2=m^2+n^2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m^2+n^2=(x\cos\theta+y\sin\theta)^2+(x\sin\theta-y\cos\theta)^2.\\
+\Step{2}\;& =(x^2\cos^2\theta+2xy\sin\theta\cos\theta+y^2\sin^2\theta)
++(x^2\sin^2\theta-2xy\sin\theta\cos\theta+y^2\cos^2\theta).\\
+\Step{3}\;& =x^2(\sin^2\theta+\cos^2\theta)+y^2(\sin^2\theta+\cos^2\theta)
+=x^2+y^2.\\
+\Step{4}\;& \Rightarrow\; x^2+y^2=m^2+n^2.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} Solve $2\sin^2\theta=\dfrac12$ for $0\le \theta\le \dfrac{\pi}{2}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2\sin^2\theta=\frac12 \;\Rightarrow\; \sin^2\theta=\frac14.\\
+\Step{2}\;& 0\le\theta\le\frac{\pi}{2}\Rightarrow \sin\theta\ge0
+\;\Rightarrow\; \sin\theta=\frac12.\\
+\Step{3}\;& \theta=\frac{\pi}{6}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} Solve $\sin\theta=\cos\theta$ for $0\le \theta\le \dfrac{\pi}{2}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sin\theta=\cos\theta \;\Rightarrow\; \tan\theta=1.\\
+\Step{2}\;& 0\le\theta\le\frac{\pi}{2}\Rightarrow \theta=\frac{\pi}{4}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} Solve $\sec^2\theta-2\tan^2\theta=0$ for $0\le \theta\le \dfrac{\pi}{2}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \sec^2\theta-2\tan^2\theta=0
+\;\Rightarrow\; (1+\tan^2\theta)-2\tan^2\theta=0.\\
+\Step{2}\;& 1-\tan^2\theta=0 \;\Rightarrow\; \tan^2\theta=1.\\
+\Step{3}\;& 0\le\theta\le\frac{\pi}{2}\Rightarrow \tan\theta\ge0
+\;\Rightarrow\; \tan\theta=1 \;\Rightarrow\; \theta=\frac{\pi}{4}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} $\triangle ABC$, $\angle C=90^\circ$, $a=4\text{ cm}$, $c=4\sqrt2\text{ cm}$. Solve the triangle.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \angle C=90^\circ \Rightarrow c \text{ is hypotenuse.}\\
+\Step{2}\;& b=\sqrt{c^2-a^2}
+=\sqrt{(4\sqrt2)^2-4^2}
+=\sqrt{32-16}
+=\sqrt{16}=4\text{ cm}.\\
+\Step{3}\;& \sin A=\frac{a}{c}=\frac{4}{4\sqrt2}=\frac{1}{\sqrt2}
+\Rightarrow A=45^\circ.\\
+\Step{4}\;& B=90^\circ-A=45^\circ.
+\end{aligned}
+\]
+\[
+\boxed{b=4\text{ cm},\; \angle A=45^\circ,\; \angle B=45^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} $\triangle PQR$, $\angle Q=90^\circ$, $\angle P=60^\circ$, $PQ=4\sqrt3\text{ cm}$. Solve the triangle.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \angle R=180^\circ-90^\circ-60^\circ=30^\circ.\\
+\Step{2}\;& \text{In a }30^\circ\!-\!60^\circ\!-\!90^\circ \text{ triangle, sides are }k:\,k\sqrt3:\,2k.\\
+\Step{3}\;& PQ \text{ is opposite } \angle R=30^\circ \Rightarrow PQ=k=4\sqrt3.\\
+\Step{4}\;& PR=2k=8\sqrt3\text{ cm},\qquad QR=k\sqrt3=(4\sqrt3)(\sqrt3)=12\text{ cm}.
+\end{aligned}
+\]
+\[
+\boxed{\angle R=30^\circ,\; QR=12\text{ cm},\; PR=8\sqrt3\text{ cm}.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} $\triangle PQR$, $\angle R=90^\circ$, $PR=8\text{ m}$, $RQ=8\text{ m}$. Solve the triangle.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& PR=RQ \Rightarrow \triangle PQR \text{ is an isosceles right triangle.}\\
+\Step{2}\;& PQ=\sqrt{PR^2+RQ^2}=\sqrt{8^2+8^2}=\sqrt{128}=8\sqrt2\text{ m}.\\
+\Step{3}\;& \angle P=\angle Q=\frac{180^\circ-90^\circ}{2}=45^\circ.
+\end{aligned}
+\]
+\[
+\boxed{PQ=8\sqrt2\text{ m},\; \angle P=45^\circ,\; \angle Q=45^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iv)}
+\textcolor{gold}{\bfseries Question:} $\triangle XYZ$, $\angle X=90^\circ$, $YZ=16\text{ m}$, $XZ=8\text{ m}$. Solve the triangle.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \angle X=90^\circ \Rightarrow YZ \text{ is hypotenuse.}\\
+\Step{2}\;& XY=\sqrt{YZ^2-XZ^2}=\sqrt{16^2-8^2}=\sqrt{256-64}=\sqrt{192}=8\sqrt3\text{ m}.\\
+\Step{3}\;& \sin Y=\frac{XZ}{YZ}=\frac{8}{16}=\frac12 \Rightarrow Y=30^\circ.\\
+\Step{4}\;& Z=90^\circ-Y=60^\circ.
+\end{aligned}
+\]
+\[
+\boxed{XY=8\sqrt3\text{ m},\; \angle Y=30^\circ,\; \angle Z=60^\circ.}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (v)}
+\textcolor{gold}{\bfseries Question:} $\triangle LMN$, $LM=10\text{ cm}$, $MN=8\text{ cm}$, $NL=6\text{ cm}$. Solve the triangle.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 6^2+8^2=36+64=100=10^2 \Rightarrow \angle N=90^\circ \text{ and } LM \text{ is hypotenuse.}\\
+\Step{2}\;& \sin L=\frac{MN}{LM}=\frac{8}{10}=\frac45
+\Rightarrow L=\sin^{-1}\!\left(\frac45\right)\approx 53.13^\circ.\\
+\Step{3}\;& M=180^\circ-90^\circ-L\approx 36.87^\circ.
+\end{aligned}
+\]
+\[
+\boxed{\angle N=90^\circ,\; \angle L\approx 53.13^\circ,\; \angle M\approx 36.87^\circ.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} If $x=r\cos\alpha\sin\beta,\; y=r\cos\alpha\cos\beta,\; z=r\sin\alpha$, find $x^2+y^2+z^2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2+y^2+z^2
+=r^2\cos^2\alpha\sin^2\beta+r^2\cos^2\alpha\cos^2\beta+r^2\sin^2\alpha.\\
+\Step{2}\;& =r^2\cos^2\alpha(\sin^2\beta+\cos^2\beta)+r^2\sin^2\alpha
+=r^2\cos^2\alpha(1)+r^2\sin^2\alpha.\\
+\Step{3}\;& =r^2(\cos^2\alpha+\sin^2\alpha)=r^2.
+\end{aligned}
+\]
+\[
+\boxed{x^2+y^2+z^2=r^2.}
+\]
+\end{QAPair}
+
+\end{document}

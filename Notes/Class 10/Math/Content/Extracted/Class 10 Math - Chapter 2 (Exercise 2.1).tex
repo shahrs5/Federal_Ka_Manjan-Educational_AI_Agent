@@ -1,0 +1,580 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 2.1 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (Quadratic Equations)}\par\medskip
+\begin{itemize}
+\item \textbf{Standard form:} $ax^2+bx+c=0$ \;($a\neq 0$).
+\item \textbf{Quadratic formula:} $x=\dfrac{-b\pm\sqrt{b^2-4ac}}{2a}$.
+\item \textbf{Discriminant:} $\Delta=b^2-4ac$:
+\;\; $\Delta>0$ (2 real roots), $\Delta=0$ (1 real double root), $\Delta<0$ (no real roots).
+\item \textbf{Completing square:} $x^2+bx=\left(x+\frac{b}{2}\right)^2-\left(\frac{b}{2}\right)^2$.
+\item \textbf{Vertex form:} $y=ax^2+bx+c=a(x-h)^2+k$ where vertex is $(h,k)$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% 1. Standard form
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} Write in standard form: $(x+2)(x-3)=5$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(x+2)(x-3)=x^2-3x+2x-6=x^2-x-6.\\
+\Step{2}\;&x^2-x-6=5.\\
+\Step{3}\;&x^2-x-11=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} Write in standard form: $(x-5)^2-(2x+4)^2=7$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(x-5)^2=x^2-10x+25,\quad (2x+4)^2=4x^2+16x+16.\\
+\Step{2}\;&(x^2-10x+25)-(4x^2+16x+16)=7.\\
+\Step{3}\;&-3x^2-26x+9=7 \;\Rightarrow\; -3x^2-26x+2=0.\\
+\Step{4}\;&3x^2+26x-2=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} Write in standard form: $x=x(x-1)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x(x-1)=x^2-x.\\
+\Step{2}\;&x=x^2-x.\\
+\Step{3}\;&0=x^2-2x \;\Rightarrow\; x^2-2x+0=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 2. Factoring method
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Solve by factoring: $(x-1)(x-4)=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(x-1)(x-4)=0\\
+\Step{2}\;&x-1=0 \;\text{or}\; x-4=0\\
+\Step{3}\;&x=1 \;\text{or}\; x=4.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Solve by factoring: $x^2-2x+1=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2-2x+1=(x-1)^2.\\
+\Step{2}\;&(x-1)^2=0 \;\Rightarrow\; x-1=0.\\
+\Step{3}\;&x=1 \quad(\text{double root}).
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Solve by factoring: $x^2-7x-8=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2-7x-8=(x-8)(x+1).\\
+\Step{2}\;&(x-8)(x+1)=0\\
+\Step{3}\;&x=8 \;\text{or}\; x=-1.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} Solve by factoring: $x^2-4x+4=(2x-7)^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(2x-7)^2=4x^2-28x+49.\\
+\Step{2}\;&x^2-4x+4=4x^2-28x+49\\
+\Step{3}\;&0=3x^2-24x+45\\
+\Step{4}\;&0=x^2-8x+15=(x-3)(x-5).\\
+\Step{5}\;&x=3 \;\text{or}\; x=5.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (v)}
+\textcolor{gold}{\bfseries Question:} Solve by factoring: $\left(2x+\frac{7}{4}\right)^2=\dfrac{48x^2+529}{16}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\left(2x+\frac{7}{4}\right)=\frac{8x+7}{4}
+\;\Rightarrow\;
+\left(2x+\frac{7}{4}\right)^2=\frac{(8x+7)^2}{16}.\\
+\Step{2}\;&\frac{(8x+7)^2}{16}=\frac{48x^2+529}{16}
+\;\Rightarrow\;
+(8x+7)^2=48x^2+529.\\
+\Step{3}\;&64x^2+112x+49=48x^2+529\\
+\Step{4}\;&16x^2+112x-480=0 \;\Rightarrow\; x^2+7x-30=0.\\
+\Step{5}\;&x^2+7x-30=(x+10)(x-3)=0.\\
+\Step{6}\;&x=-10 \;\text{or}\; x=3.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 3. Completing the square
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} Solve by completing square: $x^2+4x-32=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2+4x=32\\
+\Step{2}\;&x^2+4x+4=32+4\\
+\Step{3}\;&(x+2)^2=36\\
+\Step{4}\;&x+2=\pm 6\\
+\Step{5}\;&x=4 \;\text{or}\; x=-8.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} Solve by completing square: $x^2+8x=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2+8x=0 \;\Rightarrow\; x^2+8x+16=16\\
+\Step{2}\;&(x+4)^2=16\\
+\Step{3}\;&x+4=\pm 4\\
+\Step{4}\;&x=0 \;\text{or}\; x=-8.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} Solve by completing square: $x^2+6x-9=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2+6x=9\\
+\Step{2}\;&x^2+6x+9=9+9\\
+\Step{3}\;&(x+3)^2=18\\
+\Step{4}\;&x+3=\pm\sqrt{18}=\pm 3\sqrt{2}\\
+\Step{5}\;&x=-3\pm 3\sqrt{2}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textcolor{gold}{\bfseries Question:} Solve by completing square: $3x^2+12x+8=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&3x^2+12x+8=0 \;\Rightarrow\; x^2+4x+\frac{8}{3}=0\\
+\Step{2}\;&x^2+4x=-\frac{8}{3}\\
+\Step{3}\;&x^2+4x+4=-\frac{8}{3}+4\\
+\Step{4}\;&(x+2)^2=\frac{4}{3}\\
+\Step{5}\;&x+2=\pm \sqrt{\frac{4}{3}}=\pm \frac{2}{\sqrt3}=\pm\frac{2\sqrt3}{3}\\
+\Step{6}\;&x=-2\pm \frac{2\sqrt3}{3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (v)}
+\textcolor{gold}{\bfseries Question:} Solve by completing square: $x^2+x+1=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2+x=-1\\
+\Step{2}\;&x^2+x+\frac14=-1+\frac14\\
+\Step{3}\;&\left(x+\frac12\right)^2=-\frac34\\
+\Step{4}\;&x+\frac12=\pm \sqrt{-\frac34}=\pm \frac{\sqrt3}{2}i\\
+\Step{5}\;&x=\frac{-1\pm i\sqrt3}{2}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (vi)}
+\textcolor{gold}{\bfseries Question:} Solve by completing square: $4x^2-8x-5=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&4x^2-8x-5=0 \;\Rightarrow\; x^2-2x-\frac54=0\\
+\Step{2}\;&x^2-2x=\frac54\\
+\Step{3}\;&x^2-2x+1=\frac54+1\\
+\Step{4}\;&(x-1)^2=\frac94\\
+\Step{5}\;&x-1=\pm \frac32\\
+\Step{6}\;&x=1\pm \frac32 \;\Rightarrow\; x=\frac52 \;\text{or}\; x=-\frac12.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 4. Quadratic formula
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} Solve by quadratic formula: $x^2-9=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Here $a=1,\;b=0,\;c=-9$.
+\[
+\begin{aligned}
+x&=\frac{-b\pm\sqrt{b^2-4ac}}{2a}
+=\frac{0\pm\sqrt{0-4(1)(-9)}}{2}\\
+&=\frac{\pm\sqrt{36}}{2}=\pm 3.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} Solve by quadratic formula: $2x^2+5x+1=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Here $a=2,\;b=5,\;c=1$.
+\[
+\begin{aligned}
+x&=\frac{-5\pm\sqrt{5^2-4(2)(1)}}{2(2)}
+=\frac{-5\pm\sqrt{25-8}}{4}
+=\frac{-5\pm\sqrt{17}}{4}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} Solve by quadratic formula: $x^2-23x-24=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Here $a=1,\;b=-23,\;c=-24$.
+\[
+\begin{aligned}
+x&=\frac{-(-23)\pm\sqrt{(-23)^2-4(1)(-24)}}{2(1)}
+=\frac{23\pm\sqrt{529+96}}{2}\\
+&=\frac{23\pm\sqrt{625}}{2}
+=\frac{23\pm 25}{2}
+\Rightarrow x=24 \;\text{or}\; x=-1.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iv)}
+\textcolor{gold}{\bfseries Question:} Solve by quadratic formula: $(x+1)^2=(2x-1)^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(x+1)^2=(2x-1)^2\\
+\Step{2}\;&x^2+2x+1=4x^2-4x+1\\
+\Step{3}\;&0=3x^2-6x \quad (\text{i.e. } 3x^2-6x+0=0)
+\end{aligned}
+\]
+Here $a=3,\;b=-6,\;c=0$.
+\[
+\begin{aligned}
+x&=\frac{-(-6)\pm\sqrt{(-6)^2-4(3)(0)}}{2(3)}
+=\frac{6\pm\sqrt{36}}{6}
+=\frac{6\pm 6}{6}.
+\end{aligned}
+\]
+So $x=2$ or $x=0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (v)}
+\textcolor{gold}{\bfseries Question:} Solve by quadratic formula: $\dfrac{x+1}{2}-\dfrac{x(x+2)}{3}=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&\frac{x+1}{2}-\frac{x(x+2)}{3}=0
+\;\Rightarrow\; 6\left(\frac{x+1}{2}-\frac{x(x+2)}{3}\right)=0\\
+\Step{2}\;&3(x+1)-2x(x+2)=0\\
+\Step{3}\;&3x+3-(2x^2+4x)=0\\
+\Step{4}\;&-2x^2-x+3=0 \;\Rightarrow\; 2x^2+x-3=0.
+\end{aligned}
+\]
+Here $a=2,\;b=1,\;c=-3$.
+\[
+\begin{aligned}
+x&=\frac{-1\pm\sqrt{1^2-4(2)(-3)}}{2(2)}
+=\frac{-1\pm\sqrt{1+24}}{4}
+=\frac{-1\pm 5}{4}.
+\end{aligned}
+\]
+So $x=1$ or $x=-\dfrac{3}{2}$.
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (vi)}
+\textcolor{gold}{\bfseries Question:} Solve by quadratic formula: $(x-2)(x-6)=(2x+1)(x+1)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;&(x-2)(x-6)=x^2-8x+12,\\
+& (2x+1)(x+1)=2x^2+3x+1.\\
+\Step{2}\;&x^2-8x+12=2x^2+3x+1\\
+\Step{3}\;&0=x^2+11x-11.
+\end{aligned}
+\]
+Here $a=1,\;b=11,\;c=-11$.
+\[
+\begin{aligned}
+x&=\frac{-11\pm\sqrt{11^2-4(1)(-11)}}{2(1)}
+=\frac{-11\pm\sqrt{121+44}}{2}
+=\frac{-11\pm\sqrt{165}}{2}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% 5. Graphing + factoring
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Solve $x^2+6x=-9$ by graphing and factoring method.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textbf{Factoring:}
+\[
+\begin{aligned}
+\Step{1}\;&x^2+6x=-9 \;\Rightarrow\; x^2+6x+9=0\\
+\Step{2}\;&(x+3)^2=0\\
+\Step{3}\;&x=-3 \quad(\text{double root}).
+\end{aligned}
+\]
+
+\textbf{Graphing idea (what to sketch):}
+Graph $y=x^2+6x+9=(x+3)^2$.  
+It touches the $x$-axis at $x=-3$ (vertex on the axis), so the solution is $x=-3$.
+\end{QAPair}
+
+% ============================================================
+% 6. Graph and verify by completing square
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Graph $y=x^2+2x+4$ and verify solution by completing square method.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+
+\textbf{Completing the square:}
+\[
+\begin{aligned}
+\Step{1}\;&y=x^2+2x+4\\
+\Step{2}\;&y=(x^2+2x+1)+3\\
+\Step{3}\;&y=(x+1)^2+3.
+\end{aligned}
+\]
+
+\textbf{What this tells us (for the graph):}
+\begin{itemize}
+\item Vertex: $(-1,3)$ (minimum point).
+\item Axis of symmetry: $x=-1$.
+\item Opens upward (since coefficient of $x^2$ is positive).
+\item $y$-intercept: $y(0)=4$.
+\item No $x$-intercepts because $(x+1)^2+3>0$ for all real $x$ (so $x^2+2x+4=0$ has \emph{no real solution}).
+\end{itemize}
+\end{QAPair}
+
+% ============================================================
+% 7. Explain terms
+\begin{QAPair}{Question 7 (i) -- Solution}
+\textcolor{gold}{\bfseries Question:} Explain the term \emph{Solution}.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+A \textbf{solution} of an equation is any value of the variable that makes the equation true when substituted into it.
+\end{QAPair}
+
+\begin{QAPair}{Question 7 (ii) -- Root}
+\textcolor{gold}{\bfseries Question:} Explain the term \emph{root}.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+A \textbf{root} is a value of $x$ that makes a function equal to zero, i.e., it satisfies $f(x)=0$.
+\end{QAPair}
+
+\begin{QAPair}{Question 7 (iii) -- Zero of a function}
+\textcolor{gold}{\bfseries Question:} Explain the term \emph{zero of a function}.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+A \textbf{zero} of a function is an input value $x$ for which the output is zero: $f(x)=0$. (It is the same as a root.)
+\end{QAPair}
+
+\begin{QAPair}{Question 7 (iv) -- $x$-intercept}
+\textcolor{gold}{\bfseries Question:} Explain the term \emph{$x$-intercept}.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+The \textbf{$x$-intercept} is the point where the graph crosses or touches the $x$-axis.  
+At an $x$-intercept, $y=0$, so it occurs at solutions of $f(x)=0$.
+\end{QAPair}
+
+% ============================================================
+% 8. More than two solutions?
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Can a quadratic equation have more than two solutions? Why or why not?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+No. A quadratic equation has degree $2$, so it can have \textbf{at most two solutions} (counting repeated roots).  
+This is because a polynomial of degree $2$ cannot have more than $2$ roots.
+\end{QAPair}
+
+% ============================================================
+% 9. Word problem (area doubled)
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} A rectangular ice-skating rink is $30$m by $60$m. The area must be doubled by adding strips of the same width to a side and an end. Find the width of the strips and the new dimensions.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let the strip width be $x$ meters. New dimensions become $(30+x)$ and $(60+x)$, and the new area is double.
+
+\[
+\begin{aligned}
+\Step{1}\;&\text{Original area}=30\cdot 60=1800.\\
+\Step{2}\;&\text{New area}=2(1800)=3600.\\
+\Step{3}\;&(30+x)(60+x)=3600\\
+\Step{4}\;&x^2+90x+1800=3600\\
+\Step{5}\;&x^2+90x-1800=0.
+\end{aligned}
+\]
+
+\[
+\begin{aligned}
+\Step{6}\;&x=\frac{-90\pm\sqrt{90^2-4(1)(-1800)}}{2}
+=\frac{-90\pm\sqrt{8100+7200}}{2}\\
+&=\frac{-90\pm\sqrt{15300}}{2}
+=\frac{-90\pm 30\sqrt{17}}{2}
+=-45\pm 15\sqrt{17}.
+\end{aligned}
+\]
+
+Width must be positive, so
+\[
+x=-45+15\sqrt{17}=15(\sqrt{17}-3)\approx 16.85\text{ m}.
+\]
+
+New dimensions:
+\[
+30+x=30+15(\sqrt{17}-3)=15(\sqrt{17}-1)\approx 46.85\text{ m},
+\]
+\[
+60+x=60+15(\sqrt{17}-3)=15(\sqrt{17}+1)\approx 76.85\text{ m}.
+\]
+\end{QAPair}
+
+% ============================================================
+% 10. Motion problem
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} A car has initial speed $20\text{ m/s}$ and constant acceleration $2\text{ m/s}^2$. Find the time to travel $145\text{ m}$ using $S=v_it+\frac12 at^2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Given $S=145$, $v_i=20$, $a=2$:
+\[
+\begin{aligned}
+\Step{1}\;&145=20t+\frac12(2)t^2\\
+\Step{2}\;&145=20t+t^2\\
+\Step{3}\;&t^2+20t-145=0.
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\Step{4}\;&t=\frac{-20\pm\sqrt{20^2-4(1)(-145)}}{2}
+=\frac{-20\pm\sqrt{400+580}}{2}\\
+&=\frac{-20\pm\sqrt{980}}{2}
+=\frac{-20\pm 14\sqrt5}{2}
+=-10\pm 7\sqrt5.
+\end{aligned}
+\]
+Time must be positive:
+\[
+t=-10+7\sqrt5 \approx -10+7(2.236)\approx 5.65\text{ s}.
+\]
+\end{QAPair}
+
+\end{document}

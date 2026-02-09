@@ -1,0 +1,623 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 2.4 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item For $ax^2+bx+c=0$ ($a\neq 0$) with roots $S_1,S_2$:
+\[
+S_1+S_2=-\frac{b}{a},\qquad S_1S_2=\frac{c}{a}.
+\]
+\item Quadratic with roots $\alpha,\beta$:
+\[
+x^2-(\alpha+\beta)x+\alpha\beta=0.
+\]
+\item Handy identities:
+\[
+S_1^2+S_2^2=(S_1+S_2)^2-2S_1S_2,\quad
+\frac{1}{S_1}+\frac{1}{S_2}=\frac{S_1+S_2}{S_1S_2},
+\]
+\[
+(S_1-S_2)^2=(S_1+S_2)^2-4S_1S_2,\quad
+S_1^3+S_2^3=(S_1+S_2)^3-3S_1S_2(S_1+S_2).
+\]
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} $x^2-5x+2=0$ (Find sum \& product of roots)\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let the roots be $S_1,S_2$. Here $a=1,b=-5,c=2$.
+\[
+\begin{aligned}
+\Step{1}\;& S_1+S_2=-\frac{b}{a}=-\frac{-5}{1}=5,\\
+\Step{2}\;& S_1S_2=\frac{c}{a}=\frac{2}{1}=2.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} $-4x^2-6x-2=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Here $a=-4,b=-6,c=-2$.
+\[
+\begin{aligned}
+\Step{1}\;& S_1+S_2=-\frac{b}{a}=-\frac{-6}{-4}=\frac{6}{-4}=-\frac{3}{2},\\
+\Step{2}\;& S_1S_2=\frac{c}{a}=\frac{-2}{-4}=\frac{1}{2}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} $5x^2-2x+2=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Here $a=5,b=-2,c=2$.
+\[
+\begin{aligned}
+\Step{1}\;& S_1+S_2=-\frac{b}{a}=-\frac{-2}{5}=\frac{2}{5},\\
+\Step{2}\;& S_1S_2=\frac{c}{a}=\frac{2}{5}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} $-4x^2-8x-9=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Here $a=-4,b=-8,c=-9$.
+\[
+\begin{aligned}
+\Step{1}\;& S_1+S_2=-\frac{b}{a}=-\frac{-8}{-4}=\frac{8}{-4}=-2,\\
+\Step{2}\;& S_1S_2=\frac{c}{a}=\frac{-9}{-4}=\frac{9}{4}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (v)}
+\textcolor{gold}{\bfseries Question:} $16y^2-17y-12=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let roots be $S_1,S_2$ in $y$. Here $a=16,b=-17,c=-12$.
+\[
+\begin{aligned}
+\Step{1}\;& S_1+S_2=-\frac{b}{a}=-\frac{-17}{16}=\frac{17}{16},\\
+\Step{2}\;& S_1S_2=\frac{c}{a}=\frac{-12}{16}=-\frac{3}{4}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (vi)}
+\textcolor{gold}{\bfseries Question:} $0.3x^2-7.7x+1.8=0$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Write decimals as fractions: $0.3=\frac{3}{10}$, $7.7=\frac{77}{10}$, $1.8=\frac{9}{5}$.
+So $a=\frac{3}{10}$, $b=-\frac{77}{10}$, $c=\frac{9}{5}$.
+\[
+\begin{aligned}
+\Step{1}\;& S_1+S_2=-\frac{b}{a}
+= -\frac{-\frac{77}{10}}{\frac{3}{10}}
+=\frac{77}{3},\\
+\Step{2}\;& S_1S_2=\frac{c}{a}
+=\frac{\frac{9}{5}}{\frac{3}{10}}
+=\frac{9}{5}\cdot\frac{10}{3}=6.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Form a quadratic equation with roots $1,\;-\dfrac{8}{3}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $\alpha=1,\ \beta=-\dfrac{8}{3}$.
+\[
+\begin{aligned}
+\Step{1}\;& \alpha+\beta=1-\frac{8}{3}=-\frac{5}{3},\qquad \alpha\beta=-\frac{8}{3}.\\
+\Step{2}\;& x^2-(\alpha+\beta)x+\alpha\beta=0\\
+&\Rightarrow x^2+\frac{5}{3}x-\frac{8}{3}=0.\\
+\Step{3}\;& \text{Multiply by }3:\quad 3x^2+5x-8=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Form a quadratic equation with roots $\sqrt{3},\;2\sqrt{3}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $\alpha=\sqrt{3},\ \beta=2\sqrt{3}$.
+\[
+\begin{aligned}
+\Step{1}\;& \alpha+\beta=3\sqrt{3},\qquad \alpha\beta=2\cdot 3=6.\\
+\Step{2}\;& x^2-(3\sqrt{3})x+6=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Form a quadratic equation with roots $2+\sqrt{3},\;2-\sqrt{3}$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $\alpha=2+\sqrt{3},\ \beta=2-\sqrt{3}$.
+\[
+\begin{aligned}
+\Step{1}\;& \alpha+\beta=4,\qquad \alpha\beta=(2+\sqrt{3})(2-\sqrt{3})=4-3=1.\\
+\Step{2}\;& x^2-4x+1=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} Form a quadratic equation with roots $5i,\;-5i$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $\alpha=5i,\ \beta=-5i$.
+\[
+\begin{aligned}
+\Step{1}\;& \alpha+\beta=0,\qquad \alpha\beta=(5i)(-5i)=-25i^2=25.\\
+\Step{2}\;& x^2-0\cdot x+25=0 \;\Rightarrow\; x^2+25=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (v)}
+\textcolor{gold}{\bfseries Question:} Form a quadratic equation with roots $7+2i,\;7-2i$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let $\alpha=7+2i,\ \beta=7-2i$.
+\[
+\begin{aligned}
+\Step{1}\;& \alpha+\beta=14,\\
+\Step{2}\;& \alpha\beta=(7+2i)(7-2i)=7^2-(2i)^2=49-(-4)=53.\\
+\Step{3}\;& x^2-14x+53=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3 (Given)}
+\textcolor{gold}{\bfseries Question:} If $S_1,S_2$ are roots of $3x^2-2x+4=0$, find the following values.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+For $3x^2-2x+4=0$:
+\[
+S_1+S_2=-\frac{b}{a}=\frac{2}{3}=:s,\qquad S_1S_2=\frac{c}{a}=\frac{4}{3}=:p.
+\]
+Also,
+\[
+S_1^2+S_2^2=s^2-2p=\left(\frac{2}{3}\right)^2-2\cdot\frac{4}{3}=\frac{4}{9}-\frac{8}{3}=-\frac{20}{9}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (i)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{1}{S_1^2}+\dfrac{1}{S_2^2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{1}{S_1^2}+\frac{1}{S_2^2}=\frac{S_1^2+S_2^2}{S_1^2S_2^2}
+=\frac{S_1^2+S_2^2}{(S_1S_2)^2}.\\
+\Step{2}\;&=\frac{-\frac{20}{9}}{\left(\frac{4}{3}\right)^2}
+=\frac{-\frac{20}{9}}{\frac{16}{9}}=-\frac{5}{4}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (ii)}
+\textcolor{gold}{\bfseries Question:} $S_1^2+S_2^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+S_1^2+S_2^2=-\frac{20}{9}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iii)}
+\textcolor{gold}{\bfseries Question:} $2S_1+2S_2+4$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2S_1+2S_2+4=2(S_1+S_2)+4=2s+4.\\
+\Step{2}\;&=2\cdot\frac{2}{3}+4=\frac{4}{3}+\frac{12}{3}=\frac{16}{3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (iv)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{1}{S_1}+\dfrac{1}{S_2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{1}{S_1}+\frac{1}{S_2}=\frac{S_1+S_2}{S_1S_2}=\frac{s}{p}.\\
+\Step{2}\;&=\frac{\frac{2}{3}}{\frac{4}{3}}=\frac{1}{2}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (v)}
+\textcolor{gold}{\bfseries Question:} $\dfrac{S_1}{S_2}+\dfrac{S_2}{S_1}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{S_1}{S_2}+\frac{S_2}{S_1}=\frac{S_1^2+S_2^2}{S_1S_2}=\frac{s^2-2p}{p}.\\
+\Step{2}\;&=\frac{-\frac{20}{9}}{\frac{4}{3}}=-\frac{20}{9}\cdot\frac{3}{4}=-\frac{5}{3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (vi)}
+\textcolor{gold}{\bfseries Question:} $S_1S_2^2+S_1^2S_2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& S_1S_2^2+S_1^2S_2=S_1S_2(S_1+S_2)=ps.\\
+\Step{2}\;&=\frac{4}{3}\cdot\frac{2}{3}=\frac{8}{9}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (vii)}
+\textcolor{gold}{\bfseries Question:} $S_1^3S_2+S_1S_2^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& S_1^3S_2+S_1S_2^3=S_1S_2(S_1^2+S_2^2)=p(s^2-2p).\\
+\Step{2}\;&=\frac{4}{3}\cdot\left(-\frac{20}{9}\right)=-\frac{80}{27}.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 3 (viii)}
+\textcolor{gold}{\bfseries Question:} $(S_1-3)(S_2-3)$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (S_1-3)(S_2-3)=S_1S_2-3(S_1+S_2)+9=p-3s+9.\\
+\Step{2}\;&=\frac{4}{3}-3\cdot\frac{2}{3}+9=\frac{4}{3}-2+9=\frac{25}{3}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4 (Given)}
+\textcolor{gold}{\bfseries Question:} If $S_1,S_2$ are roots of $7x^2+10x+7=0$, form equations for the given new roots.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+For $7x^2+10x+7=0$:
+\[
+S_1+S_2=-\frac{10}{7}=:s,\qquad S_1S_2=\frac{7}{7}=1=:p.
+\]
+Also,
+\[
+S_1^2+S_2^2=s^2-2p=\left(\frac{100}{49}\right)-2=\frac{2}{49}.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (i)}
+\textcolor{gold}{\bfseries Question:} Roots $S_1^2,\;S_2^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Sum $=S_1^2+S_2^2=\dfrac{2}{49}$, product $=S_1^2S_2^2=p^2=1$.
+\[
+\begin{aligned}
+\Step{1}\;& x^2-\frac{2}{49}x+1=0.\\
+\Step{2}\;& \text{Multiply by }49:\quad 49x^2-2x+49=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ii)}
+\textcolor{gold}{\bfseries Question:} Roots $\dfrac{1}{S_1},\;\dfrac{1}{S_2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \frac{1}{S_1}+\frac{1}{S_2}=\frac{S_1+S_2}{S_1S_2}=\frac{s}{p}=s=-\frac{10}{7},\\
+\Step{2}\;& \frac{1}{S_1}\cdot\frac{1}{S_2}=\frac{1}{S_1S_2}=\frac{1}{p}=1.\\
+\Step{3}\;& x^2-\left(-\frac{10}{7}\right)x+1=0
+\Rightarrow x^2+\frac{10}{7}x+1=0\\
+&\Rightarrow 7x^2+10x+7=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iii)}
+\textcolor{gold}{\bfseries Question:} Roots $S_1^3S_2,\;S_1S_2^3$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Since $p=S_1S_2=1$,
+\[
+S_1^3S_2=S_1^2(S_1S_2)=S_1^2,\qquad S_1S_2^3=S_2^2.
+\]
+So it is the same as part (i):
+\[
+49x^2-2x+49=0.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (iv)}
+\textcolor{gold}{\bfseries Question:} Roots $S_1-\dfrac{1}{S_1},\;S_2-\dfrac{1}{S_2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Because $p=1$, we have $\dfrac{1}{S_1}=S_2$ and $\dfrac{1}{S_2}=S_1$.
+Thus roots are $(S_1-S_2)$ and $(S_2-S_1)=-(S_1-S_2)$, so their sum is $0$.
+\[
+\begin{aligned}
+\Step{1}\;& (S_1-S_2)^2=s^2-4p=\frac{100}{49}-4=-\frac{96}{49}.\\
+\Step{2}\;& \text{Product}=(S_1-S_2)(S_2-S_1)=-(S_1-S_2)^2=\frac{96}{49}.\\
+\Step{3}\;& x^2-0\cdot x+\frac{96}{49}=0 \;\Rightarrow\; 49x^2+96=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (v)}
+\textcolor{gold}{\bfseries Question:} Roots $2S_1+1,\;2S_2+1$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Sum}=2(S_1+S_2)+2=2s+2=2\left(-\frac{10}{7}\right)+2=-\frac{6}{7}.\\
+\Step{2}\;& \text{Product}=(2S_1+1)(2S_2+1)=4p+2s+1\\
+&=4(1)+2\left(-\frac{10}{7}\right)+1=5-\frac{20}{7}=\frac{15}{7}.\\
+\Step{3}\;& x^2-\left(-\frac{6}{7}\right)x+\frac{15}{7}=0
+\Rightarrow 7x^2+6x+15=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (vi)}
+\textcolor{gold}{\bfseries Question:} Roots $\dfrac{S_1}{S_2},\;\dfrac{S_2}{S_1}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Since $p=1$, $\dfrac{S_1}{S_2}=S_1^2$ and $\dfrac{S_2}{S_1}=S_2^2$.
+So it is again the same as part (i):
+\[
+49x^2-2x+49=0.
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (vii)}
+\textcolor{gold}{\bfseries Question:} Roots $S_1+S_2,\;\dfrac{1}{S_1}+\dfrac{1}{S_2}$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\Step{1}\; S_1+S_2=s=-\frac{10}{7},\qquad \frac{1}{S_1}+\frac{1}{S_2}=\frac{s}{p}=s=-\frac{10}{7}.
+\]
+Both roots are equal to $-\dfrac{10}{7}$.
+\[
+\begin{aligned}
+\Step{2}\;& (x+\tfrac{10}{7})^2=0
+\Rightarrow x^2+\frac{20}{7}x+\frac{100}{49}=0.\\
+\Step{3}\;& \text{Multiply by }49:\quad 49x^2+140x+100=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (viii)}
+\textcolor{gold}{\bfseries Question:} Roots $S_1^2+1,\;S_2^2+1$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Sum}=(S_1^2+S_2^2)+2=\frac{2}{49}+2=\frac{100}{49}.\\
+\Step{2}\;& \text{Product}=(S_1^2+1)(S_2^2+1)=S_1^2S_2^2+(S_1^2+S_2^2)+1\\
+&=p^2+\frac{2}{49}+1=1+\frac{2}{49}+1=\frac{100}{49}.\\
+\Step{3}\;& x^2-\frac{100}{49}x+\frac{100}{49}=0
+\Rightarrow 49x^2-100x+100=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4 (ix)}
+\textcolor{gold}{\bfseries Question:} Roots $S_1^2+S_2,\;S_1+S_2^2$\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Sum}=(S_1^2+S_2)+(S_1+S_2^2)=(S_1^2+S_2^2)+(S_1+S_2)\\
+&=\frac{2}{49}-\frac{10}{7}=\frac{2}{49}-\frac{70}{49}=-\frac{68}{49}.\\[4pt]
+\Step{2}\;& \text{Product}=(S_1^2+S_2)(S_1+S_2^2)=S_1^3+S_2^3+S_1S_2+S_1^2S_2^2.\\
+\Step{3}\;& S_1^3+S_2^3=s^3-3ps=\left(-\frac{10}{7}\right)^3-3(1)\left(-\frac{10}{7}\right)
+=-\frac{1000}{343}+\frac{30}{7}=\frac{470}{343}.\\
+\Step{4}\;& \Rightarrow \text{Product}=\frac{470}{343}+1+1=\frac{1156}{343}.\\
+\Step{5}\;& x^2-\left(-\frac{68}{49}\right)x+\frac{1156}{343}=0
+\Rightarrow x^2+\frac{68}{49}x+\frac{1156}{343}=0.\\
+\Step{6}\;& \text{Multiply by }343:\quad 343x^2+476x+1156=0.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} If $S_1,S_2$ are roots of $x^2+6x+3=0$, form the equation whose roots are $(S_1+S_2)^2,\ (S_1-S_2)^2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+For $x^2+6x+3=0$:
+\[
+s=S_1+S_2=-6,\qquad p=S_1S_2=3.
+\]
+\[
+\begin{aligned}
+\Step{1}\;& r_1=(S_1+S_2)^2=s^2=36,\\
+\Step{2}\;& r_2=(S_1-S_2)^2=s^2-4p=36-12=24.
+\end{aligned}
+\]
+So the required equation (roots $36,24$) is:
+\[
+x^2-(36+24)x+(36)(24)=0 \;\Rightarrow\; x^2-60x+864=0.
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} If $S_1,S_2$ are roots of $2x^2+6x-3=0$, form the equation whose roots are
+\[
+S_1-\frac{3}{S_2^2},\qquad S_2-\frac{3}{S_1^2}.
+\]
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+For $2x^2+6x-3=0$:
+\[
+s=S_1+S_2=-\frac{6}{2}=-3,\qquad p=S_1S_2=\frac{-3}{2}.
+\]
+Let
+\[
+A=S_1-\frac{3}{S_2^2},\qquad B=S_2-\frac{3}{S_1^2}.
+\]
+Note: $\dfrac{1}{S_2^2}=\dfrac{S_1^2}{p^2}$ and $\dfrac{1}{S_1^2}=\dfrac{S_2^2}{p^2}$.
+Also $S_1^2+S_2^2=s^2-2p=9-2\left(-\frac{3}{2}\right)=12$, and $p^2=\dfrac{9}{4}$.
+
+\[
+\begin{aligned}
+\Step{1}\;& A+B=(S_1+S_2)-\frac{3}{p^2}(S_1^2+S_2^2)
+=s-\frac{3}{\frac{9}{4}}\cdot 12
+=-3-\frac{4}{3}\cdot 12=-19.\\[4pt]
+\Step{2}\;& AB=p-\frac{3}{p^2}(S_1S_2^2+S_1^2S_2)+\frac{9}{p^4}(S_1^2S_2^2)\\
+&=p-\frac{3}{p^2}(ps)+\frac{9}{p^2}
+=p-\frac{3s}{p}+\frac{9}{p^2}.
+\end{aligned}
+\]
+Now substitute $s=-3,\ p=-\dfrac{3}{2}$:
+\[
+AB=-\frac{3}{2}-\frac{3(-3)}{-\frac{3}{2}}+\frac{9}{\left(\frac{9}{4}\right)}
+=-\frac{3}{2}-6+4=-\frac{7}{2}.
+\]
+Hence the required equation is
+\[
+x^2-(A+B)x+AB=0
+\Rightarrow x^2+19x-\frac{7}{2}=0
+\Rightarrow 2x^2+38x-7=0.
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Find $k$ if $S_1$ and $S_1-5$ are roots of $x^2-3kx+5=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Let the roots be $r$ and $r-5$.
+For $x^2-3kx+5=0$:
+\[
+r+(r-5)=3k,\qquad r(r-5)=5.
+\]
+\[
+\begin{aligned}
+\Step{1}\;& r(r-5)=5 \Rightarrow r^2-5r-5=0\\
+\Step{2}\;& r=\frac{5\pm\sqrt{25+20}}{2}=\frac{5\pm 3\sqrt{5}}{2}.\\
+\Step{3}\;& 3k=2r-5=\pm 3\sqrt{5}\;\Rightarrow\; k=\pm \sqrt{5}.
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Find $k$ such that $3$ is a root of $x^2+kx-21=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+If $x=3$ is a root, substitute $x=3$:
+\[
+\begin{aligned}
+\Step{1}\;& 3^2+3k-21=0\\
+\Step{2}\;& 9+3k-21=0 \Rightarrow 3k-12=0 \Rightarrow k=4.
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

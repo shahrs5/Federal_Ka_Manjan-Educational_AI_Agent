@@ -27,7 +27,7 @@ class Settings(BaseSettings):
     gemini_api_key: str = ""
     gemini_model: str = "gemini-pro"
 
-    # Embeddings (use "gemini" for Gemini API, or "sentence-transformers/..." for local)
+    # Embeddings (Gemini API)
     embedding_model: str = "gemini"
     embedding_dimension: int = 768
 

@@ -1,0 +1,412 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% Visible text inside this box (fix)
+\newtcolorbox{QuickBox}{%
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 4.4 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item \textbf{HCF scaling:} $\mathrm{HCF}(kP,Q)=\mathrm{HCF}(P,Q)$ if $k$ is a nonzero constant and $k$ is not a common numerical factor.
+\item \textbf{Both scaled:} $\mathrm{HCF}(kP,\ell Q)=\gcd(k,\ell)\,\mathrm{HCF}(P,Q)$ (for integer coefficients).
+\item \textbf{LCM of monomials:} take \emph{LCM of coefficients} and the \emph{highest power} of each variable.
+\item \textbf{LCM of expressions:} factor each expression completely; take every distinct factor with the highest power appearing.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1(i)}
+\textcolor{gold}{\bfseries Question:} If $\mathrm{HCF}(x^3+5x^2+6x,\;x^3+9x^2+14x)=x^2+2x$, find the HCF of $5(x^3+5x^2+6x)$ and $(x^3+9x^2+14x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Multiplying only one polynomial by }5\text{ does not create a new common factor.}\\
+\Step{2}\;& \boxed{\mathrm{HCF}=x^2+2x.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1(ii)}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $(x^3+5x^2+6x)$ and $2(x^3+9x^2+14x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{Multiplying only one polynomial by }2\text{ does not change the polynomial HCF.}\\
+\Step{2}\;& \boxed{\mathrm{HCF}=x^2+2x.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1(iii)}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $3(x^3+5x^2+6x)$ and $7(x^3+9x^2+14x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \gcd(3,7)=1 \Rightarrow \text{no new common numerical factor.}\\
+\Step{2}\;& \boxed{\mathrm{HCF}=x^2+2x.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1(iv)}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $15(x^3+5x^2+6x)$ and $25(x^3+9x^2+14x)$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \gcd(15,25)=5.\\
+\Step{2}\;& \mathrm{HCF}(15P,25Q)=5\cdot \mathrm{HCF}(P,Q).\\
+\Step{3}\;& \boxed{\mathrm{HCF}=5(x^2+2x).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1(v)}
+\textcolor{gold}{\bfseries Question:} Does the HCF remain unchanged if both polynomials are multiplied by $x$?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \text{If both polynomials are multiplied by }x,\text{ then }x\text{ becomes an extra common factor.}\\
+\Step{2}\;& \mathrm{New\ HCF}=x(x^2+2x)=x^2(x+2).\\
+\Step{3}\;& \boxed{\text{No. The HCF becomes }x(x^2+2x).}
+\end{aligned}
+\]
+\end{QAPair}
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2(i)}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $8x^6y$ and $4x^2yz$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \mathrm{LCM\ of\ coefficients}=\mathrm{lcm}(8,4)=8.\\
+\Step{2}\;& \mathrm{LCM\ of\ }x = x^{\max(6,2)}=x^6.\\
+\Step{3}\;& \mathrm{LCM\ of\ }y = y^{\max(1,1)}=y.\\
+\Step{4}\;& \mathrm{LCM\ of\ }z = z^{\max(0,1)}=z.\\
+\Step{5}\;& \boxed{\mathrm{LCM}=8x^6yz.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2(ii)}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $12x^2y^4z$ and $24x^3z$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \mathrm{LCM\ of\ coefficients}=\mathrm{lcm}(12,24)=24.\\
+\Step{2}\;& \mathrm{LCM\ of\ }x = x^{\max(2,3)}=x^3.\\
+\Step{3}\;& \mathrm{LCM\ of\ }y = y^{\max(4,0)}=y^4.\\
+\Step{4}\;& \mathrm{LCM\ of\ }z = z^{\max(1,1)}=z.\\
+\Step{5}\;& \boxed{\mathrm{LCM}=24x^3y^4z.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2(iii)}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $18x^3z,\;9xy^2z,\;6x^6yz^3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \mathrm{LCM\ of\ coefficients}=\mathrm{lcm}(18,9,6)=18.\\
+\Step{2}\;& \mathrm{LCM\ of\ }x = x^{\max(3,1,6)}=x^6.\\
+\Step{3}\;& \mathrm{LCM\ of\ }y = y^{\max(0,2,1)}=y^2.\\
+\Step{4}\;& \mathrm{LCM\ of\ }z = z^{\max(1,1,3)}=z^3.\\
+\Step{5}\;& \boxed{\mathrm{LCM}=18x^6y^2z^3.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2(iv)}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $xyz^3,\;xy^3z^5,\;28x^3y^5z$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& \mathrm{LCM\ of\ coefficients}=\mathrm{lcm}(1,1,28)=28.\\
+\Step{2}\;& \mathrm{LCM\ of\ }x = x^{\max(1,1,3)}=x^3.\\
+\Step{3}\;& \mathrm{LCM\ of\ }y = y^{\max(1,3,5)}=y^5.\\
+\Step{4}\;& \mathrm{LCM\ of\ }z = z^{\max(3,5,1)}=z^5.\\
+\Step{5}\;& \boxed{\mathrm{LCM}=28x^3y^5z^5.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% HCF by division method (results)
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $a^2+a-2$ and $a^3+2a^2+a+2$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a^2+a-2=(a+2)(a-1).\\
+\Step{2}\;& a^3+2a^2+a+2=a^2(a+2)+1(a+2)=(a+2)(a^2+1).\\
+\Step{3}\;& \boxed{\mathrm{HCF}=a+2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $x^3+2x^2-4x-8$ and $2x^3+7x^2+4x-4$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^3+2x^2-4x-8=x^2(x+2)-4(x+2)=(x+2)(x^2-4)\\
+&=(x+2)^2(x-2).\\
+\Step{2}\;& 2x^3+7x^2+4x-4 \text{ has root }x=-2 \Rightarrow (x+2)\text{ is a factor.}\\
+& 2x^3+7x^2+4x-4=(x+2)(2x^2+3x-2)=(x+2)^2(2x-1).\\
+\Step{3}\;& \boxed{\mathrm{HCF}=(x+2)^2.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $2x^3+x^2-x-2$ and $3x^3-x^2+x-3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x^3+x^2-x-2 \text{ has root }x=1 \Rightarrow (x-1)\text{ is a factor.}\\
+& 2x^3+x^2-x-2=(x-1)(2x^2+3x+2)=(x-1)(2x+1)(x+2).\\
+\Step{2}\;& 3x^3-x^2+x-3 \text{ has root }x=1 \Rightarrow (x-1)\text{ is a factor.}\\
+& 3x^3-x^2+x-3=(x-1)(3x^2+2x+3).\\
+\Step{3}\;& \boxed{\mathrm{HCF}=x-1.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $2p^4+5p^2+3$ and $5p^3+3p^2+5p+3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2p^4+5p^2+3=(2p^2+3)(p^2+1).\\
+\Step{2}\;& 5p^3+3p^2+5p+3=p^2(5p+3)+1(5p+3)=(5p+3)(p^2+1).\\
+\Step{3}\;& \boxed{\mathrm{HCF}=p^2+1.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $24x^4-2x^3-60x^2-32x$ and $18x^4-6x^3-39x^2-18x$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 24x^4-2x^3-60x^2-32x = 2x(3x+2)(4x^2-3x-8).\\
+\Step{2}\;& 18x^4-6x^3-39x^2-18x = 3x(3x+2)(2x^2-2x-3).\\
+\Step{3}\;& \text{Common factors are }x\text{ and }(3x+2).\\
+\Step{4}\;& \boxed{\mathrm{HCF}=x(3x+2)=3x^2+2x.}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Find the HCF of $2x^3+6x^2+x+3,\;3x^3+9x^2-2x-6,\;x^3+3x^2+2x+6$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x^3+6x^2+x+3=(x+3)(2x^2+1).\\
+\Step{2}\;& 3x^3+9x^2-2x-6=(x+3)(3x^2-2).\\
+\Step{3}\;& x^3+3x^2+2x+6=(x+3)(x^2+2).\\
+\Step{4}\;& \boxed{\mathrm{HCF}=x+3.}
+\end{aligned}
+\]
+\end{QAPair}
+
+% ============================================================
+% LCM of expressions
+\begin{QAPair}{Question 9}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $9a^2b-b$ and $6a^2+2a$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 9a^2b-b=b(9a^2-1)=b(3a-1)(3a+1).\\
+\Step{2}\;& 6a^2+2a=2a(3a+1).\\
+\Step{3}\;& \text{LCM takes }2,\;a,\;b,\;(3a-1),\;(3a+1).\\
+\Step{4}\;& \boxed{\mathrm{LCM}=2ab(3a-1)(3a+1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $p^3q-pq^3$ and $p^5q^2-p^2q^5$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& p^3q-pq^3=pq(p^2-q^2)=pq(p-q)(p+q).\\
+\Step{2}\;& p^5q^2-p^2q^5=p^2q^2(p^3-q^3)=p^2q^2(p-q)(p^2+pq+q^2).\\
+\Step{3}\;& \text{Max powers: }p^2,\;q^2;\text{ and include all distinct factors.}\\
+\Step{4}\;& \boxed{\mathrm{LCM}=p^2q^2(p-q)(p+q)(p^2+pq+q^2).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 11}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $4x^2y-y$ and $2x^2+x$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 4x^2y-y=y(4x^2-1)=y(2x-1)(2x+1).\\
+\Step{2}\;& 2x^2+x=x(2x+1).\\
+\Step{3}\;& \text{LCM takes }x,\;y,\;(2x-1),\;(2x+1).\\
+\Step{4}\;& \boxed{\mathrm{LCM}=xy(2x-1)(2x+1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 12}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $x^2-x-6,\;x^2+x-2,\;x^2-4x+3$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2-x-6=(x-3)(x+2).\\
+\Step{2}\;& x^2+x-2=(x+2)(x-1).\\
+\Step{3}\;& x^2-4x+3=(x-1)(x-3).\\
+\Step{4}\;& \boxed{\mathrm{LCM}=(x-3)(x+2)(x-1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 13}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $m^6-1,\;m^4-1,\;m^3-1$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& m^6-1=(m^3-1)(m^3+1)=(m-1)(m^2+m+1)(m+1)(m^2-m+1).\\
+\Step{2}\;& m^4-1=(m-1)(m+1)(m^2+1).\\
+\Step{3}\;& m^3-1=(m-1)(m^2+m+1).\\
+\Step{4}\;& \text{Take all distinct factors: }(m-1),(m+1),(m^2+1),(m^2+m+1),(m^2-m+1).\\
+\Step{5}\;& \boxed{\mathrm{LCM}=(m-1)(m+1)(m^2+1)(m^2+m+1)(m^2-m+1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 14}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $x^3+2x^2-x-2,\;x^2-x-2,\;x^2-4$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^3+2x^2-x-2
+= x^2(x+2)-1(x+2)\\
+&= (x+2)(x^2-1)
+= (x+2)(x-1)(x+1).\\
+\Step{2}\;& x^2-x-2=(x-2)(x+1).\\
+\Step{3}\;& x^2-4=(x-2)(x+2).\\
+\Step{4}\;& \text{Distinct factors: }(x+2),(x-2),(x-1),(x+1).\\
+\Step{5}\;& \boxed{\mathrm{LCM}=(x+2)(x-2)(x-1)(x+1).}
+\end{aligned}
+\]
+\end{QAPair}
+
+
+\begin{QAPair}{Question 15}
+\textcolor{gold}{\bfseries Question:} Find the LCM of $x^2+x-20,\;x^2-10x+24,\;x^2-x-30$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& x^2+x-20=(x+5)(x-4).\\
+\Step{2}\;& x^2-10x+24=(x-6)(x-4).\\
+\Step{3}\;& x^2-x-30=(x-6)(x+5).\\
+\Step{4}\;& \text{Distinct factors: }(x+5),(x-4),(x-6).\\
+\Step{5}\;& \boxed{\mathrm{LCM}=(x+5)(x-4)(x-6).}
+\end{aligned}
+\]
+\end{QAPair}
+
+\end{document}

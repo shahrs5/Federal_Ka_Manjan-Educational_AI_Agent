@@ -1,0 +1,492 @@
+% !TEX TS-program = pdflatex
+\documentclass[11pt]{article}
+
+% -------------------- Packages --------------------
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins,breakable}
+\usepackage{enumitem}
+\usepackage{hyperref}
+
+\pagestyle{empty}
+
+% -------------------- Dark Theme Colors --------------------
+\definecolor{bg}{HTML}{000000}
+\definecolor{pairbg}{HTML}{121212}
+\definecolor{solbg}{HTML}{0A0A0A}
+\definecolor{border}{HTML}{2A2A2A}
+\definecolor{text}{HTML}{FFFFFF}
+\definecolor{muted}{HTML}{C9CDD3}
+\definecolor{gold}{HTML}{FFD700}
+\definecolor{green}{HTML}{4ADE80}
+\definecolor{cyan}{HTML}{38BDF8}
+
+\pagecolor{bg}
+\color{text}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=cyan,
+  urlcolor=cyan
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{10pt}
+
+\setlist[itemize]{left=1.4em,itemsep=6pt,topsep=6pt}
+\setlist[enumerate]{left=1.6em,itemsep=4pt,topsep=4pt}
+
+% -------------------- tcolorbox Base --------------------
+\tcbset{
+  enhanced,
+  breakable,
+  arc=12pt,
+  boxrule=0.8pt,
+  left=16pt,right=16pt,top=12pt,bottom=12pt
+}
+
+\newtcolorbox{QAPair}[1]{%
+  colback=pairbg,
+  colbacklower=solbg,
+  colframe=border,
+  coltext=text,
+  title=\textcolor{gold}{\bfseries #1},
+  fonttitle=\bfseries,
+  coltitle=text,
+  segmentation style={draw=border, dashed, line width=0.6pt},
+}
+
+% --- FIX APPLIED HERE: Added 'enhanced' and 'width=\linewidth' ---
+\newtcolorbox{QuickBox}{%
+  enhanced, 
+  colback=pairbg,
+  colframe=cyan,
+  coltext=text,
+  fontupper=\color{text},
+  borderline north={4pt}{0pt}{cyan},
+  arc=14pt,
+  boxrule=0.8pt,
+  left=10pt,
+  right=10pt,
+  width=\linewidth,
+  breakable
+}
+
+% Helper for step headings
+\newcommand{\Step}[1]{\textcolor{muted}{\textbf{Step #1:}}}
+
+% ============================================================
+\begin{document}
+
+\begin{center}
+{\LARGE\bfseries \textcolor{gold}{Exercise 2.3 --- Solutions}}\\[-2pt]
+\end{center}
+
+\begin{QuickBox}
+{\color{cyan}\bfseries Quick formulas (useful)}\par\medskip
+\begin{itemize}
+\item For $ax^2+bx+c=0$, the \textbf{discriminant} is $\Delta=b^2-4ac$.
+\item \textbf{Nature of roots:}
+% --- FIX APPLIED HERE: Used 'aligned' to split the long equation ---
+\[
+\begin{aligned}
+\Delta>0 &\Rightarrow \text{two distinct real roots},\\
+\Delta=0 &\Rightarrow \text{real and equal roots},\\
+\Delta<0 &\Rightarrow \text{non-real (imaginary) roots}.
+\end{aligned}
+\]
+\item A quadratic is a \textbf{perfect square} (like $(px+q)^2$) when $\Delta=0$.
+\end{itemize}
+\end{QuickBox}
+
+% ============================================================
+% Q1
+\begin{QAPair}{Question 1 (i)}
+\textcolor{gold}{\bfseries Question:} Find the discriminant of $x^2+6x-27=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+For $ax^2+bx+c=0$, $\Delta=b^2-4ac$.
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=6,\; c=-27.\\
+\Step{2}\;& \Delta = 6^2-4(1)(-27)=36+108=144.
+\end{aligned}
+\]
+\[
+\boxed{\Delta=144}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (ii)}
+\textcolor{gold}{\bfseries Question:} Find the discriminant of $x^2-x-12=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=-1,\; c=-12.\\
+\Step{2}\;& \Delta = (-1)^2-4(1)(-12)=1+48=49.
+\end{aligned}
+\]
+\[
+\boxed{\Delta=49}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iii)}
+\textcolor{gold}{\bfseries Question:} Find the discriminant of $8x^2+2x+1=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=8,\; b=2,\; c=1.\\
+\Step{2}\;& \Delta = 2^2-4(8)(1)=4-32=-28.
+\end{aligned}
+\]
+\[
+\boxed{\Delta=-28}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 1 (iv)}
+\textcolor{gold}{\bfseries Question:} Find the discriminant of $12x^2-11x-15=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=12,\; b=-11,\; c=-15.\\
+\Step{2}\;& \Delta = (-11)^2-4(12)(-15)=121+720=841.
+\end{aligned}
+\]
+\[
+\boxed{\Delta=841}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q2
+\begin{QAPair}{Question 2 (i)}
+\textcolor{gold}{\bfseries Question:} Discuss the nature of roots of $x^2-2x-15=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=-2,\; c=-15.\\
+\Step{2}\;& \Delta=b^2-4ac=(-2)^2-4(1)(-15)=4+60=64>0.
+\end{aligned}
+\]
+\[
+\boxed{\text{Roots are real and distinct.}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (ii)}
+\textcolor{gold}{\bfseries Question:} Discuss the nature of roots of $x^2+3x-4=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=3,\; c=-4.\\
+\Step{2}\;& \Delta=3^2-4(1)(-4)=9+16=25>0.
+\end{aligned}
+\]
+\[
+\boxed{\text{Roots are real and distinct.}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iii)}
+\textcolor{gold}{\bfseries Question:} Discuss the nature of roots of $12x^2+x-20=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=12,\; b=1,\; c=-20.\\
+\Step{2}\;& \Delta=1^2-4(12)(-20)=1+960=961>0.
+\end{aligned}
+\]
+\[
+\boxed{\text{Roots are real and distinct.}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (iv)}
+\textcolor{gold}{\bfseries Question:} Discuss the nature of roots of $x^2+2x+8=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=2,\; c=8.\\
+\Step{2}\;& \Delta=2^2-4(1)(8)=4-32=-28<0.
+\end{aligned}
+\]
+\[
+\boxed{\text{Roots are non-real (imaginary).}}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 2 (v)}
+\textcolor{gold}{\bfseries Question:} Discuss the nature of roots of $x^2+3x-9=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=3,\; c=-9.\\
+\Step{2}\;& \Delta=3^2-4(1)(-9)=9+36=45>0.
+\end{aligned}
+\]
+\[
+\boxed{\text{Roots are real and distinct.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q3
+\begin{QAPair}{Question 3}
+\textcolor{gold}{\bfseries Question:} For what value of $k$, $9x^2-kx+16=0$ is a perfect square?\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+A quadratic is a perfect square when $\Delta=0$.
+\[
+\begin{aligned}
+\Step{1}\;& a=9,\; b=-k,\; c=16.\\
+\Step{2}\;& \Delta=b^2-4ac=(-k)^2-4(9)(16)=k^2-576.\\
+\Step{3}\;& \Delta=0 \Rightarrow k^2-576=0 \Rightarrow k^2=576 \Rightarrow k=\pm 24.
+\end{aligned}
+\]
+\[
+\boxed{k=24\ \text{or}\ k=-24}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q4
+\begin{QAPair}{Question 4}
+\textcolor{gold}{\bfseries Question:} If roots of $x^2+kx+9=0$ are equal, find $k$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Equal roots $\Rightarrow \Delta=0$.
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=k,\; c=9.\\
+\Step{2}\;& \Delta=k^2-4(1)(9)=k^2-36.\\
+\Step{3}\;& \Delta=0 \Rightarrow k^2-36=0 \Rightarrow k^2=36 \Rightarrow k=\pm 6.
+\end{aligned}
+\]
+\[
+\boxed{k=6\ \text{or}\ k=-6}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q5
+\begin{QAPair}{Question 5}
+\textcolor{gold}{\bfseries Question:} Show that the roots of $2x^2+(mx-1)^2=3$ are equal if $3m^2+4=0$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& 2x^2+(mx-1)^2=3\\
+&\Rightarrow 2x^2+(m^2x^2-2mx+1)=3\\
+&\Rightarrow (m^2+2)x^2-2mx-2=0.
+\end{aligned}
+\]
+Now compute the discriminant:
+\[
+\begin{aligned}
+\Step{2}\;& a=m^2+2,\; b=-2m,\; c=-2.\\
+\Step{3}\;& \Delta=b^2-4ac=(-2m)^2-4(m^2+2)(-2)\\
+&=4m^2+8(m^2+2)=12m^2+16=4(3m^2+4).
+\end{aligned}
+\]
+\[
+\Step{4}\; \text{If } 3m^2+4=0,\ \text{then } \Delta=0 \Rightarrow \text{roots are equal.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q6
+\begin{QAPair}{Question 6 (i)}
+\textcolor{gold}{\bfseries Question:} Find $m$ when roots of $x^2-6x+m=0$ are equal.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+Equal roots $\Rightarrow \Delta=0$.
+\[
+\begin{aligned}
+\Step{1}\;& a=1,\; b=-6,\; c=m.\\
+\Step{2}\;& \Delta= (-6)^2-4(1)(m)=36-4m.\\
+\Step{3}\;& 36-4m=0 \Rightarrow m=9.
+\end{aligned}
+\]
+\[
+\boxed{m=9}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (ii)}
+\textcolor{gold}{\bfseries Question:} Find $m$ when roots of $m^2x^2+(2m+1)x+1=0$ are equal.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=m^2,\; b=2m+1,\; c=1.\\
+\Step{2}\;& \Delta=(2m+1)^2-4(m^2)(1)\\
+&=4m^2+4m+1-4m^2=4m+1.\\
+\Step{3}\;& \Delta=0 \Rightarrow 4m+1=0 \Rightarrow m=-\frac14.
+\end{aligned}
+\]
+\[
+\boxed{m=-\frac14}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 6 (iii)}
+\textcolor{gold}{\bfseries Question:} Find $m$ when roots of $(m+3)x^2+(m+1)x+m+1=0$ are equal.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=m+3,\; b=m+1,\; c=m+1.\\
+\Step{2}\;& \Delta=(m+1)^2-4(m+3)(m+1)\\
+&=(m+1)\Big((m+1)-4(m+3)\Big)\\
+&=(m+1)(m+1-4m-12)=(m+1)(-3m-11).
+\end{aligned}
+\]
+\[
+\begin{aligned}
+\Step{3}\;& \Delta=0 \Rightarrow (m+1)(-3m-11)=0\\
+&\Rightarrow m=-1 \quad \text{or}\quad m=-\frac{11}{3}.
+\end{aligned}
+\]
+\[
+\boxed{m=-1\ \text{or}\ m=-\frac{11}{3}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q7
+\begin{QAPair}{Question 7}
+\textcolor{gold}{\bfseries Question:} Show that the roots of
+\[
+(a^2+b^2)x^2+2(ac+bd)x+c^2+d^2=0
+\]
+are imaginary. Moreover, it shows repeated roots if $ad=bc$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a_1=a^2+b^2,\quad b_1=2(ac+bd),\quad c_1=c^2+d^2.\\
+\Step{2}\;& \Delta=b_1^2-4a_1c_1
+= \big(2(ac+bd)\big)^2-4(a^2+b^2)(c^2+d^2)\\
+&=4\Big((ac+bd)^2-(a^2+b^2)(c^2+d^2)\Big).
+\end{aligned}
+\]
+Now simplify the bracket:
+\[
+\begin{aligned}
+(ac+bd)^2 &= a^2c^2+2abcd+b^2d^2,\\
+(a^2+b^2)(c^2+d^2) &= a^2c^2+a^2d^2+b^2c^2+b^2d^2.
+\end{aligned}
+\]
+So
+\[
+\begin{aligned}
+(ac+bd)^2-(a^2+b^2)(c^2+d^2)
+&=2abcd-a^2d^2-b^2c^2\\
+&=-(ad-bc)^2.
+\end{aligned}
+\]
+Hence
+\[
+\Step{3}\; \Delta =4\big(-(ad-bc)^2\big)= -4(ad-bc)^2\le 0.
+\]
+\[
+\Step{4}\;
+\begin{cases}
+ad\ne bc \Rightarrow \Delta<0 \Rightarrow \text{roots are imaginary},\\
+ad=bc \Rightarrow \Delta=0 \Rightarrow \text{roots are real and equal (repeated).}
+\end{cases}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q8
+\begin{QAPair}{Question 8}
+\textcolor{gold}{\bfseries Question:} Show that the roots of $(ax+c)^2=4bx$ will be equal, if $b=ac$.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& (ax+c)^2=4bx\\
+&\Rightarrow a^2x^2+2acx+c^2-4bx=0\\
+&\Rightarrow a^2x^2+2(ac-2b)x+c^2=0.
+\end{aligned}
+\]
+Discriminant:
+\[
+\begin{aligned}
+\Step{2}\;& \Delta=\big(2(ac-2b)\big)^2-4(a^2)(c^2)\\
+&=4\Big((ac-2b)^2-a^2c^2\Big)\\
+&=4\Big(a^2c^2-4abc+4b^2-a^2c^2\Big)=16b(b-ac).
+\end{aligned}
+\]
+\[
+\Step{3}\; \text{If } b=ac,\ \text{then } \Delta=16b(b-ac)=0 \Rightarrow \text{roots are equal.}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q9
+\begin{QAPair}{Question 9 (i)}
+\textcolor{gold}{\bfseries Question:} Show that the roots of $mx^2-2mx+m-1=0$ are real.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a=m,\; b=-2m,\; c=m-1.\\
+\Step{2}\;& \Delta=b^2-4ac=(-2m)^2-4(m)(m-1)\\
+&=4m^2-4m^2+4m=4m.
+\end{aligned}
+\]
+\[
+\Step{3}\; \text{For a quadratic, } m\ne 0.\ \text{If } m>0,\ \Delta=4m>0 \Rightarrow \text{roots are real (distinct).}
+\]
+\end{QAPair}
+
+\begin{QAPair}{Question 9 (ii)}
+\textcolor{gold}{\bfseries Question:} Show that the roots of $bx^2+ax+a-b=0$ are real.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a_1=b,\; b_1=a,\; c_1=a-b.\\
+\Step{2}\;& \Delta=a^2-4b(a-b)=a^2-4ab+4b^2=(a-2b)^2\ge 0.
+\end{aligned}
+\]
+\[
+\boxed{\text{Therefore, the roots are real.}}
+\]
+\end{QAPair}
+
+% ============================================================
+% Q10
+\begin{QAPair}{Question 10}
+\textcolor{gold}{\bfseries Question:} Show that the roots of $(a+b)x^2-ax-b=0$ are real.\\
+\tcblower
+\textcolor{green}{\bfseries Answer:}
+\[
+\begin{aligned}
+\Step{1}\;& a_1=a+b,\; b_1=-a,\; c_1=-b.\\
+\Step{2}\;& \Delta=b_1^2-4a_1c_1=(-a)^2-4(a+b)(-b)\\
+&=a^2+4b(a+b)=a^2+4ab+4b^2=(a+2b)^2\ge 0.
+\end{aligned}
+\]
+\[
+\boxed{\text{Therefore, the roots are real.}}
+\]
+\end{QAPair}
+
+\end{document}
