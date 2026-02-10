@@ -134,6 +134,9 @@ celerybeat.pid
 # SageMath parsed files
 *.sage.py
 
+# Notes (only needed locally for ingestion, not in deployment)
+Notes/
+
 # Environments
 .env
 .envrc
