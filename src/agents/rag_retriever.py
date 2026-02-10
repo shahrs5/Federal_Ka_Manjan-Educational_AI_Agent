@@ -4,9 +4,10 @@ RAG Retriever with chapter-scoped search.
 from typing import List, Dict, Any
 from dataclasses import dataclass
 import logging
-import opik
-
+from ..services.opik_setup import get_track_decorator
 from ..ingestion.embedding_generator import EmbeddingGenerator
+
+track = get_track_decorator()
 
 
 logger = logging.getLogger(__name__)
@@ -47,7 +48,7 @@ class RAGRetriever:
         self.similarity_threshold = similarity_threshold
         self.debug = debug
 
-    @opik.track
+    @track
     def retrieve(
         self,
         query: str,

@@ -9,8 +9,10 @@ from typing import Dict, Any, List
 from dataclasses import dataclass
 import json
 import re
-import opik
+from ..services.opik_setup import get_track_decorator
 from ..ingestion.subject_metadata import SUBJECT_METADATA
+
+track = get_track_decorator()
 
 
 @dataclass
@@ -248,7 +250,7 @@ class ChapterRouterAgent:
         self.memory = []
         self.debug = debug
 
-    @opik.track
+    @track
     def route(
         self,
         query: str,

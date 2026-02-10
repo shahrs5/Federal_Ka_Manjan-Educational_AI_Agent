@@ -6,7 +6,9 @@ from dataclasses import dataclass
 import json
 from .chapter_router import ChapterRouterAgent, RoutingResult
 from .rag_retriever import RAGRetriever, RetrievedChunk
-import opik
+from ..services.opik_setup import get_track_decorator
+
+track = get_track_decorator()
 
 
 @dataclass
@@ -45,7 +47,7 @@ class QAAgent:
         self.model = model
         self.model_fast = model_fast
 
-    @opik.track
+    @track
     def answer(
         self,
         query: str,
@@ -120,7 +122,7 @@ class QAAgent:
             routing_info=routing,
         )
 
-    @opik.track
+    @track
     def _rewrite_query(self, query: str, subject: str, history: List[Dict[str, str]]) -> str:
         """
         Rewrite student query to fix spelling/grammar and resolve any references
@@ -158,7 +160,7 @@ class QAAgent:
         except Exception:
             return query
 
-    @opik.track
+    @track
     def _generate_answer(
         self,
         query: str,
