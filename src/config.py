@@ -18,14 +18,34 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_key: str = ""
 
-    # LLM (Groq)
+    # LLM (Groq) — comma-separated for rotation, single key still works
     groq_api_key: str = ""
+    groq_api_keys: str = ""
     groq_model: str = "openai/gpt-oss-120b"
     groq_model_fast: str = "openai/gpt-oss-120b"
 
-    # Google Gemini (optional)
+    # Google Gemini — comma-separated for rotation, single key still works
     gemini_api_key: str = ""
+    gemini_api_keys: str = ""
     gemini_model: str = "gemini-pro"
+
+    @property
+    def groq_key_list(self) -> list[str]:
+        """Parse GROQ_API_KEYS (comma-separated), fall back to single GROQ_API_KEY."""
+        if self.groq_api_keys:
+            return [k.strip() for k in self.groq_api_keys.split(",") if k.strip()]
+        if self.groq_api_key:
+            return [self.groq_api_key]
+        return []
+
+    @property
+    def gemini_key_list(self) -> list[str]:
+        """Parse GEMINI_API_KEYS (comma-separated), fall back to single GEMINI_API_KEY."""
+        if self.gemini_api_keys:
+            return [k.strip() for k in self.gemini_api_keys.split(",") if k.strip()]
+        if self.gemini_api_key:
+            return [self.gemini_api_key]
+        return []
 
     # Embeddings (Gemini API)
     embedding_model: str = "gemini"

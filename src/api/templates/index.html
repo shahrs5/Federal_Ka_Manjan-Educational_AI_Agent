@@ -48,8 +48,7 @@
 
         /* ── Layout ───────────────────────────────────────────── */
         .app {
-            max-width: 960px;
-            margin: 0 auto;
+            width: 100%;
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -272,6 +271,160 @@
             color: var(--text-tertiary);
             font-size: 0.95rem;
             font-weight: 500;
+        }
+
+        /* ── Onboarding Overlay ─────────────────────────────── */
+        .onboarding-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .onboarding-overlay.hidden {
+            display: none;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .onboarding {
+            width: 100%;
+            max-width: 520px;
+            padding: 40px 24px;
+            text-align: center;
+        }
+
+        .onboarding-logo {
+            width: 64px;
+            height: 64px;
+            background: var(--user-bubble);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin: 0 auto 20px;
+        }
+
+        .onboarding h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .onboarding .onboarding-sub {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-bottom: 32px;
+        }
+
+        .onboarding-step {
+            margin-bottom: 28px;
+        }
+
+        .onboarding-step-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 12px;
+        }
+
+        .mcq-group {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mcq-option {
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            min-width: 100px;
+        }
+
+        .mcq-option:hover:not(.disabled):not(.selected) {
+            background: var(--bg-glass-hover);
+            border-color: rgba(255,255,255,0.15);
+            color: var(--text-primary);
+        }
+
+        .mcq-option.selected,
+        .mcq-option.selected:hover {
+            background: rgba(59,130,246,0.15);
+            border-color: var(--accent);
+            color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .mcq-option.disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+        }
+
+        .mcq-option .coming-soon {
+            display: block;
+            font-size: 0.65rem;
+            color: var(--text-tertiary);
+            margin-top: 2px;
+        }
+
+        .btn-start {
+            margin-top: 32px;
+            padding: 14px 48px;
+            border-radius: 999px;
+            border: none;
+            background: var(--accent);
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-start:hover:not(:disabled) {
+            background: var(--accent-hover);
+            transform: scale(1.03);
+        }
+
+        .btn-start:disabled {
+            background: var(--bg-tertiary);
+            color: var(--text-tertiary);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ── Session Badge ──────────────────────────────────── */
+        .session-badge {
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
+            white-space: nowrap;
         }
 
         /* ── Messages ────────────────────────────────────────── */
@@ -643,32 +796,18 @@
                 </div>
             </div>
             <div class="header-actions">
+                <span class="session-badge" id="sessionBadge"></span>
+                <button class="btn-icon" id="newSessionBtn" title="New session">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+                </button>
                 <button class="btn-icon" id="clearBtn" title="Clear chat">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Settings -->
+        <!-- Language setting (compact bar) — disabled for now
         <div class="settings-bar">
-            <div class="setting-pill">
-                <label for="classLevel">Class</label>
-                <select id="classLevel">
-                    <option value="9">Class 9</option>
-                    <option value="10">Class 10</option>
-                </select>
-            </div>
-            <div class="setting-pill">
-                <label for="subject">Subject</label>
-                <select id="subject">
-                    <option value="Physics">Physics</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Biology">Biology</option>
-                    <option value="Math">Math</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="English">English</option>
-                </select>
-            </div>
             <div class="setting-pill">
                 <label for="language">Lang</label>
                 <select id="language">
@@ -678,6 +817,7 @@
                 </select>
             </div>
         </div>
+        -->
 
         <!-- Chat Area -->
         <div class="chat-area" id="chatArea">
@@ -686,6 +826,37 @@
 
         <!-- Scroll-to-bottom -->
         <button class="scroll-btn" id="scrollBtn">&#x2193;</button>
+
+        <!-- Onboarding Overlay -->
+        <div class="onboarding-overlay" id="onboarding">
+            <div class="onboarding">
+                <div class="onboarding-logo">F</div>
+                <h1>Federal Ka Manjan</h1>
+                <p class="onboarding-sub">Pick your class and subject to get started</p>
+
+                <div class="onboarding-step">
+                    <div class="onboarding-step-label">Select your class</div>
+                    <div class="mcq-group" id="classGroup">
+                        <button class="mcq-option" data-value="9">Class 9</button>
+                        <button class="mcq-option" data-value="10">Class 10</button>
+                    </div>
+                </div>
+
+                <div class="onboarding-step">
+                    <div class="onboarding-step-label">Select your subject</div>
+                    <div class="mcq-group" id="subjectGroup">
+                        <button class="mcq-option" data-value="Physics">Physics</button>
+                        <button class="mcq-option" data-value="Chemistry">Chemistry</button>
+                        <button class="mcq-option" data-value="Biology">Biology</button>
+                        <button class="mcq-option" data-value="Math">Math</button>
+                        <button class="mcq-option" data-value="Computer Science">Computer Science</button>
+                        <button class="mcq-option" data-value="English">English</button>
+                    </div>
+                </div>
+
+                <button class="btn-start" id="startBtn" disabled>Start Chatting</button>
+            </div>
+        </div>
 
         <!-- Input -->
         <div class="input-bar">
@@ -707,15 +878,21 @@
         const sendBtn        = document.getElementById('sendBtn');
         const clearBtn       = document.getElementById('clearBtn');
         const scrollBtn      = document.getElementById('scrollBtn');
-        const classSelect    = document.getElementById('classLevel');
-        const subjectSelect  = document.getElementById('subject');
-        const languageSelect = document.getElementById('language');
+        const languageSelect = document.getElementById('language'); // may be null if commented out
+        const newSessionBtn  = document.getElementById('newSessionBtn');
+        const sessionBadge   = document.getElementById('sessionBadge');
+
+        /* ── Onboarding DOM refs ──────────────────────────── */
+        const onboarding     = document.getElementById('onboarding');
+        const classGroup     = document.getElementById('classGroup');
+        const subjectGroup   = document.getElementById('subjectGroup');
+        const startBtn       = document.getElementById('startBtn');
 
         /* ── State ─────────────────────────────────────────── */
         const HISTORY_LIMIT = 10;
         let chatHistory   = [];
-        let activeClass   = classSelect.value;
-        let activeSubject = subjectSelect.value;
+        let activeClass   = null;
+        let activeSubject = null;
 
         /* ── Subject availability ──────────────────────────── */
         const availability = {
@@ -723,47 +900,91 @@
             10: { Physics:true, Chemistry:true, Biology:true, Math:true, 'Computer Science':false, English:false }
         };
 
-        function updateSubjectOptions() {
-            const avail = availability[parseInt(classSelect.value)];
-            Array.from(subjectSelect.options).forEach(opt => {
-                const available = avail[opt.value] !== false;
-                opt.disabled = !available;
-                opt.textContent = available ? opt.value : opt.value + ' (Coming Soon)';
+        /* ── Onboarding: MCQ selection logic ─────────────── */
+        let selectedClass   = null;
+        let selectedSubject = null;
+
+        function selectOption(group, value) {
+            group.querySelectorAll('.mcq-option').forEach(btn => {
+                btn.classList.toggle('selected', btn.dataset.value === value);
             });
-            if (subjectSelect.options[subjectSelect.selectedIndex].disabled) {
-                for (let i = 0; i < subjectSelect.options.length; i++) {
-                    if (!subjectSelect.options[i].disabled) { subjectSelect.selectedIndex = i; break; }
+        }
+
+        function updateSubjectButtons() {
+            const avail = selectedClass ? availability[parseInt(selectedClass)] : {};
+            subjectGroup.querySelectorAll('.mcq-option').forEach(btn => {
+                const subj = btn.dataset.value;
+                const isAvail = avail[subj] !== false;
+                btn.classList.toggle('disabled', !isAvail);
+                // Show "Coming Soon" label
+                let badge = btn.querySelector('.coming-soon');
+                if (!isAvail) {
+                    if (!badge) {
+                        badge = document.createElement('span');
+                        badge.className = 'coming-soon';
+                        badge.textContent = 'Coming Soon';
+                        btn.appendChild(badge);
+                    }
+                } else if (badge) {
+                    badge.remove();
                 }
-            }
-        }
-        updateSubjectOptions();
-
-        /* ── Setting change handlers ───────────────────────── */
-        function handleSettingChange(selectEl, prevVal) {
-            if (chatHistory.length === 0) {
-                activeClass   = classSelect.value;
-                activeSubject = subjectSelect.value;
-                if (selectEl === classSelect) updateSubjectOptions();
-                return;
-            }
-            if (confirm('Switching will clear your chat history.\nContinue?')) {
-                if (selectEl === classSelect) updateSubjectOptions();
-                activeClass   = classSelect.value;
-                activeSubject = subjectSelect.value;
-                resetChat();
-            } else {
-                selectEl.value = prevVal;
-            }
+                // Deselect if now disabled
+                if (!isAvail && btn.classList.contains('selected')) {
+                    btn.classList.remove('selected');
+                    selectedSubject = null;
+                }
+            });
+            updateStartBtn();
         }
 
-        classSelect.addEventListener('change', () => {
-            const prevC = activeClass, prevS = activeSubject;
-            handleSettingChange(classSelect, prevC);
-            if (classSelect.value !== activeClass) subjectSelect.value = prevS;
+        function updateStartBtn() {
+            startBtn.disabled = !(selectedClass && selectedSubject);
+        }
+
+        classGroup.addEventListener('click', (e) => {
+            const btn = e.target.closest('.mcq-option');
+            if (!btn) return;
+            selectedClass = btn.dataset.value;
+            selectOption(classGroup, selectedClass);
+            updateSubjectButtons();
         });
 
-        subjectSelect.addEventListener('change', () => {
-            handleSettingChange(subjectSelect, activeSubject);
+        subjectGroup.addEventListener('click', (e) => {
+            const btn = e.target.closest('.mcq-option');
+            if (!btn || btn.classList.contains('disabled')) return;
+            selectedSubject = btn.dataset.value;
+            selectOption(subjectGroup, selectedSubject);
+            updateStartBtn();
+        });
+
+        startBtn.addEventListener('click', () => {
+            if (!selectedClass || !selectedSubject) return;
+            activeClass   = selectedClass;
+            activeSubject = selectedSubject;
+            sessionBadge.textContent = 'Class ' + activeClass + ' · ' + activeSubject;
+            onboarding.classList.add('hidden');
+            questionInput.focus();
+        });
+
+        /* ── New Session ──────────────────────────────────── */
+        function showOnboarding() {
+            // Pre-select previous choices if they exist
+            selectedClass   = activeClass;
+            selectedSubject = activeSubject;
+            if (selectedClass) {
+                selectOption(classGroup, selectedClass);
+                updateSubjectButtons();
+            }
+            if (selectedSubject) {
+                selectOption(subjectGroup, selectedSubject);
+            }
+            updateStartBtn();
+            onboarding.classList.remove('hidden');
+        }
+
+        newSessionBtn.addEventListener('click', () => {
+            resetChat();
+            showOnboarding();
         });
 
         /* ── Reset ─────────────────────────────────────────── */
@@ -815,20 +1036,15 @@
             const msg = document.createElement('div');
             msg.className = 'msg ' + (isUser ? 'user' : 'assistant');
 
-            // Build inner HTML
             let html = '';
 
-            // Avatar for assistant
             if (!isUser) {
                 html += '<div class="msg-avatar">&#x2728;</div>';
             }
 
             html += '<div class="msg-body">';
-
-            // Bubble — use textContent for safety, then render math
             html += '<div class="msg-bubble"></div>';
 
-            // Metadata (assistant only)
             if (!isUser && metadata) {
                 html += '<div class="msg-meta">';
                 if (metadata.chapter_used) {
@@ -840,7 +1056,6 @@
                         Math.round(metadata.confidence * 100) + '% confident</span>';
                 html += '</div>';
 
-                // Sources accordion
                 if (metadata.sources && metadata.sources.length > 0) {
                     const srcId = 'src-' + Date.now();
                     html += '<button class="sources-toggle" data-target="' + srcId + '">' +
@@ -861,7 +1076,6 @@
                 }
             }
 
-            // Copy button (assistant only)
             if (!isUser) {
                 html += '<div class="msg-actions">' +
                         '<button class="btn-copy" data-text="' + escapeHtml(content).replace(/"/g, '&quot;') + '">' +
@@ -869,13 +1083,11 @@
                         'Copy</button></div>';
             }
 
-            html += '</div>'; // close msg-body
+            html += '</div>';
             msg.innerHTML = html;
 
-            // Set bubble text safely: textContent prevents XSS,
-            // then split on newlines to create <br> elements while preserving raw text for KaTeX
             const bubble = msg.querySelector('.msg-bubble');
-            bubble.textContent = ''; // clear
+            bubble.textContent = '';
             const lines = content.split('\n');
             lines.forEach((line, i) => {
                 if (i > 0) bubble.appendChild(document.createElement('br'));
@@ -884,7 +1096,6 @@
 
             chatArea.appendChild(msg);
 
-            // KaTeX rendering for assistant messages (runs on raw text nodes, so \frac etc. stay intact)
             if (!isUser && typeof renderMathInElement === 'function') {
                 renderMathInElement(bubble, {
                     delimiters: [
@@ -962,9 +1173,9 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         query:       question,
-                        class_level: parseInt(classSelect.value),
-                        subject:     subjectSelect.value,
-                        language:    languageSelect.value,
+                        class_level: parseInt(activeClass),
+                        subject:     activeSubject,
+                        language:    languageSelect ? languageSelect.value : 'en',
                         history:     chatHistory.slice(0, -1),
                     }),
                 });

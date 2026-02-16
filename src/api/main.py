@@ -39,8 +39,10 @@ async def lifespan(app: FastAPI):
     global qa_agent, math_orchestrator
 
     # Validate settings
-    if not settings.groq_api_key:
-        raise RuntimeError("GROQ_API_KEY must be set in .env")
+    if not settings.groq_key_list:
+        raise RuntimeError("GROQ_API_KEYS (or GROQ_API_KEY) must be set in .env")
+    if not settings.gemini_key_list:
+        raise RuntimeError("GEMINI_API_KEYS (or GEMINI_API_KEY) must be set in .env")
     if not settings.supabase_url or not settings.supabase_key:
         raise RuntimeError("SUPABASE_URL and SUPABASE_KEY must be set in .env")
 
@@ -48,7 +50,7 @@ async def lifespan(app: FastAPI):
     setup_opik()
     groq_client = get_groq_client()
     supabase_client = get_supabase_client()
-    embedder = EmbeddingGenerator(settings.embedding_model)
+    embedder = EmbeddingGenerator(settings.embedding_model, api_keys=settings.gemini_key_list)
 
     # Initialize agents
     router = ChapterRouterAgent(groq_client, model=settings.groq_model, debug=False)
