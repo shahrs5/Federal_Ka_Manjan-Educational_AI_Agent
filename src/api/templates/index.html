@@ -545,79 +545,6 @@
         .meta-chip.conf-med    { background: rgba(234,179,8,0.12);  color: #facc15; }
         .meta-chip.conf-low    { background: rgba(239,68,68,0.12);  color: #f87171; }
 
-        /* ── Sources Accordion ───────────────────────────────── */
-        .sources-toggle {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 0;
-            margin-top: 8px;
-            background: none;
-            border: none;
-            color: var(--text-tertiary);
-            font-family: inherit;
-            font-size: 0.75rem;
-            cursor: pointer;
-            transition: color 0.2s;
-        }
-
-        .sources-toggle:hover { color: var(--text-secondary); }
-
-        .sources-toggle .arrow {
-            display: inline-block;
-            transition: transform 0.2s;
-            font-size: 10px;
-        }
-
-        .sources-toggle.open .arrow { transform: rotate(90deg); }
-
-        .sources-list {
-            display: none;
-            margin-top: 6px;
-            padding-left: 2px;
-        }
-
-        .sources-list.open { display: block; }
-
-        .source-chip {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 6px 10px;
-            margin-bottom: 4px;
-            border-radius: var(--radius-sm);
-            background: rgba(255,255,255,0.02);
-            border: 1px solid var(--border);
-            font-size: 0.75rem;
-        }
-
-        .source-chip-left {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-secondary);
-            min-width: 0;
-        }
-
-        .source-chip-left .ch {
-            color: var(--accent);
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-
-        .source-chip-left .title {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .source-chip .rel {
-            color: var(--success);
-            font-weight: 600;
-            flex-shrink: 0;
-            margin-left: 8px;
-        }
-
         /* ── Typing Indicator ────────────────────────────────── */
         .typing {
             display: flex;
@@ -1056,24 +983,6 @@
                         Math.round(metadata.confidence * 100) + '% confident</span>';
                 html += '</div>';
 
-                if (metadata.sources && metadata.sources.length > 0) {
-                    const srcId = 'src-' + Date.now();
-                    html += '<button class="sources-toggle" data-target="' + srcId + '">' +
-                            '<span class="arrow">&#x25B6;</span> ' +
-                            metadata.sources.length + ' source' + (metadata.sources.length > 1 ? 's' : '') +
-                            '</button>';
-                    html += '<div class="sources-list" id="' + srcId + '">';
-                    metadata.sources.forEach(src => {
-                        html += '<div class="source-chip">' +
-                                '<div class="source-chip-left">' +
-                                '<span class="ch">Ch.' + escapeHtml(String(src.chapter)) + '</span>' +
-                                '<span class="title">' + escapeHtml(src.title) + '</span>' +
-                                '</div>' +
-                                '<span class="rel">' + Math.round(src.relevance * 100) + '%</span>' +
-                                '</div>';
-                    });
-                    html += '</div>';
-                }
             }
 
             if (!isUser) {
@@ -1111,17 +1020,8 @@
             chatArea.scrollTop = chatArea.scrollHeight;
         }
 
-        /* ── Sources toggle (event delegation) ─────────────── */
+        /* ── Copy button (event delegation) ───────────────── */
         chatArea.addEventListener('click', (e) => {
-            const toggle = e.target.closest('.sources-toggle');
-            if (toggle) {
-                const list = document.getElementById(toggle.dataset.target);
-                if (list) {
-                    toggle.classList.toggle('open');
-                    list.classList.toggle('open');
-                }
-                return;
-            }
             const copyBtn = e.target.closest('.btn-copy');
             if (copyBtn) {
                 const text = copyBtn.dataset.text;

@@ -4,6 +4,7 @@ FastAPI application for the RAG chatbot.
 Run with:
     uvicorn src.api.main:app --reload --port 8000
 """
+import asyncio
 from dotenv import load_dotenv
 load_dotenv()  # Load .env before other imports
 
@@ -145,14 +146,16 @@ async def chat(request: ChatRequest):
         history = [{"role": m.role, "content": m.content} for m in request.history]
 
         if request.subject == "Math" and math_orchestrator is not None:
-            response = math_orchestrator.answer(
+            response = await asyncio.to_thread(
+                math_orchestrator.answer,
                 query=request.query,
                 class_level=request.class_level,
                 language=request.language,
                 history=history,
             )
         else:
-            response = qa_agent.answer(
+            response = await asyncio.to_thread(
+                qa_agent.answer,
                 query=request.query,
                 class_level=request.class_level,
                 subject=request.subject,
