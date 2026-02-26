@@ -18,6 +18,11 @@ class Settings(BaseSettings):
     supabase_url: str = ""
     supabase_key: str = ""
 
+    # Supabase Auth
+    supabase_service_role_key: str = ""
+    supabase_jwt_secret: str = ""
+    admin_email: str = ""
+
     # LLM (Groq) — comma-separated for rotation, single key still works
     groq_api_key: str = ""
     groq_api_keys: str = ""

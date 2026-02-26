@@ -44,3 +44,60 @@ class HealthResponse(BaseModel):
 
     status: str
     message: str
+
+
+# Auth models
+
+class LoginRequest(BaseModel):
+    """Request to set auth cookies after Supabase client-side login."""
+
+    access_token: str
+    refresh_token: str
+    remember_me: bool = False
+
+
+class SetPasswordRequest(BaseModel):
+    """Set password for first-time login."""
+
+    password: str = Field(..., min_length=6)
+
+
+class FirstTimeCheckRequest(BaseModel):
+    """Check if an email is a valid first-time user."""
+
+    email: str = Field(..., min_length=3)
+
+
+class FirstTimeSetPasswordRequest(BaseModel):
+    """Set password for a first-time user (public, no auth required)."""
+
+    email: str = Field(..., min_length=3)
+    password: str = Field(..., min_length=6)
+
+
+class InviteUserRequest(BaseModel):
+    """Invite a single user by email."""
+
+    email: str = Field(..., min_length=3)
+
+
+class BulkInviteRequest(BaseModel):
+    """Invite multiple users by comma-separated emails."""
+
+    emails: str = Field(..., min_length=3)
+
+
+class DeleteUserRequest(BaseModel):
+    """Delete a user by ID."""
+
+    user_id: str
+
+
+class UserInfo(BaseModel):
+    """User info returned by admin endpoints."""
+
+    id: str
+    email: str
+    created_at: str
+    last_sign_in: Optional[str] = None
+    role: Optional[str] = None

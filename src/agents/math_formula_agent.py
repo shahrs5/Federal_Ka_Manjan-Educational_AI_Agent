@@ -88,6 +88,7 @@ class MathFormulaAgent:
             confidence=min(routing.confidence, answer_result.get("confidence", 0.8)),
             chapter_used=routing.primary_chapter,
             routing_info=routing,
+            revised_query=retrieval_query,
         )
 
     # ------------------------------------------------------------------

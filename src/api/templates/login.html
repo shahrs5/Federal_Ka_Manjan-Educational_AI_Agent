@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Federal Ka Manjan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-tertiary: #1a1a24;
+            --bg-glass: rgba(255,255,255,0.03);
+            --bg-glass-hover: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.08);
+            --border-focus: #3b82f6;
+            --text-primary: #f0f0f3;
+            --text-secondary: #8b8b9e;
+            --text-tertiary: #5a5a6e;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-glow: rgba(59,130,246,0.15);
+            --success: #22c55e;
+            --danger: #ef4444;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1.6;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 420px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 40px 32px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-logo {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: var(--radius-md);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+        }
+
+        .login-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 4px;
+        }
+
+        .login-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .link-btn {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .link-btn:hover {
+            color: var(--accent-hover);
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .login-btn:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--accent-glow);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .login-btn-outline {
+            width: 100%;
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+
+        .login-btn-outline:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .alert {
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert-error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #fca5a5;
+        }
+
+        .alert-success {
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.3);
+            color: #86efac;
+        }
+
+        .hidden-form {
+            display: none;
+        }
+
+        .back-to-login {
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .back-to-login button {
+            font-size: 0.85rem;
+            color: var(--accent);
+            text-decoration: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
+        }
+
+        .back-to-login button:hover {
+            text-decoration: underline;
+        }
+
+        .password-hint {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            margin-top: 6px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 480px) {
+            .login-card { padding: 28px 20px; }
+            .form-row { flex-direction: column; gap: 12px; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="login-logo">M</div>
+                <div class="login-title">Federal Ka Manjan</div>
+                <div class="login-subtitle" id="subtitle">Sign in to your account</div>
+            </div>
+
+            <div id="alert" class="alert"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label" for="email">Email</label>
+                    <input class="form-input" type="email" id="email" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <input class="form-input" type="password" id="password" placeholder="Enter your password" required autocomplete="current-password">
+                </div>
+                <div class="form-row">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="rememberMe">
+                        <label for="rememberMe">Remember me</label>
+                    </div>
+                    <button type="button" class="link-btn" onclick="showForgotForm()">Forgot password?</button>
+                </div>
+                <button type="submit" class="login-btn" id="loginBtn">Sign In</button>
+                <button type="button" class="login-btn-outline" onclick="showFirstTimeForm()">First Time? Set up your account</button>
+            </form>
+
+            <!-- Forgot Password Form -->
+            <form id="forgotForm" class="hidden-form" onsubmit="handleForgot(event)">
+                <div class="form-group">
+                    <label class="form-label" for="forgotEmail">Email</label>
+                    <input class="form-input" type="email" id="forgotEmail" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                <button type="submit" class="login-btn" id="forgotBtn">Send Reset Link</button>
+                <div class="back-to-login">
+                    <button type="button" onclick="showLoginForm()">Back to login</button>
+                </div>
+            </form>
+
+            <!-- First Time: Step 1 - Email Check -->
+            <form id="firstTimeEmailForm" class="hidden-form" onsubmit="handleFirstTimeCheck(event)">
+                <div class="form-group">
+                    <label class="form-label" for="ftEmail">Your Email</label>
+                    <input class="form-input" type="email" id="ftEmail" placeholder="you@example.com" required autocomplete="email">
+                </div>
+                <button type="submit" class="login-btn" id="ftCheckBtn">Continue</button>
+                <div class="back-to-login">
+                    <button type="button" onclick="showLoginForm()">Back to login</button>
+                </div>
+            </form>
+
+            <!-- First Time: Step 2 - Set Password -->
+            <form id="firstTimePasswordForm" class="hidden-form" onsubmit="handleFirstTimeSetPassword(event)">
+                <div class="form-group">
+                    <label class="form-label" for="ftNewPassword">New Password</label>
+                    <input class="form-input" type="password" id="ftNewPassword" placeholder="Choose a password" required minlength="6" autocomplete="new-password">
+                    <div class="password-hint">Must be at least 6 characters</div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="ftConfirmPassword">Confirm Password</label>
+                    <input class="form-input" type="password" id="ftConfirmPassword" placeholder="Confirm your password" required minlength="6" autocomplete="new-password">
+                </div>
+                <button type="submit" class="login-btn" id="ftSetBtn">Set Password & Sign In</button>
+                <div class="back-to-login">
+                    <button type="button" onclick="showLoginForm()">Back to login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        let supabaseClient = null;
+        let firstTimeEmail = '';
+
+        async function initSupabase() {
+            const res = await fetch('/auth/config');
+            const cfg = await res.json();
+            supabaseClient = supabase.createClient(cfg.supabase_url, cfg.supabase_key);
+        }
+
+        function showAlert(msg, type) {
+            const el = document.getElementById('alert');
+            el.textContent = msg;
+            el.className = 'alert alert-' + type;
+            el.style.display = 'block';
+        }
+
+        function hideAlert() {
+            document.getElementById('alert').style.display = 'none';
+        }
+
+        function hideAllForms() {
+            hideAlert();
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('forgotForm').style.display = 'none';
+            document.getElementById('firstTimeEmailForm').style.display = 'none';
+            document.getElementById('firstTimePasswordForm').style.display = 'none';
+        }
+
+        function showLoginForm() {
+            hideAllForms();
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('subtitle').textContent = 'Sign in to your account';
+        }
+
+        function showForgotForm() {
+            hideAllForms();
+            document.getElementById('forgotForm').style.display = 'block';
+            document.getElementById('subtitle').textContent = 'Reset your password';
+        }
+
+        function showFirstTimeForm() {
+            hideAllForms();
+            document.getElementById('firstTimeEmailForm').style.display = 'block';
+            document.getElementById('subtitle').textContent = 'Set up your account';
+        }
+
+        function showFirstTimePasswordForm() {
+            hideAllForms();
+            document.getElementById('firstTimePasswordForm').style.display = 'block';
+            document.getElementById('subtitle').textContent = 'Create your password';
+        }
+
+        /* ── Login ── */
+        async function handleLogin(e) {
+            e.preventDefault();
+            hideAlert();
+            const btn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Signing in...';
+
+            try {
+                const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+                if (error) throw error;
+
+                const res = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        access_token: data.session.access_token,
+                        refresh_token: data.session.refresh_token,
+                        remember_me: rememberMe,
+                    }),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || 'Login failed');
+                }
+
+                window.location.href = '/';
+            } catch (err) {
+                showAlert(err.message || 'Login failed', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        }
+
+        /* ── Forgot Password ── */
+        async function handleForgot(e) {
+            e.preventDefault();
+            hideAlert();
+            const btn = document.getElementById('forgotBtn');
+            const email = document.getElementById('forgotEmail').value.trim();
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Sending...';
+
+            try {
+                const origin = window.location.origin;
+                const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
+                    redirectTo: origin + '/set-password',
+                });
+                if (error) throw error;
+                showAlert('Check your email for the reset link.', 'success');
+            } catch (err) {
+                showAlert(err.message || 'Failed to send reset email', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Send Reset Link';
+            }
+        }
+
+        /* ── First Time: Step 1 - Check Email ── */
+        async function handleFirstTimeCheck(e) {
+            e.preventDefault();
+            hideAlert();
+            const btn = document.getElementById('ftCheckBtn');
+            const email = document.getElementById('ftEmail').value.trim();
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Checking...';
+
+            try {
+                const res = await fetch('/auth/first-time-check', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+
+                const data = await res.json();
+
+                if (!data.exists) {
+                    showAlert('No account found with this email. Contact your admin.', 'error');
+                    return;
+                }
+
+                if (!data.first_time) {
+                    showAlert('This account is already set up. Use Sign In instead.', 'error');
+                    return;
+                }
+
+                firstTimeEmail = email;
+                showFirstTimePasswordForm();
+            } catch (err) {
+                showAlert(err.message || 'Something went wrong', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Continue';
+            }
+        }
+
+        /* ── First Time: Step 2 - Set Password ── */
+        async function handleFirstTimeSetPassword(e) {
+            e.preventDefault();
+            hideAlert();
+            const btn = document.getElementById('ftSetBtn');
+            const password = document.getElementById('ftNewPassword').value;
+            const confirm = document.getElementById('ftConfirmPassword').value;
+
+            if (password !== confirm) {
+                showAlert('Passwords do not match.', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Setting up...';
+
+            try {
+                // Set the password via server
+                const res = await fetch('/auth/first-time-setup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: firstTimeEmail, password }),
+                });
+
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || 'Failed to set password');
+                }
+
+                // Now sign in with the new password
+                const { data, error } = await supabaseClient.auth.signInWithPassword({
+                    email: firstTimeEmail,
+                    password,
+                });
+                if (error) throw error;
+
+                const loginRes = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        access_token: data.session.access_token,
+                        refresh_token: data.session.refresh_token,
+                        remember_me: false,
+                    }),
+                });
+
+                if (!loginRes.ok) {
+                    throw new Error('Password set, but auto-login failed. Please sign in manually.');
+                }
+
+                showAlert('Account set up! Redirecting...', 'success');
+                setTimeout(() => { window.location.href = '/'; }, 1000);
+            } catch (err) {
+                showAlert(err.message || 'Failed to set password', 'error');
+                btn.disabled = false;
+                btn.textContent = 'Set Password & Sign In';
+            }
+        }
+
+        initSupabase();
+    </script>
+</body>
+</html>

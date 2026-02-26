@@ -10,3 +10,9 @@ from ..config import settings
 def get_supabase_client() -> Client:
     """Get cached Supabase client instance."""
     return create_client(settings.supabase_url, settings.supabase_key)
+
+
+@lru_cache()
+def get_supabase_admin_client() -> Client:
+    """Get cached Supabase admin client using service role key."""
+    return create_client(settings.supabase_url, settings.supabase_service_role_key)

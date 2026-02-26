@@ -47,12 +47,14 @@ class MathSolvingAgent:
             confidence=result.get("confidence", 0.85),
             chapter_used=None,
             routing_info=RoutingResult(
+
                 primary_chapter=0,
                 secondary_chapters=[],
                 confidence=result.get("confidence", 0.85),
                 reasoning="Direct math problem solving — no chapter routing needed.",
                 topics_identified=result.get("topics", []),
             ),
+            revised_query=query,
         )
 
     # ------------------------------------------------------------------

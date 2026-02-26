@@ -69,19 +69,24 @@ class MathOrchestrator:
         intent = self._classify(query)
 
         if intent == "solve":
-            return self.solving_agent.answer(
+            response = self.solving_agent.answer(
                 query=query,
                 class_level=class_level,
                 language=language,
                 history=history,
             )
         else:
-            return self.formula_agent.answer(
+            response = self.formula_agent.answer(
                 query=query,
                 class_level=class_level,
                 language=language,
                 history=history,
             )
+
+        # Attach math orchestration metadata for logging
+        response.math_intent = intent
+        response.agent_used = f"math_{intent}" if intent == "solve" else "math_formula"
+        return response
 
     # ------------------------------------------------------------------
     # Intent classification

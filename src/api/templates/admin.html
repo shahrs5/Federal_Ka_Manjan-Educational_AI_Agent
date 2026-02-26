@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Federal Ka Manjan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #111118;
+            --bg-tertiary: #1a1a24;
+            --bg-glass: rgba(255,255,255,0.03);
+            --bg-glass-hover: rgba(255,255,255,0.06);
+            --border: rgba(255,255,255,0.08);
+            --border-focus: #3b82f6;
+            --text-primary: #f0f0f3;
+            --text-secondary: #8b8b9e;
+            --text-tertiary: #5a5a6e;
+            --accent: #3b82f6;
+            --accent-hover: #2563eb;
+            --accent-glow: rgba(59,130,246,0.15);
+            --success: #22c55e;
+            --warning: #eab308;
+            --danger: #ef4444;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .admin-app {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 24px 20px;
+        }
+
+        /* ── Header ── */
+        .admin-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .admin-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .admin-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .admin-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(59,130,246,0.15);
+            color: var(--accent);
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+
+        .admin-header-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-glass);
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn:hover {
+            background: var(--bg-glass-hover);
+            color: var(--text-primary);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px var(--accent-glow);
+            color: white;
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn-danger {
+            color: var(--danger);
+            border-color: rgba(239,68,68,0.3);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239,68,68,0.1);
+            color: #fca5a5;
+        }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.78rem;
+        }
+
+        /* ── Sections ── */
+        .section {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        /* ── Invite Forms ── */
+        .invite-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .invite-row .form-input {
+            flex: 1;
+        }
+
+        .form-input {
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 80px;
+            resize: vertical;
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            margin-bottom: 10px;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .form-textarea::placeholder {
+            color: var(--text-tertiary);
+        }
+
+        .form-hint {
+            font-size: 0.78rem;
+            color: var(--text-tertiary);
+            margin-bottom: 10px;
+        }
+
+        .divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+
+        /* ── Alert ── */
+        .alert {
+            padding: 10px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            margin-bottom: 16px;
+            display: none;
+        }
+
+        .alert-error {
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.3);
+            color: #fca5a5;
+        }
+
+        .alert-success {
+            background: rgba(34,197,94,0.1);
+            border: 1px solid rgba(34,197,94,0.3);
+            color: #86efac;
+        }
+
+        /* ── Users Table ── */
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .users-table th {
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 8px 12px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .users-table td {
+            padding: 12px;
+            font-size: 0.88rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            vertical-align: middle;
+        }
+
+        .users-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .users-table tr:hover td {
+            background: var(--bg-glass);
+        }
+
+        .role-badge {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            padding: 2px 8px;
+            border-radius: 20px;
+        }
+
+        .role-admin {
+            background: rgba(59,130,246,0.15);
+            color: var(--accent);
+        }
+
+        .role-user {
+            background: rgba(255,255,255,0.06);
+            color: var(--text-secondary);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-tertiary);
+            font-size: 0.9rem;
+        }
+
+        .user-count {
+            font-size: 0.85rem;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ── Confirmation Modal ── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .modal-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+
+        /* ── Bulk Results ── */
+        .bulk-results {
+            margin-top: 12px;
+            display: none;
+        }
+
+        .bulk-result-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+
+        .bulk-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .status-ok {
+            color: var(--success);
+        }
+
+        .status-err {
+            color: var(--danger);
+        }
+
+        /* ── Responsive ── */
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        @media (max-width: 640px) {
+            .admin-header { flex-direction: column; align-items: flex-start; }
+            .invite-row { flex-direction: column; }
+            .users-table th:nth-child(3),
+            .users-table td:nth-child(3) { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-app">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="admin-header-left">
+                <div class="admin-logo">M</div>
+                <div>
+                    <div class="admin-title">User Management</div>
+                </div>
+                <span class="admin-badge">Admin</span>
+            </div>
+            <div class="admin-header-right">
+                <a href="/" class="btn">Back to Chat</a>
+                <button class="btn" onclick="handleLogout()">Logout</button>
+            </div>
+        </div>
+
+        <!-- Invite Section -->
+        <div class="section">
+            <div class="section-title">Add Users</div>
+            <div id="inviteAlert" class="alert"></div>
+
+            <!-- Single Invite -->
+            <div class="invite-row">
+                <input class="form-input" type="email" id="inviteEmail" placeholder="user@example.com">
+                <button class="btn btn-primary" id="inviteBtn" onclick="inviteSingle()">Add User</button>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Bulk Invite -->
+            <div class="section-title" style="font-size:0.9rem">Bulk Add</div>
+            <textarea class="form-textarea" id="bulkEmails" placeholder="user1@example.com, user2@example.com, user3@example.com"></textarea>
+            <div class="form-hint">Enter email addresses separated by commas</div>
+            <button class="btn btn-primary" id="bulkBtn" onclick="bulkInvite()">Bulk Add</button>
+
+            <div class="bulk-results" id="bulkResults"></div>
+        </div>
+
+        <!-- Users Section -->
+        <div class="section">
+            <div class="section-title">Users</div>
+            <div class="user-count" id="userCount"></div>
+            <div id="usersAlert" class="alert"></div>
+            <div class="table-wrap">
+                <table class="users-table">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Last Sign In</th>
+                            <th>Created</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersBody">
+                        <tr><td colspan="5" class="empty-state"><span class="spinner"></span> Loading users...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal-overlay" id="deleteModal">
+        <div class="modal">
+            <div class="modal-title">Delete User</div>
+            <div class="modal-text">Are you sure you want to delete <strong id="deleteUserEmail"></strong>? This action cannot be undone.</div>
+            <div class="modal-actions">
+                <button class="btn" onclick="closeDeleteModal()">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn" onclick="confirmDelete()">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let pendingDeleteId = null;
+        let pendingDeleteEmail = null;
+
+        function showAlert(containerId, msg, type) {
+            const el = document.getElementById(containerId);
+            el.textContent = msg;
+            el.className = 'alert alert-' + type;
+            el.style.display = 'block';
+            setTimeout(() => { el.style.display = 'none'; }, 5000);
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr || dateStr === 'None') return '-';
+            const d = new Date(dateStr);
+            return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        }
+
+        async function apiFetch(url, options = {}) {
+            const res = await fetch(url, { ...options, credentials: 'include' });
+            if (res.status === 401) {
+                window.location.href = '/login';
+                return null;
+            }
+            if (res.status === 403) {
+                window.location.href = '/';
+                return null;
+            }
+            return res;
+        }
+
+        async function loadUsers() {
+            const res = await apiFetch('/api/admin/users');
+            if (!res) return;
+            const users = await res.json();
+            const tbody = document.getElementById('usersBody');
+            document.getElementById('userCount').textContent = users.length + ' user' + (users.length !== 1 ? 's' : '');
+
+            if (users.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No users yet. Invite someone above.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = users.map(u => `
+                <tr>
+                    <td>${escapeHtml(u.email)}</td>
+                    <td><span class="role-badge role-${u.role || 'user'}">${u.role || 'user'}</span></td>
+                    <td>${formatDate(u.last_sign_in)}</td>
+                    <td>${formatDate(u.created_at)}</td>
+                    <td>
+                        ${u.role !== 'admin' ? `<button class="btn btn-danger btn-sm" onclick="openDeleteModal('${u.id}', '${escapeHtml(u.email)}')">Delete</button>` : ''}
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        async function inviteSingle() {
+            const email = document.getElementById('inviteEmail').value.trim();
+            if (!email) return;
+
+            const btn = document.getElementById('inviteBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>';
+
+            try {
+                const res = await apiFetch('/api/admin/invite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email }),
+                });
+                if (!res) return;
+
+                if (res.ok) {
+                    showAlert('inviteAlert', `User ${email} added. They can use "First Time?" on the login page to set their password.`, 'success');
+                    document.getElementById('inviteEmail').value = '';
+                    loadUsers();
+                } else {
+                    const err = await res.json();
+                    showAlert('inviteAlert', err.detail || 'Failed to add user', 'error');
+                }
+            } catch (err) {
+                showAlert('inviteAlert', err.message || 'Failed to add user', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Add User';
+            }
+        }
+
+        async function bulkInvite() {
+            const emails = document.getElementById('bulkEmails').value.trim();
+            if (!emails) return;
+
+            const btn = document.getElementById('bulkBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>Inviting...';
+
+            try {
+                const res = await apiFetch('/api/admin/bulk-invite', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ emails }),
+                });
+                if (!res) return;
+
+                const data = await res.json();
+                const resultsEl = document.getElementById('bulkResults');
+                resultsEl.style.display = 'block';
+                resultsEl.innerHTML = data.results.map(r => `
+                    <div class="bulk-result-item">
+                        <span class="${r.status === 'added' ? 'status-ok' : 'status-err'}">
+                            ${r.status === 'added' ? '&#10003;' : '&#10007;'}
+                        </span>
+                        <span>${escapeHtml(r.email)}</span>
+                        <span style="color:var(--text-tertiary);font-size:0.8rem">${r.status === 'added' ? 'Added' : r.detail || 'Error'}</span>
+                    </div>
+                `).join('');
+
+                document.getElementById('bulkEmails').value = '';
+                loadUsers();
+            } catch (err) {
+                showAlert('inviteAlert', err.message || 'Bulk invite failed', 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Bulk Add';
+            }
+        }
+
+        function openDeleteModal(userId, email) {
+            pendingDeleteId = userId;
+            pendingDeleteEmail = email;
+            document.getElementById('deleteUserEmail').textContent = email;
+            document.getElementById('deleteModal').classList.add('active');
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.remove('active');
+            pendingDeleteId = null;
+            pendingDeleteEmail = null;
+        }
+
+        async function confirmDelete() {
+            if (!pendingDeleteId) return;
+            const btn = document.getElementById('confirmDeleteBtn');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span>';
+
+            try {
+                const res = await apiFetch(`/api/admin/users/${pendingDeleteId}`, { method: 'DELETE' });
+                if (!res) return;
+
+                if (res.ok) {
+                    showAlert('usersAlert', `User ${pendingDeleteEmail} deleted`, 'success');
+                    loadUsers();
+                } else {
+                    const err = await res.json();
+                    showAlert('usersAlert', err.detail || 'Failed to delete user', 'error');
+                }
+            } catch (err) {
+                showAlert('usersAlert', err.message || 'Failed to delete user', 'error');
+            } finally {
+                closeDeleteModal();
+                btn.disabled = false;
+                btn.textContent = 'Delete';
+            }
+        }
+
+        async function handleLogout() {
+            await fetch('/auth/logout', { method: 'POST' });
+            window.location.href = '/login';
+        }
+
+        // Load users on page load
+        loadUsers();
+    </script>
+</body>
+</html>

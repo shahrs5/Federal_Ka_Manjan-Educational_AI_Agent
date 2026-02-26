@@ -103,6 +103,19 @@ uv scripts/ingest_all_subjects.py --class-level 10 --subjects all
 uv scripts/ingest_all_subjects.py --class-level 9 --subjects Physics Chemistry
 ```
 
+#### Math Notes
+
+Math notes are stored as `.zip` files containing LaTeX. Run these two steps:
+
+```bash
+# Step 1: Extract zip files → .tex files under Notes/Class {X}/Math/Content/Extracted/
+python scripts/extract_math_zips.py
+
+# Step 2: Embed and upload to Supabase
+python scripts/ingest_math_notes.py --class-level 9
+python scripts/ingest_math_notes.py --class-level 10
+```
+
 ## Running the App
 
 ```bash

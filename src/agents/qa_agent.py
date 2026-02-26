@@ -21,6 +21,9 @@ class QAResponse:
     confidence: float
     chapter_used: int
     routing_info: RoutingResult
+    revised_query: str = ""
+    agent_used: str = ""
+    math_intent: str = ""
 
 
 class QAAgent:
@@ -120,6 +123,7 @@ class QAAgent:
             ),
             chapter_used=routing.primary_chapter,
             routing_info=routing,
+            revised_query=retrieval_query,
         )
 
     @track
