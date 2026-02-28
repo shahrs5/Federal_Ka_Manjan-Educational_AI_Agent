@@ -94,14 +94,9 @@
         .header-logo {
             width: 36px;
             height: 36px;
-            background: var(--user-bubble);
             border-radius: var(--radius-sm);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            font-weight: 700;
-            color: white;
+            object-fit: cover;
+            flex-shrink: 0;
         }
 
         .header-title {
@@ -414,15 +409,10 @@
         .onboarding-logo {
             width: 64px;
             height: 64px;
-            background: var(--user-bubble);
             border-radius: var(--radius-lg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
+            object-fit: cover;
             margin: 0 auto 20px;
+            display: block;
         }
 
         .onboarding h1 {
@@ -820,7 +810,7 @@
         @media (max-width: 640px) {
             .header { padding: 10px 12px; gap: 8px; flex-shrink: 0; }
             .header-subtitle { display: none; }
-            .header-logo { width: 32px; height: 32px; font-size: 15px; flex-shrink: 0; }
+            .header-logo { width: 32px; height: 32px; flex-shrink: 0; }
             .header-brand { gap: 8px; }
             .header-title { font-size: 0.95rem; }
             .header-actions { display: none; }
@@ -843,6 +833,18 @@
             .msg-actions { opacity: 1; }
         }
 
+        .disclaimer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: var(--text-muted, #666);
+            padding: 6px 16px max(8px, env(safe-area-inset-bottom, 8px));
+            line-height: 1.4;
+        }
+        .disclaimer a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
@@ -850,7 +852,7 @@
         <!-- Header -->
         <div class="header">
             <div class="header-brand">
-                <div class="header-logo">F</div>
+                <img class="header-logo" src="/logo.png" alt="Federal Ka Manjan">
                 <div>
                     <div class="header-title">Federal Ka Manjan</div>
                     <div class="header-subtitle">AI Tutor for FBISE Students</div>
@@ -925,7 +927,7 @@
         <!-- Onboarding Overlay -->
         <div class="onboarding-overlay" id="onboarding">
             <div class="onboarding">
-                <div class="onboarding-logo">F</div>
+                <img class="onboarding-logo" src="/logo.png" alt="Federal Ka Manjan">
                 <h1>Federal Ka Manjan</h1>
                 <p class="onboarding-sub">Pick your class and subject to get started</p>
 
@@ -961,6 +963,12 @@
                     <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
                 </button>
             </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            ⚠️ This chatbot is being used for <strong>TESTING</strong> and mistakes can be made.
+            Please report any bugs to <strong>Luv Kumar Lohano</strong> (<a href="tel:+923303644638">+92 330 3644638)</a>
         </div>
     </div>
 
@@ -1117,9 +1125,17 @@
             if (emptyState) emptyState.style.display = 'flex';
         }
 
+        function showClearConfirm(onConfirm) {
+            const modal = document.getElementById('clearConfirmModal');
+            modal.style.display = 'flex';
+            document.getElementById('clearCancelBtn').onclick = () => { modal.style.display = 'none'; };
+            document.getElementById('clearConfirmBtn').onclick = () => { modal.style.display = 'none'; onConfirm(); };
+            modal.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
+        }
+
         clearBtn.addEventListener('click', () => {
             if (chatHistory.length === 0) return;
-            if (confirm('Clear chat history?')) resetChat();
+            showClearConfirm(resetChat);
         });
 
         /* ── Textarea auto-resize ──────────────────────────── */
@@ -1178,12 +1194,12 @@
             if (!isUser && metadata) {
                 html += '<div class="msg-meta">';
                 if (metadata.chapter_used) {
-                    html += '<span class="meta-chip chapter">Ch. ' + escapeHtml(String(metadata.chapter_used)) + '</span>';
+                    const src = metadata.sources && metadata.sources.find(s => s.chapter === metadata.chapter_used);
+                    const chLabel = src
+                        ? 'Chapter ' + src.chapter + ' \u2014 ' + src.title
+                        : 'Chapter ' + metadata.chapter_used;
+                    html += '<span class="meta-chip chapter">' + escapeHtml(chLabel) + '</span>';
                 }
-                const confClass = metadata.confidence >= 0.8 ? 'conf-high' :
-                                  metadata.confidence >= 0.5 ? 'conf-med' : 'conf-low';
-                html += '<span class="meta-chip ' + confClass + '">' +
-                        Math.round(metadata.confidence * 100) + '% confident</span>';
                 html += '</div>';
 
             }
@@ -1357,7 +1373,7 @@
         mobileClearChat.addEventListener('click', () => {
             closeMobileMenu();
             if (chatHistory.length === 0) return;
-            if (confirm('Clear chat history?')) resetChat();
+            showClearConfirm(resetChat);
         });
 
         mobileLogout.addEventListener('click', () => {
@@ -1380,5 +1396,16 @@
         })();
     })();
     </script>
+
+    <!-- Clear Chat Confirmation Modal -->
+    <div id="clearConfirmModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.55);align-items:center;justify-content:center">
+        <div style="background:var(--surface,#1e1e2e);border:1px solid var(--border,rgba(255,255,255,.1));border-radius:12px;padding:24px 28px;max-width:300px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.5)">
+            <p style="margin:0 0 20px;font-size:15px;color:var(--text-primary,#e0e0e0);font-weight:500">Clear chat history?</p>
+            <div style="display:flex;gap:10px;justify-content:flex-end">
+                <button id="clearCancelBtn" style="padding:8px 18px;border-radius:8px;border:1px solid var(--border,rgba(255,255,255,.15));background:transparent;color:var(--text-primary,#e0e0e0);cursor:pointer;font-size:14px">Cancel</button>
+                <button id="clearConfirmBtn" style="padding:8px 18px;border-radius:8px;border:none;background:#e53e3e;color:#fff;cursor:pointer;font-size:14px;font-weight:500">Clear</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

@@ -10,7 +10,7 @@ load_dotenv()  # Load .env before other imports
 
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from contextlib import asynccontextmanager
@@ -121,6 +121,12 @@ app.add_middleware(
 
 
 # ── Public Routes ────────────────────────────────────────────────
+
+@app.get("/logo.png")
+async def serve_logo():
+    logo_path = Path(__file__).parent.parent / "logo.png"
+    return FileResponse(logo_path, media_type="image/png")
+
 
 @app.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
