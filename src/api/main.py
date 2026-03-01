@@ -384,6 +384,7 @@ async def chat(request: ChatRequest, user: dict = Depends(get_current_user)):
             sources=sources,
             confidence=response.confidence,
             chapter_used=response.chapter_used,
+            formulas=response.formulas,
         )
 
     except Exception as e:

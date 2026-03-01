@@ -2,7 +2,7 @@
 Question-Answering Agent using RAG context.
 """
 from typing import List, Dict, Any
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import json
 from .chapter_router import ChapterRouterAgent, RoutingResult
 from .rag_retriever import RAGRetriever, RetrievedChunk
@@ -24,6 +24,7 @@ class QAResponse:
     revised_query: str = ""
     agent_used: str = ""
     math_intent: str = ""
+    formulas: List[str] = field(default_factory=list)
 
 
 class QAAgent:

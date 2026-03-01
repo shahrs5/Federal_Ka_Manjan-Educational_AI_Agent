@@ -806,6 +806,36 @@
         }
         .katex-display > .katex { white-space: normal; }
 
+        /* ── Formulas Used block ──────────────────────────────── */
+        .msg-formulas {
+            margin-top: 12px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .msg-formulas-label {
+            font-size: 0.68rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 2px;
+        }
+
+        .msg-formula-item {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            padding: 4px 0;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .msg-formula-item:first-of-type { border-top: none; }
+
         /* ── Responsive ──────────────────────────────────────── */
         @media (max-width: 640px) {
             .header { padding: 10px 12px; gap: 8px; flex-shrink: 0; }
@@ -1204,6 +1234,15 @@
 
             }
 
+            if (!isUser && metadata && metadata.formulas && metadata.formulas.length > 0) {
+                html += '<div class="msg-formulas">';
+                html += '<div class="msg-formulas-label">Formulas Used</div>';
+                metadata.formulas.forEach(f => {
+                    html += '<div class="msg-formula-item">' + escapeHtml(f) + '</div>';
+                });
+                html += '</div>';
+            }
+
             if (!isUser) {
                 html += '<div class="msg-actions">' +
                         '<button class="btn-copy" data-text="' + escapeHtml(content).replace(/"/g, '&quot;') + '">' +
@@ -1225,7 +1264,7 @@
             chatArea.appendChild(msg);
 
             if (!isUser && typeof renderMathInElement === 'function') {
-                renderMathInElement(bubble, {
+                const katexOpts = {
                     delimiters: [
                         { left: '$$', right: '$$', display: true },
                         { left: '$',  right: '$',  display: false },
@@ -1233,6 +1272,10 @@
                         { left: '\\(', right: '\\)', display: false },
                     ],
                     throwOnError: false,
+                };
+                renderMathInElement(bubble, katexOpts);
+                msg.querySelectorAll('.msg-formula-item').forEach(el => {
+                    renderMathInElement(el, katexOpts);
                 });
             }
 
@@ -1317,6 +1360,7 @@
 
                 addMessage(answerText, false, {
                     confidence:   data.confidence,
+                    formulas:     data.formulas || [],
                     chapter_used: data.chapter_used,
                     sources:      data.sources,
                 });

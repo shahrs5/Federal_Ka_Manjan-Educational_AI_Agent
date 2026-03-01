@@ -37,6 +37,7 @@ class ChatResponse(BaseModel):
     sources: List[SourceInfo]
     confidence: float
     chapter_used: Optional[int] = None
+    formulas: List[str] = []
 
 
 class HealthResponse(BaseModel):
