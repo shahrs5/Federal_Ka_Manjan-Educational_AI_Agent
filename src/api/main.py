@@ -292,6 +292,12 @@ async def health_check():
 # ── Protected Routes ─────────────────────────────────────────────
 
 @app.get("/", response_class=HTMLResponse)
+async def landing():
+    """Serve the public landing page."""
+    return HTMLResponse(content=(TEMPLATES / "landing.html").read_text(encoding="utf-8"))
+
+
+@app.get("/app", response_class=HTMLResponse)
 async def root(request: Request):
     """Serve the chat UI (requires authentication)."""
     token = request.cookies.get("access_token")
