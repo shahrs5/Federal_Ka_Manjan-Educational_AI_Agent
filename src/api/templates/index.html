@@ -978,6 +978,8 @@
                         <button class="mcq-option" data-value="Math">Math</button>
                         <button class="mcq-option" data-value="Computer Science">Computer Science</button>
                         <button class="mcq-option" data-value="English">English</button>
+                        <button class="mcq-option disabled" data-value="Islamiyat" disabled>Islamiyat<span class="coming-soon">Coming Soon</span></button>
+                        <button class="mcq-option disabled" data-value="Urdu" disabled>Urdu<span class="coming-soon">Coming Soon</span></button>
                     </div>
                 </div>
 
@@ -1054,8 +1056,8 @@
 
         /* ── Subject availability ──────────────────────────── */
         const availability = {
-            9:  { Physics:true, Chemistry:true, Biology:true, Math:true, 'Computer Science':true,  English:true  },
-            10: { Physics:true, Chemistry:true, Biology:true, Math:true, 'Computer Science':false, English:false }
+            9:  { Physics:true, Chemistry:true, Biology:true, Math:true, 'Computer Science':true,  English:true,  Islamiyat:false, Urdu:false },
+            10: { Physics:true, Chemistry:true, Biology:true, Math:true, 'Computer Science':false, English:false, Islamiyat:false, Urdu:false }
         };
 
         /* ── Onboarding: MCQ selection logic ─────────────── */

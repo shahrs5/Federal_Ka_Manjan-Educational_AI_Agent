@@ -326,7 +326,7 @@
             <!-- First Time: Step 1 - Email Check -->
             <form id="firstTimeEmailForm" class="hidden-form" onsubmit="handleFirstTimeCheck(event)">
                 <div class="form-group">
-                    <label class="form-label" for="ftEmail">Your Email</label>
+                    <label class="form-label" for="ftEmail">Enter your <strong>registered</strong> email</label>
                     <input class="form-input" type="email" id="ftEmail" placeholder="you@example.com" required autocomplete="email">
                 </div>
                 <button type="submit" class="login-btn" id="ftCheckBtn">Continue</button>
@@ -492,7 +492,7 @@
                 const data = await res.json();
 
                 if (!data.exists) {
-                    showAlert('No account found with this email. Contact your admin.', 'error');
+                    showAlert('You are not part of the Normal Batch. Please contact on your \'Doubt Group\' or message Luv Kumar Lohano - +92 330 3644638 on WhatsApp to be able to set up the account.', 'error');
                     return;
                 }
 
