@@ -169,6 +169,29 @@ class MathSolvingAgent:
         return ''.join(result)
 
     @staticmethod
+    def _normalize_keys(data: Dict[str, Any]) -> Dict[str, Any]:
+        """Map common LLM key variations to expected keys."""
+        key_map = {
+            "formulas_used": "formulas",
+            "formula": "formulas",
+            "key_formulas": "formulas",
+            "solution": "answer",
+            "step_by_step": "answer",
+        }
+        normalized = {}
+        for k, v in data.items():
+            normalized[key_map.get(k, k)] = v
+        return normalized
+
+    @staticmethod
+    def _extract_answer_from_raw(text: str) -> str:
+        """Last-resort: pull the 'answer' value out of malformed JSON via regex."""
+        m = re.search(r'"answer"\s*:\s*"(.*?)"(?:\s*[,}])', text, re.DOTALL)
+        if m:
+            return m.group(1).replace('\\n', '\n').replace('\\"', '"')
+        return text
+
+    @staticmethod
     def _parse_json(text: str) -> Dict[str, Any]:
         try:
             if "```json" in text:
@@ -178,10 +201,22 @@ class MathSolvingAgent:
             text = text.strip()
             # Pass 1: direct parse (works when LLM output is clean)
             try:
-                return json.loads(text)
+                return MathSolvingAgent._normalize_keys(json.loads(text))
             except json.JSONDecodeError:
                 pass
             # Pass 2: sanitize inside strings, then parse
-            return json.loads(MathSolvingAgent._sanitize_json_strings(text))
+            try:
+                return MathSolvingAgent._normalize_keys(
+                    json.loads(MathSolvingAgent._sanitize_json_strings(text))
+                )
+            except json.JSONDecodeError:
+                pass
+            # Pass 3: extract just the answer field via regex
+            return {
+                "answer": MathSolvingAgent._extract_answer_from_raw(text),
+                "explanation": "",
+                "formulas": [],
+                "confidence": 0.5,
+            }
         except Exception:
             return {"answer": text, "explanation": "", "formulas": [], "confidence": 0.5}
