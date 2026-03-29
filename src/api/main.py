@@ -207,13 +207,19 @@ async def first_time_check(req: FirstTimeCheckRequest):
     """Check if an email belongs to a user who has never logged in."""
     client = get_supabase_admin_client()
     try:
-        users = client.auth.admin.list_users()
-        for u in users:
-            if u.email and u.email.lower() == req.email.lower():
-                if u.last_sign_in_at is None:
-                    return {"ok": True, "exists": True, "first_time": True}
-                else:
-                    return {"ok": True, "exists": True, "first_time": False}
+        page = 1
+        per_page = 100
+        while True:
+            batch = client.auth.admin.list_users(page=page, per_page=per_page)
+            for u in batch:
+                if u.email and u.email.lower() == req.email.lower():
+                    if u.last_sign_in_at is None:
+                        return {"ok": True, "exists": True, "first_time": True}
+                    else:
+                        return {"ok": True, "exists": True, "first_time": False}
+            if len(batch) < per_page:
+                break
+            page += 1
         return {"ok": True, "exists": False, "first_time": False}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -224,12 +230,18 @@ async def first_time_setup(req: FirstTimeSetPasswordRequest):
     """Set password for a first-time user. Only works if they have never logged in."""
     client = get_supabase_admin_client()
     try:
-        users = client.auth.admin.list_users()
         target = None
-        for u in users:
-            if u.email and u.email.lower() == req.email.lower():
-                target = u
+        page = 1
+        per_page = 100
+        while True:
+            batch = client.auth.admin.list_users(page=page, per_page=per_page)
+            for u in batch:
+                if u.email and u.email.lower() == req.email.lower():
+                    target = u
+                    break
+            if target or len(batch) < per_page:
                 break
+            page += 1
 
         if not target:
             raise HTTPException(status_code=404, detail="No account found with this email")
@@ -413,7 +425,15 @@ async def admin_page(request: Request):
 async def list_users(admin: dict = Depends(require_admin)):
     """List all users (admin only)."""
     client = get_supabase_admin_client()
-    response = client.auth.admin.list_users()
+    all_users = []
+    page = 1
+    per_page = 100
+    while True:
+        batch = client.auth.admin.list_users(page=page, per_page=per_page)
+        all_users.extend(batch)
+        if len(batch) < per_page:
+            break
+        page += 1
     users = [
         UserInfo(
             id=str(u.id),
@@ -422,7 +442,7 @@ async def list_users(admin: dict = Depends(require_admin)):
             last_sign_in=str(u.last_sign_in_at) if u.last_sign_in_at else None,
             role=(u.app_metadata or {}).get("role", "user"),
         )
-        for u in response
+        for u in all_users
     ]
     return users
 
