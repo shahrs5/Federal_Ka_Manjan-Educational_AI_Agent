@@ -99,6 +99,7 @@ class QAAgent:
             chunks=chunks,
             class_level=class_level,
             language=language,
+            subject=subject,
             history=history or [],
         )
 
@@ -172,6 +173,7 @@ class QAAgent:
         chunks: List[RetrievedChunk],
         class_level: int,
         language: str,
+        subject: str = "Physics",
         history: List[Dict[str, str]] = None,
     ) -> Dict[str, Any]:
         """Generate answer using LLM with RAG context and chat history."""
@@ -193,7 +195,9 @@ class QAAgent:
             )
 
         system_prompt = (
-            f"You are a helpful tutor for Class {class_level} students. "
+            f"You are a helpful {subject} tutor for Class {class_level} students (FBISE syllabus). "
+            f"You ONLY answer questions related to {subject}. "
+            f"If a student asks something outside of {subject}, politely tell them this is a {subject} tutor and suggest they switch to the correct subject. "
             "Always respond with JSON. "
             "Use the conversation history to maintain context. "
             "If reference material is provided, prefer it. "
@@ -259,6 +263,15 @@ Respond with ONLY valid JSON:
 
         return self._parse_json(response.choices[0].message.content)
 
+    @staticmethod
+    def _extract_answer_from_raw(text: str) -> str:
+        """Last-resort: pull the 'answer' value from malformed JSON via regex."""
+        import re
+        m = re.search(r'"answer"\s*:\s*"(.*?)"(?:\s*[,}])', text, re.DOTALL)
+        if m:
+            return m.group(1).replace('\\n', '\n').replace('\\"', '"')
+        return text
+
     def _parse_json(self, text: str) -> Dict[str, Any]:
         """Parse JSON from LLM response."""
         try:
@@ -266,9 +279,18 @@ Respond with ONLY valid JSON:
                 text = text.split("```json")[1].split("```")[0]
             elif "```" in text:
                 text = text.split("```")[1].split("```")[0]
-            return json.loads(text.strip())
-        except json.JSONDecodeError:
-            # Fallback: return the text as-is
+            text = text.strip()
+            try:
+                return json.loads(text)
+            except json.JSONDecodeError:
+                pass
+            # Fallback: extract just the answer field via regex
+            return {
+                "answer": self._extract_answer_from_raw(text),
+                "explanation": "",
+                "confidence": 0.5,
+            }
+        except Exception:
             return {
                 "answer": text,
                 "explanation": "",
